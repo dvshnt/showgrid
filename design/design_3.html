@@ -1,0 +1,2787 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Show Grid</title>
+		
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	    <meta name="description" content="Demo project">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		
+		<style type="text/css">
+			@font-face { font-family:"Concourse C3"; src: url(fonts/Concourse\ C3\ Regular.ttf) format("truetype"); }
+			@font-face { font-family:"Concourse C6"; src: url(fonts/Concourse\ C6\ Regular.ttf) format("truetype"); }
+
+
+			* { margin:0; padding:0; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+			body { font-family:'Concourse C6'; font-size:36pt; color:#010119; }
+			
+			header {  width:1116px; margin:0px auto; vertical-align:top; text-align:center; height:87px; position:relative; }
+			header .pic { position:absolute; font-size:24pt; padding:14px 0 0 0px; color:#222; margin:0 0 0 20px; }
+			header .loc { font-family:'Concourse C3'; position:absolute; top:20px; left:105px; font-size:25%; text-transform:uppercase; text-align:center; padding:12px 24px 6px 0px; margin:14px 20px 0 0; color:#333; }
+			header .list { border:3px solid #222; text-align:right; position:absolute; width:100px; top:16px; right:30px; padding:2px 10px 3px 0; cursor:pointer; }
+			header .list .name { color:#000; font-size:16pt;  }
+			header .list .name::before { content:'11'; height:31px; width:31px; position:relative; right:1px; top:0px; border-radius:16px; border:3px solid black; font-size:13pt; padding:0px 6px; }
+			header .schedule { border:3px solid #222; text-align:right; position:absolute; top:16px; right:150px; padding:0 10px 2px 10px; cursor:pointer; font-size:16pt; }
+			header .schedule .name { display:inline-block; }
+			header .schedule .icon { display:inline-block; height:25px; width:25px; position:relative; top:5px; padding:4px 0px; }
+			header .schedule .icon div { background:#222; height:3px; width:18px; background:; margin:2px auto; }
+
+			section { font-family:'Concourse C3'; }
+			
+			section table { position:relative; width:1116px; margin:0px auto; table-layout:fixed; background:white; }
+			section table tr:nth-child(even) { background:#fafafa; }
+			section table td:first-of-type { width:164px; font-size:11pt; padding:20px 10px; vertical-align:middle; }
+			section table td { width:136px; text-align:left; vertical-align:top; }
+			section table td:last-of-type { border-right:0; }
+
+			section table thead tr { background:#7facd2; }
+			section table thead td:first-of-type { text-align:center; }
+			section table thead td { font-size:10pt; padding:10px 30px 10px 10px; text-transform:uppercase; font-weight:bold; color:#fff; text-shadow:1px 1px 0px #3d7bae; }
+
+			section table tbody { display:block; width:1116px; height:535px; overflow:auto; }
+			section table tbody td { position:relative; font-size:9pt; padding:0; }
+			
+			section .head { position:absolute; width:100%; height:132px; background:#7facd2; z-index:-1; top:0px; }
+			section .next { position:absolute; right:0px; top:122px; width:80px; height:561px; background:url('img/forward.png'); background-repeat:no-repeat; background-size:25px; background-position:24px 260px; opacity:0.07; transition:.1s all; }
+			section .previous { position:absolute; left:15px; top:122px; width:80px; height:561px; background:#000; background:url('img/previous.png'); background-repeat:no-repeat; background-size:25px; background-position:18px 260px; opacity:0.07; transition:.1s all; }
+			section .previous:hover { opacity:.5; cursor:pointer; }
+			section .next:hover { opacity:.5; cursor:pointer; }
+
+			section table tbody tr { }
+			section table tbody td .show { position:relative; padding:20px 8px 39px 8px; background:#6dcb99; opacity:0; transition:all .7s;}
+			section table tbody td .show.clicking { opacity:0.7; }
+			section table tbody td .show:not(:first-child) { position:relative; padding:18px 8px 34px 8px; }
+			section table tbody td .show .artist { font-size:9.5pt; color:#5994c5; font-weight:bold; text-transform:uppercase; }
+			section table tbody td .show .artist:hover { text-decoration:underline; cursor:pointer; }
+			section table tbody td .show .time { position:absolute; top:5px; left:4px; font-size:8pt; color:#999999; }
+			section table tbody td .show:not(:first-child) .time { top:1px; left:4px; }
+
+			/**********************************/
+			section table tbody td .show .actions { text-align:center; }
+			section table tbody td .show .actions button { left:8px; width:24px; height:24px; margin:5px 0; padding:2px 0; border:none; display:none; }
+			section table tbody td .show .actions button.add { background:url('img/plus.png'); background-color:#6dcb99; background-repeat:no-repeat; background-size:18px; background-position:3px; }
+			section table tbody td .show .actions button.add:hover { background-color:#47be7f; }
+			section table tbody td .show .actions button.remove { background:url('img/remove.png'); background-color:#cb6d70; background-repeat:no-repeat; background-size:18px; background-position:3px; }
+			/**********************************/
+
+			section table tbody td .venue {  }
+			section table tbody td .venue .pic { width:70px; height:70px; margin:0px auto; border-radius:50px; }
+			section table tbody td .venue .pic.thirdandl { background:url('img/venues/3andl.jpg'); background-size:90px 90px; background-position:-10px -14px; }
+			section table tbody td .venue .pic.twelveporter { background:url('img/venues/12porter.jpg'); background-size:90px 90px;  background-position:1px -9px; }
+			section table tbody td .venue .pic.exitin { background:url('img/venues/exitin.jpg'); background-size:100px 100px; background-position:-18px -22px; }
+			section table tbody td .venue .pic.marathon { background:url('img/venues/marathon.jpg'); background-size:100px 100px; background-position:-18px 0px; }
+			section table tbody td .venue .pic.basement { background:url('img/venues/basement.jpg'); background-size:80px 80px; background-position:-5px 0px; }
+			section table tbody td .venue .pic.rutledge { background:url('img/venues/rutledge.jpg'); background-size:70px 70px; background-position:4px 0px; }
+			section table tbody td .venue .pic.mercylounge { background:url('img/venues/mercylounge.jpg'); background-size:70px 70px; background-position:0px 0px; }
+			section table tbody td .venue .pic.highwatt { background:url('img/venues/highwatt.jpg'); background-size:70px 70px; background-position:0px 0px; }
+			section table tbody td .venue .pic.bluebird { background:url('img/venues/bluebird.jpg'); background-size:70px 70px; background-position:0px 0px; }
+			section table tbody td .venue .pic.theend { background:url('img/venues/theend.jpg'); background-size:70px 70px; background-position:0px -5px; }
+			section table tbody td .venue .pic.listeningroomcafe { background:url('img/venues/listeningroomcafe.jpg'); background-size:70px 70px; background-position:2px -1px; }
+			section table tbody td .venue .pic.hardrockcafe { background:url('img/venues/hardrockcafe.jpeg'); background-size:70px 70px; background-position:0px -1px; }
+			section table tbody td .venue .pic.douglascorner { background:url('img/venues/douglascorner.jpg'); background-size:70px 70px; background-position:0px -1px; }
+			section table tbody td .venue .pic.wildhorse { background:url('img/venues/wildhorse.jpg'); background-size:70px 70px; background-position:0px -1px; }
+			section table tbody td .venue .pic.grandoleopry { background:url('img/venues/grandoleopry.jpg'); background-size:70px 70px; background-position:0px -1px; }
+			section table tbody td .venue .pic.ryman { background:url('img/venues/ryman.jpg'); background-size:70px 70px; background-position:0px -1px; }
+			section table tbody td .venue .pic.bridgestone { background:url('img/venues/bridgestone.jpg'); background-size:70px 70px; background-position:0px -1px; }
+			section table tbody td .venue .pic.belcourttaps { background:url('img/venues/belcourttaps.jpeg'); background-size:70px 70px; background-position:0px -1px; }
+			section table tbody td .venue .pic.pucketts { background:url('img/venues/pucketts.jpg'); background-size:70px 70px; background-position:0px -1px; }
+			section table tbody td .venue .pic.loveless { background:url('img/venues/loveless.jpg'); background-size:70px 70px; background-position:-6px -1px; }
+			section table tbody td .venue .pic.stonefox { background:url('img/venues/stonefox.jpg'); background-size:70px 70px; background-position:0px -1px; }
+			section table tbody td .venue .pic.zanies { background:url('img/venues/zanies.jpg'); background-size:70px 70px; background-position:0px -1px; }
+			section table tbody td .venue .pic.stationinn { background:url('img/venues/stationinn.jpg'); background-size:70px 70px; background-position:0px -1px; }
+
+
+			section table tbody td .venue .name { text-align:center; margin:8px 0 4px 0; }
+			section table tbody td .venue .address { text-align:center; font-size:8pt; color:#898989; margin:0 0 4px 0; }
+
+			.overlay { display:none; height:100%; width:100%; background:rgba(0,0,0,0.2); position:absolute; top:0px; left:0px; z-index:98;}
+			.list-dialog { display:none; height:500px; width:400px; background:white; top:75px; left:450px; z-index:99; position:absolute; box-shadow:0px 0px 10px #666666; }
+			.list-dialog .head { width:100%; background:#7facd2; text-align:center; color:#fff; font-size:22pt; padding:5px 0; }
+		</style>
+	</head>
+
+	<body>
+		<div class="overlay"></div>
+		<div class="list-dialog">
+			<div class="head">SHOWLIST</div>
+			<div class="list">
+				
+			</div>
+		</div>
+		<header>
+			<div class="logo">
+				<div class="pic">
+					SHOWGRID
+				</div>
+				<div class="loc">
+					Nashville, TN
+				</div>
+			</div>
+			<!-- <div class="list">
+				<div class="name">LIST</div>
+			</div>
+			<div class="schedule">
+				<div class="icon">
+					<div class="bar-1"></div>
+					<div class="bar-2"></div>
+					<div class="bar-3"></div>
+				</div>
+				<div class="name">SCHEDULE</div>
+			</div> -->
+		</header>
+
+		<section>
+			<div class="previous"></div>
+			<div class="next"></div>
+			<table>
+				<thead>
+					<tr>
+						<td>
+							Venue
+						</td>
+						<td class='day-1'>
+							Monday August 25
+						</td>
+						<td class='day-2'>
+							Tuesday August 26
+						</td>
+						<td class='day-3'>
+							Wednesday August 27
+						</td>
+						<td class='day-4'>
+							Thursday August 28
+						</td>
+						<td class='day-5'>
+							Friday August 29
+						</td>
+						<td class='day-6'>
+							Saturday August 30
+						</td>
+						<td class='day-7'>
+							Sunday August 31
+						</td>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="thirdandl pic"></div>
+						    	<div class="name">3rd & Lindsley</div>
+						    	<div class="address">
+						    		818 3rd Ave S<br>
+						    		Nashville, TN 37210
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <a class='artist'>THE TIME JUMPERS</a>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Digital Rodeo Xtreme</div>
+					            <div class='time'>6PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>Radio Romance</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Monte Byrum</div>
+					            <div class='time'>7PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>Wooten & Friends</div>
+					            <div class='time'>9:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Jeffrey Steele and The Circus</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Eaglemaniacs</div>
+					            <div class='time'>7:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Journey Resurrection</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Martina McBride</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>`
+					        </div>
+					    </td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="twelveporter pic"></div>
+						    	<div class="name">12 & Porter</div>
+						    	<div class="address">
+						    		114 12th Ave N<br>
+						    		Nashville, TN 37203
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Ryan Harris</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Cort Carpenter</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Dynamo</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>The Family</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Urban Soul</div>
+					            <div class='time'>6PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="exitin pic"></div>
+						    	<div class="name">Exit/In</div>
+						    	<div class="address">
+						    		2208 Elliston Pl<br>
+						    		Nashville, TN 37203
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>The kdsml Revue</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Deep Fried 5</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>The Nearly Deads</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="marathon pic"></div>
+						    	<div class="name">Marathon Music Works</div>
+						    	<div class="address">
+						    		1402 Clinton St<br>
+						    		Nashville, TN 37203
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="basement pic"></div>
+						    	<div class="name">The Basement</div>
+						    	<div class="address">
+									1604 8th Ave S #330<br>
+									 Nashville, TN 37203
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>The Carmonas w/ Lizzy McAvoy Reverse Cowgirls</div>
+					            <div class='time'>7PM & 9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>New Faces Nite </div>
+					            <div class='time'>3PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Cory Chisel</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Keelan Donovan</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>The Woggles</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Caitlin Rose</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="rutledge pic"></div>
+						    	<div class="name">The Rutledge</div>
+						    	<div class="address">
+									410 4th Ave S<br>
+									Nashville, TN 37201
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>The Daily Howl, Split Wigs, Christopher Butcher, The Volts</div>
+					            <div class='time'>7:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Chicks Rock Night</div>
+					            <div class='time'>7PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Franklin School of Rock</div>
+					            <div class='time'>6PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="mercylounge pic"></div>
+						    	<div class="name">Mercy Lounge</div>
+						    	<div class="address">
+									1 Cannery Row<br>
+									Nashville, TN 37203
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Kevin Gates</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Sounds Like Summer</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Sounds Like Summer</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="highwatt pic"></div>
+						    	<div class="name">The High Watt</div>
+						    	<div class="address">
+									1 Cannery Row<br>
+									Nashville, TN 37203
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>8 off 8th</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Ugly Kids Club, Field Days, Lylas</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Duncan Trussell</div>
+					            <div class='time'>8:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Rocca Deluca</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Sounds Like Summer</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Sounds Like Summer</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="mercylounge pic"></div>
+						    	<div class="name">The Cannery Ballroom</div>
+						    	<div class="address">
+									1 Cannery Row<br>
+									Nashville, TN 37203
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="bluebird pic"></div>
+						    	<div class="name">Bluebird Café</div>
+						    	<div class="address">
+									4104 Hillsboro Pike<br>
+									Nashville, TN 37215
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Open Mic</div>
+					            <div class='time'>6PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>The Kimosahbee Band</div>
+					            <div class='time'>9:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Anna Sullivan, Bob Spanburgh, Leo Clarke, Justin Leigh Walters</div>
+					            <div class='time'>6PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>Mary Gauthier</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Denise Locke Heard, Mandy Brooke, Jan King, Nancy Moore Crocker</div>
+					            <div class='time'>6:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>Mark Irwin, Marty Dodson, Clay Mills, Mark Nesler</div>
+					            <div class='time'>9:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Ashley Cleveland, Beth Nielsen Chapman, Karen Staley, Tricia Walker and</div>
+					            <div class='time'>6:30PM & 9:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Leslie Trio</div>
+					            <div class='time'>6PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>Don Schlitz</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="theend pic"></div>
+						    	<div class="name">The End</div>
+						    	<div class="address">
+						    		 2219 Elliston Pl<br>
+						    		 Nashville, TN 37203
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Black Kids</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Laurel Sorenson</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Emily & The Complexes</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Andy Dozier</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Brian Allen Thompson</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>DJ Cory, DJ Skywalker</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="listeningroomcafe pic"></div>
+						    	<div class="name">The Listening Room</div>
+						    	<div class="address">
+									217 2nd Ave S<br>
+									Nashville, TN 37201
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Song Suffragettes</div>
+					            <div class='time'>6PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>Moonshine + Music</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Jimmy Stanley</div>
+					            <div class='time'>6PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>Kirsti Manna</div>
+					            <div class='time'>8:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Fletcher, Bell & Ward</div>
+					            <div class='time'>8:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="hardrockcafe pic"></div>
+						    	<div class="name">Hard Rock Café</div>
+						    	<div class="address">
+									100 Broadway<br>
+									Nashville, TN 37201
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="douglascorner pic"></div>
+						    	<div class="name">Douglas Corner</div>
+						    	<div class="address">
+						 			2106 8th Ave S<br>
+						 			Nashville, TN 37204
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Nashville TenX9</div>
+					            <div class='time'>7:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Big Deal Music</div>
+					            <div class='time'>6PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>Open Mic</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Big Shoes</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>The Producer's Chair</div>
+					            <div class='time'>6PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>Charles Walker</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>American Pie South III and Jerry Castle</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Jan Cronin Band</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Closed</div>
+					            <div class='time'></div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="wildhorse pic"></div>
+						    	<div class="name">Wildhorse Saloon</div>
+						    	<div class="address">
+						 			120 2nd Ave N<br>
+						 			Nashville, TN 37201
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Brother Trouble</div>
+					            <div class='time'></div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Private Event</div>
+					            <div class='time'></div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Jami Grooms</div>
+					            <div class='time'></div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Larry Frick</div>
+					            <div class='time'></div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Larry Frick</div>
+					            <div class='time'></div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Larry Frick</div>
+					            <div class='time'></div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Peter Moon Band</div>
+					            <div class='time'></div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="grandoleopry pic"></div>
+						    	<div class="name">The Opry</div>
+						    	<div class="address">
+									2804 Opryland Dr<br>
+									Nashville, TN 37214
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>FRANKIE BALLARD, Lorrie Morgan, JOSH THOMPSON, Shovels & Rope, Dailey & Vincent</div>
+					            <div class='time'>7PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Kathy Mattea, Mary Gauthier, The Henningsens, Bill Anderson</div>
+					            <div class='time'>7PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Charles Esten, Chaley Rose, The SteelDrivers, Bill Anderson, THE GATLIN BROTHERS</div>
+					            <div class='time'>7PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="ryman pic"></div>
+						    	<div class="name">Ryman Auditorium</div>
+						    	<div class="address">
+									116 5th Ave N<br>
+									Nashville, TN 37219
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Merle Haggard</div>
+					            <div class='time'>7:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Merle Haggard</div>
+					            <div class='time'>7:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Jeff Bridges  & The Abiders</div>
+					            <div class='time'></div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="bridgestone pic"></div>
+						    	<div class="name">Bridgestone Arena</div>
+						    	<div class="address">
+						 			501 Broadway<br>
+						 			Nashville, TN 37203
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="belcourttaps pic"></div>
+						    	<div class="name">Belcourt Taps</div>
+						    	<div class="address">
+						 			2117 Belcourt Ave<br>
+						 			Nashville, TN 37212
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="pucketts pic"></div>
+						    	<div class="name">Pucketts</div>
+						    	<div class="address">
+						 			 500 Church St<br>
+						 			 Nashville, TN 37219
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Jimmy Charles</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Josh Helms</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>The Farmer & Adele</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Craig Carothers & Don Henry</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Raven Cliff</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Sunday Showcase</div>
+					            <div class='time'>7PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="loveless pic"></div>
+						    	<div class="name">Music City Roots<br>(Loveless Cafe)</div>
+						    	<div class="address">
+						 			8400 Tennessee 100<br>
+						 			Nashville, TN 37221
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Bryan Sutton, Rory Hoffman, Steve Wariner, Megan McCormick</div>
+					            <div class='time'>7PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="stonefox pic"></div>
+						    	<div class="name">The Stone Fox</div>
+						    	<div class="address">
+						 			712 51st Ave N<br>
+						 			Nashville, TN 37209
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Bingo</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Molly Jewell, Ryan Thies, The Sound Awake</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Sonny & The Sunsets, Cheap Time, Fox Fun</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Feedback Revival, Ancient Warfare, Bear Medicine</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>The Clean w/ Boogarins</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>80S/90S Dance Party</div>
+					            <div class='time'>10PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Open Mike Eagle</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="zanies pic"></div>
+						    	<div class="name">Zanie's</div>
+						    	<div class="address">
+						 			2025 8th Ave S<br>
+						 			Nashville, TN 37204
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="stationinn pic"></div>
+						    	<div class="name">Station Inn</div>
+						    	<div class="address">
+						 			 402 12th Ave S<br>
+						 			 Nashville, TN 37203
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Val Storey, Carl Jackson, Larry Cordle</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>The Doyle & Debbie Show</div>
+					            <div class='time'>7PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>Rock Ickes, Trey Hensley, Aubry Haynie, John Alvey, Mike Bub</div>
+					            <div class='time'>9:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>All Night Train</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Adam Wright, Jay Knowles Band</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Shawn Camp</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Jeff White</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Bluegrass Jam</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					</tr>
+				</tbody>
+
+				<tfoot>
+
+				</tfoot>
+			</table>
+
+			<table style="display:none">
+				<thead>
+					<tr>
+						<td>
+							Venue
+						</td>
+						<td class='day-1'>
+							Monday September 1
+						</td>
+						<td class='day-2'>
+							Tuesday September 2
+						</td>
+						<td class='day-3'>
+							Wednesday September 3
+						</td>
+						<td class='day-4'>
+							Thursday September 4
+						</td>
+						<td class='day-5'>
+							Friday September 5
+						</td>
+						<td class='day-6'>
+							Saturday September 6
+						</td>
+						<td class='day-7'>
+							Sunday September 7
+						</td>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="thirdandl pic"></div>
+						    	<div class="name">3rd & Lindsley</div>
+						    	<div class="address">
+						    		818 3rd Ave S<br>
+						    		Nashville, TN 37210
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <a class='artist'>THE TIME JUMPERS</a>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Digital Rodeo Xtreme</div>
+					            <div class='time'>6PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>Radio Romance</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Monte Byrum</div>
+					            <div class='time'>7PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>Wooten & Friends</div>
+					            <div class='time'>9:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Jeffrey Steele and The Circus</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Eaglemaniacs</div>
+					            <div class='time'>7:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Journey Resurrection</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Martina McBride</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>`
+					        </div>
+					    </td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="twelveporter pic"></div>
+						    	<div class="name">12 & Porter</div>
+						    	<div class="address">
+						    		114 12th Ave N<br>
+						    		Nashville, TN 37203
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Ryan Harris</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Cort Carpenter</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Dynamo</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>The Family</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Urban Soul</div>
+					            <div class='time'>6PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="exitin pic"></div>
+						    	<div class="name">Exit/In</div>
+						    	<div class="address">
+						    		2208 Elliston Pl<br>
+						    		Nashville, TN 37203
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>The kdsml Revue</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Deep Fried 5</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>The Nearly Deads</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="marathon pic"></div>
+						    	<div class="name">Marathon Music Works</div>
+						    	<div class="address">
+						    		1402 Clinton St<br>
+						    		Nashville, TN 37203
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="basement pic"></div>
+						    	<div class="name">The Basement</div>
+						    	<div class="address">
+									1604 8th Ave S #330<br>
+									 Nashville, TN 37203
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>The Carmonas w/ Lizzy McAvoy Reverse Cowgirls</div>
+					            <div class='time'>7PM & 9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>New Faces Nite </div>
+					            <div class='time'>3PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Cory Chisel</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Keelan Donovan</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>The Woggles</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Caitlin Rose</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="rutledge pic"></div>
+						    	<div class="name">The Rutledge</div>
+						    	<div class="address">
+									410 4th Ave S<br>
+									Nashville, TN 37201
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>The Daily Howl, Split Wigs, Christopher Butcher, The Volts</div>
+					            <div class='time'>7:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Chicks Rock Night</div>
+					            <div class='time'>7PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Franklin School of Rock</div>
+					            <div class='time'>6PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="mercylounge pic"></div>
+						    	<div class="name">Mercy Lounge</div>
+						    	<div class="address">
+									1 Cannery Row<br>
+									Nashville, TN 37203
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Kevin Gates</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Sounds Like Summer</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Sounds Like Summer</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="highwatt pic"></div>
+						    	<div class="name">The High Watt</div>
+						    	<div class="address">
+									1 Cannery Row<br>
+									Nashville, TN 37203
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>8 off 8th</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Ugly Kids Club, Field Days, Lylas</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Duncan Trussell</div>
+					            <div class='time'>8:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Rocca Deluca</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Sounds Like Summer</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Sounds Like Summer</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="mercylounge pic"></div>
+						    	<div class="name">The Cannery Ballroom</div>
+						    	<div class="address">
+									1 Cannery Row<br>
+									Nashville, TN 37203
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="bluebird pic"></div>
+						    	<div class="name">Bluebird Café</div>
+						    	<div class="address">
+									4104 Hillsboro Pike<br>
+									Nashville, TN 37215
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Open Mic</div>
+					            <div class='time'>6PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>The Kimosahbee Band</div>
+					            <div class='time'>9:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Anna Sullivan, Bob Spanburgh, Leo Clarke, Justin Leigh Walters</div>
+					            <div class='time'>6PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>Mary Gauthier</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Denise Locke Heard, Mandy Brooke, Jan King, Nancy Moore Crocker</div>
+					            <div class='time'>6:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>Mark Irwin, Marty Dodson, Clay Mills, Mark Nesler</div>
+					            <div class='time'>9:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Ashley Cleveland, Beth Nielsen Chapman, Karen Staley, Tricia Walker and</div>
+					            <div class='time'>6:30PM & 9:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Leslie Trio</div>
+					            <div class='time'>6PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>Don Schlitz</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="theend pic"></div>
+						    	<div class="name">The End</div>
+						    	<div class="address">
+						    		 2219 Elliston Pl<br>
+						    		 Nashville, TN 37203
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Black Kids</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Laurel Sorenson</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Emily & The Complexes</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Andy Dozier</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Brian Allen Thompson</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>DJ Cory, DJ Skywalker</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="listeningroomcafe pic"></div>
+						    	<div class="name">The Listening Room</div>
+						    	<div class="address">
+									217 2nd Ave S<br>
+									Nashville, TN 37201
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Song Suffragettes</div>
+					            <div class='time'>6PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>Moonshine + Music</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Jimmy Stanley</div>
+					            <div class='time'>6PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>Kirsti Manna</div>
+					            <div class='time'>8:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Fletcher, Bell & Ward</div>
+					            <div class='time'>8:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="hardrockcafe pic"></div>
+						    	<div class="name">Hard Rock Café</div>
+						    	<div class="address">
+									100 Broadway<br>
+									Nashville, TN 37201
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="douglascorner pic"></div>
+						    	<div class="name">Douglas Corner</div>
+						    	<div class="address">
+						 			2106 8th Ave S<br>
+						 			Nashville, TN 37204
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Nashville TenX9</div>
+					            <div class='time'>7:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Big Deal Music</div>
+					            <div class='time'>6PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>Open Mic</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Big Shoes</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>The Producer's Chair</div>
+					            <div class='time'>6PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>Charles Walker</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>American Pie South III and Jerry Castle</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Jan Cronin Band</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Closed</div>
+					            <div class='time'></div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="wildhorse pic"></div>
+						    	<div class="name">Wildhorse Saloon</div>
+						    	<div class="address">
+						 			120 2nd Ave N<br>
+						 			Nashville, TN 37201
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Brother Trouble</div>
+					            <div class='time'></div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Private Event</div>
+					            <div class='time'></div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Jami Grooms</div>
+					            <div class='time'></div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Larry Frick</div>
+					            <div class='time'></div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Larry Frick</div>
+					            <div class='time'></div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Larry Frick</div>
+					            <div class='time'></div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Peter Moon Band</div>
+					            <div class='time'></div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="grandoleopry pic"></div>
+						    	<div class="name">The Opry</div>
+						    	<div class="address">
+									2804 Opryland Dr<br>
+									Nashville, TN 37214
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>FRANKIE BALLARD, Lorrie Morgan, JOSH THOMPSON, Shovels & Rope, Dailey & Vincent</div>
+					            <div class='time'>7PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Kathy Mattea, Mary Gauthier, The Henningsens, Bill Anderson</div>
+					            <div class='time'>7PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Charles Esten, Chaley Rose, The SteelDrivers, Bill Anderson, THE GATLIN BROTHERS</div>
+					            <div class='time'>7PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="ryman pic"></div>
+						    	<div class="name">Ryman Auditorium</div>
+						    	<div class="address">
+									116 5th Ave N<br>
+									Nashville, TN 37219
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Merle Haggard</div>
+					            <div class='time'>7:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Merle Haggard</div>
+					            <div class='time'>7:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Jeff Bridges  & The Abiders</div>
+					            <div class='time'></div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="bridgestone pic"></div>
+						    	<div class="name">Bridgestone Arena</div>
+						    	<div class="address">
+						 			501 Broadway<br>
+						 			Nashville, TN 37203
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="belcourttaps pic"></div>
+						    	<div class="name">Belcourt Taps</div>
+						    	<div class="address">
+						 			2117 Belcourt Ave<br>
+						 			Nashville, TN 37212
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="pucketts pic"></div>
+						    	<div class="name">Pucketts</div>
+						    	<div class="address">
+						 			 500 Church St<br>
+						 			 Nashville, TN 37219
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Jimmy Charles</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Josh Helms</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>The Farmer & Adele</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Craig Carothers & Don Henry</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Raven Cliff</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Sunday Showcase</div>
+					            <div class='time'>7PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="loveless pic"></div>
+						    	<div class="name">Music City Roots<br>(Loveless Cafe)</div>
+						    	<div class="address">
+						 			8400 Tennessee 100<br>
+						 			Nashville, TN 37221
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Bryan Sutton, Rory Hoffman, Steve Wariner, Megan McCormick</div>
+					            <div class='time'>7PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="stonefox pic"></div>
+						    	<div class="name">The Stone Fox</div>
+						    	<div class="address">
+						 			712 51st Ave N<br>
+						 			Nashville, TN 37209
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Bingo</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Molly Jewell, Ryan Thies, The Sound Awake</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Sonny & The Sunsets, Cheap Time, Fox Fun</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Feedback Revival, Ancient Warfare, Bear Medicine</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>The Clean w/ Boogarins</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>80S/90S Dance Party</div>
+					            <div class='time'>10PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Open Mike Eagle</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="zanies pic"></div>
+						    	<div class="name">Zanie's</div>
+						    	<div class="address">
+						 			2025 8th Ave S<br>
+						 			Nashville, TN 37204
+						    	</div>
+					    	</div>
+					    </td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					</tr>
+					<tr>
+					    <td>
+					    	<div class="venue">
+						    	<div class="stationinn pic"></div>
+						    	<div class="name">Station Inn</div>
+						    	<div class="address">
+						 			 402 12th Ave S<br>
+						 			 Nashville, TN 37203
+						    	</div>
+					    	</div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Val Storey, Carl Jackson, Larry Cordle</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>The Doyle & Debbie Show</div>
+					            <div class='time'>7PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					        <div class='show'>
+					            <div class='artist'>Rock Ickes, Trey Hensley, Aubry Haynie, John Alvey, Mike Bub</div>
+					            <div class='time'>9:30PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>All Night Train</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Adam Wright, Jay Knowles Band</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Shawn Camp</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Jeff White</div>
+					            <div class='time'>9PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					    <td>
+					        <div class='show'>
+					            <div class='artist'>Bluegrass Jam</div>
+					            <div class='time'>8PM</div>
+					          	<div class='actions'>
+					          		<button class='remove'></button>
+					          	</div>
+					        </div>
+					    </td>
+					</tr>
+				</tbody>
+
+				<tfoot>
+
+				</tfoot>
+			</table>
+		</section>
+
+		<footer class="show-grid-footer">
+
+		</footer>
+	</body>
+
+	<script src="js/jquery.min.js"></script>
+	<script src="/Users/vdh3/Documents/Playground/GreenSock/src/minified/TweenLite.min.js"></script>
+	<script type="text/javascript">
+	(function() {
+		var things = [];
+		var pressTimer, pressFin = false;
+
+		$(document).keyup(function(e) {
+			if (e.keyCode == 27) {
+				$(".overlay").hide();
+				$(".list-dialog").hide();
+			}
+		});
+
+		$(".show").mouseup(function() {
+			if (!pressFin)
+				$(this).removeClass("clicking");
+
+			clearTimeout(pressTimer);
+			return false;	
+		}).mousedown(function() {
+			$(this).addClass("clicking");
+			pressTimer = window.setTimeout(function() {
+				pressFin = true;
+			}, 700);
+			return false;
+		});
+
+		// $(".show").hover(function(e) {
+		// 	$(this).find("button").show();
+		// }, function(e) {
+		// 	$(this).find("button").hide();
+		// });
+
+		// $(".list").click(function(e) {
+		// 	$(".list-dialog").show();
+		// 	$(".overlay").show();
+		// });
+
+		// $(".actions button").click(function(e) {
+		// 	if ($(this).hasClass('add')) {
+		// 		$(this).removeClass('add').addClass('remove');
+
+		// 		$(this).parent().parent().parent().css({ "background" : "rgba(127,210,165,0.6)" });
+		// 		$(this).parent().parent()
+		// 			.find('.artist').css({ "color" : "#fff" })
+		// 			.parent().find('.time').css({ "color" : "#efe" });
+
+		// 		var venue = $(this).parent().parent().parent().parent().find('td:first-of-type').find('.name').text();
+		// 		var artist = $(this).parent().parent().find('.artist').text();
+		// 		var time = $(this).parent().parent().find('.time').text();
+
+		// 		things.push({ "venue" : venue, "artist" : artist, "time" : time });
+
+		// 		$('.list-dialog .list').append('<div style="font-size:11pt; padding:4px;">'+venue+' – '+artist+' @ '+time+'</div>');
+		// 		return;
+		// 	}
+
+		// 	$(this).removeClass('remove').addClass('add');
+
+		// 	$(this).parent().parent().parent().css({ "background" : "" });
+		// 	$(this).parent().parent()
+		// 		.find('.artist').css({ "color" : "" })
+		// 		.parent().find('.time').css({ "color" : "" });
+		// });
+
+		// $(".next").click(function() {
+		// 	$("table").each(function(i, ele) {
+		// 		if (i === 0 && $(ele).is(":visible")) {
+		// 			$(ele).hide();
+		// 		}
+		// 		else if (i > 0) {
+		// 			$(ele).show();
+		// 		}
+		// 	});
+		// });
+
+		$(".previous").click(function() {
+			$("table").each(function(i, ele) {
+				if (i === 0) {
+					$(ele).show()
+					return;
+				}
+				else if (i > 0 && $(ele).is(":visible")) {
+					$(ele).hide();
+				}
+			});
+		});
+
+	})();
+	</script>
+</html>
+	

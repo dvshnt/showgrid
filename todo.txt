@@ -1,0 +1,33 @@
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+// Today on the Frontend:
+// 	1. Fix thead date change animation ================================> DONE
+// 	2. Do not allow previous to access past dates =====================> DONE (JANKY)
+//	3. Add a contact/submit form for new venues and the like ==========> DONE
+//	4. Resize page dynamically depending on device screen size ========> DONE
+//  5. Add website in all cases for shows =============================> DONE
+//  6. Nashville Skyline drawing
+//
+// Today on the Backend:
+// 	1. Create a sprite with venue pics, arrows
+// 	2. Do not allow unauthorized access to API ========================> DONE (NO POSTS, PUTS, OR DELETES)
+// 	3. Collecting emails for feedback =================================> DONE (MAILCHIMP)
+//  4. Add website in all cases for shows =============================> DONE
+//		1. Add links to show-builder from xlsx file (for sites that just have cal)
+//	
+//	BONUS: work on SEO optimizing by creating static html pages for each view. 
+//	DOUBLE BONUS: create a member signup (what for?)
+//	
+//	Today on the Data front:
+//	1. Setup Google Analytics account
+// 	2. Add Google Analytics script tag to page
+//
+//	Today on the Deployment front:
+//	1. Prepare a .sh script to launch app on a server
+//
+//	Today on the maintenence front:
+//	1. Create a git repository
+//
+//	TODAY'S LAST THING:
+//	Test on as many Browsers as possible
+//////////////////////////////////////////////////////////////////////////////
