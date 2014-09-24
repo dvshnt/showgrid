@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Showgrid{% endblock %}
+
+{% block content %}
+<section>
+	<div class="previous"></div>
+	<div class="next"></div>
+	<table>
+		<thead>
+			<tr>
+				<td>
+					Venue
+				</td>
+				<td class='day-0'></td>
+				<td class='day-1'></td>
+				<td class='day-2'></td>
+				<td class='day-3'></td>
+				<td class='day-4'></td>
+				<td class='day-5'></td>
+				<td class='day-6'></td>
+			</tr>
+		</thead>
+		<tbody>
+		
+		</tbody>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+	(function() {
+		
+		var weekdays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+		var months = [
+			"january", "february", "march", "april", "may", "june", "july", 
+			"august", "september", "october", "november", "december"
+		];
+
+		var d = new Date();
+		for (var i=0; i < 7; i++) {
+			var currentDay = addDays(d, i);
+			var dayOfWeek = weekdays[ currentDay.getDay() ];
+			var month = months[ currentDay.getMonth() ];
+			var dayOfMonth = currentDay.getDate();
+
+			var pod = $("td.day-" + i);
+			pod.html(dayOfWeek + " " + month + " " + dayOfMonth);
+			pod.data({ "day-num": i, "day-of-week": dayOfWeek });
+		}
+		
+	})();
+</script>
+{% endblock %}
