@@ -8,6 +8,9 @@ from datetime import datetime
 import openpyxl as px
 
 from django.core.management import setup_environ
+
+import sys
+sys.path.append('/home/ubuntu/app/showgrid/')
 from showgrid import settings
 setup_environ(settings)
 
