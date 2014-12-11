@@ -15,8 +15,6 @@ header .pic { font-family:"Concourse C6"; position:absolute; padding:14px 0 0 0p
 header .logo { padding:6px 0 0 0; }
 header .loc { position:absolute; top:24px; left:105px; font-size:25%; text-transform:uppercase; padding:14px 0px 6px 0px; margin:12px 0 0 0; font-family:"Concourse C3"; color:#333; cursor:pointer; }
 
-.skyline { position:absolute; left:140px; }
-
 section { font-family:"Concourse C3"; }
 
 section table { position:relative; width:1116px; margin:0px auto; table-layout:fixed; background:white; }
