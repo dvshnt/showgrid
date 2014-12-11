@@ -6,83 +6,95 @@
 @-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
-* { margin:0; padding:0; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-body { font-family:"Concourse C6"; font-size:36pt; color:#010119; }
+.sharpen {
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	font-smooth: always;
+	-moz-osx-font-smoothing: grayscale; 
+}
+table { width:100%; }
 
-/* Dynamically determine width based on screen size */
-header {  width:1116px; margin:0px auto; vertical-align:top; text-align:center; height:87px; position:relative; }
-header .pic { font-family:"Concourse C6"; position:absolute; padding:14px 0 0 0px; margin:0 0 0 20px;  font-size:24pt; color:#222; cursor:pointer; }
-header .logo { padding:6px 0 0 0; }
-header .loc { position:absolute; top:24px; left:105px; font-size:25%; text-transform:uppercase; padding:14px 0px 6px 0px; margin:12px 0 0 0; font-family:"Concourse C3"; color:#333; cursor:pointer; }
+section { width:100%; display:inline-block; z-index:2; }
 
-section { font-family:"Concourse C3"; }
+table td:first-of-type { width:16%; text-align:center; padding:20px 0; }
+table td:not(:first-of-type) { width:12%; padding:20px 0 20px 0; }
 
-section table { position:relative; width:1116px; margin:0px auto; table-layout:fixed; background:white; }
-section table tr:nth-child(even) { background:#fafafa; }
-section table td:first-of-type { width:15%; font-size:11pt; padding:20px 10px; vertical-align:middle; text-align:center; }
-section table td { width:12%; text-align:left; vertical-align:top; }
-section table td:last-of-type { border-right:0; }
+thead td:not(:first-of-type) { padding:10px 25px 10px 10px; }
 
-section table thead tr { background:#7facd2; }
-section table thead td { font-size:10pt; padding:10px 25px 10px 10px; text-transform:uppercase; font-weight:bold; color:#fff; text-shadow:1px 1px 0px #3d7bae; cursor:default; }
+thead { border-bottom:1px double  #343434; background:#343434; }
+thead tr { position:relative; display:block; background:#454545; }
+thead td { font-family:'Concourse C3'; text-transform:uppercase; color:#ededed; text-shadow:1px 1px 0px black; 
+	-webkit-font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	font-smooth: always;
+	-moz-osx-font-smoothing: grayscale;
+}
 
-section table tbody { display:block; height:535px; overflow:auto; }
-section table tbody td { position:relative; font-size:9pt; padding:0; }
-section table tbody td:not(:first-of-type) { padding:10px 0; }
+tbody { display:block; overflow:auto; height:592px; width:100%; }
+tbody tr:nth-child(odd) {}
+tbody tr:nth-child(even) {background:rgba(0,0,0,0.05);}
 
-section .next { position:absolute; right:0px; top:0px; width:60px; height:100%; background:url("/static/showgrid/img/forward.png"); background-repeat:no-repeat; background-position:20px 0px; background-size:25px; opacity:0.07; transition:.1s all; }
-section .previous { position:absolute; left:0px; top:0px; width:60px; height:100%; background:url("/static/showgrid/img/previous.png"); background-repeat:no-repeat; background-position:15px 0px; background-size:25px; opacity:0.07; transition:.1s all; display:none; }
-section .previous:hover { opacity:.5; cursor:pointer; }
-section .next:hover { opacity:.5; cursor:pointer; }
+tbody td:first-of-type { padding:20px; }
 
-section table tbody td .venue {  }
-section table tbody td .venue .pic { width:70px; height:70px; margin:0px auto; border-radius:50px; }
-section table tbody td .venue .pic.thirdandl { background:url('/static/showgrid/img/venues/thirdandl.jpg'); background-size:90px 90px; background-position:-10px -14px; }
-section table tbody td .venue .pic.twelveporter { background:url('/static/showgrid/img/venues/twelveporter.jpg'); background-size:90px 90px;  background-position:1px -9px; }
-section table tbody td .venue .pic.exitin { background:url('/static/showgrid/img/venues/exitin.jpg'); background-size:100px 100px; background-position:-18px -22px; }
-section table tbody td .venue .pic.marathon { background:url('/static/showgrid/img/venues/marathon.jpg'); background-size:100px 100px; background-position:-18px 0px; }
-section table tbody td .venue .pic.basement { background:url('/static/showgrid/img/venues/basement.jpg'); background-size:80px 80px; background-position:-5px 0px; }
-section table tbody td .venue .pic.rutledge { background:url('/static/showgrid/img/venues/rutledge.jpg'); background-size:70px 70px; background-position:4px 0px; }
-section table tbody td .venue .pic.mercylounge { background:url('/static/showgrid/img/venues/mercylounge.jpg'); background-size:70px 70px; background-position:0px 0px; }
-section table tbody td .venue .pic.highwatt { background:url('/static/showgrid/img/venues/highwatt.jpg'); background-size:70px 70px; background-position:0px 0px; }
-section table tbody td .venue .pic.bluebird { background:url('/static/showgrid/img/venues/bluebird.jpg'); background-size:70px 70px; background-position:0px 0px; }
-section table tbody td .venue .pic.theend { background:url('/static/showgrid/img/venues/theend.jpg'); background-size:70px 70px; background-position:0px -5px; }
-section table tbody td .venue .pic.listeningroomcafe { background:url('/static/showgrid/img/venues/listeningroomcafe.jpg'); background-size:70px 70px; background-position:2px -1px; }
-section table tbody td .venue .pic.hardrockcafe { background:url('/static/showgrid/img/venues/hardrockcafe.jpeg'); background-size:70px 70px; background-position:0px -1px; }
-section table tbody td .venue .pic.douglascorner { background:url('/static/showgrid/img/venues/douglascorner.jpg'); background-size:70px 70px; background-position:0px -1px; }
-section table tbody td .venue .pic.wildhorse { background:url('/static/showgrid/img/venues/wildhorse.jpg'); background-size:70px 70px; background-position:0px -1px; }
-section table tbody td .venue .pic.grandoleopry { background:url('/static/showgrid/img/venues/grandoleopry.jpg'); background-size:70px 70px; background-position:0px -1px; }
-section table tbody td .venue .pic.ryman { background:url('/static/showgrid/img/venues/ryman.jpg'); background-size:70px 70px; background-position:0px -1px; }
-section table tbody td .venue .pic.bridgestone { background:url('/static/showgrid/img/venues/bridgestone.jpg'); background-size:70px 70px; background-position:0px -1px; }
-section table tbody td .venue .pic.belcourttaps { background:url('/static/showgrid/img/venues/belcourttaps.jpeg'); background-size:70px 70px; background-position:0px -1px; }
-section table tbody td .venue .pic.pucketts { background:url('/static/showgrid/img/venues/pucketts.jpg'); background-size:70px 70px; background-position:0px -1px; }
-section table tbody td .venue .pic.loveless { background:url('/static/showgrid/img/venues/loveless.jpg'); background-size:70px 70px; background-position:-6px -1px; }
-section table tbody td .venue .pic.stonefox { background:url('/static/showgrid/img/venues/stonefox.jpg'); background-size:70px 70px; background-position:0px -1px; }
-section table tbody td .venue .pic.zanies { background:url('/static/showgrid/img/venues/zanies.jpg'); background-size:70px 70px; background-position:0px -1px; }
-section table tbody td .venue .pic.stationinn { background:url('/static/showgrid/img/venues/stationinn.jpg'); background-size:70px 70px; background-position:0px -1px; }
+.venue .name { font-family:'Concourse C3'; font-size:12pt; color:#343434; }
+.venue .address { font-family:'Concourse C3'; font-size:8pt; color:#aaa; }
 
-section table tbody td .venue .name { text-align:center; margin:8px 0 4px 0; }
-section table tbody td .venue .name a { color:#010119; }
-section table tbody td .venue .address { text-align:center; font-size:8pt; color:#898989; margin:0 0 4px 0; }
+.show { position:relative; padding:15px 12px; }
+.artist { font-family:'Concourse T7'; color:#5994c5; text-transform:uppercase; font-weight:bold; font-size:11pt; letter-spacing:.1em;  }
+.time { font-family:'Concourse T3'; color:#aaa; font-size:8pt; position:absolute; top:2px; left:5px; }
 
-section table tbody tr { }
-section table tbody td .show { position:relative; padding:20px 8px 25px 8px; background:rgba(109,203,153,0); opacity:0;  /* make things invisible upon start */
-    -webkit-animation:fadeIn ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-    -moz-animation:fadeIn ease-in 1;
-    animation:fadeIn ease-in 1;
- 
-    -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
-    -moz-animation-fill-mode:forwards;
-    animation-fill-mode:forwards;
- 
-    -webkit-animation-duration:.3s;
-    -moz-animation-duration:.3s;
-    animation-duration:.3s;}
-section table tbody td .show:not(:first-child) { position:relative; padding:18px 8px 34px 8px; }
-section table tbody td .show .artist { font-size:9.5pt; color:#5994c5; font-weight:bold; text-transform:uppercase; }
-section table tbody td .show .artist:hover { cursor:default; }
-section table tbody td .show .time { position:absolute; top:5px; left:4px; font-size:8pt; color:#999999; cursor:default; }
-section table tbody td .show:not(:first-child) .time { top:1px; left:4px; }
+.pic { width:70px; height:70px; margin:0px auto; border-radius:50px; }
+.pic.thirdandl { background:url('img/venues/thirdandl.jpg'); background-size:90px 90px; background-position:-10px -14px; }
+.pic.twelveporter { background:url('img/venues/twelveporter.jpg'); background-size:90px 90px;  background-position:1px -9px; }
+.pic.exitin { background:url('img/venues/exitin.jpg'); background-size:100px 100px; background-position:-18px -22px; }
+.pic.marathon { background:url('img/venues/marathon.jpg'); background-size:100px 100px; background-position:-18px 0px; }
+.pic.basement { background:url('img/venues/basement.jpg'); background-size:80px 80px; background-position:-5px 0px; }
+.pic.rutledge { background:url('img/venues/rutledge.jpg'); background-size:70px 70px; background-position:4px 0px; }
+.pic.mercylounge { background:url('img/venues/mercylounge.jpg'); background-size:70px 70px; background-position:0px 0px; }
+.pic.highwatt { background:url('img/venues/highwatt.jpg'); background-size:70px 70px; background-position:0px 0px; }
+.pic.bluebird { background:url('img/venues/bluebird.jpg'); background-size:70px 70px; background-position:0px 0px; }
+.pic.theend { background:url('img/venues/theend.jpg'); background-size:70px 70px; background-position:0px -5px; }
+.pic.listeningroomcafe { background:url('img/venues/listeningroomcafe.jpg'); background-size:70px 70px; background-position:2px -1px; }
+.pic.hardrockcafe { background:url('img/venues/hardrockcafe.jpeg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.douglascorner { background:url('img/venues/douglascorner.jpg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.wildhorse { background:url('img/venues/wildhorse.jpg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.grandoleopry { background:url('img/venues/grandoleopry.jpg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.ryman { background:url('img/venues/ryman.jpg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.bridgestone { background:url('img/venues/bridgestone.jpg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.belcourttaps { background:url('img/venues/belcourttaps.jpeg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.pucketts { background:url('img/venues/pucketts.jpg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.loveless { background:url('img/venues/loveless.jpg'); background-size:70px 70px; background-position:-6px -1px; }
+.pic.stonefox { background:url('img/venues/stonefox.jpg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.zanies { background:url('img/venues/zanies.jpg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.stationinn { background:url('img/venues/stationinn.jpg'); background-size:70px 70px; background-position:0px -1px; }
+
+header {
+	width:100%;
+	background-image: url('img/nashville.png');
+	background-size:400px;
+	background-repeat:no-repeat;
+	background-position:-20px 6px;
+
+	padding:13px 0;
+	text-align:center;
+}
+
+.head--title {
+	color:#343434;
+	font-size:18pt;
+
+	letter-spacing:0.45em;
+
+	font-family:'Concourse C7';
+}
+
+.smaller {
+	font-family:'Concourse C3';
+}
 
 div.new-venue { display:none; }
 
