@@ -1,0 +1,3 @@
+*.pyc
+showgrid/showgrid/wsgi.py
+showgrid/showgrid/settings.py
