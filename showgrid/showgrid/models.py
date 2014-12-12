@@ -40,9 +40,7 @@ class Address(models.Model):
 
 
 class Show(models.Model):
-	# Validate that at least band or band_name is filled out
-	band = models.ManyToManyField('Band', blank=True)
-	band_name = models.CharField(_("band"), max_length=300, blank=True)
+	band_name = models.CharField(_("band"), max_length=300)
 	website = models.CharField(max_length=200, blank=True)
 	date = models.DateTimeField()
 	venue = models.ForeignKey('Venue')
@@ -66,11 +64,3 @@ class Show(models.Model):
 			'website' : self.website,
 			'venue' : self.venue.json()
 		}
-
-class Band(models.Model):
-	name = models.CharField(_("band"), max_length=300)
-	website = models.CharField(max_length=200, blank=True)
-
-class List(models.Model):
-	user = models.ForeignKey(User)
-	shows = models.ManyToManyField('Show')

@@ -1,6 +1,6 @@
 {"venues": [
 		{"name" : "3rd & Lindsley", "address" : [{"street" : "818 3rd Ave S", "city" : "Nashville", "state" : "TN", "zip" : "37210"}], "website" : "http://www.3rdandlindsley.com", "image" : "img/venues/thirdandl.jpg"},
-		{"name" : "12th & Porter", "address" : [{"street" : "114 12th Ave N", "city" : "Nashville", "state" : "TN", "zip" : "37203"}], "website" : "http://www.12andporter.com", "image" : "img/venues/twelveporter.jpg"},
+		{"name" : "12th & Porter", "address" : [{"street" : "114 12th Ave N", "city" : "Nashville", "state" : "TN", "zip" : "37203"}], "website" : "http://12andporter.com", "image" : "img/venues/twelveporter.jpg"},
 		{"name" : "Exit/In", "address" : [{"street" : "2208 Elliston Pl", "city" : "Nashville", "state" : "TN", "zip" : "37203"}], "website" : "http://www.exitin.com", "image" : "img/venues/exitin.jpg"},
 		{"name" : "Marathon Music Works", "address" : [{"street" : "1402 Clinton St", "city" : "Nashville", "state" : "TN", "zip" : "37203"}], "website" : "http://www.marathonmusicworks.com", "image" : "img/venues/marathon.jpg"},
 		{"name" : "The Basement", "address" : [{"street" : "1604 8th Ave S", "city" : "Nashville", "state" : "TN", "zip" : "37203"}], "website" : "http://www.thebasementnashville.do615.com", "image" : "img/venues/basement.jpg"},
