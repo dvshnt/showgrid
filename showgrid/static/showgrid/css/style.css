@@ -40,7 +40,7 @@ tbody tr:nth-child(even) {background:rgba(0,0,0,0.05);}
 
 tbody td:first-of-type { padding:20px; }
 
-.venue .name { font-family:'Concourse C3'; font-size:12pt; color:#343434; }
+.venue .name a { font-family:'Concourse C3'; font-size:12pt; color:#343434; }
 .venue .address { font-family:'Concourse C3'; font-size:8pt; color:#aaa; }
 
 .show { position:relative; padding:15px 12px; }
