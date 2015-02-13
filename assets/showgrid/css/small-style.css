@@ -6,10 +6,29 @@
 body { font-family:"Concourse C6"; font-size:36pt; color:#010119; }
 
 /* Dynamically determine width based on screen size */
-header { vertical-align:top; text-align:center; height:61px; position:relative; }
-header .logo { text-align:center; padding:14px 0 0 0; }
-header h1.pic { font-family:"Concourse C6"; font-size:18pt; color:#222; cursor:pointer; margin:0; }
-header .loc { position:absolute; top:15px; left:150px; font-size:20%; text-transform:uppercase; font-family:"Concourse C3"; color:#333; cursor:pointer; }
+
+header {
+	width:100%;
+
+	text-align:center; 
+	height:61px; position:relative;
+}
+
+.head--title {
+	color:#343434;
+	font-size:12pt;
+
+	line-height:61px;
+	vertical-align:top;
+
+	font-family:'Concourse C7';
+}
+
+.smaller {
+	font-family:'Concourse C3';
+	line-height:61px;
+	vertical-align:top;
+}
 
 section { font-family:"Concourse C3"; font-size:8pt; }
 
@@ -18,17 +37,22 @@ section .previous { position:absolute; left:0; top:0; width:60px; height:62px; b
 section .previous:hover { opacity:.5; cursor:pointer; }
 section .next:hover { opacity:.5; cursor:pointer; }
 
-section { width:320px; overflow:scroll; margin-left:0px; }
-table { border-collapse:separate; }
+section { width:100%; overflow:scroll; margin-left:0px; }
+table { border-collapse:separate; width:100%; }
 
 section table tr:nth-child(even) { background:#fafafa; }
 
 /*table td:first-of-type { text-align:center; position:absolute; left:0; }*/
 td .venue {  }
 td .show {  }
-section table thead tr { background:#7facd2; }
-section table thead td { font-size:10pt; padding:10px 25px 10px 10px; text-transform:uppercase; font-weight:bold; color:#fff; text-shadow:1px 1px 0px #3d7bae; cursor:default; }
-section table thead td:first-of-type { background:#7facd2; width:160px; height:56px; vertical-align:middle; text-align:center; }
+section table thead tr {  background:#343434; }
+section table thead td { font-family: 'Concourse C3';
+	text-transform: uppercase;
+	color: #ededed;
+	text-shadow: 1px 1px 0px black;
+	text-align:center;
+}
+section table thead td:first-of-type {  width:160px; height:56px; vertical-align:middle; text-align:center; }
 
 section table td:not(:first-of-type):not(:nth-child(2)) { display:none; }
 
