@@ -48,33 +48,33 @@ tbody td:first-of-type { padding:20px; }
 .time { font-family:'Concourse T3'; color:#aaa; font-size:8pt; position:absolute; top:2px; left:5px; }
 
 .pic { width:70px; height:70px; margin:0px auto; border-radius:50px; }
-.pic.thirdandl { background:url('img/venues/thirdandl.jpg'); background-size:90px 90px; background-position:-10px -14px; }
-.pic.twelveporter { background:url('img/venues/twelveporter.jpg'); background-size:90px 90px;  background-position:1px -9px; }
-.pic.exitin { background:url('img/venues/exitin.jpg'); background-size:100px 100px; background-position:-18px -22px; }
-.pic.marathon { background:url('img/venues/marathon.jpg'); background-size:100px 100px; background-position:-18px 0px; }
-.pic.basement { background:url('img/venues/basement.jpg'); background-size:80px 80px; background-position:-5px 0px; }
-.pic.rutledge { background:url('img/venues/rutledge.jpg'); background-size:70px 70px; background-position:4px 0px; }
-.pic.mercylounge { background:url('img/venues/mercylounge.jpg'); background-size:70px 70px; background-position:0px 0px; }
-.pic.highwatt { background:url('img/venues/highwatt.jpg'); background-size:70px 70px; background-position:0px 0px; }
-.pic.bluebird { background:url('img/venues/bluebird.jpg'); background-size:70px 70px; background-position:0px 0px; }
-.pic.theend { background:url('img/venues/theend.jpg'); background-size:70px 70px; background-position:0px -5px; }
-.pic.listeningroomcafe { background:url('img/venues/listeningroomcafe.jpg'); background-size:70px 70px; background-position:2px -1px; }
-.pic.hardrockcafe { background:url('img/venues/hardrockcafe.jpeg'); background-size:70px 70px; background-position:0px -1px; }
-.pic.douglascorner { background:url('img/venues/douglascorner.jpg'); background-size:70px 70px; background-position:0px -1px; }
-.pic.wildhorse { background:url('img/venues/wildhorse.jpg'); background-size:70px 70px; background-position:0px -1px; }
-.pic.grandoleopry { background:url('img/venues/grandoleopry.jpg'); background-size:70px 70px; background-position:0px -1px; }
-.pic.ryman { background:url('img/venues/ryman.jpg'); background-size:70px 70px; background-position:0px -1px; }
-.pic.bridgestone { background:url('img/venues/bridgestone.jpg'); background-size:70px 70px; background-position:0px -1px; }
-.pic.belcourttaps { background:url('img/venues/belcourttaps.jpeg'); background-size:70px 70px; background-position:0px -1px; }
-.pic.pucketts { background:url('img/venues/pucketts.jpg'); background-size:70px 70px; background-position:0px -1px; }
-.pic.loveless { background:url('img/venues/loveless.jpg'); background-size:70px 70px; background-position:-6px -1px; }
-.pic.stonefox { background:url('img/venues/stonefox.jpg'); background-size:70px 70px; background-position:0px -1px; }
-.pic.zanies { background:url('img/venues/zanies.jpg'); background-size:70px 70px; background-position:0px -1px; }
-.pic.stationinn { background:url('img/venues/stationinn.jpg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.thirdandl { background:url('/static/showgrid/img/venues/thirdandl.jpg'); background-size:90px 90px; background-position:-10px -14px; }
+.pic.twelveporter { background:url('/static/showgrid/img/venues/twelveporter.jpg'); background-size:90px 90px;  background-position:1px -9px; }
+.pic.exitin { background:url('/static/showgrid/img/venues/exitin.jpg'); background-size:100px 100px; background-position:-18px -22px; }
+.pic.marathon { background:url('/static/showgrid/img/venues/marathon.jpg'); background-size:100px 100px; background-position:-18px 0px; }
+.pic.basement { background:url('/static/showgrid/img/venues/basement.jpg'); background-size:80px 80px; background-position:-5px 0px; }
+.pic.rutledge { background:url('/static/showgrid/img/venues/rutledge.jpg'); background-size:70px 70px; background-position:4px 0px; }
+.pic.mercylounge { background:url('/static/showgrid/img/venues/mercylounge.jpg'); background-size:70px 70px; background-position:0px 0px; }
+.pic.highwatt { background:url('/static/showgrid/img/venues/highwatt.jpg'); background-size:70px 70px; background-position:0px 0px; }
+.pic.bluebird { background:url('/static/showgrid/img/venues/bluebird.jpg'); background-size:70px 70px; background-position:0px 0px; }
+.pic.theend { background:url('/static/showgrid/img/venues/theend.jpg'); background-size:70px 70px; background-position:0px -5px; }
+.pic.listeningroomcafe { background:url('/static/showgrid/img/venues/listeningroomcafe.jpg'); background-size:70px 70px; background-position:2px -1px; }
+.pic.hardrockcafe { background:url('/static/showgrid/img/venues/hardrockcafe.jpeg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.douglascorner { background:url('/static/showgrid/img/venues/douglascorner.jpg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.wildhorse { background:url('/static/showgrid/img/venues/wildhorse.jpg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.grandoleopry { background:url('/static/showgrid/img/venues/grandoleopry.jpg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.ryman { background:url('/static/showgrid/img/venues/ryman.jpg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.bridgestone { background:url('/static/showgrid/img/venues/bridgestone.jpg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.belcourttaps { background:url('/static/showgrid/img/venues/belcourttaps.jpeg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.pucketts { background:url('/static/showgrid/img/venues/pucketts.jpg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.loveless { background:url('/static/showgrid/img/venues/loveless.jpg'); background-size:70px 70px; background-position:-6px -1px; }
+.pic.stonefox { background:url('/static/showgrid/img/venues/stonefox.jpg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.zanies { background:url('/static/showgrid/img/venues/zanies.jpg'); background-size:70px 70px; background-position:0px -1px; }
+.pic.stationinn { background:url('/static/showgrid/img/venues/stationinn.jpg'); background-size:70px 70px; background-position:0px -1px; }
 
 header {
 	width:100%;
-	background-image: url('img/nashville.png');
+	background-image: url('/static/showgrid/img/nashville.png');
 	background-size:400px;
 	background-repeat:no-repeat;
 	background-position:-20px 6px;
