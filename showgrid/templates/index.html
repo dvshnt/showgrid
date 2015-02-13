@@ -284,7 +284,7 @@
 			$scope.addShow = function(datePod) {
 				return function(show) {
 					var pod = $("." + datePod);
-					var day = new Date(pod.html() + " 2014").setHours(0,0,0,0);
+					var day = new Date(pod.html() + " 2015").setHours(0,0,0,0); // WOW DUMB CHANGE THIS
 					var showDay = new Date(show.date.split(" ")[0]).setHours(0,0,0,0);
 				
 					return day == showDay;
