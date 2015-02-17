@@ -165,7 +165,7 @@
 				<div class="share">
 					<h3>something missing?</h3>
 					<p>Let us know if you notice a show or venue missing from the Grid. Otherwise, feel free to drop us a line and let us know what you think of the thing. We are in the early stages and welcome any and all feedback.</p>
-					<p>Email us at <a href="mailto:info@showgrid.com"><b>info@showgrid.com</b></a> with any requests or comments.</p><br>
+					<p>Email us at <a href="mailto:ishowgridnashville@gmail.com"><b>showgridnashville@gmail.com</b></a> with any requests or comments.</p><br>
 				</div>
 				<div class='sign-up'>
 					<!-- Begin MailChimp Signup Form -->
@@ -188,9 +188,13 @@
 			</div>
 		</section>
 	</body>
+
+
 	<script src={% static "showgrid/js/jquery.min.js" %}></script>
 	<script src={% static "showgrid/js/angular.min.js" %}></script>
 	<script src={% static "showgrid/js/angular-route.min.js" %}></script>
+	<script src={% static "showgrid/js/moment.min.js" %}></script>
+	<script src={% static "showgrid/js/moment-timezone.min.js" %}></script>
 	<script>
 		var showgrid = angular.module('showgrid', ['ngRoute'])
 			.config(function($interpolateProvider, $routeProvider, $locationProvider) {
@@ -205,16 +209,7 @@
 			})
 			.filter('formatTime', function() {
 		  		return function(input) {
-		  			var time = new Date(input).toLocaleTimeString().split(" ");
-					var clockTime = time[0];
-					var ampm = time[1];
-
-					var output = [];
-					clockTime.split(":").forEach(function(v) {
-						if (v != "00") output.push(v);
-					});
-
-					return output.join(":") + " " + ampm;
+		  			return moment(input).format("h:mm A");
 		  		};
 		  	})
 		    .controller('dayOfWeekGridCtrl', function ($scope, $routeParams) {
@@ -241,9 +236,29 @@
 		function initGrid($scope, $http) {
 			var url_params = getDateFromUrl(document.URL);
 
+			$("tbody").height(window.innerHeight - ($("header").height() + $("thead").height()));
+
+			$(window).mousemove(function (e) {
+				if (e.pageY > 120 && e.pageX < Math.floor(window.innerWidth * .06)) {
+					console.log("SHOW PREVIOUS");
+					$(".previous").show();
+					$(".next").hide();
+				}
+				else if (e.pageY > 120 && e.pageX > Math.floor(window.innerWidth * .94)) {
+					console.log("SHOW NEXT");
+					$(".next").show();
+					$(".previous").hide();
+				}
+				else {
+					console.log("MOVING");
+					$(".next").hide();
+					$(".previous").hide();
+				}
+			});
+
 			$http.get('/i/grid/' + url_params.join("/"))
 				.success(function(data) {
-					if (url_params.length == 3) {
+					if (url_params.length === 3) {
 						setTableHeadDates(
 							new Date(url_params[1] + '/' + url_params[2] + '/' + url_params[0])
 						);
@@ -253,7 +268,6 @@
 					}
 
 					$scope.venues = data;
-					console.log(data);
 
 					if (window.innerWidth <= 480) $("div.new-venue").show();
 					else $("td.new-venue").show();
@@ -284,10 +298,10 @@
 			$scope.addShow = function(datePod) {
 				return function(show) {
 					var pod = $("." + datePod);
-					var day = new Date(pod.html() + " 2015").setHours(0,0,0,0); // WOW DUMB CHANGE THIS
+					var day = new Date(pod.html() + ", 2015").setHours(0,0,0,0); // WOW DUMB CHANGE THIS
 					var showDay = new Date(show.date.split(" ")[0]).setHours(0,0,0,0);
 				
-					return day == showDay;
+					return day === showDay;
 				}
 			}
 		}
@@ -317,7 +331,7 @@
 
 		function getDateFromUrl(site) {
 			var url = site.split(/(\/)/);
-			if (url.length == 11) {
+			if (url.length === 11) {
 				var year = url[6], month = url[8], day = url[10];
 				return [year, month, day];
 			} 
@@ -328,25 +342,6 @@
 		    var result = new Date(date);
 		    result.setDate(date.getDate() + days);
 		    return result;
-		}
-
-		function setTableSize() {
-			$("tbody").height(window.innerHeight - ($("thead").height() + $("header").height()));
-			
-			if (window.innerWidth <= 480) {
-				$("table").width(window.innerWidth);
-				$("section").width(window.innerWidth);
-
-				
-				return;
-			}
-			$("header").width(window.innerWidth - 120);
-			$("table").width(window.innerWidth - 120);
-			$("tbody").width(window.innerWidth - 120);
-
-			$(".previous").css('backgroundPosition', '15px ' + (window.innerHeight - 35)/2 + 'px');
-			$(".next").css('backgroundPosition', '20px ' + (window.innerHeight - 35)/2 + 'px');
-
 		}
 
 		function previousDay($http, $scope) {
