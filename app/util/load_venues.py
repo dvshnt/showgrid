@@ -1,5 +1,4 @@
 import sys
-sys.path.append('/home/ubuntu/showgrid/showgrid/')
 
 import json
 from django.core.management import setup_environ
