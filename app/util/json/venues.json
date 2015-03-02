@@ -4,14 +4,14 @@
       "name": "City Winery",
       "address": [
         {
-          "street": "818 3rd Ave S",
+          "street": "609 Lafayette St",
           "city": "Nashville",
           "state": "TN",
-          "zip": "37210"
+          "zip": "37203"
         }
       ],
-      "website": "http://www.3rdandlindsley.com",
-      "image": "img/venues/thirdandl.jpg"
+      "website": "http://www.citywinery.com/nashville/",
+      "image": "img/venues/citywinery.jpg"
     },
     {
       "name": "3rd & Lindsley",
@@ -193,7 +193,7 @@
         }
       ],
       "website": "http://www.wildhorsesaloon.com",
-      "image": "img/venues/wildhorse.JPG"
+      "image": "img/venues/wildhorse.jpg"
     },
     {
       "name": "The Opry",
@@ -245,7 +245,7 @@
         }
       ],
       "website": "http://www.belcourttaps.com",
-      "image": "img/venues/belcourttaps.jpeg"
+      "image": "img/venues/belcourttaps.jpg"
     },
     {
       "name": "Pucketts",
