@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		{% load staticfiles %}
+
 		<title>ShowGrid</title>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<link rel="stylesheet" href="./css/base.css">
+
+		<link rel="stylesheet" type="text/css" href='{% static "showgrid/css/base.css" %}'/>
 	</head>
 	<body id="showgrid">
 		{{ body }}
 	</body>
 
-    <script src="js/bundle.js"></script>
+    <script src='{% static "showgrid/js/bundle.js" %}'></script>
 </html>
