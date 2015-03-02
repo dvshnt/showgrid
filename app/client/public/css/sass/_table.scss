@@ -1,0 +1,30 @@
+#grid--container {
+	font-family: 'Concourse C3';
+}
+
+.arrow {
+	position:fixed;
+
+	width:20px; height:100%;
+
+	background:rgba(0, 0, 0, 0.005);
+
+	cursor:pointer;
+
+	@include transition(all 0.35s);
+
+	z-index:6;
+}
+.arrow:hover {
+	width:60px;
+
+	background:rgba(0, 0, 0, 0.25);
+}
+
+.arrow.previous {
+	top:0; left:0;
+}
+
+.arrow.next {
+	top:0; right:0;
+}

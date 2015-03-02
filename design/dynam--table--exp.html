@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Dynamic Table Experiment</title>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<style type="text/css">
+
+			html, body {
+				margin:0; padding:0;
+				font-family:'Helvetica';
+			}
+
+			header {
+				width:100%; height:12.5vh;
+
+				background: rgba(0, 0, 0, 0.5);
+			}
+
+			section {
+				height:87.5vh;
+			}
+
+			#title--row {
+				display: -webkit-flex;
+				display: 		 flex;
+
+				width:100%; height:120px;
+			}
+
+			#title--row:first-of-type {
+				background:rgba(0,0,0,0.8);
+			}
+
+			.cell {
+				margin:0; padding:0;
+			}
+
+			.cell:first-of-type {
+				height:100%; 
+
+				display: -webkit-flex;
+				display: 		 flex;
+
+				-webkit-flex:0 0 12em;
+						flex:0 0 12em;
+
+				background:#45a902;
+			}
+
+			.cell:not(:first-of-type) {
+				height:100%; 
+
+				-webkit-flex:1 0 9em;
+						flex:1 0 9em;
+			}
+
+			.cell:not(:first-of-type):nth-child(odd) {
+				background:rgba(0,0,0,0.2);
+			}
+
+			.cell div {
+				margin:auto;
+
+				text-transform:uppercase;
+				font-size:1.2em;
+				color:white;
+			}
+
+		</style>
+	</head>
+
+	<body style="font-size:16px;">
+		<header>
+		</header>
+
+		<section>
+			<div id="title--row">
+				<div class="cell"><div>Venues</div></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+			</div>
+		</section>
+		
+	</body>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script type="text/javascript">
+		window.getComputedStyle = window.getComputedStyle || function(e) {return e.currentStyle;};
+
+		(function () {
+			
+			var Row = {
+
+				cells: null,		// Cells in table row
+
+				MIN_NUM_CELLS: 2, 	// Min number of cells in row
+				MAX_NUM_CELLS: 8,	// Max number of cells in row
+
+				V_EM_UNIT: 12,		// 'em' value of venue cell
+				S_EM_UNIT: 9,		// 'em' value of show cells
+				F_PX_UNIT: 16,		// 'px' value of default font
+
+				V_WIDTH: null,	// venue cell width
+				S_WIDTH: null,	// min show cell width
+
+
+				init: function() {
+					this.cells = this.getCellCount();
+
+					this.createCellWidthConstants();		// Sets cell width constants
+					this.addListeners(window, "resize");	// Add grid adjustment listeners
+				},
+
+				createCellWidthConstants: function() {
+					this.V_WIDTH = V_EM_UNIT * F_PX_UNIT;	// calc venue column min/max-width
+					this.S_WIDTH = S_EM_UNIT * F_PX_UNIT;	// calc show cell min-width
+				},
+
+				addListeners: function(ele, events) {
+					var e = events.split(" ");
+
+					for (var i = 0, len = e.length; i < len; i++) {
+						ele.addEventListener(e[i], this.gridAdjust);
+					}
+				},
+
+				gridAdjust: function(e) {
+					Row.cells = Row.getCellCount();
+				},
+
+				getCellCount: function() {
+					var wWidth = window.innerWidth,		// Window width
+						rWidth = V_WIDTH,				// Base row width (constant venue width)
+						count = 0;						// Count of number of cells
+
+					while (rWidth < wWidth) {
+						rWidth += S_WIDTH;
+
+						count++;
+					}
+
+					State.cells = count;
+				}
+			};
+
+			var State = {
+				cells: $(".cell"),
+				title: $("#title--row"),
+				previousWidth: window.innerWidth
+			};
+
+			window.addEventListener("resize", function(e) {
+				var rowWidth = calculateRowWidth();
+				
+				if (rowWidth > window.innerWidth && State.previousWidth > window.innerWidth) {
+					State.cells[State.cells.length - 1].remove();
+					State.cells = $(".cell");
+				}
+				else if (State.previousWidth < window.innerWidth && State.cells.length < 8) {
+					var totalLength = 0, index = 0;
+					var lengths = [16 * 12, 16 * 9, 16 * 9, 16 * 9, 16 * 9, 16 * 9, 16 * 9, 16 * 9];
+
+					while (totalLength < window.innerWidth) {
+						totalLength += lengths[index];
+
+						index++;
+					}
+
+					var count = index - State.cells.length;
+
+					console.log(count);
+
+					var cellThings = Array(count).join("<div class='cell'></div>")
+					State.title.append(cellThings);
+
+					State.cells = $(".cell");
+				}
+
+				State.previousWidth = window.innerWidth;
+			});
+
+
+			function calculateRowWidth() {
+				var width = 0;
+				
+				State.cells.each(function(i) {
+					width += $(this).width();
+				});
+
+				return width;
+			}
+
+		}());
+		
+	</script>
+</html>

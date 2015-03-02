@@ -1,0 +1,49 @@
+#table--head {
+	width:100%;
+
+	display: -webkit-flex;
+	display: 		 flex;
+
+	background: $table-head-bg;
+}
+
+#table--head {
+
+	.cell {
+		display: -webkit-flex;
+		display: 		 flex;
+
+		padding:12px 0;
+	}
+
+	.cell {
+		span {
+			@include sharpen--text;
+
+			margin:auto;
+			
+			font-size: 14px;
+			text-transform: uppercase;
+			color: $table-head-text-color;
+			text-shadow: $table-head-text-shadow;
+		}
+	}
+
+	.cell:first-of-type {
+		display: -webkit-flex;
+		display: 		 flex;
+
+		-webkit-flex:0 0 12em;
+				flex:0 0 12em;
+
+		text-align:center;
+	}
+
+	.cell:not(:first-of-type) {
+		-webkit-flex:1 0 7em;
+				flex:1 0 7em;
+
+		padding:12px 1em;
+	}
+
+}
