@@ -73,17 +73,11 @@ def venue(request, venue=None):
 	if venue == None:
 		if request.method == "GET":
 			return get_venue(request)
-		# elif request.method == "POST":
-		# 	return post_venue(request)
 
 	#/venue/<?venue>
 	elif validate_object_existence(venue=venue):
 		if request.method == "GET":
 			return get_venue(request, venue=venue)
-		# elif request.method == "PUT":
-		# 	return edit_venue(request, venue=venue)
-		# elif request.method == "DELETE":
-		# 	return delete_venue(request, venue=venue)
 	
 	return error_handler(request)
 
@@ -92,19 +86,11 @@ def show(request, show=None):
 	if show == None:
 		if request.method == "GET":
 			return get_show(request)
-		# elif request.method == "POST":
-		# 	if validate_object_existence(request.POST.get('venue', '')):
-		# 		return post_show(request, venue=venue)
-		# 	return HttpResponse("no such venue")
 
 	#/show/<?show?>
 	elif validate_object_existence(show=show):
 		if request.method == "GET":
 			return get_show(request, show=show)
-		# elif request.method == "PUT":
-		# 	return edit_show(request, show=show)
-		# elif request.method == "DELETE":
-		# 	return delete_show(request, show=show)
 
 	return error_handler(request)
 
@@ -114,53 +100,12 @@ def venue_and_show(request, venue, show=None):
 		if show == None:
 			if request.method == "GET":
 				return get_show(request, venue=venue)
-			# elif request.method == "POST":
-			# 	return post_show(request, venue=venue)
 
 		#/venue/<?venue?>/show/<?show?>
 		if request.method == "GET":
 			return get_show(request, venue=venue, show=show)
-		# elif request.method == "PUT":
-		# 	return edit_show(request, venue=venue, show=show)
-		# elif request.method == "DELETE":
-		# 	return delete_show(request, venue=venue, show=show)
 
 	return error_handler(request)
-
-
-
-
-
-
-##### VENUE REST METHODS #####
-# @login_required
-# @validate_json
-def post_venue(request):
-	resp = {'status' : 'success'}
-
-	# Check if venue already exists
-	name = request.POST.get('name', '')
-	website = request.POST.get('website', '')
-	image = request.POST.get('image', '')
-	
-	street = request.POST.get('street', '')
-	city = request.POST.get('city', '')
-	state = request.POST.get('state', '')
-	zip_code = request.POST.get('zip_code', '')
-
-	# Check if Address already exists
-	address = Address(street=street, city=city, state=state, zip_code=zip_code)
-	address.save()
-
-	with open(image) as f:
-		image = File(f)
-		venue = Venue(name=name, website=website, image=image, address=address)
-		venue.save()
-
-	response = HttpResponse(json.dumps(resp), content_type='application/json; charset=UTF-8')
-	response.__setitem__("Content-type", "application/json")
-	response.__setitem__("Access-Control-Allow-Origin", "*")
-	return response
 	
 
 def get_venue(request, venue=None):
@@ -173,53 +118,7 @@ def get_venue(request, venue=None):
 	response.__setitem__("Content-type", "application/json")
 	response.__setitem__("Access-Control-Allow-Origin", "*")
 	return response
-	
 
-# @login_required
-# @validate_json
-# We assume that the Venue item does exist at this point
-def edit_venue(request, venue):
-	resp = {'status' : 'success'}
-
-	data = {
-		'name' : request.POST.get('name', ''),
-		'website' : request.POST.get('website', ''),
-		'image' : request.POST.get('image', '')
-	}
-
-	venue = Venue.objects.get(id=venue)
-
-	for k, v in data.iteritems():
-		if v != '':
-			setattr(venue, k, v)
-
-	response = HttpResponse(json.dumps(resp), content_type='application/json; charset=UTF-8')
-	response.__setitem__("Content-type", "application/json")
-	response.__setitem__("Access-Control-Allow-Origin", "*")
-	return response
-	
-
-# @login_required
-def delete_venue(request, venue):
-	venue = Venue.objects.get(id=venue)
-	venue.delete()
-
-	response = HttpResponse(json.dumps({'status' : 'success'}), content_type='application/json; charset=UTF-8')
-	response.__setitem__("Content-type", "application/json")
-	response.__setitem__("Access-Control-Allow-Origin", "*")
-	return response
-
-
-##### SHOW REST METHODS #####
-# @login_required
-# @validate_json
-def post_show(request, venue):
-	# read JSON
-	# validate JSON
-	# create object from JSON if it doesn't already exist
-	# save object
-	# return status
-	return HttpResponse("")
 
 
 def get_show(request, venue=None, show=None):
@@ -250,23 +149,6 @@ def get_show(request, venue=None, show=None):
 	data = [ show.json_min() for show in Show.objects.filter(id=show, venue=Venue.objects.get(id=venue)) ]
 	
 	response = HttpResponse(json.dumps(data), content_type='application/json; charset=UTF-8')
-	response.__setitem__("Content-type", "application/json")
-	response.__setitem__("Access-Control-Allow-Origin", "*")
-	return response
-
-
-# @login_required
-# @validate_json
-def edit_show(request, show, venue=None):
-	return HttpResponse("")
-
-
-# @login_required
-def delete_show(request, show, venue=None):
-	show = Show.objects.get(id=show)
-	show.delete()
-
-	response = HttpResponse(json.dumps({'status' : 'success'}), content_type='application/json; charset=UTF-8')
 	response.__setitem__("Content-type", "application/json")
 	response.__setitem__("Access-Control-Allow-Origin", "*")
 	return response
