@@ -9,6 +9,8 @@ class Venue(models.Model):
 	website = models.CharField(max_length=200)
 	image = models.ImageField (upload_to='img/venues/')
 
+	autofill_calendar_url = models.CharField(max_length=200)
+
 	def __unicode__ (self):
 		return self.name
 
@@ -20,6 +22,7 @@ class Venue(models.Model):
 			'image' : self.image.url,
 			'address' : self.address.json()
 		}
+
 
 class Address(models.Model):
 	street = models.CharField(_("street"), max_length=128)
@@ -41,6 +44,7 @@ class Address(models.Model):
 
 class Show(models.Model):
 	band_name = models.CharField(_("band"), max_length=300)
+	other_info = models.CharField(_("other"), max_length=400)
 	website = models.CharField(max_length=200, blank=True)
 	date = models.DateTimeField()
 	venue = models.ForeignKey('Venue')
