@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 					style: 'expanded'
 				},
 				files: {
-					'public/css/base.css' : 'public/css/sass/base.scss'
+					'../static/showgrid/css/base.css' : './public/css/sass/base.scss'
 				}
 			},
 			build: {
@@ -17,7 +17,7 @@ module.exports = function(grunt) {
 					style: 'compressed'
 				},
 				files: {
-					'public/css/base.css' : 'public/css/sass/base.scss'
+					'../static/showgrid/css/base.css' : './public/css/sass/base.scss'
 				}
 			}
 		},
@@ -25,16 +25,7 @@ module.exports = function(grunt) {
 		uglify: {
 			build: {
 				files: {
-					'./public/js/bundle.min.js': './public/js/bundle.js'
-				}
-			}
-		},
-
-		nodemon: {
-			dev: {
-				script: 'server.js',
-				options: {
-					watch: ['server.js', 'routes.js']
+					'../static/showgrid/js/bundle.min.js': '../static/showgrid/js/bundle.js'
 				}
 			}
 		},
@@ -46,7 +37,7 @@ module.exports = function(grunt) {
 					transform: ['reactify']
 				},
 				files: {
-					'./public/js/bundle.js': './app.js'
+					'../static/showgrid/js/bundle.js': './app.jsx'
 				}
 			},
 			build: {
@@ -55,7 +46,7 @@ module.exports = function(grunt) {
 					// transform: ['reactify', 'uglify:build']
 				},
 				files: {
-					'./public/js/bundle.js': './app.js'
+					'../static/showgrid/js/bundle.js': './app.jsx'
 				}
 			}
 		},
@@ -69,7 +60,7 @@ module.exports = function(grunt) {
 				}
 			},
 			js: {
-				files: ['./components/*.js', './util/*.js', './app.js'],
+				files: ['./components/*.js', './app.js'],
 				tasks: ['browserify:dev'],
 				options: {
 					livereload: true
@@ -88,7 +79,6 @@ module.exports = function(grunt) {
 
 	//// Grunt Modules
 	//grunt.loadNpmTasks('reactify');
-	grunt.loadNpmTasks('grunt-nodemon');
 	grunt.loadNpmTasks('grunt-browserify');
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-watch');
@@ -97,6 +87,5 @@ module.exports = function(grunt) {
 
 	//// Registered Tasks
 	grunt.registerTask('default', ['watch']);
-	grunt.registerTask('server', ['nodemon:dev']);
 
 }
