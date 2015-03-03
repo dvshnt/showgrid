@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
-var React = require('react'),
-	moment = require('moment'),
+var React = require('../node_modules/react/react'),
+	moment = require('../node_modules/moment/moment'),
 	Header = require('./Header.react'),
 	TableHead = require('./TableHead.react'),
 	TableBody = require('./TableBody.react'),

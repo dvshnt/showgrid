@@ -1,14 +1,41 @@
 import inspect, itertools, json
 from datetime import timedelta, date
 
-from showgrid.models import *
+from server.models import *
+
+from django_react import ReactComponent
 
 from django.http import HttpResponse
 from django.core import serializers
 from django.shortcuts import render
 
+
+class ShowGridComponent(ReactComponent):
+	source = '../static/showgrid/js/bundle.js'
+
+
 def index(request, year=None, month=None, day=None):
-	return render(request, "index.html")
+	data = []
+
+	day = str( date.today())
+	day_range = 7
+	venues = Venue.objects.all()
+
+
+	for venue in venues:
+		info = venue.json()
+		data.append(info)
+	
+
+	component = ShowGridComponent(
+		day=day,
+		range=day_range,
+		venues=json.dumps(data)
+	)
+
+	body = component.render_to_string()
+
+	return render(request, "index.html", { "body": body })
 
 
 def validate_object_existence(venue=None, show=None):

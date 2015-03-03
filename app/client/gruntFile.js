@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 					style: 'expanded'
 				},
 				files: {
-					'../static/showgrid/css/base.css' : './public/css/sass/base.scss'
+					'./public/css/base.css' : './public/css/sass/base.scss'
 				}
 			},
 			build: {
@@ -17,7 +17,7 @@ module.exports = function(grunt) {
 					style: 'compressed'
 				},
 				files: {
-					'../static/showgrid/css/base.css' : './public/css/sass/base.scss'
+					'./public/css/base.css' : './public/css/sass/base.scss'
 				}
 			}
 		},
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 		uglify: {
 			build: {
 				files: {
-					'../static/showgrid/js/bundle.min.js': '../static/showgrid/js/bundle.js'
+					'./public/js/bundle.min.js': './public/js/bundle.js'
 				}
 			}
 		},
@@ -37,7 +37,7 @@ module.exports = function(grunt) {
 					transform: ['reactify']
 				},
 				files: {
-					'../static/showgrid/js/bundle.js': './app.jsx'
+					'./public/js/bundle.js': './app.react.js'
 				}
 			},
 			build: {
@@ -46,31 +46,38 @@ module.exports = function(grunt) {
 					// transform: ['reactify', 'uglify:build']
 				},
 				files: {
-					'../static/showgrid/js/bundle.js': './app.jsx'
+					'./public/js/bundle.js': './app.react.js'
 				}
 			}
 		},
 
-		watch: { 
+		copy: {
 			css: {
-				files: './public/css/sass/*.sass', 
-				tasks: ['sass:dev'],
-				options: {
-					livereload: true
-				}
+				expand: true,
+				flatten: true,
+				cwd: 'public/css/',
+				src: ['*.css', '*.css.map'],
+				dest: '../static/showgrid/css/',
 			},
 			js: {
-				files: ['./components/*.js', './app.js'],
-				tasks: ['browserify:dev'],
-				options: {
-					livereload: true
-				}
+				expand: true,
+				cwd: 'public/js/',
+				src: '*.js',
+				dest: '../static/showgrid/js/',
+			},
+		},
+
+		watch: { 
+			css: {
+				files: './public/css/sass/*.scss', 
+				tasks: ['sass:dev', 'copy:css']
+			},
+			js: {
+				files: ['./components/*.js', './app.react.js'],
+				tasks: ['browserify:dev', 'copy:js']
 			},
 			html : {
-				files: ['./views/*.html'],
-				options: {
-					livereload: true
-				}
+				files: ['./views/*.html']
 			}
 		},
 
@@ -80,6 +87,7 @@ module.exports = function(grunt) {
 	//// Grunt Modules
 	//grunt.loadNpmTasks('reactify');
 	grunt.loadNpmTasks('grunt-browserify');
+	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
