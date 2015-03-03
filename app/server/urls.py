@@ -7,11 +7,11 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     
-    url(r'^$', 'showgrid.views.index', name='index'),
-    url(r'^(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)$', 'showgrid.views.index', name='index'),
+    url(r'^$', 'server.views.index', name='index'),
+    url(r'^(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)$', 'server.views.index', name='index'),
 
- 	url(r'^i/grid/$', 'showgrid.views.grid', name='grid'),
-	url(r'^i/grid/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)$', 'showgrid.views.grid', name='grid')
+ 	url(r'^i/grid/$', 'server.views.grid', name='grid'),
+	url(r'^i/grid/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)$', 'server.views.grid', name='grid')
 )
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns

@@ -2,4 +2,11 @@ app/server/*.pyc
 app/server/wsgi.py
 app/server/settings.py
 
-app/client/public/.sass-cahce/*
+app/static/showgrid/js/bundle.js
+
+app/client/.sass-cache/*
+app/client/public/.sass-cache/*
+app/client/node_modules/**
+app/client/public/js/bundle.js
+
+assets/**
