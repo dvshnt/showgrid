@@ -5,7 +5,8 @@ module.exports = GridEngine = {
 	MIN_NUM_CELLS: 2, 	// Min number of cells in row
 	MAX_NUM_CELLS: 7,	// Max number of cells in row
 
-	V_EM_UNIT: 12,		// 'em' value of venue cell
+	V_EM_UNIT_LG: 12,		// 'em' value of venue cell
+	V_EM_UNIT_SM: 10,		// 'em' value of venue cell
 	S_EM_UNIT: 9,		// 'em' value of show cells
 	F_PX_UNIT: 16,		// 'px' value of default font
 
@@ -26,7 +27,11 @@ module.exports = GridEngine = {
 	},
 
 	createCellWidthConstants: function() {
-		this.V_WIDTH = this.V_EM_UNIT * this.F_PX_UNIT;	// calc venue column min/max-width
+		if (window.innerWidth <= 320)
+			this.V_WIDTH = this.V_EM_UNIT_SM * this.F_PX_UNIT;	// calc venue column min/max-width for SM
+		else 
+			this.V_WIDTH = this.V_EM_UNIT_LG * this.F_PX_UNIT;	// calc venue column min/max-width for LG
+
 		this.S_WIDTH = this.S_EM_UNIT * this.F_PX_UNIT;	// calc show cell min-width
 	},
 
