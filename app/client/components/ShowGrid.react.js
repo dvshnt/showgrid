@@ -1,10 +1,12 @@
 /** @jsx React.DOM */
 
-var React = require('../node_modules/react/react'),
-	moment = require('../node_modules/moment/moment'),
+var $ = require('jquery'),
+	React = require('react'),
+	moment = require('moment'),
 	Header = require('./Header.react'),
 	TableHead = require('./TableHead.react'),
 	TableBody = require('./TableBody.react'),
+	Footer = require('./Footer.react'),
 	GridEngine = require('../util/GridEngine');
 
 module.exports = ShowGrid = React.createClass({
@@ -95,6 +97,7 @@ module.exports = ShowGrid = React.createClass({
 					day={ this.props.day }
 					range={ this.props.range } 
 					venues={ this.props.venues } />
+				<Footer></Footer>
 			</section>
 		)
 	}
