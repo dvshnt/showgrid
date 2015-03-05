@@ -25,19 +25,23 @@ module.exports = TableBody = React.createClass({
 		    	</div>
 		    );
 
-		    date = moment(this.props.day, 'dddd MMMM D');
+		    date = moment(this.props.day, 'MMMM Do YYYY');
 		    for (var i = 0; i < this.props.range; i++) {
 		    	var shows = [];
 		    	for (var j = 0; j < venue.shows.length; j++) {
-		    		var showDate = moment(venue.shows[j].date, 'dddd MMMM D');
-		    		if (date.isSame(showDate)) {
+		    		var showDate = moment(venue.shows[j].date, 'YYYY-MM-DD HH:mm:ssZZ').format('MMMM Do YYYY');
+		    		
+		    		if ( date.isSame(moment(showDate, 'MMMM Do YYYY')) ) {
+		    			var time = moment(venue.shows[j].date, 'YYYY-MM-DD HH:mm:ssZZ').format('h A');
+
 		    			 shows.push(
 		    			 	<div className="show">
-					            <div className="time">{ venue.shows[j].time }</div>
-					        	<div className="artist">{ venue.shows[j].artist }</div>
+					            <div className="time">{ time}</div>
+					        	<div className="artist">{ venue.shows[j].band_name }</div>
 					        </div>
 		    			 );
 		    		}
+
 		    	}							
 
 	    		row.push(
