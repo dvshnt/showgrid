@@ -5,6 +5,7 @@
   "main": "app.js",
   "author": "Davis Hunt",
   "dependencies": {
+    "jquery": "^2.1.3",
     "moment": "^2.9.0",
     "react": "^0.12.2"
   },
