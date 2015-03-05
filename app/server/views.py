@@ -3,8 +3,6 @@ from datetime import timedelta, date
 
 from server.models import *
 
-from django_react import ReactComponent
-
 from django.http import HttpResponse
 from django.core import serializers
 from django.shortcuts import render
