@@ -10,32 +10,8 @@ from django.core import serializers
 from django.shortcuts import render
 
 
-class ShowGridComponent(ReactComponent):
-	source = '../static/showgrid/js/bundle.js'
-
-
 def index(request, year=None, month=None, day=None):
-	data = []
-
-	day = str( date.today())
-	day_range = 7
-	venues = Venue.objects.all()
-
-
-	for venue in venues:
-		info = venue.json()
-		data.append(info)
-	
-
-	component = ShowGridComponent(
-		day=day,
-		range=day_range,
-		venues=json.dumps(data)
-	)
-
-	body = component.render_to_string()
-
-	return render(request, "index.html", { "body": body })
+	return render(request, "index.html")
 
 
 def validate_object_existence(venue=None, show=None):
@@ -205,4 +181,4 @@ def get_venue_class(url):
 
 			break
 
-	return image_url
+	return "pic " + image_url
