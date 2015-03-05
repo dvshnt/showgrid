@@ -5,6 +5,12 @@ footer {
 }
 
 footer {
+	.input--prompt {
+		max-width:700px;
+
+		margin:0px auto;
+	}
+
 	a {
 		color: #428bca;
 		font-weight:bold;
@@ -19,7 +25,7 @@ footer {
 	}
 
 	.input--prompt { 
-		padding:20px 150px 50px 150px;
+		padding:20px 0 50px 0;
 	}
 
 	h3 {
