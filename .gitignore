@@ -3,6 +3,8 @@ app/server/wsgi.py
 app/server/settings.py
 
 app/static/showgrid/js/bundle.js
+app/static/showgrid/css/base.css
+app/static/showgrid/css/base.css.map
 
 app/client/.sass-cache/*
 app/client/public/.sass-cache/*
@@ -12,5 +14,3 @@ app/client/public/css/base.css
 app/client/public/css/base.css.map
 
 assets/**
-app/static/showgrid/css/base.css
-app/static/showgrid/css/base.css.map
