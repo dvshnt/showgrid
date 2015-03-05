@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var React = require('react'),
+var React = require('react/addons'),
 	moment = require('moment');
 
 module.exports = TableBody = React.createClass({
@@ -14,13 +14,13 @@ module.exports = TableBody = React.createClass({
 			var row = [];
 			row.push(
 				<div className="venue">
-			    	<div className="pic"></div>
+			    	<div className={ venue.image_url }></div>
 			    	<div className="name">{ venue.name }</div>
 			    	<div className="address">
-			    		{ venue.address.split('/')[0] }
+			    		{ venue.address.street }
 			    	</div>
 			    	<div className="address">
-			    		{ venue.address.split('/')[1] }
+			    		{ venue.address.city },  { venue.address.state } { venue.address.zip_code }
 			    	</div>
 		    	</div>
 		    );
