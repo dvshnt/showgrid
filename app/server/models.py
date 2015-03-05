@@ -44,7 +44,7 @@ class Address(models.Model):
 
 class Show(models.Model):
 	band_name = models.CharField(_("band"), max_length=300)
-	other_info = models.CharField(_("other"), max_length=400)
+	other_info = models.CharField(_("other"), max_length=400, blank=True)
 	website = models.CharField(max_length=200, blank=True)
 	date = models.DateTimeField()
 	venue = models.ForeignKey('Venue')
