@@ -8,5 +8,7 @@ app/client/.sass-cache/*
 app/client/public/.sass-cache/*
 app/client/node_modules/**
 app/client/public/js/bundle.js
+app/client/public/css/base.css
+app/client/public/css/base.css.map
 
 assets/**
