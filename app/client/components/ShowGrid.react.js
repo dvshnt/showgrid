@@ -26,9 +26,9 @@ module.exports = ShowGrid = React.createClass({
 		if (typeof window != 'undefined' && window.document) {
 			var offset = document.querySelectorAll("#table--head > .cell").length - 1;
 
-			var day = moment(this.props.day, 'dddd MMMM D'),
+			var day = moment(this.props.day, 'MMMM Do YYYY'),
 				day = day.add(offset, 'days');
-				day = day.format('dddd MMMM D');
+				day = day.format('MMMM Do YYYY');
 
 			this.setProps({ day: day });
 		}
@@ -38,9 +38,9 @@ module.exports = ShowGrid = React.createClass({
 		if (typeof window != 'undefined' && window.document) {
 			var offset = document.querySelectorAll("#table--head > .cell").length - 1;
 
-			var day = moment(this.props.day, 'dddd MMMM D'),
+			var day = moment(this.props.day, 'MMMM Do YYYY'),
 				day = day.subtract(offset, 'days');
-				day = day.format('dddd MMMM D');
+				day = day.format('MMMM Do YYYY');
 
 			this.setProps({ day: day });
 		}
