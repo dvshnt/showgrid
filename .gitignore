@@ -12,3 +12,5 @@ app/client/public/css/base.css
 app/client/public/css/base.css.map
 
 assets/**
+app/static/showgrid/css/base.css
+app/static/showgrid/css/base.css.map
