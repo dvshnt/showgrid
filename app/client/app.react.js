@@ -6,7 +6,7 @@ var $ = require('jquery'),
 	ShowGrid = require('./components/ShowGrid.react');
 
 
-var dataURL = 'http://localhost:8000/i/grid/';
+var dataURL = 'http://localhost:8000/i/grid?range=7';
 $.ajax({
 	type: "GET",
 	url: dataURL,

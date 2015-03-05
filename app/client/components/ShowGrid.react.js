@@ -24,25 +24,59 @@ module.exports = ShowGrid = React.createClass({
 
 	nextPage: function () {
 		if (typeof window != 'undefined' && window.document) {
+			var _this = this;
+
 			var offset = document.querySelectorAll("#table--head > .cell").length - 1;
 
 			var day = moment(this.props.day, 'MMMM Do YYYY'),
 				day = day.add(offset, 'days');
-				day = day.format('MMMM Do YYYY');
 
-			this.setProps({ day: day });
+			var year = day.format('YYYY'),
+				month = day.format('M'),
+				dayD = day.format('D');
+
+			var dataURL = 'http://localhost:8000/i/grid/' + year + '/' + month + '/' + dayD + '?range=' + offset;
+
+			$.ajax({
+				type: "GET",
+				url: dataURL,
+			}).success(function(data, status) {
+
+				_this.setProps({ 
+					venues: data,
+					day: day.format('MMMM Do YYYY')
+				});
+
+			});
 		}
 	},
 
 	previousPage: function () {
 		if (typeof window != 'undefined' && window.document) {
+			var _this = this;
+
 			var offset = document.querySelectorAll("#table--head > .cell").length - 1;
 
 			var day = moment(this.props.day, 'MMMM Do YYYY'),
 				day = day.subtract(offset, 'days');
-				day = day.format('MMMM Do YYYY');
 
-			this.setProps({ day: day });
+			var year = day.format('YYYY'),
+				month = day.format('M'),
+				dayD = day.format('D');
+
+			var dataURL = 'http://localhost:8000/i/grid/' + year + '/' + month + '/' + dayD + '?range=' + offset;
+
+			$.ajax({
+				type: "GET",
+				url: dataURL,
+			}).success(function(data, status) {
+
+				_this.setProps({ 
+					venues: data,
+					day: day.format('MMMM Do YYYY')
+				});
+
+			});
 		}
 	},
 

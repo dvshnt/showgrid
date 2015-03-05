@@ -34,22 +34,13 @@ def grid(request, year=None, month=None, day=None):
 	if request.method == "GET":
 		if year != None and month != None or day != None:
 			d1 = date(int(year), int(month), int(day))
-			d2 = d1 + timedelta(days=7)
+			d2 = d1 + timedelta(days=int(request.GET['range']))
 		else:
 			d1 = date.today()
-			d2 = d1 + timedelta(days=7)
+			d2 = d1 + timedelta(days=int(request.GET['range']))
 
 		data = []
 		venues = Venue.objects.all()
-		if request.GET.get('_escaped_fragment_', ''):
-			for venue in venues:
-				shows = Show.objects.filter(venue=venue.id).filter(date__range=
-					[ d1.strftime("%Y-%m-%d"), d2.strftime("%Y-%m-%d") ]
-				)
-				venue.shows = shows
-
-				return render(request, 'index_seo.html', {'venues' : venues})
-
 		for venue in venues:
 			shows = Show.objects.filter(venue=venue.id).filter(date__range=
 				[ d1.strftime("%Y-%m-%d"), d2.strftime("%Y-%m-%d") ]
