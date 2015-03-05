@@ -1,0 +1,81 @@
+footer {
+	padding:0 0 100px 0;
+
+	font-family:"Concourse C6"; 
+}
+
+footer {
+	a {
+		color: #428bca;
+		font-weight:bold;
+		text-decoration: none;
+
+		cursor:pointer;
+	}
+
+	a:hover {
+		color: #428bca;
+		text-decoration: underline;
+	}
+
+	.input--prompt { 
+		padding:20px 150px 50px 150px;
+	}
+
+	h3 {
+		font-family:"Concourse C6";
+		font-size:24px;
+		text-transform:uppercase; 
+		font-weight:bold; 
+
+		text-align:center;
+	}
+
+	p {
+		font-family:"Concourse C3"; 
+		font-size:11pt; 
+
+		text-align:left;
+	}
+
+	.email--form { 
+		text-align:center;
+		font-family:"Concourse C3";  
+		font-size:14pt;
+	}
+
+	.email--form {
+		label {
+			font-size:11pt; 
+			font-weight:lighter; 
+			text-transform:uppercase;
+		}
+
+		input[type=email] { 
+			padding:2px 5px; 
+
+			margin:0 8px;
+
+			border:1px solid #aaa; 
+			font-family:'Helvetica'; 
+		}
+		
+		input[type=submit] {
+			position:relative;
+
+			padding:3px 22px; 
+
+			border:none;
+			background:#7fd2a5;
+
+			color:white;
+			text-transform:uppercase;
+
+			cursor:pointer;
+		}
+
+		input[type=submit]:hover { 
+			background:#59c58a; 
+		}
+	}
+}
