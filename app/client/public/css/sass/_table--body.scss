@@ -30,15 +30,24 @@
 		text-align:center;
 	}
 
-	.venue {
-		.pic {
-			width:90px; height:90px;
-
-			background-size:100px 100px; 
-
-			margin:10px auto;
-			border-radius:45px;
+	@media screen and (max-width: 320px ) {
+		.venue {
+			-webkit-flex:0 0 10em;
+					flex:0 0 10em;
 		}
+	}
+
+	.venue {
+		@media screen and (min-width: 400px ) {
+			.pic {
+				width:90px; height:90px;
+
+				background-size:100px 100px; 
+
+				margin:10px auto;
+				border-radius:45px;
+			}
+		}	
 
 		.address {
 			font-family: 'Concourse C3';
