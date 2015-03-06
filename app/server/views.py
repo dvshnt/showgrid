@@ -42,7 +42,7 @@ def grid(request, year=None, month=None, day=None):
 		for venue in venues:
 			shows = Show.objects.filter(venue=venue.id).filter(date__range=
 				[ d1.strftime("%Y-%m-%d"), d2.strftime("%Y-%m-%d") ]
-			)
+			).order_by('-date')
 
 			info = venue.json()
 			info['shows'] = [ show.json_min() for show in shows ]
