@@ -38,7 +38,7 @@ def grid(request, year=None, month=None, day=None):
 			d2 = d1 + timedelta(days=int(request.GET['range']))
 
 		data = []
-		venues = Venue.objects.all()
+		venues = Venue.objects.all().order_by('name')
 		for venue in venues:
 			shows = Show.objects.filter(venue=venue.id).filter(date__range=
 				[ d1.strftime("%Y-%m-%d"), d2.strftime("%Y-%m-%d") ]
