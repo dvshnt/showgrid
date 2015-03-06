@@ -25,6 +25,7 @@
 		-webkit-flex:0 0 12em;
 				flex:0 0 12em;
 
+		margin:auto;
 		padding:12px 0;
 
 		text-align:center;
@@ -64,18 +65,23 @@
 		-webkit-flex:1 0 8em;
 				flex:1 0 8em;
 
+		-webkit-flex-direction: column;
+				flex-direction: column;
+
 		padding:12px 0 12px 0.5em;
 	}
 
 	.cell {
 		.show{
 			position:relative;
+
+			margin:10px 0;
 		}
 
 		.show {
 			.time {
 				position: absolute;
-				top: 2px; left: 5px;
+				top: 2px; left: 0px;
 
 				font-size: 8pt;
 				color: $show-time-color;
