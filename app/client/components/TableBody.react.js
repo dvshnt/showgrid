@@ -34,10 +34,18 @@ module.exports = TableBody = React.createClass({
 		    		if ( date.isSame(moment(showDate, 'MMMM Do YYYY')) ) {
 		    			var time = moment(venue.shows[j].date, 'YYYY-MM-DD HH:mm:ssZZ').format('h A');
 
+		    			if (venue.shows[j].website !== '') {
+		    				var artist = <a href={ venue.shows[j].website }>{ venue.shows[j].band_name }</a>;
+		    			}
+		    			else {
+		    				var artist = venue.shows[j].band_name;
+		    			}
+
+
 		    			 shows.push(
 		    			 	<div className="show">
 					            <div className="time">{ time}</div>
-					        	<div className="artist">{ venue.shows[j].band_name }</div>
+					        	<div className="artist">{ artist }</div>
 					        </div>
 		    			 );
 		    		}

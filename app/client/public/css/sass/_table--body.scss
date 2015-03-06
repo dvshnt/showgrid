@@ -113,6 +113,15 @@
 
 				padding:15px 0 0 5px;
 			}
+
+			.artist a {
+				color:$show-title-color;
+				text-decoration:none;
+			}
+
+			.artist a:hover {
+				text-decoration:underline;
+			}
 		}
 	}
 
