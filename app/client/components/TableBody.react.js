@@ -15,7 +15,7 @@ module.exports = TableBody = React.createClass({
 			row.push(
 				<div className="venue">
 			    	<div className={ venue.image_url }></div>
-			    	<div className="name">{ venue.name }</div>
+			    	<div className="name"><a href={ venue.website }>{ venue.name }</a></div>
 			    	<div className="address">
 			    		{ venue.address.street }
 			    	</div>
