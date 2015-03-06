@@ -5,6 +5,9 @@
 .arrow {
 	position:fixed;
 
+	display: -webkit-flex;
+	display: 		 flex;
+
 	width:20px; height:100%;
 
 	background:rgba(0, 0, 0, 0.005);
@@ -14,11 +17,67 @@
 	@include transition(all 0.35s);
 
 	z-index:6;
+
+	-webkit-animation-name: lookie;
+	-webkit-animation-delay:0.5s;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-direction: alternate;
 }
+
+.arrow .direction {
+	margin:auto;
+
+	opacity:0;
+
+	@include transition(all 0.35s);
+
+	-webkit-animation-name: lookie--arrow;
+	-webkit-animation-delay:0.5s;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-direction: alternate;
+}
+
+.direction div {
+	width:40px; height:10px;
+	background:white;
+}
+
+.arrow.next .direction .top {
+	-webkit-transform: matrix(0.707, 0.707, -0.707, 0.707, 0, 0);
+		-ms-transform: matrix(0.707, 0.707, -0.707, 0.707, 0, 0);
+			transform: matrix(0.707, 0.707, -0.707, 0.707, 0, 0);
+}
+
+.arrow.next .direction .bottom {
+	-webkit-transform: matrix(0.707, -0.707, 0.707, 0.707, 0, 12);
+		-ms-transform: matrix(0.707, -0.707, 0.707, 0.707, 0, 12);
+			transform: matrix(0.707, -0.707, 0.707, 0.707, 0, 12);
+}
+
+.arrow.previous .direction .top {
+	-webkit-transform: matrix(0.707, -0.707, 0.707, 0.707, 0, 0);
+		-ms-transform: matrix(0.707, -0.707, 0.707, 0.707, 0, 0);
+			transform: matrix(0.707, -0.707, 0.707, 0.707, 0, 0);
+}
+
+.arrow.previous .direction .bottom {
+	-webkit-transform: matrix(0.707, 0.707, -0.707, 0.707, 0, 12);
+		-ms-transform: matrix(0.707, 0.707, -0.707, 0.707, 0, 12);
+			transform: matrix(0.707, 0.707, -0.707, 0.707, 0, 12);
+}
+
 .arrow:hover {
 	width:60px;
 
 	background:rgba(0, 0, 0, 0.25);
+}
+
+.arrow:hover {
+	.direction {
+		opacity:0.8;
+	}
 }
 
 .arrow.previous {
@@ -27,4 +86,43 @@
 
 .arrow.next {
 	top:0; right:0;
+}
+
+
+//////// Show the controls at first ////////
+@-webkit-keyframes lookie {
+	0% { width:0px; background:rgba(0, 0, 0, 0.005); }
+	60% { background:rgba(15, 215, 50, 0.4); }
+	80% { width:100px; background:rgba(0, 0, 0, 0.005); }
+	100% { width:10px; }
+}
+@-moz-keyframes lookie {
+	0% { width:0px; background:rgba(0, 0, 0, 0.005); }
+	60% { background:rgba(15, 215, 50, 0.4); }
+	80% { width:100px; background:rgba(0, 0, 0, 0.005); }
+	100% { width:10px; }
+}
+@keyframes lookie {
+	0% { width:0px; background:rgba(0, 0, 0, 0.005); }
+	60% { background:rgba(15, 215, 50, 0.4); }
+	80% { width:100px; background:rgba(0, 0, 0, 0.005); }
+	100% { width:10px; }
+}
+
+
+//////// Show the arrow at first ////////
+@-webkit-keyframes lookie--arrow {
+	0% { opacity:0; }
+	60% { opacity:0.8; }
+	80% { opacity:0; }
+}
+@-moz-keyframes lookie--arrow {
+	0% { opacity:0; }
+	60% { opacity:0.8; }
+	80% { opacity:0; }
+}
+@keyframes lookie--arrow {
+	0% { opacity:0; }
+	60% { opacity:0.8; }
+	80% { opacity:0; }
 }

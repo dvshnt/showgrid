@@ -85,8 +85,12 @@ module.exports = ShowGrid = React.createClass({
 	render: function() {
 		return (
 			<section id="grid--container">
-				<div className="arrow previous" onClick={ this.previousPage }></div>
-				<div className="arrow next" onClick={ this.nextPage }></div>
+				<div className="arrow previous" onClick={ this.previousPage }>
+					<div className="direction"><div className="top"></div><div className="bottom"></div></div>
+				</div>
+				<div className="arrow next" onClick={ this.nextPage }>
+					<div className="direction"><div className="top"></div><div className="bottom"></div></div>
+				</div>
 				<section id="grid--fixed--container">
 					<Header></Header>
 					<TableHead 
