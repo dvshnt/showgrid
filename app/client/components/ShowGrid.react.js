@@ -2,12 +2,19 @@
 
 var $ = require('jquery'),
 	React = require('react'),
+
+	Swipeable = require('react-swipeable'),
 	moment = require('moment'),
+
 	Header = require('./Header.react'),
 	TableHead = require('./TableHead.react'),
 	TableBody = require('./TableBody.react'),
 	Footer = require('./Footer.react'),
+
 	GridEngine = require('../util/GridEngine');
+
+
+React.initializeTouchEvents(true);
 
 module.exports = ShowGrid = React.createClass({
 	componentDidMount: function() {
@@ -91,16 +98,27 @@ module.exports = ShowGrid = React.createClass({
 				<div className="arrow next" onClick={ this.nextPage }>
 					<div className="direction"><div className="top"></div><div className="bottom"></div></div>
 				</div>
+
 				<section id="grid--fixed--container">
+
 					<Header></Header>
 					<TableHead 
 						day={ this.props.day } 
 						range={ this.props.range } />
+
 				</section>
-				<TableBody
-					day={ this.props.day }
-					range={ this.props.range } 
-					venues={ this.props.venues } />
+				
+				<Swipeable  
+					onSwipedLeft={ this.nextPage } 
+					onSwipedRight={ this.previousPage } >
+				
+					<TableBody
+						day={ this.props.day }
+						range={ this.props.range } 
+						venues={ this.props.venues } />
+
+				</Swipeable>
+				
 				<Footer></Footer>
 			</section>
 		)

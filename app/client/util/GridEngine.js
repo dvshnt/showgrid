@@ -44,7 +44,6 @@ module.exports = GridEngine = {
 	},
 
 	gridAdjust: function(e) {
-		console.log("I see you moving");
 		GridEngine.cells = GridEngine.calculateCellCount();
 	},
 
