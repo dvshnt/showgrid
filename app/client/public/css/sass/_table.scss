@@ -9,7 +9,7 @@
 		display: -webkit-flex;
 		display: 		 flex;
 
-		width:20px; height:100%;
+		width:30px; height:100%;
 
 		background:rgba(0, 0, 0, 0.005);
 
@@ -21,7 +21,7 @@
 
 		-webkit-animation-name: lookie;
 		-webkit-animation-delay:0.5s;
-	    -webkit-animation-duration: 1s;
+	    -webkit-animation-duration: 0.8s;
 	    -webkit-animation-timing-function: ease-in-out;
 	    -webkit-animation-direction: alternate;
 	}
@@ -35,7 +35,7 @@
 
 		-webkit-animation-name: lookie--arrow;
 		-webkit-animation-delay:0.5s;
-	    -webkit-animation-duration: 1s;
+	    -webkit-animation-duration: 0.8s;
 	    -webkit-animation-timing-function: ease-in-out;
 	    -webkit-animation-direction: alternate;
 	}
@@ -92,22 +92,22 @@
 
 	//////// Show the controls at first ////////
 	@-webkit-keyframes lookie {
-		0% { width:0px; background:rgba(0, 0, 0, 0.005); }
-		40% { background:rgba(0, 0, 0, 0.4); }
-		90% { width:100px; background:rgba(0, 0, 0, 0.005); }
-		100% { width:10px; }
+		0% { width:0px; background:rgba(0, 0, 0, 0.4); }
+		70% { width:70px; }
+		80% { width:70px; }
+		100% { width:0px; background:rgba(0, 0, 0, 0.4); }
 	}
 	@-moz-keyframes lookie {
-		0% { width:0px; background:rgba(0, 0, 0, 0.005); }
-		40% { background:rgba(0, 0, 0, 0.4); }
-		90% { width:100px; background:rgba(0, 0, 0, 0.005); }
-		100% { width:10px; }
+		0% { width:0px; background:rgba(0, 0, 0, 0.4); }
+		70% { width:70px; }
+		80% { width:70px; }
+		100% { width:0px; background:rgba(0, 0, 0, 0.4); }
 	}
 	@keyframes lookie {
-		0% { width:0px; background:rgba(0, 0, 0, 0.005); }
-		40% { background:rgba(0, 0, 0, 0.4); }
-		90% { width:100px; background:rgba(0, 0, 0, 0.005); }
-		100% { width:10px; }
+		0% { width:0px; background:rgba(0, 0, 0, 0.4); }
+		70% { width:70px; }
+		80% { width:70px; }
+		100% { width:0px; background:rgba(0, 0, 0, 0.4); }
 	}
 
 
