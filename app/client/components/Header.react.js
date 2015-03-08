@@ -7,7 +7,7 @@ module.exports = Header = React.createClass({
 		return (
 			<header>
 				<a href="/">
-					<span className="head--title">SG</span>
+					<h1 className="head--title" alt="Showgrid">SG</h1>
 				</a>
 			</header>
 		)
