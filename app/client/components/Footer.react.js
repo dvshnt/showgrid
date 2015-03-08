@@ -13,7 +13,7 @@ module.exports = Header = React.createClass({
 			<footer>
 				<div className="input--prompt">
 					<h3>something missing?</h3>
-					<p>Let us know if you notice a show or venue missing from the Grid. Otherwise, feel free to drop us a line and let us know what you think of the thing. We are in the early stages and welcome any and all feedback.</p>
+					<p>Let us know if you notice a show or venue missing from the Grid. Otherwise, feel free to drop us a line or come visit us in our batcave located one hundred miles under the ground in an old, repurposed bomb shelter.</p>
 					<p>Email us at <a href="mailto:showgridnashville@gmail.com">showgridnashville@gmail.com</a> with any requests or comments.</p>
 				</div>
 				<div className='email--form'>
