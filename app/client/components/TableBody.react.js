@@ -15,7 +15,7 @@ module.exports = TableBody = React.createClass({
 			row.push(
 				<div className="venue">
 			    	<div className={ venue.image_url }></div>
-			    	<h3 className="name"><a href={ venue.website }>{ venue.name }</a></h3>
+			    	<h3 className="name"><a href={ venue.website } target="_blank">{ venue.name }</a></h3>
 			    	<div className="address">
 			    		{ venue.address.street }
 			    	</div>
@@ -41,13 +41,12 @@ module.exports = TableBody = React.createClass({
 		    				var artist = venue.shows[j].band_name;
 		    			}
 
-
-		    			 shows.push(
-		    			 	<div className="show">
+		    			shows.push(
+		    				<div className="show">
 					            <div className="time">{ time}</div>
 					        	<div className="artist">{ artist }</div>
 					        </div>
-		    			 );
+		    			);
 		    		}
 
 		    	}							
