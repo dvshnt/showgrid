@@ -32,8 +32,13 @@ module.exports = TableBody = React.createClass({
 		    		var showDate = moment(venue.shows[j].date, 'YYYY-MM-DD HH:mm:ssZZ').format('MMMM Do YYYY');
 		    		
 		    		if ( date.isSame(moment(showDate, 'MMMM Do YYYY')) ) {
-		    			var time = moment(venue.shows[j].date, 'YYYY-MM-DD HH:mm:ssZZ').format('h A');
-
+		    			if (moment(venue.shows[j].date, 'YYYY-MM-DD HH:mm:ssZZ').format('mm') !== '00') {
+							var time = moment(venue.shows[j].date, 'YYYY-MM-DD HH:mm:ssZZ').format('h:mm A');
+			    		}
+			    		else {
+			    			var time = moment(venue.shows[j].date, 'YYYY-MM-DD HH:mm:ssZZ').format('h A');
+			    		}
+		    			
 		    			if (venue.shows[j].website !== '') {
 		    				var artist = <a href={ venue.shows[j].website }>{ venue.shows[j].band_name }</a>;
 		    			}
