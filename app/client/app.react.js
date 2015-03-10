@@ -3,10 +3,12 @@
 var $ = require('jquery'),
 	React = require('react'),
 	moment = require('moment'),
+	GridEngine = require('./util/GridEngine');
 	ShowGrid = React.createFactory(require('./components/ShowGrid.react'));
 
 
-var dataURL = 'http://www.showgridnashville.com/i/grid?range=7';
+var dataURL = GridEngine.domain + '/i/grid/?range=7';
+
 $.ajax({
 	type: "GET",
 	url: dataURL,

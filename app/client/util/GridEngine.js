@@ -1,4 +1,7 @@
 module.exports = GridEngine = {
+	domain: 'http://localhost:8000',
+	// domain: 'http://10.0.0.21:8000',
+	// domain: 'http://www.showgridnashville.com',
 
 	cells: null,		// Cells in table row
 

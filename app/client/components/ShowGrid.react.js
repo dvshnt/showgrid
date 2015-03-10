@@ -43,9 +43,10 @@ module.exports = ShowGrid = React.createClass({
 			var year = day.format('YYYY'),
 				month = day.format('M'),
 				dayD = day.format('D');
+			
 
-			var dataURL = 'http://www.showgridnashville.com/i/grid/' + year + '/' + month + '/' + dayD + '?range=' + offset;
-
+			var dataURL = GridEngine.domain + '/i/grid/' + year + '/' + month + '/' + dayD + '?range=' + offset;
+			
 			$.ajax({
 				type: "GET",
 				url: dataURL,
@@ -73,8 +74,9 @@ module.exports = ShowGrid = React.createClass({
 				month = day.format('M'),
 				dayD = day.format('D');
 
-			var dataURL = 'http://www.showgridnashville.com/i/grid/' + year + '/' + month + '/' + dayD + '?range=' + offset;
-
+			
+			var dataURL = GridEngine.domain + '/i/grid/' + year + '/' + month + '/' + dayD + '?range=' + offset;
+			
 			$.ajax({
 				type: "GET",
 				url: dataURL,
