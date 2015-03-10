@@ -18,12 +18,12 @@ module.exports = Header = React.createClass({
 				</div>
 				<div className='email--form'>
 					<div id="mc_embed_signup">
-						<form action="//showgrid.us9.list-manage.com/subscribe/post?u=24f724359c2dd0e5e6d775b61&amp;id=49b59ce078" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+						<form action="//showgrid.us9.list-manage.com/subscribe/post?u=24f724359c2dd0e5e6d775b61&amp;id=49b59ce078" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className="validate" target="_blank" noValidate>
 							<div id="mc_embed_signup_scroll">
-								<label for="mce-EMAIL">Receive news and updates about Show Grid</label><br></br>
+								<label htmlFor="mce-EMAIL">Receive news and updates about Show Grid</label><br></br>
 								<input type="email" value="" name="EMAIL" id="mce-EMAIL" placeholder="Email"/>
 								<div style={ cookieStyle }>
-									<input type="text" name="b_24f724359c2dd0e5e6d775b61_49b59ce078" tabindex="-1" value=""/>
+									<input type="text" name="b_24f724359c2dd0e5e6d775b61_49b59ce078" tabIndex="-1" value=""/>
 								</div>
 								<input type="submit" value="Join the Mailing List" name="subscribe" id="mc-embedded-subscribe"/>
 							</div>
