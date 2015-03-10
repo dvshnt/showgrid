@@ -3,13 +3,13 @@
 var $ = require('jquery'),
 	React = require('react'),
 
-	Swipeable = require('react-swipeable'),
+	Swipeable = React.createFactory(require('react-swipeable')),
 	moment = require('moment'),
 
-	Header = require('./Header.react'),
-	TableHead = require('./TableHead.react'),
-	TableBody = require('./TableBody.react'),
-	Footer = require('./Footer.react'),
+	Header = React.createFactory(require('./Header.react')),
+	TableHead = React.createFactory(require('./TableHead.react')),
+	TableBody = React.createFactory(require('./TableBody.react')),
+	Footer = React.createFactory(require('./Footer.react')),
 
 	GridEngine = require('../util/GridEngine');
 

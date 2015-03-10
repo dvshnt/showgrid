@@ -3,7 +3,7 @@
 var $ = require('jquery'),
 	React = require('react'),
 	moment = require('moment'),
-	ShowGrid = require('./components/ShowGrid.react');
+	ShowGrid = React.createFactory(require('./components/ShowGrid.react'));
 
 
 var dataURL = 'http://www.showgridnashville.com/i/grid?range=7';
