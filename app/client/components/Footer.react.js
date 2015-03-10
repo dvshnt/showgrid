@@ -30,6 +30,9 @@ module.exports = Header = React.createClass({
 						</form>
 					</div>
 				</div>
+				<div className="footer--copy">
+					<span>&copy; 2015 Showgrid, Nashville, TN</span>
+				</div>
 			</footer>
 		)
 	}

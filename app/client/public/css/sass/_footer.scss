@@ -1,5 +1,5 @@
 footer {
-	padding:0 0.5em 100px 0.75em;
+	padding:0 0.5em 20px 0.75em;
 
 	font-family:"Concourse C6"; 
 }
@@ -83,6 +83,23 @@ footer {
 
 		input[type=submit]:hover { 
 			background:#59c58a; 
+		}
+	}
+
+	.footer--copy {
+		width:100%;
+
+		padding:60px 0 0 0;
+
+		text-align:center;
+	}
+
+	.footer--copy {
+		span {
+			font-family:"Concourse C3";
+
+			font-size:10pt;
+			color:#999999;
 		}
 	}
 }
