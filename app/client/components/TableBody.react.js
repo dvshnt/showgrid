@@ -40,7 +40,7 @@ module.exports = TableBody = React.createClass({
 			    		}
 		    			
 		    			if (venue.shows[j].website !== '') {
-		    				var artist = <a href={ venue.shows[j].website }>{ venue.shows[j].band_name }</a>;
+		    				var artist = <a href={ venue.shows[j].website } target="_blank">{ venue.shows[j].band_name }</a>;
 		    			}
 		    			else {
 		    				var artist = venue.shows[j].band_name;
