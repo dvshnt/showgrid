@@ -1,5 +1,4 @@
 #table--body {
-
 	z-index:4;
 }
 
@@ -105,7 +104,7 @@
 
 			.artist {
 				font-size: 11pt;
-				font-family: 'Concourse C6';
+				font-family: $thick-font;
 
 				color: $show-title-color;
 
