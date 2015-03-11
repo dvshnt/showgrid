@@ -11,7 +11,8 @@ var $ = require('jquery'),
 	TableBody = React.createFactory(require('./TableBody.react')),
 	Footer = React.createFactory(require('./Footer.react')),
 
-	GridEngine = require('../util/GridEngine');
+	GridEngine = require('../util/GridEngine'),
+	DateManager = require('../util/DateManager');
 
 
 React.initializeTouchEvents(true);
@@ -27,68 +28,81 @@ module.exports = ShowGrid = React.createClass({
 		window.addEventListener("resize", function(e) {
 			GridEngine.calculateCellCount();
 
-			_this.setProps({ range: GridEngine.getCellCount() });
+			_this.setProps({ 
+				range: GridEngine.getCellCount()
+			});
 		});
 	},
 
-	nextPage: function () {
-		if (typeof window != 'undefined' && window.document) {
-			var _this = this;
+	componentWillReceiveProps: function(nextProps) {
+		// If range changes, we need to update the days array
+		if (nextProps.range !== this.props.range) {
+			var start = moment(this.props.days[0].date, 'MMMM Do YYYY');
 
-			var offset = document.querySelectorAll("#table--head > .cell").length - 1;
+			var days = DateManager.getDaysArray(start, nextProps.range);
 
-			var day = moment(this.props.day, 'MMMM Do YYYY'),
-				day = day.add(offset, 'days');
-
-			var year = day.format('YYYY'),
-				month = day.format('M'),
-				dayD = day.format('D');
-			
-
-			var dataURL = GridEngine.domain + '/i/grid/' + year + '/' + month + '/' + dayD + '?range=' + offset;
-			
-			$.ajax({
-				type: "GET",
-				url: dataURL,
-			}).success(function(data, status) {
-
-				_this.setProps({ 
-					venues: data,
-					day: day.format('MMMM Do YYYY')
-				});
-
+			this.setProps({
+				range: nextProps.range,
+				days: days
 			});
 		}
+
+	},
+
+	nextPage: function () {
+		var _this = this;
+
+		// Get current calendar range
+		var offset = this.props.range;
+
+		// Get the last day that we will use to calculate the next page's days
+		var day = DateManager.getStartOfNextPage(this.props.days[offset - 1].date);
+
+		var dataURL = GridEngine.domain + '/i/grid/' + 
+						day.format('YYYY') + '/' + 
+						day.format('M') + '/' + 
+						day.format('D') + '?range=' + offset;
+		
+
+		$.ajax({
+			type: "GET",
+			url: dataURL,
+		}).success(function(data, status) {
+			var days = DateManager.getDaysArray(day, offset);
+
+			_this.setProps({ 
+				venues: data,
+				days: days
+			});
+		});
 	},
 
 	previousPage: function () {
-		if (typeof window != 'undefined' && window.document) {
-			var _this = this;
+		var _this = this;
 
-			var offset = document.querySelectorAll("#table--head > .cell").length - 1;
+		// Get current calendar range
+		var offset = this.props.range;
 
-			var day = moment(this.props.day, 'MMMM Do YYYY'),
-				day = day.subtract(offset, 'days');
+		// Get the last day that we will use to calculate the next page's days
+		var day = DateManager.getStartOfPreviousPage(this.props.days[0].date, offset);
 
-			var year = day.format('YYYY'),
-				month = day.format('M'),
-				dayD = day.format('D');
+		var dataURL = GridEngine.domain + '/i/grid/' + 
+						day.format('YYYY') + '/' + 
+						day.format('M') + '/' + 
+						day.format('D') + '?range=' + offset;
+		
 
-			
-			var dataURL = GridEngine.domain + '/i/grid/' + year + '/' + month + '/' + dayD + '?range=' + offset;
-			
-			$.ajax({
-				type: "GET",
-				url: dataURL,
-			}).success(function(data, status) {
+		$.ajax({
+			type: "GET",
+			url: dataURL,
+		}).success(function(data, status) {
+			var days = DateManager.getDaysArray(day, offset);
 
-				_this.setProps({ 
-					venues: data,
-					day: day.format('MMMM Do YYYY')
-				});
-
+			_this.setProps({ 
+				venues: data,
+				days: days
 			});
-		}
+		});
 	},
 
 	render: function() {
@@ -104,9 +118,7 @@ module.exports = ShowGrid = React.createClass({
 				<section id="grid--fixed--container">
 
 					<Header></Header>
-					<TableHead 
-						day={ this.props.day } 
-						range={ this.props.range } />
+					<TableHead days={ this.props.days }/>
 
 				</section>
 				
@@ -115,9 +127,8 @@ module.exports = ShowGrid = React.createClass({
 					onSwipedRight={ this.previousPage } >
 				
 					<TableBody
-						day={ this.props.day }
-						range={ this.props.range } 
-						venues={ this.props.venues } />
+						days={ this.props.days }
+						venues={ this.props.venues }/>
 
 				</Swipeable>
 				
