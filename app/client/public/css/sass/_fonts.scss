@@ -1,9 +1,17 @@
 @font-face {
   font-family: "Concourse C3";
-  src: url('/static/showgrid/css/fonts/Concourse C3 Regular.ttf') format("truetype");
+  src: local("Concourse C3"),
+       url("/static/showgrid/css/fonts/Concourse%20C3%20Regular.woff2") format("woff2"), 
+       url("/static/showgrid/css/fonts/Concourse%20C3%20Regular.woff") format("woff"),
+       url("/static/showgrid/css/fonts/Concourse%20C3%20Regular.ttf") format("ttf"),
+       url("/static/showgrid/css/fonts/Concourse%20C3%20Regular.eot") format("eot");
 }
 
 @font-face {
   font-family: "Concourse C6";
-  src: url('/static/showgrid/css/fonts/Concourse C6 Regular.ttf') format("truetype");
+  src: local("Concourse C6"),
+       url("/static/showgrid/css/fonts/Concourse%20C6%20Regular.woff2") format("woff2"), 
+       url("/static/showgrid/css/fonts/Concourse%20C6%20Regular.woff") format("woff"),
+       url("/static/showgrid/css/fonts/Concourse%20C6%20Regular.ttf") format("ttf"),
+       url("/static/showgrid/css/fonts/Concourse%20C6%20Regular.eot") format("eot");
 }
