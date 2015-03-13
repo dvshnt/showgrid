@@ -1,6 +1,8 @@
 import inspect, itertools, json
 from datetime import timedelta, date
 
+from operator import attrgetter
+
 from server.models import *
 
 from django.http import HttpResponse
@@ -38,7 +40,7 @@ def grid(request, year=None, month=None, day=None):
 			d2 = d1 + timedelta(days=int(request.GET['range']))
 
 		data = []
-		venues = Venue.objects.all().order_by('name')
+		venues = sorted(Venue.objects.all(), key=attrgetter('alphabetical_title'), reverse=False)
 		for venue in venues:
 			shows = Show.objects.filter(venue=venue.id).filter(date__range=
 				[ d1.strftime("%Y-%m-%d"), d2.strftime("%Y-%m-%d") ]
