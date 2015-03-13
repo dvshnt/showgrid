@@ -16,8 +16,8 @@
 		z-index:6;
 
 		-webkit-animation-name: lookie;
-		-webkit-animation-delay:0.5s;
-	    -webkit-animation-duration: 0.8s;
+		-webkit-animation-delay:5s;
+	    -webkit-animation-duration: 0.9s;
 	    -webkit-animation-timing-function: ease-in-out;
 	    -webkit-animation-direction: alternate;
 	}
@@ -30,8 +30,8 @@
 		@include transition(all 0.35s);
 
 		-webkit-animation-name: lookie--arrow;
-		-webkit-animation-delay:0.5s;
-	    -webkit-animation-duration: 0.8s;
+		-webkit-animation-delay:5s;
+	    -webkit-animation-duration: 0.9s;
 	    -webkit-animation-timing-function: ease-in-out;
 	    -webkit-animation-direction: alternate;
 	}
