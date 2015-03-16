@@ -48,7 +48,7 @@ def grid(request, year=None, month=None, day=None):
 
 			info = venue.json()
 			info['shows'] = [ show.json_min() for show in shows ]
-			info['image_url'] = get_venue_class(venue.image.url)
+			info['image_url'] = "pic " + get_venue_class(venue.image.url)
 			data.append(info)
 
 		response = HttpResponse(json.dumps(data), content_type='application/json; charset=UTF-8')
@@ -60,6 +60,26 @@ def grid(request, year=None, month=None, day=None):
 	response.__setitem__("Content-type", "application/json")
 	response.__setitem__("Access-Control-Allow-Origin", "*")
 	return response
+
+
+def check_venues(request):
+	d1 = date.today()
+	d2 = d1 + timedelta(days=365)
+
+	data = []
+	venues = sorted(Venue.objects.all(), key=attrgetter('alphabetical_title'), reverse=False)
+	for venue in venues:
+		shows = Show.objects.filter(venue=venue.id).filter(date__range=
+			[ d1.strftime("%Y-%m-%d"), d2.strftime("%Y-%m-%d") ]
+		).order_by('date')
+
+		info = venue.json()
+		info['shows'] = [ show.json_min() for show in shows ]
+		info['image_url'] = get_venue_class(venue.image.url)
+		data.append(info)
+
+
+	return render(request, 'venues.html', { 'venues': data })
 
 
 def venue(request, venue=None):
@@ -172,4 +192,4 @@ def get_venue_class(url):
 
 			break
 
-	return "pic " + image_url
+	return image_url

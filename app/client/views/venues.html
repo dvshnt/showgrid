@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{% load staticfiles %}
+
+		<title>Showgrid Nashville | Venues</title>
+
+		<meta name=”description” content=”Showgrid is a simple live music calendar for Nashville.”>
+
+		<link rel="icon" type="image/png" href='{% static "showgrid/img/favicon.ico" %}'>
+		
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+
+		<meta property="og:title" content="Showgrid Nashville - A simple live music calendar"/>
+		<meta property="og:type" content="website"/>
+		<meta property="og:image" content="http://www.showgridnashville.com/static/showgrid/img/sg--fb.png"/>
+		<meta property="og:url" content="http://showgridnashville.com"/>
+		<meta property="og:description" content="We believe one needs only three things to live: food, water, and a live music calendar that is a live music calendar and nothing else."/>
+
+		<style>
+
+			ol { list-style:none; }
+
+			li { margin:10px 0; }
+
+			.time { display:inline-block; width:20%;}
+
+			.band { display:inline-block; }
+
+		</style>
+	</head>
+	<body>
+		<header>
+			<h1>Showgrid Nashville | Venues</h1>
+		</header>
+		{% for venue in venues %}
+		<section class={{ venue.image_url }}>
+			<h2>{{ venue.name }}</h2>
+			<ol>
+				{% for show in venue.shows %}
+				<li>
+					<div class="time">{{ show.date }}</div>
+					<div class="band">{{ show.band_name }}</div>
+				</li>
+				{% endfor %}
+			</ol>
+		</section>
+		{% endfor %}
+	</body>
+
+    <script>
+
+
+
+    </script>
+</html>

@@ -8,6 +8,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     
     url(r'^$', 'server.views.index', name='index'),
+    url(r'^check/venues$', 'server.views.check_venues', name='check_venues'),
     
  	url(r'^i/grid/$', 'server.views.grid', name='grid'),
 	url(r'^i/grid/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)$', 'server.views.grid', name='grid')
