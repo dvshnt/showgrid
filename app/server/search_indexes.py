@@ -19,12 +19,3 @@ class ShowIndex(indexes.SearchIndex, indexes.Indexable):
 
 	def prepare_venue(self, obj):
 		return obj.venue.name
-
-
-# class VenueIndex(indexes.SearchIndex, indexes.Indexable):
-# 	text = indexes.CharField(document=True, use_template=True)
-
-# 	band = indexes.CharField(model_attr='name')
-
-# 	def get_model(self):
-# 		return Venue
