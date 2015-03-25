@@ -1,6 +1,7 @@
 app/server/*.pyc
 app/server/wsgi.py
 app/server/settings.py
+app/server/whoosh_index/*
 
 app/static/showgrid/js/bundle.js
 app/static/showgrid/css/base.css
