@@ -1,13 +1,17 @@
 import inspect, itertools, json
-from datetime import timedelta, date
+from datetime import timedelta, date, datetime
 
 from operator import attrgetter
+
+from pytz import timezone
 
 from server.models import *
 
 from django.http import HttpResponse
 from django.core import serializers
 from django.shortcuts import render
+
+from haystack.query import SearchQuerySet
 
 
 def index(request, year=None, month=None, day=None):
@@ -80,6 +84,126 @@ def check_venues(request):
 
 
 	return render(request, 'venues.html', { 'venues': data })
+
+
+def search(request):
+	return render(request, 'search.html')
+
+def _search_result_to_dict(result):
+	try:
+		shows = result['shows']
+	except KeyError:
+		shows = ""
+
+	return {
+		'id': result['id'],
+		'name': result['name'],
+		'address': result['address'],
+		'website': result['website'],
+		'shows': shows,
+	}
+
+
+def get_search_results(request):
+	if request.method == "GET":
+		query = request.GET['q']
+
+		querySet = SearchQuerySet().filter(text=query).order_by('date')
+		results = format_results(querySet)
+		shows = map(_search_result_to_dict, results)
+
+		result = {
+			"query": query,
+			"results": shows
+		}
+
+		response = HttpResponse(json.dumps(result), content_type='application/json; charset=UTF-8')
+		response.__setitem__("Content-type", "application/json")
+		response.__setitem__("Access-Control-Allow-Origin", "*")
+		return response
+
+
+def format_results(shows):
+	results = []
+	venues = [] # Tracking which venues are in the list
+
+	for show in shows:
+		if show.venue not in venues:
+			venue = Venue.objects.get(name=show.venue).json()
+			venue['shows'] = []
+
+			venues.append(show.venue)
+			results.append(venue)
+
+	for show in shows:
+		for result in results:
+			if result['name'] == show.venue:
+				result['shows'].append({
+					'band': show.band,
+					'date': convert_timzone(show.date),
+					'website': show.website
+				})
+				break
+
+	for result in results:
+		result['shows'] = group_by_date(result['shows'])
+
+	results.sort(key=lambda x: x['name'], reverse=False)
+
+	return results
+
+
+def convert_timzone(date):
+	from dateutil import tz
+
+	# METHOD 1: Hardcode zones:
+	from_zone = tz.gettz('UTC')
+	to_zone = tz.gettz('America/Chicago')
+
+	# METHOD 2: Auto-detect zones:
+	from_zone = tz.tzutc()
+	to_zone = tz.tzlocal()
+
+	# Tell the datetime object that it's in UTC time zone since 
+	# datetime objects are 'naive' by default
+	utc = date.replace(tzinfo=from_zone)
+
+	# Convert time zone
+	return utc.astimezone(to_zone)
+
+
+def group_by_date(shows):
+	array = shows
+	temp = {}
+	dates = []
+	results = []
+
+	array.sort(key=lambda x: x['date'])
+
+	for show in array:
+		tempDate = show['date'].strftime('%m-%d-%Y')
+		if tempDate not in dates:
+			dates.append(tempDate)
+			temp[tempDate] = []
+
+
+	for show in array:
+		for date in dates:
+			tempDate = show['date'].strftime('%m-%d-%Y')
+			if tempDate == date:
+				temp[tempDate].append({
+					'band': show['band'],
+					'date': str(show['date']),
+					'website': show['website']
+				})
+				break
+
+	for k, v in temp.iteritems():
+		results.append(v)
+
+	results.sort(key=lambda x: x[0]['date'])
+
+	return results
 
 
 def venue(request, venue=None):
