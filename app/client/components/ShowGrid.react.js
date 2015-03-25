@@ -6,10 +6,8 @@ var $ = require('jquery'),
 	Swipeable = React.createFactory(require('react-swipeable')),
 	moment = require('moment'),
 
-	Header = React.createFactory(require('./Header.react')),
-	TableHead = React.createFactory(require('./TableHead.react')),
-	TableBody = React.createFactory(require('./TableBody.react')),
-	Footer = React.createFactory(require('./Footer.react')),
+	Calendar = React.createFactory(require('./Calendar.react')),
+	Search = React.createFactory(require('./Search.react')),
 
 	GridEngine = require('../util/GridEngine'),
 	DateManager = require('../util/DateManager');
@@ -18,6 +16,7 @@ var $ = require('jquery'),
 React.initializeTouchEvents(true);
 
 module.exports = ShowGrid = React.createClass({
+
 	componentDidMount: function() {
 		var _this = this;
 
@@ -105,34 +104,39 @@ module.exports = ShowGrid = React.createClass({
 		});
 	},
 
+	openSearch: function() {
+		var search = $(".search--container"),
+			button = $(".search--button"),
+			grid = $("#grid--container");
+		
+		if (search.hasClass("active")) {
+			button.removeClass("opened");
+			search.removeClass("active");
+			grid.removeClass("locked");
+			return;
+		}
+		
+		button.addClass("opened");
+		search.addClass("active");
+		grid.addClass("locked");
+		search.find(".search--bar__text").focus();
+	},
+
 	render: function() {
 		return (
 			<section id="grid--container">
-				<div className="arrow previous" onClick={ this.previousPage }>
-					<div className="direction"><div className="top"></div><div className="bottom"></div></div>
-				</div>
-				<div className="arrow next" onClick={ this.nextPage }>
-					<div className="direction"><div className="top"></div><div className="bottom"></div></div>
+				<div className="container__search--button">
+					<input className="search--button" type="button" onClick={ this.openSearch }/>
 				</div>
 
-				<section id="grid--fixed--container">
+				<Calendar days={ this.props.days } 
+					venues={ this.props.venues } 
+					range={ this.props.range }
+					nextPage={ this.nextPage }
+					previousPage={ this.previousPage }/>
 
-					<Header></Header>
-					<TableHead days={ this.props.days }/>
+				<Search/>
 
-				</section>
-				
-				<Swipeable  
-					onSwipedLeft={ this.nextPage } 
-					onSwipedRight={ this.previousPage } >
-				
-					<TableBody
-						days={ this.props.days }
-						venues={ this.props.venues }/>
-
-				</Swipeable>
-				
-				<Footer></Footer>
 			</section>
 		)
 	}
