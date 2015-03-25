@@ -63,5 +63,13 @@ module.exports = DateManager = {
 			day = day.subtract(offset, 'days');
 
 		return day;
-	}
+	},
+
+	getMonthFromDate: function(date) {
+		return moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('MMM');
+	},
+
+	getDayFromDate: function(date) {
+		return moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('D');
+	},
 };
