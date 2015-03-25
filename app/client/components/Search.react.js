@@ -24,7 +24,7 @@ module.exports = Search = React.createClass({
 		return (
 			<div className="search--container">
 				<div className="search--bar">
-					<input type="text" className="search--bar__text" placeholder="Search by venue, date, or show"/>
+					<input type="text" className="search--bar__text" placeholder="Search by venue, date, or artist"/>
 					<input type="button" className="search--bar__button" onClick={ this.search }/>
 				</div>
 				<SearchResults results={ this.state.results }/>
