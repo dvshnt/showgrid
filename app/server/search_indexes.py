@@ -1,5 +1,8 @@
 import datetime
+from dateutil import tz
+
 from haystack import indexes
+
 from server.models import Venue, Show
 
 
@@ -8,6 +11,7 @@ class ShowIndex(indexes.SearchIndex, indexes.Indexable):
 
 	band = indexes.CharField(model_attr='band_name')
 	date = indexes.DateTimeField(model_attr='date')
+	day = indexes.CharField()
 	website = indexes.CharField(model_attr='website')
 	venue = indexes.CharField(model_attr='venue')
 
@@ -19,3 +23,13 @@ class ShowIndex(indexes.SearchIndex, indexes.Indexable):
 
 	def prepare_venue(self, obj):
 		return obj.venue.name
+
+	def prepare_day(self, obj):
+		from_zone = tz.gettz('UTC')
+		to_zone = tz.gettz('America/Chicago')
+
+		utc = obj.date.replace(tzinfo=from_zone)
+
+		date = utc.astimezone(to_zone)
+
+		return date.strftime("%Y-%m-%d")

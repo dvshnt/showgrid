@@ -1,3 +1,2 @@
 {{ object.band }}
-{{ object.date }}
 {{ object.venue }}
