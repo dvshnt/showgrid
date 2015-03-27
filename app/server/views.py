@@ -86,8 +86,6 @@ def check_venues(request):
 	return render(request, 'venues.html', { 'venues': data })
 
 
-def search(request):
-	return render(request, 'search.html')
 
 def _search_result_to_dict(result):
 	try:
@@ -107,13 +105,22 @@ def _search_result_to_dict(result):
 def get_search_results(request):
 	if request.method == "GET":
 		query = request.GET['q']
+		day = request.GET['d']
 
-		querySet = SearchQuerySet().filter(text=query).order_by('date')
+		if day == "":
+			querySet = SearchQuerySet().filter(text=query).order_by('venue')
+		elif query == "":
+			querySet = SearchQuerySet().filter(day__exact=day).order_by('venue')
+		else:
+			querySet = SearchQuerySet().filter(day__exact=day, text=query).order_by('venue')
+
+
 		results = format_results(querySet)
 		shows = map(_search_result_to_dict, results)
 
 		result = {
 			"query": query,
+			"day": day,
 			"results": shows
 		}
 
@@ -159,10 +166,6 @@ def convert_timzone(date):
 	# METHOD 1: Hardcode zones:
 	from_zone = tz.gettz('UTC')
 	to_zone = tz.gettz('America/Chicago')
-
-	# METHOD 2: Auto-detect zones:
-	from_zone = tz.tzutc()
-	to_zone = tz.tzlocal()
 
 	# Tell the datetime object that it's in UTC time zone since 
 	# datetime objects are 'naive' by default
