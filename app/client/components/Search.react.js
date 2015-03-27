@@ -77,11 +77,14 @@ module.exports = Search = React.createClass({
 
 	clearSearch: function() {
 		var searchText = $(".search--bar__text"),
+			searchClear = $(".search--bar__clear"),
 			datepicker = $("#search__date--picker");
 
 		datepicker.removeClass("picked").val("Select Date").data("date", "");
 
 		searchText.val("");
+
+		searchClear.removeClass("ready");
 	},
 
 	render: function() {
