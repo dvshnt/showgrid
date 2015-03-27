@@ -4,14 +4,20 @@ var React = require('react/addons'),
 
 module.exports = SearchResults = React.createClass({
 	render: function() {
-		var results = []
+		var results = [];
 		
-		for (var i=0; i < this.props.results.length; i++) {
-			var key = this.props.results[i].id,
-				result = this.props.results[i];
+		if (this.props.results.length > 0) {
+			for (var i=0; i < this.props.results.length; i++) {
+				var key = this.props.results[i].id,
+					result = this.props.results[i];
 
-			results.push(<SearchResultsRow key={ key } result={ result }/>)
+				results.push(<SearchResultsRow key={ key } result={ result }/>)
+			}
 		}
+		else {
+			results.push(<div className="search__no--results">There ain&#39;t a thing herE</div>);
+		}
+
 
 		return (
 			<div className="search--results">{ results }</div>
