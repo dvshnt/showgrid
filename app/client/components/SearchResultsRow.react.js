@@ -7,7 +7,7 @@ module.exports = SearchResultsRow = React.createClass({
 		return (
 			<div className="search--results__row">
 				<div className="search--results__row__venue">
-					<a href={ this.props.result.website }>{ this.props.result.name }</a>
+					<a href={ this.props.result.website } target="_blank">{ this.props.result.name }</a>
 				</div>
 				{
 					this.props.result.shows.map(function(show) {

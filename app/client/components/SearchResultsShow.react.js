@@ -4,8 +4,7 @@ var React = require('react/addons'),
 
 module.exports = SearchResultsShow = React.createClass({
 	render: function() {
-		var time = DateManager.formatShowTime(this.props.show[0].date),
-			month = DateManager.getMonthFromDate(this.props.show[0].date),
+		var month = DateManager.getMonthFromDate(this.props.show[0].date),
 			day = DateManager.getDayFromDate(this.props.show[0].date);
 
 		return (
@@ -20,8 +19,8 @@ module.exports = SearchResultsShow = React.createClass({
 					this.props.show.map(function(s) {
 						return (
 							<div>
-								<span className="search--results__row__show__band__time">{ time }</span>
-								<a href={ s.website }>{ s.band }</a>
+								<span className="search--results__row__show__band__time">{ DateManager.formatShowTime(s.date) }</span>
+								<a href={ s.website } target="_blank">{ s.band }</a>
 							</div>
 						)
     				})
