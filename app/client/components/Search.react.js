@@ -3,12 +3,15 @@ var $ = require('jquery'),
 	React = require('react/addons'),
 	SearchResults = require('./SearchResults.react'),
 
+	GridEngine = require('../util/GridEngine'),
+
 	moment = require('moment'),
 	Pikaday = require('../util/pikaday');
 
 module.exports = Search = React.createClass({
 	componentDidMount: function() {
 
+		// Initializing datepicker
 		var picker = new Pikaday({
 	        field: document.getElementById("search__date--picker"),
 	        format: 'MMMM Do',
@@ -49,12 +52,14 @@ module.exports = Search = React.createClass({
 			searchClear = $(".search--bar__clear"),
 			datepicker = $("#search__date--picker");
 
+		// If there is content in input text or datepicker, show the clear button
 		if ((searchText.val() !== "" || datepicker.hasClass("picked")) && !searchClear.hasClass("ready")) {
 			searchClear.addClass("ready");
 			return;
 		}
 
-		else if (searchText.val() === "" && !datepicker.hasClass("picked")) {
+		// If not, remove it
+		else if (searchText.val() === "" && !datepicker.hasClass("picked") && searchClear.hasClass("ready")) {
 			searchClear.removeClass("ready");
 		}
 	},
@@ -67,11 +72,12 @@ module.exports = Search = React.createClass({
 
 		$.ajax({
 			type: "GET",
-			url: "http://localhost:8000/i/search?q=" + query + "&d=" + date,
+			url: GridEngine.domain + "/i/search?q=" + query + "&d=" + date,
 		}).success(function(data, status) {
 			_this.setState({ 
 				results: data.results, 
-				day: (data.day) ? moment(data.day).format("MMMM Do") : "Select Date" });
+				day: (data.day) ? moment(data.day).format("MMMM Do") : "Select Date" 
+			});
 		});	
 	},
 
