@@ -6,6 +6,8 @@ var $ = require('jquery'),
 	Swipeable = React.createFactory(require('react-swipeable')),
 	moment = require('moment'),
 
+	NextControl = React.createFactory(require('./NextControl.react')),
+	PreviousControl = React.createFactory(require('./PreviousControl.react')),
 	Header = React.createFactory(require('./Header.react')),
 	TableHead = React.createFactory(require('./TableHead.react')),
 	TableBody = React.createFactory(require('./TableBody.react')),
@@ -108,12 +110,8 @@ module.exports = ShowGrid = React.createClass({
 	render: function() {
 		return (
 			<section id="grid--container">
-				<div className="arrow previous" onClick={ this.previousPage }>
-					<div className="direction"><div className="top"></div><div className="bottom"></div></div>
-				</div>
-				<div className="arrow next" onClick={ this.nextPage }>
-					<div className="direction"><div className="top"></div><div className="bottom"></div></div>
-				</div>
+				<NextControl next={ this.nextPage }/>
+				<PreviousControl previous={ this.previousPage }/>
 
 				<section id="grid--fixed--container">
 
