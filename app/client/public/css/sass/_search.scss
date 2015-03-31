@@ -336,3 +336,77 @@
 		font-family: $thin-font;
 	}
 }
+
+@media screen and (max-width: 400px ) {
+	.search--bar {
+		padding:7.5px 0 15px 10px;
+
+		text-align:left;
+	}
+
+	.container__search--button {
+		right:0;
+	}
+
+	.container__search--button.opened {
+		width:50px;
+	}	
+
+	.container__search--button.opened {
+		input[type=button] {
+			background-size:20px;
+		}
+	}
+
+	.search--bar__text {
+		width:50.5vw;
+		font-size:14px;
+
+		padding:12.5px 30px 12.5px 10px;
+	}
+
+	#search__date--picker {
+		font-size:10px;
+	}
+
+	#search__date--picker.picked {
+		font-size:11px;
+	}
+
+	.search--bar__button {
+		display:none;
+	}
+
+	.search--bar__clear {
+		top:3px; left:-25px;
+		background-size:12px;
+	}
+
+	.search--results {
+		margin:60px auto;
+
+		width:95%;
+	}
+
+	.search--results__row__venue {
+		font-size:14pt;
+	}
+
+	.search--results__row__show__date {
+		div:first-of-type {
+			font-size:8pt;
+		}
+
+		div:last-of-type {
+			font-size:16pt;
+		}
+	}
+
+	.search--results__row__show__band span {
+		font-size:12px;
+	}
+
+	.search--results__row__show__band a {
+		font-size:14px;
+	}
+}
