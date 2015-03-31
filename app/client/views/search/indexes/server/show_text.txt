@@ -1,2 +1,2 @@
-{{ object.band }}
+{{ object.band_name }}
 {{ object.venue }}
