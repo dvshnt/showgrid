@@ -106,7 +106,7 @@ module.exports = ShowGrid = React.createClass({
 
 	openSearch: function() {
 		var search = $(".search--container"),
-			button = $(".search--button"),
+			button = $(".container__search--button"),
 			grid = $("#grid--container");
 		
 		if (search.hasClass("active")) {
