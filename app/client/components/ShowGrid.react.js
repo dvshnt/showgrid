@@ -3,14 +3,15 @@
 var $ = require('jquery'),
 	React = require('react'),
 
-	Swipeable = React.createFactory(require('react-swipeable')),
 	moment = require('moment'),
 
-	NextControl = React.createFactory(require('./NextControl.react')),
-	PreviousControl = React.createFactory(require('./PreviousControl.react')),
+	Swipeable = React.createFactory(require('react-swipeable')),
+
+	ControlNext = React.createFactory(require('./ControlNext.react')),
+	ControlPrevious = React.createFactory(require('./ControlPrevious.react')),
+
 	Header = React.createFactory(require('./Header.react')),
-	TableHead = React.createFactory(require('./TableHead.react')),
-	TableBody = React.createFactory(require('./TableBody.react')),
+	Calendar = React.createFactory(require('./Calendar.react')),
 	Footer = React.createFactory(require('./Footer.react')),
 
 	GridEngine = require('../util/GridEngine'),
@@ -109,28 +110,16 @@ module.exports = ShowGrid = React.createClass({
 
 	render: function() {
 		return (
-			<section id="grid--container">
-				<NextControl next={ this.nextPage }/>
-				<PreviousControl previous={ this.previousPage }/>
+			<section id="container">
+				<ControlNext next={ this.nextPage }/>
+				<ControlPrevious previous={ this.previousPage }/>
 
-				<section id="grid--fixed--container">
-
-					<Header></Header>
-					<TableHead days={ this.props.days }/>
-
-				</section>
-				
-				<Swipeable  
-					onSwipedLeft={ this.nextPage } 
-					onSwipedRight={ this.previousPage } >
-				
-					<TableBody
-						days={ this.props.days }
-						venues={ this.props.venues }/>
-
+				<Header days={ this.props.days } />
+				<Swipeable onSwipedLeft={ this.nextPage } onSwipedRight={ this.previousPage }>
+					<Calendar venues={ this.props.venues } days={ this.props.days }/>
 				</Swipeable>
-				
-				<Footer></Footer>
+				<Footer/>
+
 			</section>
 		)
 	}

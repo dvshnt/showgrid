@@ -1,0 +1,19 @@
+#header--page {
+	width:100%; height:60px;
+
+	text-align:left;
+}
+
+
+
+@media screen and (min-width: 450px ) {
+	#header--page {
+		@include background-size(400px);
+
+		background-image: 	url('../img/nashville--skyline.png');
+		background-repeat: 	no-repeat;
+		background-position:70px 6px;
+	}
+}
+
+@import "header--page__logo";

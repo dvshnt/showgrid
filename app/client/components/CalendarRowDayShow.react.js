@@ -2,7 +2,7 @@
 var React = require('react/addons'),
 	DateManager = require('../util/DateManager');
 
-module.exports = TableShowCell = React.createClass({
+module.exports = CalendarRowDayShow = React.createClass({
 	render: function() {
 		var show = this.props.show,
 			artist = show.band_name,
