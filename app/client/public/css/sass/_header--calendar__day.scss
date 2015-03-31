@@ -1,0 +1,12 @@
+#header--table {
+
+	 /////////////////////////
+	// Date table head labels
+	.cell:not(:first-of-type) {
+		-webkit-flex:1 0 7em;
+				flex:1 0 7em;
+
+		padding:0 1em;
+	}
+	
+}
