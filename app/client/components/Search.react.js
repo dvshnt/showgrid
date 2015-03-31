@@ -81,6 +81,14 @@ module.exports = Search = React.createClass({
 		});	
 	},
 
+	searchKeyDown: function(e) {
+		var search = $(".container__search--button");
+
+		if (search.hasClass("opened") && e.keyCode === 13) {
+			this.search();
+		}
+	},
+
 	clearSearch: function() {
 		var searchText = $(".search--bar__text"),
 			searchClear = $(".search--bar__clear"),
@@ -98,7 +106,7 @@ module.exports = Search = React.createClass({
 			<div className="search--container">
 				<div className="search--bar">
 					<input type="button" id="search__date--picker" value={ this.state.day } data-date="" onClick={ this.pickDate } onFocus={ this.focusSearchText } onBlur={ this.blurSearchText }/>
-					<input type="text" className="search--bar__text" placeholder="Search by venue or artist" onFocus={ this.focusDatepicker } onBlur={ this.blurDatepicker } onChange={ this.searchTextChange }/>
+					<input type="text" className="search--bar__text" placeholder="Search by venue or artist" onKeyDown={ this.searchKeyDown } onFocus={ this.focusDatepicker } onBlur={ this.blurDatepicker } onChange={ this.searchTextChange }/>
 					<input type="button" className="search--bar__clear" onClick={ this.clearSearch }/>
 					<input type="button" className="search--bar__button" value="Search" onClick={ this.search }/>
 				</div>
