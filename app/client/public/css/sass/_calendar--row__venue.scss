@@ -1,0 +1,55 @@
+.calendar--row {
+	.venue {
+		-webkit-flex:0 0 12em;
+				flex:0 0 12em;
+
+		margin:auto;
+		padding:12px 0;
+
+		text-align:center;
+	}
+
+	@media screen and (max-width: 320px ) {
+		.venue {
+			-webkit-flex:0 0 10em;
+					flex:0 0 10em;
+		}
+	}
+
+	.venue {
+		@media screen and (min-width: 400px ) {
+			.pic {
+				width:90px; height:90px;
+
+				background-size:100px 100px; 
+
+				margin:10px auto;
+				border-radius:45px;
+			}
+		}	
+
+		.address {
+			font-size: 8pt;
+			color: $venue-address-color;
+		}
+
+		.name {
+			font-size:12pt;
+			font-weight:normal;
+			margin:3px 8px;
+		}
+
+		.name {
+			a {
+				color:$venue-title-color;
+				text-decoration:none;
+			}
+
+			a:hover {
+				text-decoration:underline;
+			}
+		}
+	}
+}
+
+@import "venue--img";

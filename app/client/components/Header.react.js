@@ -1,11 +1,16 @@
 /** @jsx React.DOM */
-var React = require('react');
+var React = require('react'),
+
+	HeaderPage = React.createFactory(require('./HeaderPage.react')),
+	HeaderCalendar = React.createFactory(require('./HeaderCalendar.react'));
+
 
 module.exports = Header = React.createClass({
 	render: function() {
 		return (
 			<header>
-				<a className="head--title" href="/">SG</a>
+				<HeaderPage/>
+				<HeaderCalendar days={ this.props.days }/>
 			</header>
 		)
 	}

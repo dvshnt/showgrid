@@ -3,11 +3,16 @@
 var $ = require('jquery'),
 	React = require('react'),
 
-	Swipeable = React.createFactory(require('react-swipeable')),
 	moment = require('moment'),
 
+	Swipeable = React.createFactory(require('react-swipeable')),
+
+	ControlNext = React.createFactory(require('./ControlNext.react')),
+	ControlPrevious = React.createFactory(require('./ControlPrevious.react')),
+
+	Header = React.createFactory(require('./Header.react')),
 	Calendar = React.createFactory(require('./Calendar.react')),
-	Search = React.createFactory(require('./Search.react')),
+	Footer = React.createFactory(require('./Footer.react')),
 
 	GridEngine = require('../util/GridEngine'),
 	DateManager = require('../util/DateManager');
@@ -124,19 +129,15 @@ module.exports = ShowGrid = React.createClass({
 
 	render: function() {
 		return (
-			<section id="grid--container">
-				<div className="container__search--button">
-					<input className="search--button" type="button" onClick={ this.openSearch }/>
-				</div>
+			<section id="container">
+				<ControlNext next={ this.nextPage }/>
+				<ControlPrevious previous={ this.previousPage }/>
 
-				<Calendar days={ this.props.days } 
-					venues={ this.props.venues } 
-					range={ this.props.range }
-					nextPage={ this.nextPage }
-					previousPage={ this.previousPage }/>
-
-				<Search/>
-
+				<Header days={ this.props.days } />
+				<Swipeable onSwipedLeft={ this.nextPage } onSwipedRight={ this.previousPage }>
+					<Calendar venues={ this.props.venues } days={ this.props.days }/>
+					<Footer/>
+				</Swipeable>
 			</section>
 		)
 	}

@@ -28,7 +28,7 @@ module.exports = DateManager = {
 	    return result;
 	},
 
-	formatHeadDate: function (day) {
+	formatHeaderCalendarDay: function (day) {
 		var date = moment(day, 'MMMM Do YYYY'),
 			date = date.format('dddd MMMM D');
 

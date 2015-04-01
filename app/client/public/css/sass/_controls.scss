@@ -1,0 +1,58 @@
+@media screen and (min-width: 400px ) {
+
+	.arrow {
+		position:fixed;
+
+		width:200px; height:200px;
+
+		margin:auto;
+
+		border-radius:100px;
+
+		background-color:rgba(0, 0, 0, 0.075);
+
+		cursor:pointer;
+
+		z-index:6;
+
+		line-height:200px;
+		vertical-align:middle;
+
+		color:#ffffff;
+		text-transform:uppercase;
+
+		background-image: 	url('../img/arrow.gif');
+		background-size: 	29px 50px;
+		background-position: 35px 75px;
+		background-repeat: 	no-repeat;
+	}
+
+
+	.arrow.next {
+		top:0; right:-170px; bottom:0;
+
+		@include transition(all 0.2s);
+	}
+
+	.arrow.previous {
+		top:0; left:-170px; bottom:0;
+
+	    -webkit-transform: rotate(180deg);
+			-ms-transform: rotate(180deg);
+	   			transform: rotate(180deg);
+
+		@include transition(all 0.2s);
+	}
+
+	.arrow.next:hover {
+		right:-120px;
+
+		background-color:rgba(0, 0, 0, 0.25);
+	}
+
+	.arrow.previous:hover {
+		left:-120px;
+
+		background-color:rgba(0, 0, 0, 0.25);
+	}
+}
