@@ -117,8 +117,8 @@ module.exports = ShowGrid = React.createClass({
 				<Header days={ this.props.days } />
 				<Swipeable onSwipedLeft={ this.nextPage } onSwipedRight={ this.previousPage }>
 					<Calendar venues={ this.props.venues } days={ this.props.days }/>
+					<Footer/>
 				</Swipeable>
-				<Footer/>
 
 			</section>
 		)
