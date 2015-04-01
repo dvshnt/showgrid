@@ -70,7 +70,7 @@ module.exports = function(grunt) {
 				tasks: ['sass:dev', 'copy:css']
 			},
 			js: {
-				files: ['./components/*.js', './app.react.js'],
+				files: ['./components/*.js', './app.react.js', './util/*.js'],
 				tasks: ['browserify:dev', 'copy:js']
 			},
 			html : {
