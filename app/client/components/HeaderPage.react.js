@@ -1,12 +1,13 @@
 /** @jsx React.DOM */
-var React = require('react'),
-	HeaderPageLogo = React.createFactory(require('./HeaderPageLogo.react'));
+var React = require('react');
 
 module.exports = HeaderPage = React.createClass({
 	render: function() {
 		return (
 			<section id="header--page">
-				<HeaderPageLogo/>
+				<a href="/">
+					<h1 className="header--page__title" alt="Showgrid">SG</h1>
+				</a>
 			</section>
 		)
 	}
