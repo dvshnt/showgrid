@@ -147,7 +147,7 @@ def format_results(shows):
 			if result['name'] == show.venue:
 				result['shows'].append({
 					'band': show.band,
-					'date': convert_timzone(show.date),
+					'date': convert_timezone(show.date),
 					'website': show.website
 				})
 				break
@@ -160,7 +160,7 @@ def format_results(shows):
 	return results
 
 
-def convert_timzone(date):
+def convert_timezone(date):
 	from dateutil import tz
 
 	# METHOD 1: Hardcode zones:
