@@ -1,5 +1,4 @@
 /** @jsx React.DOM */
-
 var $ = require('jquery'),
 	React = require('react'),
 
@@ -107,24 +106,6 @@ module.exports = ShowGrid = React.createClass({
 				days: days
 			});
 		});
-	},
-
-	openSearch: function() {
-		var search = $(".search--container"),
-			button = $(".container__search--button"),
-			grid = $("#grid--container");
-		
-		if (search.hasClass("active")) {
-			button.removeClass("opened");
-			search.removeClass("active");
-			grid.removeClass("locked");
-			return;
-		}
-		
-		button.addClass("opened");
-		search.addClass("active");
-		grid.addClass("locked");
-		search.find(".search--bar__text").focus();
 	},
 
 	render: function() {
