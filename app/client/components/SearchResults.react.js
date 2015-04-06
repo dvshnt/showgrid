@@ -15,7 +15,7 @@ module.exports = SearchResults = React.createClass({
 			}
 		}
 		else {
-			results.push(<div className="search__no--results">There ain&#39;t a thing herE</div>);
+			results.push(<div className="search__no--results">There ain&#39;t a thing here</div>);
 		}
 
 
