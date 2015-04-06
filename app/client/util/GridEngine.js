@@ -4,6 +4,7 @@ module.exports = GridEngine = {
 	// domain: 'http://www.showgridnashville.com',
 
 	cells: null,		// Cells in table row
+	venues: null,
 
 	MIN_NUM_CELLS: 2, 	// Min number of cells in row
 	MAX_NUM_CELLS: 7,	// Max number of cells in row
@@ -17,12 +18,17 @@ module.exports = GridEngine = {
 	S_WIDTH: null,	// min show cell width
 
 
-	init: function() {
+	init: function(data) {
 		this.createCellWidthConstants();		// Sets cell width constants
 		
 		this.cells = this.calculateCellCount();
+		this.venues = data;
 
 		this.addListeners(window, "resize");	// Add grid adjustment listeners
+	},
+
+	getVenues: function() {
+		return this.venues || [];
 	},
 
 	getCellCount: function () {
