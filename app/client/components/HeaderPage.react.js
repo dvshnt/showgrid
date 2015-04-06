@@ -6,6 +6,7 @@ module.exports = HeaderPage = React.createClass({
 		return (
 			<section id="header--page">
 				<a href="/">SG</a>
+				<a href="/#/search"><div className="nav--button calendar"></div></a>
 			</section>
 		)
 	}

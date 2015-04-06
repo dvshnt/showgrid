@@ -10,6 +10,7 @@ var $ = require('jquery'),
 
 module.exports = Search = React.createClass({
 	componentDidMount: function() {
+	    $(".search--bar__text").focus();
 
 		// Initializing datepicker
 		var picker = new Pikaday({
@@ -17,6 +18,8 @@ module.exports = Search = React.createClass({
 	        format: 'MMMM Do',
 	        minDate: moment().toDate(),
 	        onSelect: function() {
+				$(".search--bar__text").focus();
+
 	            $("#search__date--picker")
 	            	.data("date", this.getMoment().format('YYYY-MM-DD'))
 	            	.addClass("picked");
@@ -107,6 +110,7 @@ module.exports = Search = React.createClass({
 		return (
 			<div className="search--container">
 				<form className="search--bar" action="" onSubmit={ this.search }>
+					<a href="/#/"><div className="nav--button search"></div></a>
 					<input type="button" id="search__date--picker" value={ this.state.day } data-date="" onClick={ this.pickDate } onFocus={ this.focusSearchText } onBlur={ this.blurSearchText }/>
 					<input type="search" className="search--bar__text" placeholder="Search by venue or artist" onFocus={ this.focusDatepicker } onBlur={ this.blurDatepicker } onChange={ this.searchTextChange }/>
 					<input type="button" className="search--bar__clear" onClick={ this.clearSearch }/>
