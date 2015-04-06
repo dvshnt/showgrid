@@ -109,25 +109,9 @@ module.exports = App = React.createClass({
 		});
 	},
 
-	changeMode: function() {
-		var nav = $(".nav--button");
-
-		if (nav.hasClass("search")) {
-			this.transitionTo("/");
-			return;
-		}
-
-		this.transitionTo("/search");
-		return;
-	},
-
 	render: function() {
-		var classes = "nav--button ";
-			classes += (this.getPath() === "/") ? "calendar" : "search";
-
 		return (
 			<div>
-				<div className={ classes } onClick={ this.changeMode }></div>
 				<RouteHandler 
 					venues={ this.state.venues } 
 					range={ this.state.range } 
