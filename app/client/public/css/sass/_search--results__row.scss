@@ -1,0 +1,25 @@
+.search--results__row {
+	margin:25px 0;
+}
+
+.search--results__row__venue {
+	font-size:18pt;
+}
+
+.search--results__row__venue {
+ 	a {
+		color:$venue-title-color;
+		text-decoration:none;
+ 	}
+
+ 	a:hover  {
+		text-decoration:underline;
+ 	}
+}
+
+
+@media screen and (max-width: 400px ) {
+	.search--results__row__venue {
+		font-size:14pt;
+	}
+}
