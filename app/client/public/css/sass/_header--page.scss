@@ -4,6 +4,33 @@
 	text-align:left;
 }
 
+.to--search {
+	position:fixed;
+	top:0px; right:40px;
+	
+	width:60px; height:60px;
+
+	z-index:99;
+	opacity:0.7;
+
+	cursor:pointer;
+
+	background-image: 	url('../img/search--icon.gif');
+	background-repeat:	no-repeat;
+	background-position:10px 14px;
+	
+	@include background-size(32px);
+}
+
+.to--search:hover {
+	opacity:1;
+}
+
+@media screen and (max-width: 400px ) {
+	.to--search {
+		right:5px;
+	}
+}
 
 
 @media screen and (min-width: 450px ) {

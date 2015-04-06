@@ -1,5 +1,5 @@
-.nav--button {
-	position:fixed;
+.to--calendar {
+	position:absolute;
 	top:0px; right:40px;
 	
 	width:60px; height:60px;
@@ -7,30 +7,18 @@
 	z-index:99;
 
 	cursor:pointer;
-}
-
-.nav--button {
 	opacity:0.7;
-}
 
-.nav--button:hover {
-	opacity:1;
-}
-
-.nav--button.calendar {
-	background-image: 	url('../img/search--icon.gif');
-	background-repeat:	no-repeat;
-	background-position:10px 14px;
-	
-	@include background-size(32px);
-}
-
-.nav--button.search {
 	background-image: 	url('../img/close.gif');
 	background-repeat:	no-repeat;
 	background-position:18px;
 	
 	@include background-size(24px);
+
+}
+
+.to--calendar:hover {
+	opacity:1;
 }
 
 
@@ -72,7 +60,11 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 	z-index:97;
 }
 
-#search__date--picker {
+.search--bar__input {
+	display:inline-block;
+}
+
+#search--bar__date--picker {
 	width:auto; height:44px;
 
 	position:relative;
@@ -95,17 +87,17 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 	@include transition(all 0.3s);
 }
 
-#search__date--picker.focused {
+#search--bar__date--picker.focused {
 	border-color: $show-title-color;
 	outline: 0;
 }
 
-#search__date--picker:focus {
+#search--bar__date--picker:focus {
 	border-color: $show-title-color;
 	outline: 0;
 }
 
-#search__date--picker.picked {
+#search--bar__date--picker.picked {
 	width:auto;
 
 	font-family:'Helvetica Neue', helvetica, arial, sans-serif;
@@ -116,11 +108,11 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 	background-image:none;
 }
 
-#search__date--picker:hover {
+#search--bar__date--picker:hover {
 	background:#f3f3f3;
 }
 
-#search__date--picker.picked:hover {
+#search--bar__date--picker.picked:hover {
 	background:#f3f3f3;
 }
 
@@ -218,40 +210,59 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 
 
 @media screen and (max-width: 400px ) {
-	.nav--button {
-		right:5px;
+
+	.search--bar {
+		display: -webkit-flex;
+		display: 		 flex;
 	}
 
-	.nav--button.search {
-		left:0px;
+	.a__to--calendar {
+		-webkit-flex:0 0 3.5em;
+				flex:0 0 3.5em;
+	}
+
+	.to--calendar {
+		position:relative;
+		right:0; top:0;
+
+		-webkit-flex:0 0 3.5em;
+				flex:0 0 3.5em;
 
 		background-image: 	url('../img/back.gif');
 		background-repeat:	no-repeat;
-		background-position:18px;
+		background-position:15px 6px;
 
 		@include background-size(15px);
 	}
 
-	.search--bar {
-		padding:7.5px 0 15px 10px;
-		margin-left:20px;
+	.search--bar__input {
+		vertical-align:top;
+
+		display: -webkit-flex;
+		display: 		 flex;
+
+		-webkit-flex:1 0 19em;
+				flex:1 0 19em;
 	}
 
-	#search__date--picker {
-		font-size:11px;
-
-		max-width:25vw;
-	}
-
-	#search__date--picker.picked {
+	#search--bar__date--picker {
 		font-size:12px;
+
+		-webkit-flex:1 0 5em;
+				flex:1 0 5em;
+	}
+
+	#search--bar__date--picker.picked {
+		font-size:13px;
 	}
 
 	.search--bar__text {
-		width:50.5vw;
-		font-size:13px;
+		font-size:15px;
 
-		padding:12.5px 30px 12.5px 10px;
+		-webkit-flex:1 0 10em;
+				flex:1 0 10em;
+
+		padding:12.5px 10px;
 	}
 
 	.search--bar__button {
@@ -259,8 +270,7 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 	}
 
 	.search--bar__clear {
-		top:3px; left:-25px;
-		background-size:10px;
+		display:none;
 	}
 }
 

@@ -110,10 +110,12 @@ module.exports = Search = React.createClass({
 		return (
 			<div className="search--container">
 				<form className="search--bar" action="" onSubmit={ this.search }>
-					<a href="/#/"><div className="nav--button search"></div></a>
-					<input type="button" id="search__date--picker" value={ this.state.day } data-date="" onClick={ this.pickDate } onFocus={ this.focusSearchText } onBlur={ this.blurSearchText }/>
-					<input type="search" className="search--bar__text" placeholder="Search by venue or artist" onFocus={ this.focusDatepicker } onBlur={ this.blurDatepicker } onChange={ this.searchTextChange }/>
-					<input type="button" className="search--bar__clear" onClick={ this.clearSearch }/>
+					<a href="/#/" className="a__to--calendar"><div className="to--calendar"></div></a>
+					<div className="search--bar__input">
+						<input type="button" id="search--bar__date--picker" value={ this.state.day } data-date="" onClick={ this.pickDate } onFocus={ this.focusSearchText } onBlur={ this.blurSearchText }/>
+						<input type="search" className="search--bar__text" placeholder="Search by venue or artist" onFocus={ this.focusDatepicker } onBlur={ this.blurDatepicker } onChange={ this.searchTextChange }/>
+						<input type="button" className="search--bar__clear" onClick={ this.clearSearch }/>
+					</div>
 					<input type="submit" className="search--bar__button" value="Search"/>
 				</form>
 				<SearchResults results={ this.state.results }/>
