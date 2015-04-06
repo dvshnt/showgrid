@@ -12,8 +12,6 @@ var Route = Router.Route;
 var RouteHandler = Router.RouteHandler;
 
 module.exports = App = React.createClass({
-	mixins: [Router.State, Router.Navigation],
-
 	getInitialState: function() {
 		var venues = GridEngine.getVenues(),
 			range = GridEngine.getCellCount(),
