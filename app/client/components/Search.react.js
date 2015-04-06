@@ -14,13 +14,13 @@ module.exports = Search = React.createClass({
 
 		// Initializing datepicker
 		var picker = new Pikaday({
-	        field: document.getElementById("search__date--picker"),
+	        field: document.getElementById("search--bar__date--picker"),
 	        format: 'MMMM Do',
 	        minDate: moment().toDate(),
 	        onSelect: function() {
 				$(".search--bar__text").focus();
 
-	            $("#search__date--picker")
+	            $("#search--bar__date--picker")
 	            	.data("date", this.getMoment().format('YYYY-MM-DD'))
 	            	.addClass("picked");
 
@@ -31,7 +31,7 @@ module.exports = Search = React.createClass({
 	},
 
     focusDatepicker: function () {
-    	$("#search__date--picker").addClass("focused");
+    	$("#search--bar__date--picker").addClass("focused");
     },
 	   
     focusSearchText: function () {
@@ -39,7 +39,7 @@ module.exports = Search = React.createClass({
     },
 	   
     blurDatepicker: function () {
-    	$("#search__date--picker").removeClass("focused");
+    	$("#search--bar__date--picker").removeClass("focused");
     },
 	   
     blurSearchText: function () {
@@ -53,7 +53,7 @@ module.exports = Search = React.createClass({
 	searchTextChange: function () {
 		var searchText = $(".search--bar__text"),
 			searchClear = $(".search--bar__clear"),
-			datepicker = $("#search__date--picker");
+			datepicker = $("#search--bar__date--picker");
 
 		// If there is content in input text or datepicker, show the clear button
 		if ((searchText.val() !== "" || datepicker.hasClass("picked")) && !searchClear.hasClass("ready")) {
@@ -71,7 +71,7 @@ module.exports = Search = React.createClass({
 		var _this = this;
 
 		var query = $(".search--bar__text").val().trim(),
-			date = $("#search__date--picker").data("date");
+			date = $("#search--bar__date--picker").data("date");
 
 		$.ajax({
 			type: "GET",
@@ -97,7 +97,7 @@ module.exports = Search = React.createClass({
 	clearSearch: function() {
 		var searchText = $(".search--bar__text"),
 			searchClear = $(".search--bar__clear"),
-			datepicker = $("#search__date--picker");
+			datepicker = $("#search--bar__date--picker");
 
 		datepicker.removeClass("picked").val("Select Date").data("date", "");
 

@@ -1,9 +1,7 @@
 .search--results {
 	width:800px;
 
-	margin:100px auto;
-
-	overflow:scroll;
+	margin:110px auto;
 }
 
 .search__no--results {
@@ -16,11 +14,9 @@
 
 @media screen and (max-width: 400px ) {
 	.search--results {
-		margin:60px auto;
+		margin:100px auto;
 
 		width:92.5%;
-
-		overflow:scroll;
 	}
 }
 
