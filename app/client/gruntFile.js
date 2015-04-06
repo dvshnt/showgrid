@@ -44,7 +44,7 @@ module.exports = function(grunt) {
 					debug: true,
 					transform: ['reactify']
 				},
-				src: './app.react.js',
+				src: './spark.react.js',
 				dest: './public/js/bundle.js'
 			},
 			build: {
@@ -52,7 +52,7 @@ module.exports = function(grunt) {
 					debug: false,
 					transform: ['reactify']
 				},
-				src: './app.react.js',
+				src: './spark.react.js',
 				dest: './public/js/bundle.js'
 			}
 		},
@@ -70,7 +70,7 @@ module.exports = function(grunt) {
 				tasks: ['sass:dev', 'copy:css']
 			},
 			js: {
-				files: ['./components/*.js', './app.react.js', './util/*.js'],
+				files: ['./components/*.js', './spark.react.js', './util/*.js'],
 				tasks: ['browserify:dev', 'copy:js']
 			},
 			html : {
