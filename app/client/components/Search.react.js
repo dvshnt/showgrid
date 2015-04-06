@@ -79,6 +79,8 @@ module.exports = Search = React.createClass({
 				day: (data.day) ? moment(data.day).format("MMMM Do") : "Select Date" 
 			});
 		});	
+
+		return false;
 	},
 
 	searchKeyDown: function(e) {
@@ -104,12 +106,12 @@ module.exports = Search = React.createClass({
 	render: function() {
 		return (
 			<div className="search--container">
-				<div className="search--bar">
+				<form className="search--bar" action="" onSubmit={ this.search }>
 					<input type="button" id="search__date--picker" value={ this.state.day } data-date="" onClick={ this.pickDate } onFocus={ this.focusSearchText } onBlur={ this.blurSearchText }/>
-					<input type="text" className="search--bar__text" placeholder="Search by venue or artist" onKeyDown={ this.searchKeyDown } onFocus={ this.focusDatepicker } onBlur={ this.blurDatepicker } onChange={ this.searchTextChange }/>
+					<input type="search" className="search--bar__text" placeholder="Search by venue or artist" onFocus={ this.focusDatepicker } onBlur={ this.blurDatepicker } onChange={ this.searchTextChange }/>
 					<input type="button" className="search--bar__clear" onClick={ this.clearSearch }/>
-					<input type="button" className="search--bar__button" value="Search" onClick={ this.search }/>
-				</div>
+					<input type="submit" className="search--bar__button" value="Search"/>
+				</form>
 				<SearchResults results={ this.state.results }/>
 			</div>
 		)
