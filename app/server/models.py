@@ -7,7 +7,7 @@ class Venue(models.Model):
 	name = models.CharField(max_length=200)
 	address = models.ForeignKey('Address')
 	website = models.CharField(max_length=200)
-	image = models.ImageField (upload_to='/static/showgrid/img/venues/')
+	image = models.ImageField (upload_to='showgrid/img/venues/')
 
 	autofill_calendar_url = models.CharField(max_length=200, blank=True)
 

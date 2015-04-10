@@ -10,7 +10,9 @@ var $ = require('jquery'),
 
 module.exports = Search = React.createClass({
 	componentDidMount: function() {
-	    $(".search--bar__text").focus();
+		var _this = this;	    
+
+		$(".search--bar__text").focus();
 
 		// Initializing datepicker
 		var picker = new Pikaday({
@@ -25,7 +27,8 @@ module.exports = Search = React.createClass({
 	            	.addClass("picked");
 
 	           	$(".search--bar__clear").addClass("ready");
-	        }
+	        	_this.search();
+		}
 	    });
 
 	},
@@ -72,6 +75,9 @@ module.exports = Search = React.createClass({
 
 		var query = $(".search--bar__text").val().trim(),
 			date = $("#search--bar__date--picker").data("date");
+	
+                ga('send', 'event', 'search', 'date', date);
+                ga('send', 'event', 'search', 'query', query);    
 
 		$.ajax({
 			type: "GET",

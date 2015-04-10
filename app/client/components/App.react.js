@@ -52,6 +52,8 @@ module.exports = App = React.createClass({
 	},
 
 	nextPage: function () {
+		ga('send', 'event', 'paging', 'click', 'next page');		
+
 		var _this = this;
 
 		// Get current calendar range
@@ -80,6 +82,8 @@ module.exports = App = React.createClass({
 	},
 
 	previousPage: function () {
+		ga('send', 'event', 'paging', 'click', 'previous page');  
+
 		var _this = this;
 
 		// Get current calendar range
