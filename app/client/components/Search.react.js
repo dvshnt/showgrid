@@ -10,9 +10,9 @@ var $ = require('jquery'),
 
 module.exports = Search = React.createClass({
 	componentDidMount: function() {
-		var _this = this;	    
+		var _this = this;
 
-		$(".search--bar__text").focus();
+	    $(".search--bar__text").focus();
 
 		// Initializing datepicker
 		var picker = new Pikaday({
@@ -27,8 +27,9 @@ module.exports = Search = React.createClass({
 	            	.addClass("picked");
 
 	           	$(".search--bar__clear").addClass("ready");
-	        	_this.search();
-		}
+	           	
+	           	_this.search();
+	        }
 	    });
 
 	},
