@@ -8,7 +8,7 @@ from django.contrib.localflavor.us.models import USStateField
 
 class Venue_v2(models.Model):
 	name = models.CharField(max_length=200)
-	address = models.ForeignKey('Address_v2')
+	address = models.ForeignKey('Address')
 	image = models.ImageField (upload_to='showgrid/img/venues/')
 	website = models.URLField()
 
@@ -42,25 +42,6 @@ class Venue_v2(models.Model):
 			pass
 		
 		return self.name
-
-
-
-class Address_v2(models.Model):
-	street = models.CharField(_("street"), max_length=128)
-	city = models.CharField(_("city"), max_length=64)
-	state = models.CharField(_("state"), max_length=2)
-	zip_code = models.CharField(_("zip code"), max_length=10)
-
-	def __unicode__ (self):
-		return self.street
-
-	def json(self):
-		return {
-			'street' :self.street,
-			'state' : self.state,
-			'city' : self.city,
-			'zip_code' : self.zip_code
-		}
 
 
 
