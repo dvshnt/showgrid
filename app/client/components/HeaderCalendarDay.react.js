@@ -4,14 +4,11 @@ var React = require('react'),
 
 module.exports = HeaderCalendarDay = React.createClass({
 	render: function() {
-		var date = DateManager.formatHeaderCalendarDay(this.props.day),
-			dow = date.split(" ", 1)[0],
-			day = date.split(" ")[1] + " " + date.split(" ")[2];
-
+		var date = DateManager.formatHeaderCalendarDay(this.props.day);
 
 		return (
-			<div className="cell">
-				<span>{ dow }<br/>{ day }</span>
+			<div className="day">
+				<span>{ date }</span>
 			</div>
 		)
 	}
