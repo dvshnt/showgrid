@@ -6,16 +6,14 @@ var React = require('react'),
 module.exports = HeaderTable = React.createClass({
 	render: function() {
 		return (
-			<section id="header--table">
-				<div className="cell">
-					<span>Venue</span>
-				</div>
+			<div id="header__calendar">
+				<div id="datepicker" className="month"><span>April</span></div>
 				{
 					this.props.days.map(function(day) {
 						return <HeaderCalendarDay key={ day.id } day={ day.date }/>
 	    			})
 				}
-			</section>
+			</div>
 		)
 	}
 });
