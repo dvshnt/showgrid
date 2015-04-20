@@ -1,0 +1,80 @@
+#header__page {
+	position:relative;
+
+	width:94%; height:60px;
+
+	margin:0px auto;
+}
+
+#header__page--logo {
+	display:inline-block;
+
+	width:200px; height:100%;
+
+	background-image:url('../img/showgrid--mark.gif');
+	background-repeat:no-repeat;
+	background-position:0 15px;
+	background-size:200px;
+}
+
+#header__page--location {
+
+	margin:0 0 0 20px;
+
+	vertical-align:top;
+	line-height:65px;
+
+	text-transform:uppercase;
+	font-weight:300;
+	font-size:112.5%;
+}
+
+#header__page--search {
+	position:absolute;
+	top:0; right:0;
+
+	height:100%;
+
+	line-height:60px;
+}
+
+#header__page--search {
+	input.search[type=text] {
+		width:250px;
+
+		padding:5px 8px;
+
+		font-size:16px;
+
+		border:1px solid #e5e5e5;
+		border-radius:1px;
+	}
+
+	input[type=text].search:focus {
+		border:1px solid #5697d0;
+		outline:none;
+	}
+
+
+	input.search[type=button] {
+		position:absolute;
+		top:20px; right:10px;
+
+		width:20px; height:20px;
+
+		background-repeat:no-repeat;
+		background-image: url('../img/search.gif');
+		background-size:20px;
+
+		background-color:transparent;
+		border:0;
+
+		opacity:0.5;
+
+		cursor:pointer;
+	}
+
+	input.search:hover {
+		opacity:1;
+	}
+}
