@@ -30,7 +30,7 @@ module.exports = DateManager = {
 
 	formatHeaderCalendarDay: function (day) {
 		var date = moment(day, 'MMMM Do YYYY'),
-			date = date.format('dddd MMMM D');
+			date = date.format('ddd D');
 
 		return date;
 	},
