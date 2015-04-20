@@ -8,7 +8,7 @@ var React = require('react'),
 module.exports = Header = React.createClass({
 	render: function() {
 		return (
-			<header>
+			<header id="header">
 				<HeaderPage/>
 				<HeaderCalendar days={ this.props.days }/>
 			</header>

@@ -1,12 +1,23 @@
-header {
+#header {
 	position:fixed;
+	top:0; left:0;
 
 	width:100%;
 
-	background:#fff;
+	background:#f6f6f6;
+	border-bottom:1px solid #707070;
 
 	z-index:10;
+
+	-webkit-transition: -webkit-transform .3s ease-in-out;
+	   -moz-transition:    -moz-transform .3s ease-in-out;
+		 -o-transition: 	 -o-transform .3s ease-in-out;
+			transition: 		transform .3s ease-in-out;
 }
 
-@import "header--page";
-@import "header--calendar";
+body.sleep #header {
+	@include transform(translate(0, -60px));
+}
+
+@import "header__page";
+@import "header__calendar";
