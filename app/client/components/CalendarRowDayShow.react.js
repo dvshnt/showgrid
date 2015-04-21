@@ -19,8 +19,10 @@ module.exports = CalendarRowDayShow = React.createClass({
 
 		return (
 			<div className="show">
-	            <div className="time">{ time }</div>
-	        	<div className="artist">{ artist }</div>
+				<div className="show--info">
+	            	<div className="time">{ time }</div>
+				</div>
+	        	<div className="main">{ artist }</div>
 	        </div>
 		)
 	}
