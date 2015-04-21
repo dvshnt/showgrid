@@ -3,6 +3,7 @@ var $ = require('jquery'),
 	React = require('react'),
 	Router = require('react-router'),
 	moment = require('moment'),
+	Pikaday = require('../util/pikaday'),
 
 	GridEngine = require('../util/GridEngine'),
 	DateManager = require('../util/DateManager');
@@ -34,6 +35,22 @@ module.exports = App = React.createClass({
 				range: GridEngine.getCellCount()
 			});
 		});
+
+		var picker = new Pikaday({
+        	field: document.getElementById('datepicker'),
+	        format: 'D MMM YYYY',
+	        minDate: moment().toDate(),
+	        onSelect: function() {
+	        	var start = this.getMoment();
+	        	var days = DateManager.getDaysArray(start, _this.state.range);
+
+				_this.setState({
+					days: days
+				});
+	        	
+	            console.log('Calendar start changed to ' + days[0]);
+	        }
+	    });
 	},
 
 	componentWillUpdate: function(nextProps, nextState) {
