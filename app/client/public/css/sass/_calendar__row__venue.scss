@@ -1,0 +1,28 @@
+.calendar__row {
+	.venue {
+		font-size:16px;
+		-webkit-flex:0 0 10em;
+				flex:0 0 10em;
+	}
+
+	.venue .name {
+		margin:40px 0 5px 0;
+
+		font-size:18px;
+		text-align:center;
+	} 
+
+	.venue .name a {
+		color:#333;
+		font-weight:400;
+		text-decoration: none;
+	}
+
+	.venue .address {
+		text-align:center;
+		font-size:12px;
+		color:#aaaaaa;
+	}
+}
+
+@import "venue--img";
