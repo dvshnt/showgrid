@@ -1,5 +1,15 @@
 #calendar {
-	padding:110px 0 0 0;
+	width:100%;
+
+	margin:0;
+
+	@include transform(translate(0, 120px));
+
+	@include transition--transform(.3s ease-in-out);
 }
 
-@import "calendar--row";
+body.sleep #calendar {
+	@include transform(translate(0, 60px));
+}
+
+@import "calendar__row";
