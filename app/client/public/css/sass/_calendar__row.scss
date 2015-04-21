@@ -1,0 +1,15 @@
+.calendar__row {
+	display:-webkit-flex;
+	display:		flex;
+
+	width:100%;
+
+	border-bottom:1px solid rgb(229,229,229);
+}
+
+.calendar__row > div {
+	padding:40px 0;
+}
+
+@import "calendar__row__venue";
+@import "calendar__row__day";
