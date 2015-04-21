@@ -42,13 +42,27 @@ module.exports = App = React.createClass({
 	        minDate: moment().toDate(),
 	        onSelect: function() {
 	        	var start = this.getMoment();
-	        	var days = DateManager.getDaysArray(start, _this.state.range);
 
-				_this.setState({
-					days: days
+				var dataURL = GridEngine.domain + '/i/grid/' + 
+								start.format('YYYY') + '/' + 
+								start.format('M') + '/' + 
+								start.format('D') + '?range=' + _this.state.range;
+				
+
+				$.ajax({
+					type: "GET",
+					url: dataURL,
+				}).success(function(data, status) {
+	        		var days = DateManager.getDaysArray(start, _this.state.range);
+
+					_this.setState({
+						venues: data,
+						days: days
+					});
+		        	
+		            console.log('Calendar start changed to ' + days[0]);
+		            return true;
 				});
-	        	
-	            console.log('Calendar start changed to ' + days[0]);
 	        }
 	    });
 	},
