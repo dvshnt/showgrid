@@ -20,6 +20,14 @@
 			transform: $trans;
 }
 
+@mixin transition--transform($trans) {
+	-webkit-transition: -webkit-transform $trans;
+	   -moz-transition:    -moz-transform $trans;
+	     -o-transition:      -o-transform $trans;
+			transition:			transform $trans;
+
+}
+
 @mixin sharpen--text {
 	-webkit-font-smoothing: antialiased;
 	   -moz-font-smoothing: antialiased;
