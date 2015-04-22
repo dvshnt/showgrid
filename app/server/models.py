@@ -55,10 +55,10 @@ class Show_v2(models.Model):
 
 	venue = models.ForeignKey('Venue_v2')
 	
-	price = models.PositiveSmallIntegerField(default=0, blank=True)
+	price = models.PositiveSmallIntegerField(default=-1, blank=True)
 	ticket = models.URLField(blank=True)
 	soldout = models.BooleanField(default=False)
-	onsale = models.DateTimeField(blank=True)
+	onsale = models.DateTimeField(default=datetime.datetime.now(), blank=True)
 
 	age = models.PositiveSmallIntegerField(default=0, blank=True)
 
@@ -71,9 +71,15 @@ class Show_v2(models.Model):
 			'id' : self.id,
 			'title': self.title,
 			'headliners': self.headliners,
-			'date' : str(self.date),
+			'openers': self.openers,
 			'website' : self.website,
-			'venue' : self.venue.name,
+			'date' : str(self.date),
+			'price' : self.price,
+			'ticket' : self.ticket,
+			'soldout' : self.soldout,
+			'onsale' : str(self.onsale),
+			'age' : self.age,
+			'venue' : self.venue.name
 		}
 
 	def json_max(self):
