@@ -73,9 +73,9 @@ def check_venues(request):
 	d2 = d1 + timedelta(days=365)
 
 	data = []
-	venues = sorted(Venue.objects.all(), key=attrgetter('alphabetical_title'), reverse=False)
+	venues = sorted(Venue_v2.objects.all(), key=attrgetter('alphabetical_title'), reverse=False)
 	for venue in venues:
-		shows = Show.objects.filter(venue=venue.id).filter(date__range=
+		shows = Show_v2.objects.filter(venue=venue.id).filter(date__range=
 			[ d1.strftime("%Y-%m-%d"), d2.strftime("%Y-%m-%d") ]
 		).order_by('date')
 

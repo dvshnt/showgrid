@@ -42,7 +42,7 @@
 				{% for show in venue.shows %}
 				<li>
 					<div class="time">{{ show.date }}</div>
-					<div class="band">{{ show.band_name }}</div>
+					<div class="band">{{ show.headliners }}</div>
 				</li>
 				{% endfor %}
 			</ol>
@@ -50,9 +50,17 @@
 		{% endfor %}
 	</body>
 
+    <script src='https://code.jquery.com/jquery-2.1.3.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js'></script>
     <script>
 
+    	$(".time").each(function(index) {
+    		var time = $(this).html();
 
+    		var readable = moment(time).format('MMM D YYYY, h:mm A');
+
+    		$(this).html(readable);
+    	});
 
     </script>
 </html>
