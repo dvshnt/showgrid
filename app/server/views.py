@@ -137,7 +137,6 @@ def format_results(shows):
 			results.append(venue)
 
 	for show in shows:
-		print show.soldout
 		for result in results:
 			if result['name'] == show.venue:
 				result['shows'].append({
