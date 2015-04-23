@@ -1,14 +1,14 @@
-.search--results__row {
+.search__row {
 	margin:25px 0;
 }
 
-.search--results__row__venue {
+.search__row__venue {
 	font-size:18pt;
 }
 
-.search--results__row__venue {
+.search__row__venue {
  	a {
-		color:$venue-title-color;
+ 		color:#333333;
 		text-decoration:none;
  	}
 
@@ -19,7 +19,7 @@
 
 
 @media screen and (max-width: 400px ) {
-	.search--results__row__venue {
+	.search__row__venue {
 		font-size:14pt;
 	}
 }
