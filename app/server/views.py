@@ -1,6 +1,8 @@
 import inspect, itertools, json
 from datetime import timedelta, date, datetime
 
+import datetime as datetime_2
+
 from operator import attrgetter
 
 from pytz import timezone
@@ -44,9 +46,9 @@ def grid(request, year=None, month=None, day=None):
 			d2 = d1 + timedelta(days=int(request.GET['range']))
 
 		data = []
-		venues = sorted(Venue.objects.all(), key=attrgetter('alphabetical_title'), reverse=False)
+		venues = sorted(Venue_v2.objects.all(), key=attrgetter('alphabetical_title'), reverse=False)
 		for venue in venues:
-			shows = Show.objects.filter(venue=venue.id).filter(date__range=
+			shows = Show_v2.objects.filter(venue=venue.id).filter(date__range=
 				[ d1.strftime("%Y-%m-%d"), d2.strftime("%Y-%m-%d") ]
 			).order_by('date')
 
@@ -105,22 +107,14 @@ def _search_result_to_dict(result):
 def get_search_results(request):
 	if request.method == "GET":
 		query = request.GET['q']
-		day = request.GET['d']
 
-		if day == "":
-			querySet = SearchQuerySet().filter(text=query).order_by('venue')
-		elif query == "":
-			querySet = SearchQuerySet().filter(day__exact=day).order_by('venue')
-		else:
-			querySet = SearchQuerySet().filter(day__exact=day, text=query).order_by('venue')
-
+		querySet = SearchQuerySet().filter(text=query).order_by('venue')
 
 		results = format_results(querySet)
 		shows = map(_search_result_to_dict, results)
 
 		result = {
 			"query": query,
-			"day": day,
 			"results": shows
 		}
 
@@ -136,19 +130,27 @@ def format_results(shows):
 
 	for show in shows:
 		if show.venue not in venues:
-			venue = Venue.objects.get(name=show.venue).json()
+			venue = Venue_v2.objects.get(name=show.venue).json()
 			venue['shows'] = []
 
 			venues.append(show.venue)
 			results.append(venue)
 
 	for show in shows:
+		print show.soldout
 		for result in results:
 			if result['name'] == show.venue:
 				result['shows'].append({
-					'band': show.band,
+					'title': show.title,
+					'headliners': show.headliners,
+					'openers': show.openers,
 					'date': convert_timezone(show.date),
-					'website': show.website
+					'website': show.website,
+					'price': show.price,
+					'age': show.age,
+					'ticket': show.ticket,
+					'soldout': show.soldout,
+					'onsale': show.onsale
 				})
 				break
 
@@ -195,9 +197,16 @@ def group_by_date(shows):
 			tempDate = show['date'].strftime('%m-%d-%Y')
 			if tempDate == date:
 				temp[tempDate].append({
-					'band': show['band'],
+					'title': show['title'],
+					'headliners': show['headliners'],
+					'openers': show['openers'],
 					'date': str(show['date']),
-					'website': show['website']
+					'website': show['website'],
+					'price': show['price'],
+					'age': show['age'],
+					'ticket': show['ticket'],
+					'soldout': show['soldout'],
+					'onsale': str(show['onsale'])
 				})
 				break
 
