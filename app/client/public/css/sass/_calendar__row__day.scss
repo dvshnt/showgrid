@@ -20,4 +20,12 @@
 
 }
 
+@media screen and (max-width: 500px ) {
+	.calendar__row {
+		.day {
+			padding:40px 0.25em;
+		}
+	}
+}
+
 @import "calendar__row__day--show";

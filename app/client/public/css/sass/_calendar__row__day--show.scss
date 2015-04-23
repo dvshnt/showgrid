@@ -2,10 +2,40 @@
 	.show {
 		padding:20px 7px;
 	}
+}	
+
+
+.calendar__row .day .show:hover {
+	.age {
+		background:#d5d5d5;
+	}
+
+	.ticket {
+		border:1px solid rgb(0,222,144);
+		color:rgb(0,222,144);
+	}
 }
 
 .calendar__row .day {
 	.show {
+
+		a {
+			color:#333;
+			text-decoration:none;
+		}
+
+		a:hover {
+			text-decoration:none;
+		}
+
+		a:hover .main {
+			text-decoration:underline;
+		}
+
+		a:hover .extra {
+			text-decoration:underline;
+		}
+
 		.time {
 			font-size:13px;
 			color:#aaaaaa;
@@ -34,10 +64,15 @@
 			font-size:10px;
 			color:#ffffff;
 
-			-webkit-transition: all .2s ease;
-			   -moz-transition: all .2s ease;
-				 -o-transition: all .2s ease;
-					transition: all .2s ease;
+			@include transition(all .2s ease);
+		}
+
+		.title {
+			margin:5px 0 0 0;
+
+			color:#666666;
+			font-size:14px;
+			font-weight:300;
 		}
 
 		.main {
@@ -45,15 +80,6 @@
 
 			font-size:18px;
 			font-weight:700;
-		}
-
-		.main a {
-			color:#333;
-			text-decoration: none;
-		}
-
-		.main a:hover {
-			text-decoration:underline;
 		}
 
 		.extra {
@@ -134,16 +160,21 @@
 		}
 	}
 
-}		
+}	
 
+@media screen and (max-width: 500px ) {
+	.calendar__row .day {
+		.show {
+			.ticket {
+				border:1px solid rgb(0,222,144);
+				color:rgb(0,222,144);
+			}
 
-.calendar__row .day .show:hover {
-	.age {
-		background:#d5d5d5;
-	}
+			
+			.age {
+				background:#d5d5d5;
+			}
 
-	.ticket {
-		border:1px solid rgb(0,222,144);
-		color:rgb(0,222,144);
+		}
 	}
 }
