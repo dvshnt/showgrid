@@ -1,5 +1,6 @@
 /** @jsx React.DOM */
-var React = require('react');
+var $ = require('jquery'),
+	React = require('react');
 
 module.exports = HeaderPage = React.createClass({
 	render: function() {
@@ -7,10 +8,11 @@ module.exports = HeaderPage = React.createClass({
 			<div id="header__page">
 				<div id="header__page--logo"></div>
 				<span id="header__page--location">Nashville</span>
-				<div id="header__page--search">
+
+				<form id="header__page--search"  action="" onSubmit={ this.props.launchSearch }>
 					<input className="search" type="text" placeholder="Search by venue or artist"/>
-					<input className="search" type="button"/>
-				</div>
+					<input className="search" type="submit" value=""/>
+				</form>
 			</div>
 		)
 	}

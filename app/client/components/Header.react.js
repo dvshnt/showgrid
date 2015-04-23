@@ -9,7 +9,7 @@ module.exports = Header = React.createClass({
 	render: function() {
 		return (
 			<header id="header">
-				<HeaderPage/>
+				<HeaderPage launchSearch={ this.props.launchSearch }/>
 				<HeaderCalendar days={ this.props.days }/>
 			</header>
 		)

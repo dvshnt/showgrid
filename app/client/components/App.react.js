@@ -18,10 +18,13 @@ module.exports = App = React.createClass({
 			range = GridEngine.getCellCount(),
 			days = DateManager.getDaysArray(moment(), range);
 
+		var searchQuery = "";
+
 		return {
 			venues: venues,
 			range: range,
-			days: days
+			days: days,
+			query: searchQuery
 		};
 	},
 
@@ -142,6 +145,20 @@ module.exports = App = React.createClass({
 		});
 	},
 
+	launchSearch: function() {
+		var search = $("input.search[type=text]").val().trim();
+
+		if (search || window.innerWidth <= 500) {
+			this.setState({
+				query: search
+			});
+
+			window.location.href = "/#/search";
+		}
+
+		return false;
+	},
+
 	render: function() {
 		return (
 			<div>
@@ -149,8 +166,12 @@ module.exports = App = React.createClass({
 					venues={ this.state.venues } 
 					range={ this.state.range } 
 					days={ this.state.days }
+
 					next={ this.nextPage }
-					previous={ this.previousPage }/>
+					previous={ this.previousPage }
+
+					query={ this.state.query }
+					launchSearch={ this.launchSearch }/>
 			</div>
 		)
 	}

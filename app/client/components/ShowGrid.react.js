@@ -41,7 +41,7 @@ module.exports = ShowGrid = React.createClass({
 				<ControlNext next={ this.props.next }/>
 				<ControlPrevious previous={ this.props.previous }/>
 
-				<Header days={ this.props.days } />
+				<Header days={ this.props.days } launchSearch={ this.props.launchSearch }/>
 				<Swipeable onSwipedLeft={ this.props.next } onSwipedRight={ this.props.previous }>
 					<Calendar venues={ this.props.venues } days={ this.props.days }/>
 					<Footer/>
