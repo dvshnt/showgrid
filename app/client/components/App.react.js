@@ -3,6 +3,7 @@ var $ = require('jquery'),
 	React = require('react'),
 	Router = require('react-router'),
 	moment = require('moment'),
+	Pikaday = require('../util/pikaday'),
 
 	GridEngine = require('../util/GridEngine'),
 	DateManager = require('../util/DateManager');
@@ -17,10 +18,13 @@ module.exports = App = React.createClass({
 			range = GridEngine.getCellCount(),
 			days = DateManager.getDaysArray(moment(), range);
 
+		var searchQuery = "";
+
 		return {
 			venues: venues,
 			range: range,
-			days: days
+			days: days,
+			query: searchQuery
 		};
 	},
 
@@ -34,6 +38,36 @@ module.exports = App = React.createClass({
 				range: GridEngine.getCellCount()
 			});
 		});
+
+		var picker = new Pikaday({
+        	field: document.getElementById('datepicker'),
+	        format: 'D MMM YYYY',
+	        minDate: moment().toDate(),
+	        onSelect: function() {
+	        	var start = this.getMoment();
+
+				var dataURL = GridEngine.domain + '/i/grid/' + 
+								start.format('YYYY') + '/' + 
+								start.format('M') + '/' + 
+								start.format('D') + '?range=' + _this.state.range;
+				
+
+				$.ajax({
+					type: "GET",
+					url: dataURL,
+				}).success(function(data, status) {
+	        		var days = DateManager.getDaysArray(start, _this.state.range);
+
+					_this.setState({
+						venues: data,
+						days: days
+					});
+		        	
+		            console.log('Calendar start changed to ' + days[0]);
+		            return true;
+				});
+	        }
+	    });
 	},
 
 	componentWillUpdate: function(nextProps, nextState) {
@@ -111,6 +145,20 @@ module.exports = App = React.createClass({
 		});
 	},
 
+	launchSearch: function() {
+		var search = $("input.search[type=text]").val().trim();
+
+		if (search || window.innerWidth <= 500) {
+			this.setState({
+				query: search
+			});
+
+			window.location.href = "/#/search";
+		}
+
+		return false;
+	},
+
 	render: function() {
 		return (
 			<div>
@@ -118,8 +166,12 @@ module.exports = App = React.createClass({
 					venues={ this.state.venues } 
 					range={ this.state.range } 
 					days={ this.state.days }
+
 					next={ this.nextPage }
-					previous={ this.previousPage }/>
+					previous={ this.previousPage }
+
+					query={ this.state.query }
+					launchSearch={ this.launchSearch }/>
 			</div>
 		)
 	}

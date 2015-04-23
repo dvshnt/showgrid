@@ -8,8 +8,8 @@ var React = require('react'),
 module.exports = Header = React.createClass({
 	render: function() {
 		return (
-			<header>
-				<HeaderPage/>
+			<header id="header">
+				<HeaderPage launchSearch={ this.props.launchSearch }/>
 				<HeaderCalendar days={ this.props.days }/>
 			</header>
 		)

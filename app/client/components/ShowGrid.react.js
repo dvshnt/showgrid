@@ -15,13 +15,33 @@ var $ = require('jquery'),
 React.initializeTouchEvents(true);
 
 module.exports = ShowGrid = React.createClass({
+	componentDidMount: function() {
+		var previousScroll = 0,
+			headerOrgOffset = $('#header').height();
+
+		$(window).scroll(function() {
+			var currentScroll = $(this).scrollTop();
+
+			if (currentScroll > headerOrgOffset) {
+				if (currentScroll > previousScroll) {
+					$('body').addClass("sleep");
+				} else {
+					$('body').removeClass("sleep");
+				}
+			} else {
+				$('body').removeClass("sleep");
+			}
+			previousScroll = currentScroll;
+		})
+	},
+
 	render: function() {
 		return (
 			<section id="container">
 				<ControlNext next={ this.props.next }/>
 				<ControlPrevious previous={ this.props.previous }/>
 
-				<Header days={ this.props.days } />
+				<Header days={ this.props.days } launchSearch={ this.props.launchSearch }/>
 				<Swipeable onSwipedLeft={ this.props.next } onSwipedRight={ this.props.previous }>
 					<Calendar venues={ this.props.venues } days={ this.props.days }/>
 					<Footer/>

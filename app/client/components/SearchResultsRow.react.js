@@ -5,8 +5,8 @@ var React = require('react/addons'),
 module.exports = SearchResultsRow = React.createClass({
 	render: function() {
 		return (
-			<div className="search--results__row">
-				<div className="search--results__row__venue">
+			<div className="search__row">
+				<div className="search__row__venue">
 					<a href={ this.props.result.website } target="_blank">{ this.props.result.name }</a>
 				</div>
 				{

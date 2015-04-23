@@ -1,0 +1,52 @@
+#header__calendar {
+	display:-webkit-flex;
+	display:		flex;
+
+	-webkit-align-items: center;
+				align-items: center;
+
+	width:100%;
+}
+
+#header__calendar {
+
+	.month {
+		-webkit-flex:0 0 10em;
+				flex:0 0 10em;
+
+		line-height:60px;
+		text-align:center;
+	}
+
+	.month:hover {
+		background:rgba(0,0,0,0.05);
+		cursor:pointer;
+	}
+
+	.month:after {
+		clear:both;
+	    display:inline;
+	    position:relative;
+	    top:11px;
+	    left:10px;
+	    content: "";
+	    height:0;
+	    width:0;
+	    padding:0;
+	    margin:-8px;
+	    border:5px solid transparent;
+	    border-top-color:#444444;
+	}
+
+	.month span {
+		position:relative;
+		left:-0.5em;
+		color:#444444;
+		font-size:125%;
+		text-transform:uppercase;
+		font-weight:300;
+	}
+
+}
+
+@import "header__calendar--day";

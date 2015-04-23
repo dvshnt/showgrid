@@ -9,7 +9,7 @@ module.exports = CalendarRow = React.createClass({
 		var venue = this.props.venue;
 
 		return (
-			<div className="calendar--row">
+			<div className="calendar__row">
 				<CalendarRowVenue venue={ venue }/>
 				{
 					this.props.days.map(function(day) {

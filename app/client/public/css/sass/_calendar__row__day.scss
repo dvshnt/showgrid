@@ -1,0 +1,31 @@
+.calendar__row {
+
+	.day {
+		-webkit-flex:1 0 10.625em;
+				flex:1 0 10.625em;
+				
+		display:-webkit-flex;
+		display:		flex;
+
+		-webkit-flex-direction: column;
+					flex-direction: column;
+
+		-webkit-justify-content: baseline;
+				justify-content: baseline;
+	}
+
+	.day:nth-child(even) {
+		background-color:#fbfbfb;
+	}
+
+}
+
+@media screen and (max-width: 500px ) {
+	.calendar__row {
+		.day {
+			padding:40px 0.25em;
+		}
+	}
+}
+
+@import "calendar__row__day--show";

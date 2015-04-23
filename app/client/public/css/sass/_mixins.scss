@@ -12,6 +12,22 @@
 			transition: $trans;
 }
 
+@mixin transform($trans) {
+	-webkit-transform: $trans;
+	   -moz-transform: $trans;
+		-ms-transform: $trans;
+		 -o-transform: $trans;
+			transform: $trans;
+}
+
+@mixin transition--transform($trans) {
+	-webkit-transition: -webkit-transform $trans;
+	   -moz-transition:    -moz-transform $trans;
+	     -o-transition:      -o-transform $trans;
+			transition:			transform $trans;
+
+}
+
 @mixin sharpen--text {
 	-webkit-font-smoothing: antialiased;
 	   -moz-font-smoothing: antialiased;

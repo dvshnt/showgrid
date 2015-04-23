@@ -9,9 +9,9 @@ module.exports = GridEngine = {
 	MIN_NUM_CELLS: 2, 	// Min number of cells in row
 	MAX_NUM_CELLS: 7,	// Max number of cells in row
 
-	V_EM_UNIT_LG: 12,		// 'em' value of venue cell
+	V_EM_UNIT_LG: 10,		// 'em' value of venue cell
 	V_EM_UNIT_SM: 10,		// 'em' value of venue cell
-	S_EM_UNIT: 9,		// 'em' value of show cells
+	S_EM_UNIT: 10.625,		// 'em' value of show cells
 	F_PX_UNIT: 16,		// 'px' value of default font
 
 	V_WIDTH: null,	// venue cell width

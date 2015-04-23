@@ -1,8 +1,17 @@
-footer {
-	padding:0 0.5em 20px 0.75em;
+#footer {
+	display:block;
+
+	padding:0 0.75em 20px 0.75em;
+
+	@include transform(translate(0, 120px));
+	@include transition--transform(.3s ease-in-out);
 }
 
-footer {
+body.sleep #footer {
+	@include transform(translate(0, 60px));
+}
+
+#footer {
 	.input--prompt {
 		max-width:700px;
 
@@ -10,7 +19,7 @@ footer {
 	}
 
 	a {
-		color: #428bca;
+		color: rgb(0,222,144);
 		font-weight:bold;
 		text-decoration: none;
 
@@ -18,7 +27,7 @@ footer {
 	}
 
 	a:hover {
-		color: #428bca;
+		color: rgb(0,222,144);
 		text-decoration: underline;
 	}
 
@@ -27,7 +36,7 @@ footer {
 	}
 
 	h3 {
-		font-family:$thick-font;
+		font-weight:700;
 		font-size:24px;
 		text-transform:uppercase; 
 		font-weight:bold; 
@@ -64,21 +73,27 @@ footer {
 		}
 		
 		input[type=submit] {
-			position:relative;
+			margin:15px 0 0 0;
+			padding:8px 20px;
 
-			padding:3px 22px; 
+			color:rgb(0,222,144);
+			font-size:18px;
+			font-weight:300;
 
-			border:none;
-			background:#7fd2a5;
+			text-align:left;
 
-			color:white;
-			text-transform:uppercase;
+			border:1px solid rgb(0,222,144);
+			border-radius:1px;
+			background:none;
 
 			cursor:pointer;
+
+			@include transition(all 0.3s);
 		}
 
 		input[type=submit]:hover { 
-			background:#59c58a; 
+			background:rgb(0,222,144);
+			color:#ffffff;
 		}
 	}
 

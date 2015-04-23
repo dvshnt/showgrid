@@ -50,99 +50,17 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 	display:inline-block;
 }
 
-#search--bar__date--picker {
-	width:auto; height:44px;
-
-	position:relative;
-	left:2px;
-
-	vertical-align:bottom;
-
-	border:1px solid #CBCBD2;
-	border-right:none;
-	border-radius:2px 0 0 2px;
-	padding:0 8px;
-
-	background:none;
-
-	font-family:'Helvetica Neue', helvetica, arial, sans-serif;
-	font-weight:200;
-	font-size:14px;
-	color:#b0b0ba;
-
-	@include transition(all 0.3s);
-}
-
-#search--bar__date--picker.focused {
-	border-color: $show-title-color;
-	outline: 0;
-}
-
-#search--bar__date--picker:focus {
-	border-color: $show-title-color;
-	outline: 0;
-}
-
-#search--bar__date--picker.picked {
-	width:auto;
-
-	font-family:'Helvetica Neue', helvetica, arial, sans-serif;
-	font-weight:200;
-	font-size:16px;
-	color: #26262a;
-
-	background-image:none;
-}
-
-#search--bar__date--picker:hover {
-	background:#f3f3f3;
-}
-
-#search--bar__date--picker.picked:hover {
-	background:#f3f3f3;
-}
-
-.search--bar__clear {
-	width:12px; height: 12px;
-
-	position:relative;
-	left:-25px; top:-2px;
-
-	border:none;
-
-	background-image:url('../img/close.gif');
-	background-color:transparent;
-	background-size:12px;
-	background-repeat:no-repeat;
-
-	opacity:0.8;
-
-	visibility:hidden;
-
-	@include transition(all 0.3s);
-}
-
-.search--bar__clear.ready {
-	visibility:visible;
-}
-
-.search--bar__clear:hover {
-	opacity:1;
-}
-
 .search--bar__text {
 	width:420px;
 
 	border: 1px solid #CBCBD2;
-	border-left:none;
-	border-radius:0 2px 2px 0;
+	border-radius:1px;
 
 	margin:0 auto;
-	padding:10px 15px;
+	padding:8px 50px 8px 15px;
 
 	box-shadow:none;
 
-	font-family:'Helvetica Neue', helvetica, arial, sans-serif;
 	font-weight:200;
 	font-size:18px;
 	color: #3F3F44;
@@ -160,38 +78,31 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 	outline: 0;
 }
 
-
 .search--bar__button {
-	width:auto; height:44px;
-
 	position:relative;
+	top:3.5px; left:-35px;
 
-	vertical-align:bottom;
+	width:25px; height:25px;
 
-	border:none;
-	padding:0 15px;
-	margin:0 5px;
+	background-repeat:no-repeat;
+	background-image: url('../img/search.gif');
+	background-size:25px;
 
-	background:none;
-	border:1px solid #7fd2a5;
-	border-radius:2px;
+	background-color:transparent;
+	border:0;
 
-	font-family:'Helvetica Neue', helvetica, arial, sans-serif;
-	font-weight:200;
-	font-size:18px;
-	color:#7fd2a5;
+	opacity:0.5;
 
-	@include transition(all 0.3s);
+	cursor:pointer;
 }
 
 .search--bar__button:hover {
-	border:1px solid #46be7d;
-
-	background: #f1faf5;
-
-	color:#46be7d;
+	opacity:1;
 }
 
+.search--bar__button:focus {
+	outline:none;
+}
 
 
 
@@ -216,9 +127,9 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 
 		background-image: 	url('../img/back.gif');
 		background-repeat:	no-repeat;
-		background-position:15px 6px;
+		background-position:20px 10px;
 
-		@include background-size(15px);
+		@include background-size(12px);
 	}
 
 	.search--bar__input {
@@ -231,32 +142,18 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 				flex:1 0 19em;
 	}
 
-	#search--bar__date--picker {
-		font-size:12px;
-
-		-webkit-flex:1 0 5em;
-				flex:1 0 5em;
-	}
-
-	#search--bar__date--picker.picked {
-		font-size:13px;
-	}
-
 	.search--bar__text {
-		font-size:15px;
+		font-size:14px;
 
 		-webkit-flex:1 0 10em;
 				flex:1 0 10em;
 
-		padding:12.5px 10px;
+		padding:2px 10px;
 	}
 
 	.search--bar__button {
-		margin-left:100000px;
-	}
-
-	.search--bar__clear {
-		display:none;
+		position:relative;
+		top:8px; left:-35px;
 	}
 }
 
