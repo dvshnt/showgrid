@@ -17,6 +17,7 @@ class Venue_v2(models.Model):
 
 	# Auto-fill URL for calendars without unique links
 	autofill = models.CharField(max_length=200, blank=True)
+	age = models.PositiveSmallIntegerField(default=0, blank=True)
 
 	def __unicode__ (self):
 		return self.name
@@ -55,10 +56,10 @@ class Show_v2(models.Model):
 
 	venue = models.ForeignKey('Venue_v2')
 	
-	price = models.PositiveSmallIntegerField(default=0, blank=True)
+	price = models.SmallIntegerField(default=-1, blank=True)
 	ticket = models.URLField(blank=True)
 	soldout = models.BooleanField(default=False)
-	onsale = models.DateTimeField(blank=True)
+	onsale = models.DateTimeField(default=datetime.datetime.now(), blank=True)
 
 	age = models.PositiveSmallIntegerField(default=0, blank=True)
 
@@ -71,9 +72,15 @@ class Show_v2(models.Model):
 			'id' : self.id,
 			'title': self.title,
 			'headliners': self.headliners,
-			'date' : str(self.date),
+			'openers': self.openers,
 			'website' : self.website,
-			'venue' : self.venue.name,
+			'date' : str(self.date),
+			'price' : self.price,
+			'ticket' : self.ticket,
+			'soldout' : self.soldout,
+			'onsale' : str(self.onsale),
+			'age' : self.age,
+			'venue' : self.venue.name
 		}
 
 	def json_max(self):
@@ -166,7 +173,7 @@ class Address(models.Model):
 class Show(models.Model):
 	band_name = models.CharField(_("band"), max_length=300)
 	other_info = models.CharField(_("other"), max_length=400, blank=True)
-	website = models.CharField(max_length=200, blank=True)
+	website = models.URLField()
 	date = models.DateTimeField()
 	venue = models.ForeignKey('Venue')
 
