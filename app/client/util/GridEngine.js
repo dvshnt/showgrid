@@ -6,7 +6,7 @@ module.exports = GridEngine = {
 	cells: null,		// Cells in table row
 	venues: null,
 
-	MIN_NUM_CELLS: 2, 	// Min number of cells in row
+	MIN_NUM_CELLS: 1, 	// Min number of cells in row
 	MAX_NUM_CELLS: 7,	// Max number of cells in row
 
 	V_EM_UNIT_LG: 10,		// 'em' value of venue cell
@@ -67,6 +67,9 @@ module.exports = GridEngine = {
 			count++;
 		}
 
-		return (count > GridEngine.MAX_NUM_CELLS) ? 7 : count;
+		count = (count < GridEngine.MIN_NUM_CELLS) ? 1 : count;
+		count = (count > GridEngine.MAX_NUM_CELLS) ? 7 : count;
+
+		return count;
 	}
 };
