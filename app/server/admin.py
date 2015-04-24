@@ -6,7 +6,7 @@ class ShowAdmin(admin.ModelAdmin):
 	list_display = ('date', 'band_name', 'venue')
 
 class ShowV2Admin(admin.ModelAdmin):
-	search_fields = ['headliners', 'openers', 'title', 'venue']
+	search_fields = ['headliners', 'openers', 'title']
 	list_display = ('date', 'headliners', 'openers', 'venue')
 
 admin.site.register(Venue)
