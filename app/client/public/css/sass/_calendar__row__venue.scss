@@ -3,11 +3,11 @@
 		display:-webkit-flex;
 		display:		flex;
 
-		-webkit-align-items: center;
-  				align-items: center;
+		-webkit-align-items:center;
+  				align-items:center;
 		
-		-webkit-justify-content: center;
-  				justify-content: center;
+		-webkit-justify-content:center;
+  				justify-content:center;
 
 		font-size:16px;
 
@@ -33,7 +33,11 @@
 	.venue .name a {
 		color:#333;
 		font-weight:400;
-		text-decoration: none;
+		text-decoration:none;
+	}
+
+	.venue .name a:hover {
+		text-decoration:underline;
 	}
 
 	.venue .address {
