@@ -10,7 +10,7 @@ module.exports = Header = React.createClass({
 		return (
 			<header id="header">
 				<HeaderPage launchSearch={ this.props.launchSearch }/>
-				<HeaderCalendar days={ this.props.days }/>
+				<HeaderCalendar days={ this.props.days } pickDate={ this.props.pickDate }/>
 			</header>
 		)
 	}

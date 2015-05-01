@@ -3,7 +3,6 @@ var $ = require('jquery'),
 	React = require('react'),
 	Router = require('react-router'),
 	moment = require('moment'),
-	Pikaday = require('../util/pikaday'),
 
 	GridEngine = require('../util/GridEngine'),
 	DateManager = require('../util/DateManager');
@@ -83,6 +82,29 @@ module.exports = App = React.createClass({
 			});
 		}
 
+	},
+
+	pickDate: function(start) {
+		var _this = this;
+
+		var dataURL = GridEngine.domain + '/i/grid/' + 
+						start.format('YYYY') + '/' + 
+						start.format('M') + '/' + 
+						start.format('D') + '?range=' + _this.state.range;
+		
+		$.ajax({
+			type: "GET",
+			url: dataURL,
+		}).success(function(data, status) {
+    		var days = DateManager.getDaysArray(start, _this.state.range);
+
+			_this.setState({
+				venues: data,
+				days: days
+			});
+        	
+            return true;
+		});
 	},
 
 	nextPage: function () {
@@ -171,6 +193,7 @@ module.exports = App = React.createClass({
 					previous={ this.previousPage }
 
 					query={ this.state.query }
+					pickDate={ this.pickDate }
 					launchSearch={ this.launchSearch }/>
 			</div>
 		)
