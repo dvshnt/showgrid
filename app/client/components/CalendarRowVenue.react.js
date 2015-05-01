@@ -3,6 +3,8 @@ var React = require('react/addons');
 
 module.exports = CalendarRowVenue = React.createClass({
 	render: function() {
+		this.props.venue.website += '?utm_source=showgridnashville&utm_medium=web&utm_campaign=calendar';
+
 		return (
 			<div className="venue">
 				<div className={ this.props.venue.image_url }></div>
