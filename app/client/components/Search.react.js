@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 var $ = require('jquery'),
 	React = require('react/addons'),
-	SearchResults = require('./SearchResults.react'),
+	SearchResults = React.createFactory(require('./SearchResults.react')),
 
 	GridEngine = require('../util/GridEngine'),
 

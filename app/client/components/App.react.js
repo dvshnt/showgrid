@@ -37,36 +37,6 @@ module.exports = App = React.createClass({
 				range: GridEngine.getCellCount()
 			});
 		});
-
-		var picker = new Pikaday({
-        	field: document.getElementById('datepicker'),
-	        format: 'D MMM YYYY',
-	        minDate: moment().toDate(),
-	        onSelect: function() {
-	        	var start = this.getMoment();
-
-				var dataURL = GridEngine.domain + '/i/grid/' + 
-								start.format('YYYY') + '/' + 
-								start.format('M') + '/' + 
-								start.format('D') + '?range=' + _this.state.range;
-				
-
-				$.ajax({
-					type: "GET",
-					url: dataURL,
-				}).success(function(data, status) {
-	        		var days = DateManager.getDaysArray(start, _this.state.range);
-
-					_this.setState({
-						venues: data,
-						days: days
-					});
-		        	
-		            console.log('Calendar start changed to ' + days[0]);
-		            return true;
-				});
-	        }
-	    });
 	},
 
 	componentWillUpdate: function(nextProps, nextState) {
@@ -184,17 +154,19 @@ module.exports = App = React.createClass({
 	render: function() {
 		return (
 			<div>
-				<RouteHandler 
-					venues={ this.state.venues } 
-					range={ this.state.range } 
-					days={ this.state.days }
+				<TransitionGroup component="div" transitionName="example">
+					<RouteHandler 
+						venues={ this.state.venues } 
+						range={ this.state.range } 
+						days={ this.state.days }
 
-					next={ this.nextPage }
-					previous={ this.previousPage }
+						next={ this.nextPage }
+						previous={ this.previousPage }
 
-					query={ this.state.query }
-					pickDate={ this.pickDate }
-					launchSearch={ this.launchSearch }/>
+						query={ this.state.query }
+						pickDate={ this.pickDate }
+						launchSearch={ this.launchSearch }/>
+				</TransitionGroup>
 			</div>
 		)
 	}

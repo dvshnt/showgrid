@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 var React = require('react/addons'),
-	SearchResultsRow = require('./SearchResultsRow.react');
+	SearchResultsRow = React.createFactory(require('./SearchResultsRow.react'));
 
 module.exports = SearchResults = React.createClass({
 	render: function() {
