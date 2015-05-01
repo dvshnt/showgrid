@@ -19,7 +19,9 @@ module.exports = CalendarRowDayShow = React.createClass({
 			time = DateManager.formatShowTime(show.date);
 
 		show.website += '?utm_source=showgridnashville&utm_medium=web&utm_campaign=calendar';
-		show.ticket += '?utm_source=showgridnashville&utm_medium=web&utm_campaign=calendar';
+		if (show.ticket !== "") {
+			show.ticket += '?utm_source=showgridnashville&utm_medium=web&utm_campaign=calendar';
+		}
 
 		var	title = "",
 			headliner = "",
@@ -41,7 +43,7 @@ module.exports = CalendarRowDayShow = React.createClass({
 			opener =  <a href={ show.website } target="_blank" onClick={ this.registerShowEvent }><div className="extra">{ show.openers }</div></a>;
 		}
 
-		if (show.ticket !== '') {
+		if (show.ticket !== "") {
 			var price = "";
 
 			if (show.price > 0) {
@@ -50,7 +52,7 @@ module.exports = CalendarRowDayShow = React.createClass({
 
 			ticket = <a href={ show.ticket } target="_blank" onClick={ this.registerTicketEvent }><div className="ticket">Buy Tickets{ price }</div></a>;
 		}
-		else if (show.price > 0) {
+		else if (show.price > 0 && show.ticket === '') {
 			free = <span className="free">${ show.price }</span>;
 		}
 		else if (show.price < 0) {
