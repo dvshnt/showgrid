@@ -154,19 +154,17 @@ module.exports = App = React.createClass({
 	render: function() {
 		return (
 			<div>
-				<TransitionGroup component="div" transitionName="example">
-					<RouteHandler 
-						venues={ this.state.venues } 
-						range={ this.state.range } 
-						days={ this.state.days }
+				<RouteHandler 
+					venues={ this.state.venues } 
+					range={ this.state.range } 
+					days={ this.state.days }
 
-						next={ this.nextPage }
-						previous={ this.previousPage }
+					next={ this.nextPage }
+					previous={ this.previousPage }
 
-						query={ this.state.query }
-						pickDate={ this.pickDate }
-						launchSearch={ this.launchSearch }/>
-				</TransitionGroup>
+					query={ this.state.query }
+					pickDate={ this.pickDate }
+					launchSearch={ this.launchSearch }/>
 			</div>
 		)
 	}
