@@ -11,10 +11,13 @@ module.exports = SearchResultsShow = React.createClass({
 		var month = DateManager.getMonthFromDate(this.props.show[0].date),
 			day = DateManager.getDayFromDate(this.props.show[0].date);
 
+
 		var shows = [];
 
 		for (var i=0; i < this.props.show.length; i++) {
 			var show = this.props.show[i];
+
+			var onsale = DateManager.areTicketsOnSale(show.onsale);
 
 			var	title = "",
 				headliner = "",
@@ -36,10 +39,15 @@ module.exports = SearchResultsShow = React.createClass({
 				opener =  <a href={ show.website } target="_blank" onClick={ this.registerEvent }><div className="extra">{ show.openers }</div></a>;
 			}
 
-			if (show.ticket !== '') {
+
+			if (!onsale) {
+				saleDate = <span className="date">{ DateManager.formatSaleDate(show.onsale) }</span>;
+				ticket = <a href={ show.ticket } target="_blank" onClick={ this.registerTicketEvent }><div className="onsale">On Sale<br></br>{ saleDate }</div></a>;
+			}
+			else if (show.ticket !== '') {
 				var price = "";
 
-				if (show.price !== '') {
+				if (show.price > 0) {
 					price = <span className="price">${ show.price }</span>;
 				}
 

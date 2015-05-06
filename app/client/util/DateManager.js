@@ -28,6 +28,19 @@ module.exports = DateManager = {
 	    return result;
 	},
 
+	areTicketsOnSale: function (date) {
+		var saleDate = moment(date, 'YYYY-MM-DD HH:mm:ssZZ');
+
+		if (saleDate.isAfter(moment())) {
+			return false;
+		}
+		return true;
+	},
+
+	formatSaleDate: function (date) {
+		return moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('M/D') + " at " + moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('h a');
+	},
+
 	formatHeaderCalendarDay: function (day) {
 		var date = moment(day, 'MMMM Do YYYY'),
 			date = date.format('ddd D');
