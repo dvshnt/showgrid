@@ -55,6 +55,8 @@ module.exports = App = React.createClass({
 	},
 
 	pickDate: function(start) {
+		ga('send', 'event', 'pick date', 'select');	
+
 		var _this = this;
 
 		var dataURL = GridEngine.domain + '/i/grid/' + 
