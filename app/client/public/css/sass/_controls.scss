@@ -29,30 +29,26 @@
 
 
 	.arrow.next {
-		top:0; right:-170px; bottom:0;
+		top:0; right:-120px; bottom:0;
 
-		@include transition(all 0.2s);
+		@include transition(background-color 0.2s);
 	}
 
 	.arrow.previous {
-		top:0; left:-170px; bottom:0;
+		top:0; left:-120px; bottom:0;
 
 	    -webkit-transform: rotate(180deg);
 			-ms-transform: rotate(180deg);
 	   			transform: rotate(180deg);
 
-		@include transition(all 0.2s);
+		@include transition(background-color 0.2s);
 	}
 
 	.arrow.next:hover {
-		right:-120px;
-
 		background-color:rgba(0, 0, 0, 0.25);
 	}
 
 	.arrow.previous:hover {
-		left:-120px;
-
 		background-color:rgba(0, 0, 0, 0.25);
 	}
 }
