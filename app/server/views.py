@@ -36,6 +36,43 @@ def validate_object_existence(venue=None, show=None):
 	return True
 
 
+## Shows on sale within the next 5 days
+def shows_on_sale_soon(request):
+	result = []
+
+	if request.method == "GET":
+		d1 = date.today()
+		d2 = d1 + timedelta(days=5)
+
+		shows = Show_v2.objects.filter(onsale__range=
+			[ d1.strftime("%Y-%m-%d"), d2.strftime("%Y-%m-%d") ]
+		).order_by('onsale')
+
+		result = [ show.json_min() for show in shows ]
+
+		response = HttpResponse(json.dumps(result), content_type='application/json; charset=UTF-8')
+		response.__setitem__("Content-type", "application/json")
+		response.__setitem__("Access-Control-Allow-Origin", "*")
+		return response
+
+
+
+## Shows recently added most recent 10
+def recently_added(request):
+	result = []
+
+	if request.method == "GET":
+		shows = Show_v2.objects.all().order_by('-id')[:10]
+
+		result = [ show.json_min() for show in shows ]
+
+		response = HttpResponse(json.dumps(result), content_type='application/json; charset=UTF-8')
+		response.__setitem__("Content-type", "application/json")
+		response.__setitem__("Access-Control-Allow-Origin", "*")
+		return response
+
+
+
 def grid(request, year=None, month=None, day=None):
 	if request.method == "GET":
 		if year != None and month != None or day != None:
