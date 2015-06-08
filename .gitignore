@@ -3,6 +3,8 @@ app/server/wsgi.py
 app/server/settings.py
 app/server/whoosh_index/*
 
+app/media/**
+
 app/static/showgrid/js/bundle.js
 app/static/showgrid/css/base.css
 app/static/showgrid/css/base.css.map
