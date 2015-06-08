@@ -60,7 +60,7 @@ def shows_on_sale_soon(request):
 
 		shows = Show_v2.objects.filter(onsale__range=
 			[ d1.strftime("%Y-%m-%d"), d2.strftime("%Y-%m-%d") ]
-		).order_by('onsale')
+		).order_by('onsale')[:5]
 
 		result = [ show.json_onsale() for show in shows ]
 
@@ -76,7 +76,7 @@ def recently_added(request):
 	result = []
 
 	if request.method == "GET":
-		shows = Show_v2.objects.all().order_by('-id')[:8]
+		shows = Show_v2.objects.all().order_by('-id')[:5]
 
 		result = [ show.json_recent() for show in shows ]
 
