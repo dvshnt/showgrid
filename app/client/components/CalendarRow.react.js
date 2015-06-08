@@ -8,8 +8,10 @@ module.exports = CalendarRow = React.createClass({
 	render: function() {
 		var venue = this.props.venue;
 
+		var rowClass = (venue.shows.length > 0) ? "calendar__row" : "calendar__row mini";
+
 		return (
-			<div className="calendar__row">
+			<div className={rowClass}>
 				<CalendarRowVenue venue={ venue }/>
 				{
 					this.props.days.map(function(day) {

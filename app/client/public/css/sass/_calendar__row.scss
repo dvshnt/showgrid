@@ -11,5 +11,11 @@
 	padding:40px 0;
 }
 
+.calendar__row.mini > div {
+	padding:10px 0;
+
+	height:80px;
+}
+
 @import "calendar__row__venue";
 @import "calendar__row__day";

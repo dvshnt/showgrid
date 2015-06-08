@@ -47,4 +47,25 @@
 	}
 }
 
+.calendar__row.mini {
+	.venue {
+		padding:10px 0.2em;
+	}
+
+	.venue .name {
+		margin:0 0 5px 0;
+
+		font-size:16px;
+	}
+
+	.venue .name a {
+		color:#666666;
+	}
+
+	.venue .address {
+		font-size:10px;
+		color:#afafaf;
+	}
+} 
+
 @import "venue--img";
