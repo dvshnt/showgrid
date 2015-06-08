@@ -22,14 +22,15 @@ module.exports = ShowGrid = React.createClass({
 		$(window).scroll(function() {
 			var currentScroll = $(this).scrollTop();
 
-			if (currentScroll > headerOrgOffset) {
+			if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+				
+			}
+			else if (currentScroll > headerOrgOffset) {
 				if (currentScroll > previousScroll) {
 					$('body').addClass("sleep");
 				} else {
 					$('body').removeClass("sleep");
 				}
-			} else {
-				$('body').removeClass("sleep");
 			}
 			previousScroll = currentScroll;
 		})
