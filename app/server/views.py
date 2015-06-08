@@ -36,6 +36,20 @@ def validate_object_existence(venue=None, show=None):
 	return True
 
 
+def recommended_shows(request):
+	result = []
+
+	if request.method == "GET":
+		shows = RecommendedShows.objects.all().order_by('-id')[:3]
+
+		result = [ show.json() for show in shows ]
+
+		response = HttpResponse(json.dumps(result), content_type='application/json; charset=UTF-8')
+		response.__setitem__("Content-type", "application/json")
+		response.__setitem__("Access-Control-Allow-Origin", "*")
+		return response
+
+
 ## Shows on sale within the next 5 days
 def shows_on_sale_soon(request):
 	result = []
@@ -48,7 +62,7 @@ def shows_on_sale_soon(request):
 			[ d1.strftime("%Y-%m-%d"), d2.strftime("%Y-%m-%d") ]
 		).order_by('onsale')
 
-		result = [ show.json_min() for show in shows ]
+		result = [ show.json_onsale() for show in shows ]
 
 		response = HttpResponse(json.dumps(result), content_type='application/json; charset=UTF-8')
 		response.__setitem__("Content-type", "application/json")
@@ -62,9 +76,9 @@ def recently_added(request):
 	result = []
 
 	if request.method == "GET":
-		shows = Show_v2.objects.all().order_by('-id')[:10]
+		shows = Show_v2.objects.all().order_by('-id')[:8]
 
-		result = [ show.json_min() for show in shows ]
+		result = [ show.json_recent() for show in shows ]
 
 		response = HttpResponse(json.dumps(result), content_type='application/json; charset=UTF-8')
 		response.__setitem__("Content-type", "application/json")

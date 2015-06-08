@@ -6,6 +6,26 @@ from django.utils.translation import ugettext as _
 from django.contrib.localflavor.us.models import USStateField
 
 
+class RecommendedShows(models.Model):
+	show = models.ForeignKey('Show_v2')
+	image = models.ImageField(upload_to='showgrid/img/recshows/')
+
+	def json(self):
+		return {
+			'id': self.id,
+			'banner' : self.image.url,
+			'title': self.show.title,
+			'headliners': self.show.headliners,
+			'openers': self.show.openers,
+			'website' : self.show.website,
+			'date' : str(self.show.date),
+			'price' : self.show.price,
+			'ticket' : self.show.ticket,
+			'age' : self.show.age,
+			'venue' : self.show.venue.name
+		}
+
+
 class Venue_v2(models.Model):
 	name = models.CharField(max_length=200)
 	address = models.ForeignKey('Address')
@@ -66,6 +86,30 @@ class Show_v2(models.Model):
 
 	def __unicode__ (self):
 		return self.headliners
+
+	def json_recent(self):
+		return {
+			'id' : self.id,
+			'title': self.title,
+			'headliners': self.headliners,
+			'website' : self.website,
+			'date' : str(self.date),
+			'ticket' : self.ticket,
+			'onsale' : str(self.onsale),
+			'venue' : self.venue.name
+		}
+
+	def json_onsale(self):
+		return {
+			'id' : self.id,
+			'title': self.title,
+			'headliners': self.headliners,
+			'website' : self.website,
+			'date' : str(self.date),
+			'ticket' : self.ticket,
+			'onsale' : str(self.onsale),
+			'venue' : self.venue.name
+		}
 
 	def json_min(self):
 		return {
