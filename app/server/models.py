@@ -96,7 +96,7 @@ class Show_v2(models.Model):
 			'date' : str(self.date),
 			'ticket' : self.ticket,
 			'onsale' : str(self.onsale),
-			'venue' : self.show.venue.json()
+			'venue' : self.venue.json()
 		}
 
 	def json_onsale(self):
@@ -108,7 +108,7 @@ class Show_v2(models.Model):
 			'date' : str(self.date),
 			'ticket' : self.ticket,
 			'onsale' : str(self.onsale),
-			'venue' : self.show.venue.json()
+			'venue' : self.venue.json()
 		}
 
 	def json_min(self):
