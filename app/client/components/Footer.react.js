@@ -13,7 +13,7 @@ module.exports = Header = React.createClass({
 				<div className="input--prompt">
 					<h3>something missing?</h3>
 					<p>Let us know if you notice a show or venue missing from the Grid. Our goal is to make a rock solid event calendar without frills and we cannot do it alone. Otherwise, feel free to drop us a line or come visit us.</p>
-					<p>Email us at <a href="mailto:showgridnashville@gmail.com">showgridnashville@gmail.com</a>.</p>
+					<p>Email us at <a href="mailto:info@showgrid.com">info@showgrid.com</a>.</p>
 				</div>
 				<div className='email--form'>
 					<div id="mc_embed_signup">
