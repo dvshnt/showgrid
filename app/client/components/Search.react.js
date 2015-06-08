@@ -21,15 +21,15 @@ module.exports = Search = React.createClass({
 	},
 
 	getInitialState: function () {
-		return { results: [] };
-	},
-
-	searchTextChange: function () {
-
+		return { results: "start"};
 	},
 
 	search: function() {
 		var _this = this;
+
+		this.setState({ 
+			results: "pending"
+		});
 
 		var query = $(".search--bar__text").val().trim();
 	
@@ -39,9 +39,13 @@ module.exports = Search = React.createClass({
 			type: "GET",
 			url: GridEngine.domain + "/i/search?q=" + query
 		}).success(function(data, status) {
-			_this.setState({ 
-				results: data.results
-			});
+
+			setTimeout(function() {
+				_this.setState({ 
+					results: data.results
+				});
+			}, 4000);
+			
 		});	
 
 		return false;

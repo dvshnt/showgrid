@@ -6,7 +6,19 @@ module.exports = SearchResults = React.createClass({
 	render: function() {
 		var results = [];
 		
-		if (this.props.results.length > 0) {
+		if (typeof this.props.results === "string" && this.props.results === "start") {
+			results.push(
+				<div className="search__text">
+					<h3>For best results, search by venue or artist.</h3>
+					<p>For example, <i>mercy lounge</i> or <i>alabama shakes</i></p>
+					<p>To look at a particular date, use the date selector at the top of the calender.</p>
+				</div>
+			);
+		}
+		else if (typeof this.props.results === "string" && this.props.results === "pending") {
+			results.push(<div className="search__throbber"></div>);
+		}
+		else if (this.props.results.length > 0) {
 			for (var i=0; i < this.props.results.length; i++) {
 				var key = this.props.results[i].id,
 					result = this.props.results[i];
@@ -14,8 +26,15 @@ module.exports = SearchResults = React.createClass({
 				results.push(<SearchResultsRow key={ key } result={ result }/>)
 			}
 		}
-		else {
-			results.push(<div className="search__no--results">There ain&#39;t a thing here</div>);
+		else if (this.props.results.length <= 0) {
+			results.push(
+				<div className="search__text">
+					<h2>Unfortunately, no results were found.</h2>
+					<h3>For best results, search by venue or artist.</h3>
+					<p>For example, <i>mercy lounge</i> or <i>alabama shakes</i></p>
+					<p>To look at a particular date, use the date selector at the top of the calender.</p>
+				</div>
+			);
 		}
 
 
