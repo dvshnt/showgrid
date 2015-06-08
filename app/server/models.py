@@ -22,7 +22,7 @@ class RecommendedShows(models.Model):
 			'price' : self.show.price,
 			'ticket' : self.show.ticket,
 			'age' : self.show.age,
-			'venue' : self.show.venue.name
+			'venue' : self.show.venue.json()
 		}
 
 
@@ -96,7 +96,7 @@ class Show_v2(models.Model):
 			'date' : str(self.date),
 			'ticket' : self.ticket,
 			'onsale' : str(self.onsale),
-			'venue' : self.venue.name
+			'venue' : self.show.venue.json()
 		}
 
 	def json_onsale(self):
@@ -108,7 +108,7 @@ class Show_v2(models.Model):
 			'date' : str(self.date),
 			'ticket' : self.ticket,
 			'onsale' : str(self.onsale),
-			'venue' : self.venue.name
+			'venue' : self.show.venue.json()
 		}
 
 	def json_min(self):
