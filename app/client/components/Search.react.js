@@ -39,13 +39,9 @@ module.exports = Search = React.createClass({
 			type: "GET",
 			url: GridEngine.domain + "/i/search?q=" + query
 		}).success(function(data, status) {
-
-			setTimeout(function() {
-				_this.setState({ 
-					results: data.results
-				});
-			}, 4000);
-			
+			_this.setState({ 
+				results: data.results
+			});
 		});	
 
 		return false;
