@@ -30,15 +30,19 @@ module.exports = CalendarRowDayShow = React.createClass({
 			opener = "",
 			ticket = "",
 			free = "",
-			age = "";
+			age = "",
+			star = "";
 
 		if (show.title !== '' && show.headliners !== '') {
 			title = <a href={ show.website } target="_blank" onClick={ this.registerShowEvent }><div className="title">{ show.title }</div></a>;
 		}
-		
+
+		if (show.star) {
+			star = <div className="star"></div>;
+		}
 
 		if (show.headliners !== '') {
-			headliner = <a href={ show.website } target="_blank" onClick={ this.registerShowEvent }><div className="main">{ show.headliners }</div></a>;
+			headliner = <a href={ show.website } target="_blank" onClick={ this.registerShowEvent }><div className="main">{ star }{ show.headliners }</div></a>;
 		}
 
 		if (show.openers !== '') {

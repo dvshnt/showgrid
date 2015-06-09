@@ -75,6 +75,8 @@ class Show_v2(models.Model):
 	date = models.DateTimeField()
 
 	venue = models.ForeignKey('Venue_v2')
+
+	star = models.BooleanField(default=False)
 	
 	price = models.SmallIntegerField(default=-1, blank=True)
 	ticket = models.URLField(blank=True)
@@ -119,6 +121,7 @@ class Show_v2(models.Model):
 			'openers': self.openers,
 			'website' : self.website,
 			'date' : str(self.date),
+			'star' : self.star,
 			'price' : self.price,
 			'ticket' : self.ticket,
 			'soldout' : self.soldout,
