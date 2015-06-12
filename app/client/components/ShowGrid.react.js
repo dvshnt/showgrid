@@ -16,23 +16,30 @@ React.initializeTouchEvents(true);
 
 module.exports = ShowGrid = React.createClass({
 	componentDidMount: function() {
+		var _this = this;
+
 		var previousScroll = 0,
 			headerOrgOffset = $('#header').height();
 
 		$(window).scroll(function() {
-			var currentScroll = $(this).scrollTop();
+			previousScroll = togglePageHeader(previousScroll, headerOrgOffset);
 
-			if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+			function togglePageHeader(prev, offset) {
+				var currentScroll = $(this).scrollTop();
 				
-			}
-			else if (currentScroll > headerOrgOffset) {
-				if (currentScroll > previousScroll) {
-					$('body').addClass("sleep");
-				} else {
-					$('body').removeClass("sleep");
+				if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+					
 				}
+				else if (currentScroll > offset && (_this.props.page === "calendar" || _this.props.page === "search")) {
+					if (currentScroll > prev) {
+						$('body').addClass("sleep");
+					} else {
+						$('body').removeClass("sleep");
+					}
+				}
+				
+				return currentScroll;
 			}
-			previousScroll = currentScroll;
 		})
 	},
 
@@ -42,7 +49,6 @@ module.exports = ShowGrid = React.createClass({
 				<ControlNext next={ this.props.next }/>
 				<ControlPrevious previous={ this.props.previous }/>
 
-				<Header days={ this.props.days } launchSearch={ this.props.launchSearch } pickDate={ this.props.pickDate }/>
 				<Swipeable onSwipedLeft={ this.props.next } onSwipedRight={ this.props.previous }>
 					<Calendar venues={ this.props.venues } days={ this.props.days }/>
 					<Footer/>
