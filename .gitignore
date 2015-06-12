@@ -8,6 +8,8 @@ app/media/**
 app/static/showgrid/js/bundle.js
 app/static/showgrid/css/base.css
 app/static/showgrid/css/base.css.map
+app/static/showgrid/css/fonts.css
+app/static/showgrid/css/fonts.css.map
 
 app/client/.sass-cache/*
 app/client/public/.sass-cache/*
@@ -15,5 +17,7 @@ app/client/node_modules/**
 app/client/public/js/bundle.js
 app/client/public/css/base.css
 app/client/public/css/base.css.map
+app/client/public/css/fonts.css
+app/client/public/css/fonts.css.map
 
 assets/**
