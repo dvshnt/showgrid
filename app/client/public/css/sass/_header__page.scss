@@ -1,7 +1,7 @@
 #header__page {
 	position:relative;
 
-	width:94%; height:60px;
+	width:94%; height:64px;
 
 	margin:0px auto;
 }
@@ -29,7 +29,20 @@
 	font-size:112.5%;
 }
 
+.header__page--options {
+	position:absolute;
+	top:0; right:0;
+
+	height:100%;
+
+	padding:12px 0;
+
+	display:inline-block;
+}
+
 #header__page--search {
+	display:none;
+
 	position:absolute;
 	top:0; right:0;
 
@@ -126,3 +139,5 @@
 		}
 	}
 }
+
+@import "header__page--options";

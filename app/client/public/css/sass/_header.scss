@@ -13,8 +13,9 @@
 }
 
 body.sleep #header {
-	@include transform(translate(0, -60px));
+	@include transform(translate(0, -64px));
 }
 
 @import "header__page";
 @import "header__calendar";
+@import "header__search";
