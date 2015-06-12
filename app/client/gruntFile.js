@@ -33,11 +33,40 @@ module.exports = function(grunt) {
 					style: 'compressed'
 				},
 				files: {
-					'./public/css/base.css' : './public/css/sass/base.scss'
+					'./public/css/base.css' : './public/css/base.css'
 				}
 			}
 		},
-		
+
+		cssmin: {
+			fonts: {
+				options: {
+					shorthandCompacting: false,
+					roundingPrecision: -1
+				},
+				target: {
+					files: {
+						'./public/css/fonts.css': [
+							'./public/css/fonts/*.css'
+						]
+					}
+				}
+			},
+			prod: {
+				options: {
+					shorthandCompacting: false,
+					roundingPrecision: -1
+				},
+				target: {
+					files: {
+						'./public/css/fonts.css': [
+							'./public/css/fonts/*.css'
+						]
+					}
+				}
+			}
+		},
+	
 		browserify: {
 			dev: {
 				options: {
@@ -67,14 +96,23 @@ module.exports = function(grunt) {
 		watch: { 
 			css: {
 				files: './public/css/sass/*.scss', 
-				tasks: ['sass:dev', 'copy:css']
+				tasks: ['sass:dev', 'copy:css'],
+				options: {
+					livereload: true,
+				}
 			},
 			js: {
 				files: ['./components/*.js', './spark.react.js', './util/*.js'],
-				tasks: ['browserify:dev', 'copy:js']
+				tasks: ['browserify:dev', 'copy:js'],
+				options: {
+					livereload: true,
+				}
 			},
 			html : {
-				files: ['./views/*.html']
+				files: ['./views/*.html'],
+				options: {
+					livereload: true,
+				}
 			}
 		},
 
@@ -87,6 +125,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
 
 
 	//// Registered Tasks
