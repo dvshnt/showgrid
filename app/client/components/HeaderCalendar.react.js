@@ -22,8 +22,10 @@ module.exports = HeaderTable = React.createClass({
 	render: function() {
 		var month = moment(this.props.days[0].date, 'MMMM Do YYYY').format('MMMM');
 
+		var disabled = (this.props.page !== 'calendar') ? 'disabled' : '';
+
 		return (
-			<div id="header__calendar">
+			<div id="header__calendar" className={ disabled }>
 				<div id="datepicker" className="month"><span>{ month }</span></div>
 				{
 					this.props.days.map(function(day) {
