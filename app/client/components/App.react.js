@@ -4,6 +4,8 @@ var $ = require('jquery'),
 	Router = require('react-router'),
 	moment = require('moment'),
 
+	Header = React.createFactory(require('./Header.react')),
+
 	GridEngine = require('../util/GridEngine'),
 	DateManager = require('../util/DateManager');
 
@@ -17,14 +19,35 @@ module.exports = App = React.createClass({
 			range = GridEngine.getCellCount(),
 			days = DateManager.getDaysArray(moment(), range);
 
-		var searchQuery = "";
+		var page = this.getCurrentPage(),
+			searchQuery = "",
+			searchResults = "start";
 
 		return {
 			venues: venues,
 			range: range,
 			days: days,
-			query: searchQuery
+			page: page,
+			query: searchQuery,
+			results: searchResults
 		};
+	},
+
+	getCurrentPage: function() {
+		var path = window.location.hash;
+
+		if (path.indexOf("search") > -1) return "search";
+		else if (path.indexOf("recent") > -1) return "recent";
+		else if (path.indexOf("onsale") > -1) return "onsale";
+		else if (path.indexOf("featured") > -1) return "featured";
+
+		return "calendar";
+	},
+
+	selectPage: function(page) {
+		this.setState({
+			page: page
+		});
 	},
 
 	componentDidMount: function() {
@@ -139,16 +162,25 @@ module.exports = App = React.createClass({
 		});
 	},
 
-	launchSearch: function() {
-		var search = $("input.search[type=text]").val().trim();
+	search: function() {
+		var _this = this;
 
-		if (search || window.innerWidth <= 500) {
-			this.setState({
-				query: search
+		this.setState({ 
+			results: "pending"
+		});
+
+		var query = $(".search--bar__text").val().trim();
+	
+        ga('send', 'event', 'search', 'query', query);    
+
+		$.ajax({
+			type: "GET",
+			url: GridEngine.domain + "/i/search?q=" + query
+		}).success(function(data, status) {
+			_this.setState({ 
+				results: data.results
 			});
-
-			window.location.href = "/#/search";
-		}
+		});	
 
 		return false;
 	},
@@ -156,6 +188,7 @@ module.exports = App = React.createClass({
 	render: function() {
 		return (
 			<div>
+				<Header days={ this.state.days } pickDate={ this.state.pickDate } selectPage={ this.selectPage } page={ this.state.page } search={ this.search }/>
 				<RouteHandler 
 					venues={ this.state.venues } 
 					range={ this.state.range } 
@@ -164,9 +197,10 @@ module.exports = App = React.createClass({
 					next={ this.nextPage }
 					previous={ this.previousPage }
 
+					page={ this.state.page }
+
 					query={ this.state.query }
-					pickDate={ this.pickDate }
-					launchSearch={ this.launchSearch }/>
+					results={ this.state.results }/>
 			</div>
 		)
 	}
