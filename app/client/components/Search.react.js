@@ -1,72 +1,45 @@
 /** @jsx React.DOM */
-var $ = require('jquery'),
-	React = require('react/addons'),
-	SearchResults = React.createFactory(require('./SearchResults.react')),
-
-	GridEngine = require('../util/GridEngine'),
-
-	moment = require('moment'),
-	Pikaday = require('../util/pikaday');
+var React = require('react/addons'),
+	SearchResultsRow = React.createFactory(require('./SearchResultsRow.react'));
 
 module.exports = Search = React.createClass({
-	componentDidMount: function() {
-		var _this = this;
-
-		if (this.props.query) {
-			$(".search--bar__text").val(this.props.query);
-			this.search();
-		}
-
-	    $(".search--bar__text").focus();
-	},
-
-	getInitialState: function () {
-		return { results: "start"};
-	},
-
-	search: function() {
-		var _this = this;
-
-		this.setState({ 
-			results: "pending"
-		});
-
-		var query = $(".search--bar__text").val().trim();
-	
-        ga('send', 'event', 'search', 'query', query);    
-
-		$.ajax({
-			type: "GET",
-			url: GridEngine.domain + "/i/search?q=" + query
-		}).success(function(data, status) {
-			_this.setState({ 
-				results: data.results
-			});
-		});	
-
-		return false;
-	},
-
-	searchKeyDown: function(e) {
-		var search = $(".container__search--button");
-
-		if (search.hasClass("opened") && e.keyCode === 13) {
-			this.search();
-		}
-	},
-
 	render: function() {
+		var results = [];
+		
+		if (typeof this.props.results === "string" && this.props.results === "start") {
+			results.push(
+				<div className="search__text">
+					<h3>For best results, search by venue or artist.</h3>
+					<p>For example, <i>mercy lounge</i> or <i>alabama shakes</i></p>
+					<p>To look at a particular date, use the date selector at the top of the calender.</p>
+				</div>
+			);
+		}
+		else if (typeof this.props.results === "string" && this.props.results === "pending") {
+			results.push(<div className="search__throbber"></div>);
+		}
+		else if (this.props.results.length > 0) {
+			for (var i=0; i < this.props.results.length; i++) {
+				var key = this.props.results[i].id,
+					result = this.props.results[i];
+
+				results.push(<SearchResultsRow key={ key } result={ result }/>)
+			}
+		}
+		else if (this.props.results.length <= 0) {
+			results.push(
+				<div className="search__text">
+					<h2>Unfortunately, no results were found.</h2>
+					<h3>For best results, search by venue or artist.</h3>
+					<p>For example, <i>mercy lounge</i> or <i>alabama shakes</i></p>
+					<p>To look at a particular date, use the date selector at the top of the calender.</p>
+				</div>
+			);
+		}
+
+
 		return (
-			<div className="search--container">
-				<form className="search--bar" action="" onSubmit={ this.search }>
-					<a href="/#/" className="a__to--calendar"><div className="to--calendar"></div></a>
-					<div className="search--bar__input">
-						<input type="search" className="search--bar__text" placeholder="Search by venue or artist"/>
-					</div>
-					<input type="submit" className="search--bar__button" value=""/>
-				</form>
-				<SearchResults results={ this.state.results }/>
-			</div>
+			<div className="search--results">{ results }</div>
 		)
 	}
 });

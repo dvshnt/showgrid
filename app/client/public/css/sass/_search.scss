@@ -1,27 +1,3 @@
-.to--calendar {
-	position:absolute;
-	top:0px; right:40px;
-	
-	width:60px; height:60px;
-
-	z-index:99;
-
-	cursor:pointer;
-	opacity:0.7;
-
-	background-image: 	url('../img/close.gif');
-	background-repeat:	no-repeat;
-	background-position:18px;
-	
-	@include background-size(24px);
-
-}
-
-.to--calendar:hover {
-	opacity:1;
-}
-
-
 .search--container {
 	overflow:scroll;
 }
@@ -31,132 +7,62 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 	-moz-appearance: none; /* mobile firefox too! */
 }
 
-.search--bar {
-	position:fixed;
-	top:0;
-
-	width:100%; height:44px;
-
-	padding:8px 0;
-
-	text-align:center;
-
-	background:#ffffff;
-
-	z-index:97;
-}
-
-.search--bar__input {
-	display:inline-block;
-}
-
-.search--bar__text {
-	width:420px;
-
-	border: 1px solid #CBCBD2;
-	border-radius:1px;
+.search--results {
+	width:800px;
 
 	margin:0 auto;
-	padding:8px 50px 8px 15px;
+	padding:30px 0 0 0;
 
-	box-shadow:none;
-
-	font-weight:200;
-	font-size:18px;
-	color: #3F3F44;
-
-	@include transition(all 0.3s);
+	@include transform(translate(0, 125px));
 }
 
-.search--bar__text.focused {
-	border-color: $show-title-color;
-	outline: 0;
-}
+.search__throbber {
+	width:200px; height:150px;
 
-.search--bar__text:focus {
-	border-color: $show-title-color;
-	outline: 0;
-}
+	margin:0px auto;
 
-.search--bar__button {
-	position:relative;
-	top:3.5px; left:-35px;
-
-	width:25px; height:25px;
-
+	background-image:url('/static/showgrid/img/spinner.gif');
+				
 	background-repeat:no-repeat;
-	background-image: url('../img/search.gif');
-	background-size:25px;
-
 	background-color:transparent;
-	border:0;
 
-	opacity:0.5;
-
-	cursor:pointer;
+	@include background-size(200px);
 }
 
-.search--bar__button:hover {
-	opacity:1;
+.search__text {
+	text-align:center
 }
 
-.search--bar__button:focus {
-	outline:none;
-}
+.search__text {
+	h2 {
+		margin:0 0 60px 0;
 
-
-
-@media screen and (max-width: 400px ) {
-
-	.search--bar {
-		display: -webkit-flex;
-		display: 		 flex;
+		font-size:24px;
+		color:#333333;
+		font-weight:700;
+	}
+	h3 {
+		font-size:22px;
+		color:#434343;
 	}
 
-	.a__to--calendar {
-		-webkit-flex:0 0 3.5em;
-				flex:0 0 3.5em;
+	p {
+		font-size:18px;
+		color:#676767;
 	}
 
-	.to--calendar {
-		position:relative;
-		right:0; top:0;
-
-		-webkit-flex:0 0 3.5em;
-				flex:0 0 3.5em;
-
-		background-image: 	url('../img/back.gif');
-		background-repeat:	no-repeat;
-		background-position:20px 10px;
-
-		@include background-size(12px);
-	}
-
-	.search--bar__input {
-		vertical-align:top;
-
-		display: -webkit-flex;
-		display: 		 flex;
-
-		-webkit-flex:1 0 19em;
-				flex:1 0 19em;
-	}
-
-	.search--bar__text {
-		font-size:14px;
-
-		-webkit-flex:1 0 10em;
-				flex:1 0 10em;
-
-		padding:2px 10px;
-	}
-
-	.search--bar__button {
-		position:relative;
-		top:8px; left:-35px;
+	i {
+		font-size:20px;
 	}
 }
 
+@media screen and (max-width: 800px ) {
+	.search--results {
+		margin:100px auto;
 
-@import "pikaday";
-@import "search--results";
+		width:92.5%;
+	}
+}
+
+@import "search--results__row";
+@import "search--results__show";
