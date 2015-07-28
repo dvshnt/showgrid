@@ -5,8 +5,8 @@
 	width:100%;
 
 	background:#f6f6f6;
-	border-bottom:1px solid #707070;
-
+	border-bottom:4px solid #e5e5e5;
+	
 	z-index:10;
 
 	@include transition--transform(.3s ease-in-out);
@@ -16,6 +16,13 @@ body.sleep #header {
 	@include transform(translate(0, -64px));
 }
 
+@media screen and (max-width: 500px ) {
+	body.sleep #header {
+		@include transform(translate(0, 0));
+	}
+}
+
 @import "header__page";
 @import "header__calendar";
 @import "header__search";
+@import "header__mobile";

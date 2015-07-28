@@ -4,7 +4,7 @@ var $ = require('jquery'),
 
 module.exports = HeaderPageOption = React.createClass({
 	render: function() {
-		var boxClass = (this.props.page === this.props.pageName) ? "header__page--option--box selected" : "header__page--option--box"; 
+		var boxClass = (this.props.page === this.props.pageName) ? "header__page--option--box selected " + this.props.pageName : "header__page--option--box " + this.props.pageName; 
 
 		return (
 			<a className={ boxClass } href={ this.props.link } onClick={ this.props.selectPage.bind(this, this.props.pageName) }>
