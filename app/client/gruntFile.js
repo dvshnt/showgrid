@@ -18,6 +18,13 @@ module.exports = function(grunt) {
 			},
 		},
 
+		concat: {
+			basic: {
+				src: ['public/css/fonts/*.css'],
+				dest: 'public/css/font.css'
+			},
+		},
+
 		// SASS Compilation
 		sass: {
 			dev: {
@@ -25,7 +32,7 @@ module.exports = function(grunt) {
 					style: 'expanded'
 				},
 				files: {
-					'./public/css/base.css' : './public/css/sass/base.scss'
+					'./public/css/base.css' : './public/css/sass/base.scss',
 				}
 			},
 			prod: {
@@ -126,6 +133,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
+	grunt.loadNpmTasks('grunt-contrib-concat');
 
 
 	//// Registered Tasks
