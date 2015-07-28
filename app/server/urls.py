@@ -18,11 +18,9 @@ urlpatterns = patterns('',
  	url(r'^i/grid/$', 'server.views.grid', name='grid'),
 	url(r'^i/grid/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)$', 'server.views.grid', name='grid'),
 
- 	url(r'^i/onsale/$', 'server.views.shows_on_sale_soon', name='shows on sale soon'),
+	url(r'^i/recent/$', 'server.views.recently_added', name='recently added shows'),
 
- 	url(r'^i/recent/$', 'server.views.recently_added', name='recently added shows'),
-
- 	url(r'^i/recommended/$', 'server.views.recommended_shows', name='recommended shows')
+ 	url(r'^i/featured/$', 'server.views.recommended_shows', name='recommended shows')
 )
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
