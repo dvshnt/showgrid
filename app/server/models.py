@@ -5,27 +5,6 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.contrib.localflavor.us.models import USStateField
 
-
-class RecommendedShows(models.Model):
-	show = models.ForeignKey('Show_v2')
-	image = models.ImageField(upload_to='showgrid/img/recshows/')
-
-	def json(self):
-		return {
-			'id': self.id,
-			'banner' : self.image.url,
-			'title': self.show.title,
-			'headliners': self.show.headliners,
-			'openers': self.show.openers,
-			'website' : self.show.website,
-			'date' : str(self.show.date),
-			'price' : self.show.price,
-			'ticket' : self.show.ticket,
-			'age' : self.show.age,
-			'venue' : self.show.venue.json()
-		}
-
-
 class Venue_v2(models.Model):
 	name = models.CharField(max_length=200)
 	address = models.ForeignKey('Address')
@@ -67,6 +46,9 @@ class Venue_v2(models.Model):
 
 
 class Show_v2(models.Model):
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
 	title = models.CharField(max_length=100, blank=True)
 	headliners = models.CharField(_("headliners"), max_length=300, blank=True)
 	openers = models.CharField(_("openers"), max_length=400, blank=True)
@@ -88,18 +70,6 @@ class Show_v2(models.Model):
 
 	def __unicode__ (self):
 		return self.headliners
-
-	def json_recent(self):
-		return {
-			'id' : self.id,
-			'title': self.title,
-			'headliners': self.headliners,
-			'website' : self.website,
-			'date' : str(self.date),
-			'ticket' : self.ticket,
-			'onsale' : str(self.onsale),
-			'venue' : self.venue.json()
-		}
 
 	def json_onsale(self):
 		return {

@@ -15,5 +15,4 @@ admin.site.register(Address)
 
 admin.site.register(Venue_v2)
 admin.site.register(Show_v2, ShowV2Admin)
-admin.site.register(RecommendedShows)
 
