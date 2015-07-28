@@ -28,8 +28,8 @@
 	
 
 	.venue .name a {
-		color:#333;
-		font-weight:400;
+		color:#555;
+		font-weight:300;
 		text-decoration:none;
 	}
 
@@ -46,13 +46,13 @@
 
 .calendar__row.mini {
 	.venue {
-		padding:10px 0.2em;
+		padding:5px 0.2em;
 	}
 
 	.venue .name {
 		margin:0 0 5px 0;
 
-		font-size:16px;
+		font-size:14px;
 	}
 
 	.venue .name a {
