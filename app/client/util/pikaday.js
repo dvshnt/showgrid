@@ -914,9 +914,13 @@
                 top = top - height - field.offsetHeight;
             }
 
+            if (window.innerWidth < 500) {
+                left = 0;
+            }
+
             this.el.style.cssText = [
                 'position: absolute',
-                'left: ' + left + 'px',
+                'left: ' + left + '0px',
                 'top: ' + top + 'px'
             ].join(';');
         },
