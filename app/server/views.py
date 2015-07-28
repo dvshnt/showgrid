@@ -12,6 +12,7 @@ from server.models import *
 from django.http import HttpResponse
 from django.core import serializers
 from django.shortcuts import render
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from haystack.query import SearchQuerySet
 
@@ -40,29 +41,14 @@ def recommended_shows(request):
 	result = []
 
 	if request.method == "GET":
-		shows = RecommendedShows.objects.all().order_by('-id')[:3]
-
-		result = [ show.json() for show in shows ]
-
-		response = HttpResponse(json.dumps(result), content_type='application/json; charset=UTF-8')
-		response.__setitem__("Content-type", "application/json")
-		response.__setitem__("Access-Control-Allow-Origin", "*")
-		return response
-
-
-## Shows on sale within the next 5 days
-def shows_on_sale_soon(request):
-	result = []
-
-	if request.method == "GET":
 		d1 = date.today()
-		d2 = d1 + timedelta(days=5)
+		d2 = d1 + timedelta(days=7)
 
-		shows = Show_v2.objects.filter(onsale__range=
-			[ d1.strftime("%Y-%m-%d"), d2.strftime("%Y-%m-%d") ]
-		).order_by('onsale')[:5]
+		shows = Show_v2.objects.filter(star=True).filter(
+			date__range=[ d1.strftime("%Y-%m-%d"), d2.strftime("%Y-%m-%d") ]
+		).order_by('date')
 
-		result = [ show.json_onsale() for show in shows ]
+		result = [ show.json_min() for show in shows ]
 
 		response = HttpResponse(json.dumps(result), content_type='application/json; charset=UTF-8')
 		response.__setitem__("Content-type", "application/json")
@@ -72,18 +58,91 @@ def shows_on_sale_soon(request):
 
 
 ## Shows recently added most recent 10
-def recently_added(request):
+def recently_added(request, page=None):
 	result = []
 
 	if request.method == "GET":
-		shows = Show_v2.objects.all().order_by('-id')[:5]
+		shows_list = Show_v2.objects.filter(date__gte=date.today().strftime("%Y-%m-%d"))
+		shows_list = shows_list.filter(created_at__lte=(date.today() + timedelta(1)))
+		shows_list = shows_list.order_by('-created_at', 'venue__name', 'date')
 
-		result = [ show.json_recent() for show in shows ]
+		paginator = Paginator(shows_list, 100)
+
+		page = request.GET.get('page')
+		try:
+			shows = paginator.page(page)
+		except PageNotAnInteger:
+			shows = paginator.page(1)
+		except EmptyPage:
+			response = HttpResponse(status=204)
+			response.__setitem__("Content-type", "application/json")
+			response.__setitem__("Access-Control-Allow-Origin", "*")
+			return response
+
+		result = group_shows_by_date(shows, page)
 
 		response = HttpResponse(json.dumps(result), content_type='application/json; charset=UTF-8')
 		response.__setitem__("Content-type", "application/json")
 		response.__setitem__("Access-Control-Allow-Origin", "*")
 		return response
+
+
+def group_shows_by_date(shows, page):
+	# Subtract 1 because we use 1 as first page instead of 0
+	delta = int(page) - 1
+	start = date.today() + timedelta(days=delta)
+	dates = []
+	results = []
+
+	for show in shows:
+		if show.created_at not in dates:
+			dates.append(show.created_at)
+
+
+	for d in dates:
+		bundle = create_date_bundle(d, shows)
+		results.append(bundle)
+
+	return results
+
+
+
+def create_date_bundle(d, shows):
+	shows_bundle = []
+	d = d.strftime("%Y-%m-%d")
+
+	for show in shows:
+		if d == show.created_at.strftime("%Y-%m-%d"):
+			shows_bundle.append(show.json_min())
+
+	bundle = {
+		'date': d,
+		'shows': group_shows_by_venue(shows_bundle)
+	}
+
+	return bundle
+
+
+def group_shows_by_venue(shows):
+	shows_by_venue = []
+	venues = []
+
+	for show in shows:
+		if show['venue'] not in venues:
+			venues.append(show['venue'])
+
+	for venue in venues:
+		shows_of_venue = []
+		for show in shows:
+			if show['venue'] == venue:
+				shows_of_venue.append(show)
+
+		shows_by_venue.append({
+			'venue': Venue_v2.objects.get(name=venue).json(),
+			'shows': shows_of_venue
+		})
+
+	return shows_by_venue
 
 
 
