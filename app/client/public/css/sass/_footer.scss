@@ -112,3 +112,13 @@ body.sleep #footer {
 		}
 	}
 }
+
+@media screen and (max-width: 500px ) {
+	#footer {
+		@include transform(translate(0, 70px));
+	}
+
+	body.sleep #footer {
+		@include transform(translate(0, 0));
+	}
+}
