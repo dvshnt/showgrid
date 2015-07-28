@@ -14,6 +14,61 @@
 	height:0px; overflow:hidden;
 }
 
+#back-to-today {
+	position:absolute;
+	top:126px; right:0px;
+
+	height:0px;
+
+	padding:0px;
+
+	background:#f6f6f6;
+	border:none;
+
+	font-size:12px;
+	text-transform:uppercase;
+
+	cursor:pointer;
+
+	overflow:hidden;
+
+	@include transition(all 0.2s ease);
+}
+
+#back-to-today.visible {
+	height:auto;
+
+	padding:7px 30px 7px 30px;
+
+	border-left:2px solid #e5e5e5;
+	border-bottom:2px solid #e5e5e5;
+}
+
+#back-to-today div {
+	display:inline-block;
+
+	position:relative;
+	top:0px; left:-10px;
+
+	width:0px; height:0px !important;
+
+	padding:0;
+
+	border:5px solid transparent;
+	border-right:7px solid #222222;
+
+	opacity:0;
+
+	@include transition(all 0.1s ease);
+}
+
+#back-to-today:hover div {
+	left:-15px;
+
+	opacity:1;
+}
+
+
 #header__calendar {
 
 	.month {
@@ -53,6 +108,12 @@
 		font-weight:300;
 	}
 
+}
+
+@media screen and (max-width: 500px ) {
+	#header__calendar {
+		display:none;
+	}
 }
 
 @import "pikaday";
