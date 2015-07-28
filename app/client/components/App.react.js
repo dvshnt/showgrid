@@ -40,14 +40,23 @@ module.exports = App = React.createClass({
 		else if (path.indexOf("recent") > -1) return "recent";
 		else if (path.indexOf("onsale") > -1) return "onsale";
 		else if (path.indexOf("featured") > -1) return "featured";
+		else if (path.indexOf("alerts") > -1) return "alerts";
+		else if (path.indexOf("favorites") > -1) return "favorites";
 
 		return "calendar";
 	},
 
 	selectPage: function(page) {
+		var body = $("body");
+
+		if (body.hasClass("mobile--open")) {
+			body.removeClass("mobile--open")
+		}
+		
 		this.setState({
 			page: page
 		});
+		return;
 	},
 
 	componentDidMount: function() {
@@ -78,7 +87,7 @@ module.exports = App = React.createClass({
 	},
 
 	pickDate: function(start) {
-		ga('send', 'event', 'pick date', 'select');	
+		ga('send', 'event', 'pick date', 'select');
 
 		var _this = this;
 
@@ -188,7 +197,7 @@ module.exports = App = React.createClass({
 	render: function() {
 		return (
 			<div>
-				<Header days={ this.state.days } pickDate={ this.state.pickDate } selectPage={ this.selectPage } page={ this.state.page } search={ this.search }/>
+				<Header days={ this.state.days } pickDate={ this.pickDate } selectPage={ this.selectPage } page={ this.state.page } search={ this.search }/>
 				<RouteHandler 
 					venues={ this.state.venues } 
 					range={ this.state.range } 
