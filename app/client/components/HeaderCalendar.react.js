@@ -19,8 +19,16 @@ module.exports = HeaderTable = React.createClass({
 	    });
 	},
 
+	goToToday: function(e) {
+		this.props.pickDate(moment());
+	},
+
 	render: function() {
-		var month = moment(this.props.days[0].date, 'MMMM Do YYYY').format('MMMM');
+		var startDate = moment(this.props.days[0].date, 'MMMM Do YYYY');
+
+		var month = startDate.format('MMMM');
+
+		var backToToday = (!startDate.isSame(new Date(), 'day') && this.props.page === 'calendar') ? 'visible' : '';
 
 		var disabled = (this.props.page !== 'calendar') ? 'disabled' : '';
 
@@ -32,6 +40,7 @@ module.exports = HeaderTable = React.createClass({
 						return <HeaderCalendarDay key={ day.id } day={ day.date }/>
 	    			})
 				}
+				<div id="back-to-today" className={ backToToday } onClick={ this.goToToday }><div></div>Back to Today</div>
 			</div>
 		)
 	}
