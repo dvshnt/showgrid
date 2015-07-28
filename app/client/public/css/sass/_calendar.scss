@@ -12,4 +12,14 @@ body.sleep #calendar {
 	@include transform(translate(0, 60px));
 }
 
+@media screen and (max-width: 500px ) {
+	#calendar {
+		@include transform(translate(0, 70px));
+	}
+
+	body.sleep #calendar {
+		@include transform(translate(0, 0));
+	}
+}
+
 @import "calendar__row";
