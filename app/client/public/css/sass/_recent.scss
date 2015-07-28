@@ -1,0 +1,51 @@
+.recent--results {
+	width:800px;
+
+	margin:0 auto; padding:0;
+
+	@include transform(translate(0, 100px));
+}
+
+.recent--results-more {
+	width:100%;
+
+	padding:25px 0;
+
+	color:rgb(0, 181, 255);
+	font-size:14px;
+
+	text-align:center;
+	text-decoration:underline;
+
+	cursor:pointer;
+
+	@include transition(background 0.2s ease);
+}
+
+.recent--results-more:hover {
+	background:rgba(0,0,0,0.05);
+}
+
+.recent--results-more:active {
+	background:rgba(0,0,0,0.075);
+}
+
+@media screen and (max-width: 500px ) {
+	.recent--results {
+		margin:20px auto;
+
+		width:92.5%;
+
+		@include transform(translate(0, 80px));
+	}
+
+	.recent--results-more {
+		width:100%;
+
+		padding:8px 0;
+	}
+}
+
+
+@import "recent--day";
+@import "recent--show";

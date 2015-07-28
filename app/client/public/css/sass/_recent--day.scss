@@ -1,0 +1,30 @@
+.recent--day {
+	width:100%;
+
+	h2 {
+		font-weight:600;
+
+		margin:0 0 25px -20px; padding:0;
+
+		text-align:left;
+	}
+
+	h3 {
+		font-size:24px;
+		font-weight:400;
+
+		margin:50px 0 0 -10px;
+	}
+}
+
+@media screen and (max-width: 500px ) {
+	.recent--day {
+		h2 {
+			font-weight:600;
+
+			margin:0 0 15px 0; padding:0;
+
+			text-align:center;
+		}
+	}
+}
