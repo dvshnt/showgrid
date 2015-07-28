@@ -85,4 +85,44 @@ module.exports = DateManager = {
 	getDayFromDate: function(date) {
 		return moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('D');
 	},
+
+	getMobileDate: function(date) {
+		var currentDate = moment(date.date, 'MMMM Do YYYY');
+		var today = moment().hour(0).minute(0).second(0);
+
+		var diff = Math.round(currentDate.diff(today, 'days', true));
+
+		if (diff === 0) {
+			return "TODAY";
+		}
+		else if (diff === -1 ) {
+			return "YESTERDAY";
+		}
+		else if (diff === 1 ) {
+			return "TOMORROW";
+		}
+		else if (diff < 7 && diff > 1) {
+			return currentDate.format("dddd").toUpperCase();
+		}
+		else {
+			return currentDate.format("dddd M/D").toUpperCase();
+		}
+	},
+
+	getRecentShowsDate: function(date) {
+		var currentDate = moment(date, 'YYYY-MM-DD');
+		var today = moment().hour(0).minute(0).second(0);
+
+		var diff = Math.round(currentDate.diff(today, 'days', true));
+
+		if (diff === 0) {
+			return "TODAY";
+		}
+		else if (diff === -1 ) {
+			return "YESTERDAY";
+		}
+		else {
+			return currentDate.format("dddd M/D").toUpperCase();
+		}
+	}
 };
