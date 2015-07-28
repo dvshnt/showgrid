@@ -1,0 +1,369 @@
+#header__mobile--menu {
+	display:none;
+}
+
+@media screen and (max-width: 500px ) {
+	#header__mobile--menu {
+		position:absolute;
+		top:-100vh;
+
+		display:-webkit-flex;
+		display:		flex;
+
+		-webkit-flex-flow:column nowrap;
+				flex-flow:column nowrap;
+
+		position:absolute;
+
+		width:100vw; height:100vh;
+
+		background:rgba(255,255,255,0.95);
+
+		z-index:99;
+
+		overflow:hidden;
+
+		@include transition(top 0.35s ease);
+	}
+
+	body.mobile--open {
+		overflow:hidden;
+	}
+
+	body.mobile--open #header__mobile--menu {
+		top:0vh;
+	}
+
+	#header__mobile--menu header {
+		-webkit-flex:0 0 70px;
+				flex:0 0 70px;
+
+		width:100%;
+
+		display:-webkit-flex;
+		display:		flex;
+
+		-webkit-flex-flow:row wrap;
+				flex-flow:row wrap;
+
+		-webkit-justify-content:center;
+				justify-content:center;
+
+		-webkit-align-items:center;
+				align-items:center;
+	}
+
+	#header__mobile--menu header aside {
+		-webkit-flex:0 0 70px; 
+				flex:0 0 70px; 
+
+		height:70px;
+
+		text-align:center;
+	}
+
+	#header__mobile--menu header .profile {
+		-webkit-filter:grayscale(100%);
+				filter:grayscale(100%);
+	}
+
+	#header__mobile--menu header .profile div {
+		width:40px; height:40px;
+
+		margin:15px;
+
+		background-image:url('https://scontent-atl1-1.xx.fbcdn.net/hphotos-xpf1/t31.0-8/10957430_628791257267124_485202279518583117_o.jpg');
+		background-repeat:no-repeat;
+		background-size:40px;
+
+		border-radius:60px;
+	}
+	
+
+	#header__mobile--menu header .city {
+		-webkit-flex:1 1 100px;
+				flex:1 1 100px;
+
+		height:70px;
+
+		text-align:center;
+		text-transform:uppercase;
+	}
+
+	#header__mobile--menu header .city span {
+		font-size:18px;
+		font-weight:100;
+
+		line-height:70px;
+	}
+
+	#header__mobile--menu header .city span:before {
+		content: "";
+
+		position:relative;
+		top:-2px;
+
+	    display:inline-block;
+	    
+	    margin:0 0.5em;
+
+	    border: 5px solid transparent;
+	    border-top:7px solid rgba(0,0,0,0.5);
+	    border-bottom:0 none;
+	}
+
+	#header__mobile--menu header .close {
+		background:rgba(0,0,0,0);
+
+		@include transition(background .2s ease);
+	}
+
+	#header__mobile--menu header .close:active {
+		background:rgba(0,0,0,0.2);
+	}
+
+	#header__mobile--menu header .close b {
+		color:rgba(0,0,0,0.75);
+		font-size:24px;
+
+		line-height:70px;
+	}
+
+
+
+	#header__mobile--menu section {
+		-webkit-flex:1 1 50%;
+				flex:1 1 50%;
+
+		width:100%;
+
+		padding:25% 0;
+		
+		display:-webkit-flex;
+		display:		flex;
+
+		-webkit-flex-flow:row wrap;
+				flex-flow:row wrap;
+
+		-webkit-justify-content:center;
+				justify-content:center;
+
+		-webkit-align-items:center;
+				align-items:center;
+	}
+
+	#header__mobile--menu section a {
+		text-decoration:none;
+	}
+
+	#header__mobile--menu section .page {
+		position:relative;
+		top:-600px;
+
+		-webkit-flex:0 0 22.5vw;
+				flex:0 0 22.5vw;
+
+		height:22.5vw;
+
+		margin:0 4vw;
+
+		border-radius:25vw;
+
+		text-align:center;
+
+		opacity:0.85;
+		
+		@include transform(scale(1,1));
+
+		@include transition--transform(0.3s ease);
+	}
+
+	#header__mobile--menu section .page:active {
+		@include transform(scale(0.9,0.9));
+	}
+
+
+
+	#header__mobile--menu section .page.calendar {
+		background:rgb(0,194,115);
+	}
+
+	#header__mobile--menu section .page.calendar:after {
+		display:block;
+
+		content:'Calendar';
+
+		position:relative;
+		top:8px;
+
+		color:rgba(0,0,0,0.8);
+		font-size:10px;
+		font-weight:100;
+
+		text-transform:uppercase;
+	}
+
+	body.mobile--open #header__mobile--menu section .page.calendar {
+		top:0px;
+
+		@include transition(top 0.3s ease 0.15s);
+	}
+
+	#header__mobile--menu section .page.recent {
+		background:rgb(0,181,255);
+	}
+
+	#header__mobile--menu section .page.recent:after {
+		display:block;
+
+		content:'New Shows';
+
+		position:relative;
+		top:8px;
+
+		color:rgba(0,0,0,0.8);
+		font-size:10px;
+		font-weight:100;
+
+		text-transform:uppercase;
+	}
+
+	body.mobile--open #header__mobile--menu section .page.recent {
+		top:0px;
+
+		@include transition(top 0.4s ease 0.15s);
+	}
+
+	#header__mobile--menu section .page.star {
+		background:rgb(251,191,0);
+	}
+
+	#header__mobile--menu section .page.star:after {
+		display:block;
+
+		content:'Recommended';
+
+		position:relative;
+		top:8px;
+
+		color:rgba(0,0,0,0.8);
+		font-size:10px;
+		font-weight:100;
+
+		text-transform:uppercase;
+	}
+
+	body.mobile--open #header__mobile--menu section .page.star {
+		top:0px;
+
+		@include transition(top 0.5s ease 0.15s);
+	}
+
+	#header__mobile--menu section .page.alert {
+		background:rgb(255,138,0);
+	}
+
+	#header__mobile--menu section .page.alert:after {
+		display:block;
+
+		content:'Alerts';
+
+		position:relative;
+		top:8px;
+
+		color:rgba(0,0,0,0.8);
+		font-size:10px;
+		font-weight:100;
+
+		text-transform:uppercase;
+	}
+
+	body.mobile--open #header__mobile--menu section .page.alert {
+		top:0px;
+
+		@include transition(top 0.35s ease 0.15s);
+	}
+
+	#header__mobile--menu section .page.heart {
+		background:rgb(255,0,53);
+	}
+
+	#header__mobile--menu section .page.heart:after {
+		display:block;
+
+		content:'Favorited';
+
+		position:relative;
+		top:8px;
+
+		color:rgba(0,0,0,0.8);
+		font-size:10px;
+		font-weight:100;
+
+		text-transform:uppercase;
+	}
+
+	body.mobile--open #header__mobile--menu section .page.heart {
+		top:0px;
+
+		@include transition(top 0.45s ease 0.15s);
+	}
+
+	#header__mobile--menu section .page.search {
+		background:#6f14ee;
+	}
+
+	#header__mobile--menu section .page.search:after {
+		display:block;
+
+		content:'Search';
+
+		position:relative;
+		top:8px;
+
+		color:rgba(0,0,0,0.8);
+		font-size:10px;
+		font-weight:100;
+
+		text-transform:uppercase;
+	}
+
+	body.mobile--open #header__mobile--menu section .page.search {
+		top:0px;
+
+		@include transition(top 0.55s ease 0.15s);
+	}
+
+	#header__mobile--menu section .page b {
+		color:rgba(255,255,255,1);
+		font-size:36px;
+
+		line-height:22.5vw;
+	}
+
+
+
+	#header__mobile--menu footer {
+		-webkit-flex:0 0 140px;
+				flex:0 0 140px;
+
+		width:100%;
+
+		text-align:center;
+	}
+
+	#header__mobile--menu footer .chat {
+		width:100px; height:100px;
+
+		margin:-10px auto 0 auto;
+
+		background:rgba(0,0,0,0.6);
+
+		background-image:url('../img/hat.png');
+		background-size:75px;
+		background-repeat:no-repeat;
+		background-position:15px 15px;
+
+		border-radius:25vw;
+	}
+}
