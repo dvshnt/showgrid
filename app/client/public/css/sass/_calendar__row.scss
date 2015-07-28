@@ -4,7 +4,7 @@
 
 	width:100%;
 
-	border-bottom:1px solid rgb(229,229,229);
+	border-bottom:1px solid #efefef;
 }
 
 .calendar__row > div {
@@ -15,6 +15,17 @@
 	padding:10px 0;
 
 	height:80px;
+}
+
+@media screen and (max-width: 500px ) {
+	.calendar__row {
+		border-bottom:none;
+	}
+
+	.calendar__row:nth-child(even) {
+		background-color:#fcfcfc;
+	}
+
 }
 
 @import "calendar__row__venue";

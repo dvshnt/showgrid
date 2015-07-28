@@ -15,7 +15,7 @@
 	}
 
 	.day:nth-child(even) {
-		background-color:#fbfbfb;
+		background-color:#fdfdfd;
 	}
 
 }
@@ -25,6 +25,10 @@
 		.day {
 			padding:40px 0.25em;
 		}
+	}
+
+	.day:nth-child(even) {
+		background-color:transparent !important;
 	}
 }
 

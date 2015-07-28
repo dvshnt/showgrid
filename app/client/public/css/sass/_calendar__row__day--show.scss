@@ -95,6 +95,22 @@
 			line-height:16px;
 		}
 
+		.actions {
+			width:100%;
+
+			padding:4px 0;
+
+			font-size:24px;
+
+			.icon-bell {
+				color:rgb(255,0,53);
+			}
+
+			.icon-heart {
+				color:rgb(134,195,0);
+			}
+		}
+
 		.ticket {
 			width:85%;
 
