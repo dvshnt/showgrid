@@ -16,6 +16,12 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 	@include transform(translate(0, 125px));
 }
 
+.search--results.rec {
+	padding:0;
+
+	@include transform(translate(0, 60px));
+}
+
 .search__throbber {
 	width:200px; height:150px;
 
@@ -56,11 +62,30 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 	}
 }
 
-@media screen and (max-width: 800px ) {
+@media screen and (max-width: 500px ) {
 	.search--results {
-		margin:100px auto;
+		margin:20px auto;
 
 		width:92.5%;
+
+		@include transform(translate(0, 15px));
+	}
+
+	.search__text {
+		h2 {
+			mfont-size:20px;
+		}
+		h3 {
+			font-size:18px;
+		}
+
+		p {
+			font-size:14px;
+		}
+
+		i {
+			font-size:16px;
+		}
 	}
 }
 
