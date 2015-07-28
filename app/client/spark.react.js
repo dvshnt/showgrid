@@ -7,10 +7,11 @@ var $ = require('jquery'),
 	App = React.createFactory(require('./components/App.react')),
 
 	ShowGrid = React.createFactory(require('./components/ShowGrid.react')),
-	Search = React.createFactory(require('./components/Search.react')),
 	Recent = React.createFactory(require('./components/Recent.react')),
-	OnSale = React.createFactory(require('./components/OnSale.react')),
 	Featured = React.createFactory(require('./components/Featured.react')),
+	Alerts = React.createFactory(require('./components/Alerts.react')),
+	Favorites = React.createFactory(require('./components/Favorites.react')),
+	Search = React.createFactory(require('./components/Search.react')),
 
 	GridEngine = require('./util/GridEngine'),
 	DateManager = require('./util/DateManager');
@@ -32,10 +33,11 @@ $.ajax({
 	var routes = (
 		<Route name="app" handler={App} path="/">
 			<DefaultRoute name="showgrid" handler={ShowGrid}/>
-			<Route name="search" path="/search" handler={Search} />
 			<Route name="recent" path="/recent" handler={Recent} />
-			<Route name="onsale" path="/onsale" handler={OnSale} />
 			<Route name="featured" path="/featured" handler={Featured} />
+			<Route name="alerts" path="/alerts" handler={Alerts} />
+			<Route name="favorites" path="/favorites" handler={Favorites} />
+			<Route name="search" path="/search" handler={Search} />
 		</Route>
 	);
 
