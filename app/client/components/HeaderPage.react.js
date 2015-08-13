@@ -29,8 +29,6 @@ module.exports = HeaderPage = React.createClass({
 					<HeaderPageOption pageName="calendar" symbol="icon-calendar--full" text="Calendar" link="/#/" page={this.props.page} selectPage={ this.props.selectPage }/>
 					<HeaderPageOption pageName="recent" symbol="icon-recent--full" text="New Shows" link="/#/recent" page={this.props.page} selectPage={ this.props.selectPage }/>
 					<HeaderPageOption pageName="featured" symbol="icon-star--full" text="Recommended" link="/#/featured" page={this.props.page} selectPage={ this.props.selectPage }/>
-					<HeaderPageOption pageName="alert" symbol="icon-bell--full" text="Alerts" link="/#/alerts" page={this.props.page} selectPage={ this.props.selectPage }/>
-					<HeaderPageOption pageName="favorite" symbol="icon-heart--full" text="Favorites" link="/#/favorites" page={this.props.page} selectPage={ this.props.selectPage }/>
 					<HeaderPageOption pageName="search" symbol="icon-search" text="Search" link="/#/search" page={this.props.page} selectPage={ this.props.selectPage }/>
 				</div>
 			</div>

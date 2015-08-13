@@ -9,18 +9,46 @@ var $ = require('jquery'),
 	DateManager = require('../util/DateManager');
 
 module.exports = HeaderMobileCalendar = React.createClass({
-	componentDidMount: function() {
-		var _this = this;
+	getInitialState: function() {
+		return {
+			mounted: false
+		};
+	},
 
-		var picker = new Pikaday({
-        	field: document.getElementById('mobile--datepicker'),
-	        format: 'D MMM YYYY',
-	        minDate: moment().toDate(),
-	        reposition: true,
-	        onSelect: function() {
-	        	_this.props.pickDate(this.getMoment());
-	        }
-	    });
+	componentDidMount: function() {
+		if (this.props.page === "calendar" && !this.state.mounted) {
+			var _this = this;
+
+			var picker = new Pikaday({
+	        	field: document.getElementById('mobile--datepicker'),
+		        format: 'D MMM YYYY',
+		        minDate: moment().toDate(),
+		        reposition: true,
+		        onSelect: function() {
+		        	_this.props.pickDate(this.getMoment());
+		        }
+		    });
+
+		    this.state.mounted = true;
+		}
+	},
+
+	componentDidUpdate: function() {
+		if (this.props.page === "calendar" && !this.state.mounted) {
+			var _this = this;
+
+			var picker = new Pikaday({
+	        	field: document.getElementById('mobile--datepicker'),
+		        format: 'D MMM YYYY',
+		        minDate: moment().toDate(),
+		        reposition: true,
+		        onSelect: function() {
+		        	_this.props.pickDate(this.getMoment());
+		        }
+		    });
+
+		    this.state.mounted = true;
+		}
 	},
 
 	render: function() {
