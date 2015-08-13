@@ -17,18 +17,16 @@ module.exports = RecentDay = React.createClass({
 			recent: this.props.day.shows
 		}
 	},
-
+	
 	render: function() {
 		return (
 			<div className="recent--day">
 				<h2>{ this.state.day }</h2>
-				<div className="recent--shows">
 				{
 					this.state.recent.map(function(show) {
 						return <RecentShow show={ show }/> 
-    				})
+					})
 				}
-				</div>
 			</div>
 		)
 	}

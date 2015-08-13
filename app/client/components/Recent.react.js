@@ -52,7 +52,7 @@ module.exports = Recent = React.createClass({
 		}
 
 		return (
-			<div className="recent--results">
+			<div className="recent--container">
 				{ results }
 				<div className="recent--results-more" onClick={ this.getRecentShows }>See More New Shows...</div>
 			</div>

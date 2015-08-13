@@ -1,9 +1,11 @@
-.recent--results {
+.recent--container {
 	width:800px;
 
 	margin:0 auto; padding:0;
 
-	@include transform(translate(0, 100px));
+	font-family:"Proxima Nova Soft";
+
+	@include transform(translate(0, 90px));
 }
 
 .recent--results-more {
@@ -13,6 +15,7 @@
 
 	color:rgb(0, 181, 255);
 	font-size:14px;
+	font-weight:300;
 
 	text-align:center;
 	text-decoration:underline;
@@ -30,22 +33,19 @@
 	background:rgba(0,0,0,0.075);
 }
 
-@media screen and (max-width: 500px ) {
-	.recent--results {
-		margin:20px auto;
-
+@media screen and (max-width: 800px ) {
+	.recent--container {
 		width:92.5%;
-
-		@include transform(translate(0, 80px));
 	}
 
 	.recent--results-more {
 		width:100%;
 
-		padding:8px 0;
+		padding:30px 0;
+
+		font-size:16px;
 	}
 }
 
-
-@import "recent--day";
 @import "recent--show";
+@import "recent--day";
