@@ -916,11 +916,20 @@
 
             if (window.innerWidth < 500) {
                 left = 0;
+                top = 62;
+            }
+            else {
+                if (document.body.className.indexOf('sleep') > -1) {
+                    top = 62;
+                }
+                else {
+                    top = 126;
+                }
             }
 
             this.el.style.cssText = [
-                'position: absolute',
-                'left: ' + left + '0px',
+                'position: fixed',
+                'left: ' + left + 'px',
                 'top: ' + top + 'px'
             ].join(';');
         },
