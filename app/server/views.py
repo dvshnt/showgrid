@@ -151,14 +151,12 @@ def recently_added(request):
 
 def group_shows_by_date(shows, page):
 	# Subtract 1 because we use 1 as first page instead of 0
-	delta = int(page) - 1
-	start = date.today() + timedelta(days=delta)
 	dates = []
 	results = []
 
 	for show in shows:
-		if show.created_at not in dates:
-			dates.append(show.created_at)
+		if show.created_at.strftime("%Y-%m-%d") not in dates:
+			dates.append(show.created_at.strftime("%Y-%m-%d"))
 
 
 	for d in dates:
@@ -171,7 +169,6 @@ def group_shows_by_date(shows, page):
 
 def create_date_bundle(d, shows):
 	shows_bundle = []
-	d = d.strftime("%Y-%m-%d")
 
 	for show in shows:
 		if d == show.created_at.strftime("%Y-%m-%d"):
