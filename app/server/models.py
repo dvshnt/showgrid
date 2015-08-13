@@ -5,11 +5,17 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.contrib.localflavor.us.models import USStateField
 
+from colorful.fields import RGBColorField
+
 class Venue_v2(models.Model):
 	name = models.CharField(max_length=200)
 	address = models.ForeignKey('Address')
 	image = models.ImageField (upload_to='showgrid/img/venues/')
 	website = models.URLField()
+
+	primary_color = RGBColorField()
+	secondary_color = RGBColorField()
+	accent_color = RGBColorField()
 
 	# Sign-post for if venue is open or not
 	opened = models.BooleanField(default=True)
@@ -27,7 +33,10 @@ class Venue_v2(models.Model):
 			'name' : self.name,
 			'website' : self.website,
 			'image' : self.image.url,
-			'address' : self.address.json()
+			'address' : self.address.json(),
+			'primary_color':  self.primary_color,
+			'secondary_color':  self.secondary_color,
+			'accent_color':  self.accent_color,
 		}
 
 	@property
@@ -76,10 +85,15 @@ class Show_v2(models.Model):
 			'id' : self.id,
 			'title': self.title,
 			'headliners': self.headliners,
+			'openers': self.openers,
 			'website' : self.website,
 			'date' : str(self.date),
+			'star' : self.star,
+			'price' : self.price,
 			'ticket' : self.ticket,
+			'soldout' : self.soldout,
 			'onsale' : str(self.onsale),
+			'age' : self.age,
 			'venue' : self.venue.json()
 		}
 
@@ -108,64 +122,13 @@ class Show_v2(models.Model):
 			'openers': self.openers,
 			'website' : self.website,
 			'date' : str(self.date),
+			'star' : self.star,
 			'price' : self.price,
 			'ticket' : self.ticket,
 			'soldout' : self.soldout,
-			'onsale' : self.onsale,
+			'onsale' : str(self.onsale),
 			'age' : self.age,
 			'venue' : self.venue.json()
-		}
-
-
-###################
-### OLD MODELS
-class Venue(models.Model):
-	name = models.CharField(max_length=200)
-	address = models.ForeignKey('Address')
-	website = models.CharField(max_length=200)
-	image = models.ImageField (upload_to='showgrid/img/venues/')
-
-	autofill_calendar_url = models.CharField(max_length=200, blank=True)
-
-
-	@property
-	def alphabetical_title(self):
-		"""
-		Returns an alphabetical-friendly string of a title attribute.
-		"""
-		name = self.name
-
-		# A list of flags to check each `title` against.
-		starts_with_flags = [
-			'the ',
-			'an ',
-			'a '
-		]
-
-		# Check each flag to see if the title starts with one of it's contents.
-		for flag in starts_with_flags:
-			if name.lower().startswith(flag):
-				# If the title does indeed start with a flag, return the title with
-				# the flag appended to the end preceded by a comma.
-				return "%s, %s" % (name[len(flag):], name[:len(flag)-1])
-		else:
-			pass
-		
-		# If the property did not return as a result of the previous for loop then just
-		# return the title.
-		return self.name
-
-
-	def __unicode__ (self):
-		return self.name
-
-	def json(self):
-		return {
-			'id' : self.id,
-			'name' : self.name,
-			'website' : self.website,
-			'image' : self.image.url,
-			'address' : self.address.json()
 		}
 
 
@@ -184,32 +147,4 @@ class Address(models.Model):
 			'state' : self.state,
 			'city' : self.city,
 			'zip_code' : self.zip_code
-		}
-
-
-class Show(models.Model):
-	band_name = models.CharField(_("band"), max_length=300)
-	other_info = models.CharField(_("other"), max_length=400, blank=True)
-	website = models.URLField()
-	date = models.DateTimeField()
-	venue = models.ForeignKey('Venue')
-
-	def __unicode__ (self):
-		return self.band_name
-
-	def json_min(self):
-		return {
-			'id' : self.id,
-			'band_name': self.band_name,
-			'date' : str(self.date),
-			'website' : self.website
-		}
-
-	def json_max(self):
-		return {
-			'id' : self.id,
-			'band_name': self.band_name,
-			'date' : str(self.date),
-			'website' : self.website,
-			'venue' : self.venue.json()
 		}

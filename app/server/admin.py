@@ -1,16 +1,10 @@
 from models import *
 from django.contrib import admin
 
-class ShowAdmin(admin.ModelAdmin):
-	search_fields = ['band_name']
-	list_display = ('date', 'band_name', 'venue')
-
 class ShowV2Admin(admin.ModelAdmin):
 	search_fields = ['headliners', 'openers', 'title']
 	list_display = ('date', 'headliners', 'openers', 'venue')
 
-admin.site.register(Venue)
-admin.site.register(Show, ShowAdmin)
 admin.site.register(Address)
 
 admin.site.register(Venue_v2)

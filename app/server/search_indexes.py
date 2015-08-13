@@ -31,8 +31,10 @@ class ShowV2Index(indexes.SearchIndex, indexes.Indexable):
 	def index_queryset(self, using=None):
 		return self.get_model().objects.filter(date__gte=datetime.datetime.now())
 
+
 	def prepare_venue(self, obj):
 		return obj.venue.name
+
 
 	def prepare_soldout(self, obj):
 		if obj.soldout == False:
