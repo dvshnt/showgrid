@@ -42,9 +42,13 @@ module.exports = SearchResultsShow = React.createClass({
 		if (show.title !== '' && show.headliners !== '') {
 			title = <a href={ show.website } target="_blank" onClick={ this.registerEvent }><div className="title">{ show.title }</div></a>;
 		}
+
+		if (show.star) {
+			star = <b className="icon-star--full"></b>;
+		}
 		
 		if (show.headliners !== '') {
-			headliner = <a href={ show.website } target="_blank" onClick={ this.registerEvent }><div className="headliner">{ show.headliners }</div></a>;
+			headliner = <a href={ show.website } target="_blank" onClick={ this.registerEvent }><div className="headliner">{ star }{ show.headliners }</div></a>;
 		}
 
 		if (show.openers !== '') {

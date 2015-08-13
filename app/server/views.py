@@ -251,7 +251,7 @@ def get_search_results(request):
 	if request.method == "GET":
 		query = request.GET['q']
 
-		querySet = SearchQuerySet().filter(text=query).order_by('venue')
+		querySet = SearchQuerySet().filter(text=query).order_by('date')
 
 		results = [ Show_v2.objects.get(id=show.pk).json_max() for show in querySet ]
 

@@ -49,12 +49,17 @@ module.exports = Recent = React.createClass({
 
 				results.push(<RecentDay key={ key } day={ day }/>)
 			}
+
+			results.push(<div className="recent--results-more" onClick={ this.getRecentShows }>See More New Shows...</div>);
+		}
+
+		else {
+			results = <h2>No Recently Added Shows</h2>;
 		}
 
 		return (
 			<div className="recent--container">
 				{ results }
-				<div className="recent--results-more" onClick={ this.getRecentShows }>See More New Shows...</div>
 			</div>
 
 		)

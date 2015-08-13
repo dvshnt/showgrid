@@ -6,6 +6,10 @@
 	font-family:"Proxima Nova Soft";
 
 	@include transform(translate(0, 90px));
+
+	h2 {
+		text-align:center;
+	}
 }
 
 .recent--results-more {
