@@ -9,8 +9,6 @@ var $ = require('jquery'),
 	ShowGrid = React.createFactory(require('./components/ShowGrid.react')),
 	Recent = React.createFactory(require('./components/Recent.react')),
 	Featured = React.createFactory(require('./components/Featured.react')),
-	Alerts = React.createFactory(require('./components/Alerts.react')),
-	Favorites = React.createFactory(require('./components/Favorites.react')),
 	Search = React.createFactory(require('./components/Search.react')),
 
 	GridEngine = require('./util/GridEngine'),
