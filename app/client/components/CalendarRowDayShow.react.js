@@ -38,7 +38,7 @@ module.exports = CalendarRowDayShow = React.createClass({
 		}
 
 		if (show.star) {
-			star = <div className="star"></div>;
+			star = <b className="icon-star--full"></b>;
 		}
 
 		if (show.headliners !== '') {

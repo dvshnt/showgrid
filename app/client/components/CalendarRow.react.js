@@ -15,7 +15,7 @@ module.exports = CalendarRow = React.createClass({
 				<CalendarRowVenue venue={ venue }/>
 				{
 					this.props.days.map(function(day) {
-						return <CalendarRowDay key={ day.id } day={ day } shows={ venue.shows }/>
+						return <CalendarRowDay key={ day.id } day={ day } venue={ venue } shows={ venue.shows }/>
 					})
 				}
 			</div>
