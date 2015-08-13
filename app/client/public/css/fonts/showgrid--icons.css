@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'showgrid--icons';
-  src: url('../../font/showgrid--icons.eot?72911463');
-  src: url('../../font/showgrid--icons.eot?72911463#iefix') format('embedded-opentype'),
-       url('../../font/showgrid--icons.woff?72911463') format('woff'),
-       url('../../font/showgrid--icons.ttf?72911463') format('truetype'),
-       url('../../font/showgrid--icons.svg?72911463#showgrid--icons') format('svg');
+  src: url('./webfonts/showgrid--icons.eot?72911463');
+  src: url('./webfonts/showgrid--icons.eot?72911463#iefix') format('embedded-opentype'),
+       url('./webfonts/showgrid--icons.woff?72911463') format('woff'),
+       url('./webfonts/showgrid--icons.ttf?72911463') format('truetype'),
+       url('./webfonts/showgrid--icons.svg?72911463#showgrid--icons') format('svg');
   font-weight: normal;
   font-style: normal;
 }
