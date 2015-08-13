@@ -35,8 +35,6 @@ $.ajax({
 			<DefaultRoute name="showgrid" handler={ShowGrid}/>
 			<Route name="recent" path="/recent" handler={Recent} />
 			<Route name="featured" path="/featured" handler={Featured} />
-			<Route name="alerts" path="/alerts" handler={Alerts} />
-			<Route name="favorites" path="/favorites" handler={Favorites} />
 			<Route name="search" path="/search" handler={Search} />
 		</Route>
 	);

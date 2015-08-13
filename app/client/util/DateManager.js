@@ -105,11 +105,11 @@ module.exports = DateManager = {
 			return currentDate.format("dddd").toUpperCase();
 		}
 		else {
-			return currentDate.format("dddd M/D").toUpperCase();
+			return currentDate.format("dddd MMM Do").toUpperCase();
 		}
 	},
 
-	getRecentShowsDate: function(date) {
+	getFeaturedShowDate: function(date) {
 		var currentDate = moment(date, 'YYYY-MM-DD');
 		var today = moment().hour(0).minute(0).second(0);
 
@@ -121,8 +121,31 @@ module.exports = DateManager = {
 		else if (diff === -1 ) {
 			return "YESTERDAY";
 		}
+		else if (diff === 1 ) {
+			return "TOMORROW";
+		}
+		else if (diff < 7 && diff > 1) {
+			return currentDate.format("dddd").toUpperCase();
+		}
 		else {
-			return currentDate.format("dddd M/D").toUpperCase();
+			return currentDate.format("dddd, MMMM Do").toUpperCase();
+		}
+	},
+
+	getRecentShowsDate: function(date) {
+		var currentDate = moment(date, 'YYYY-MM-DD');
+		var today = moment().hour(0).minute(0).second(0);
+
+		var diff = Math.round(currentDate.diff(today, 'days', true));
+
+		if (diff === 0) {
+			return "Added Today";
+		}
+		else if (diff === -1 ) {
+			return "Added Yesterday";
+		}
+		else {
+			return "Added " + currentDate.format("dddd, MMMM Do");
 		}
 	}
 };

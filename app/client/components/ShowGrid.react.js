@@ -27,14 +27,16 @@ module.exports = ShowGrid = React.createClass({
 			function togglePageHeader(prev, offset) {
 				var currentScroll = $(this).scrollTop();
 				
-				if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
-					
-				}
-				else if (currentScroll > offset && (_this.props.page === "calendar" || _this.props.page === "search")) {
-					if (currentScroll > prev) {
-						$('body').addClass("sleep");
-					} else {
-						$('body').removeClass("sleep");
+				if ($(window).width() > 500) {
+					if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+						
+					}
+					else if (currentScroll > offset && (_this.props.page === "calendar" || _this.props.page === "search")) {
+						if (currentScroll > prev) {
+							$('body').addClass("sleep");
+						} else {
+							$('body').removeClass("sleep");
+						}
 					}
 				}
 				

@@ -8,84 +8,103 @@ module.exports = SearchResultsShow = React.createClass({
 	},
 
 	render: function() {
-		var month = DateManager.getMonthFromDate(this.props.show[0].date),
-			day = DateManager.getDayFromDate(this.props.show[0].date);
+		var show = this.props.show,
+			venue = show.venue;
+
+		var onsale = DateManager.areTicketsOnSale(show.onsale);
+
+		var month = DateManager.getMonthFromDate(show.date),
+			day = DateManager.getDayFromDate(show.date);
+
+		var	venue = show.venue,
+			title = "",
+			headliner = "",
+			opener = "",
+			ticket = "",
+			star = "",
+			free = "",
+			age = "";
 
 
-		var shows = [];
+		var primaryColor = {
+			'background': venue.primary_color
+		};
 
-		for (var i=0; i < this.props.show.length; i++) {
-			var show = this.props.show[i];
+		var secondaryColor = {
+			'color': venue.secondary_color
+		};
 
-			var onsale = DateManager.areTicketsOnSale(show.onsale);
-
-			var	title = "",
-				headliner = "",
-				opener = "",
-				ticket = "",
-				free = "",
-				age = "";
+		var accentColor = {
+			'color': venue.accent_color
+		};
 
 
-			if (show.title !== '' && show.headliners !== '') {
-				title = <a href={ show.website } target="_blank" onClick={ this.registerEvent }><div className="title">{ show.title }</div></a>;
-			}
-			
-			if (show.headliners !== '') {
-				headliner = <a href={ show.website } target="_blank" onClick={ this.registerEvent }><div className="main">{ show.headliners }</div></a>;
-			}
-
-			if (show.openers !== '') {
-				opener =  <a href={ show.website } target="_blank" onClick={ this.registerEvent }><div className="extra">{ show.openers }</div></a>;
-			}
-
-
-			if (!onsale) {
-				saleDate = <span className="date">{ DateManager.formatSaleDate(show.onsale) }</span>;
-				ticket = <a href={ show.ticket } target="_blank" onClick={ this.registerTicketEvent }><div className="onsale">On Sale<br></br>{ saleDate }</div></a>;
-			}
-			else if (show.ticket !== '') {
-				var price = "";
-
-				if (show.price > 0) {
-					price = <span className="price">${ show.price }</span>;
-				}
-
-				ticket = <a href={ show.ticket } target="_blank" onClick={ this.registerEvent }><div className="ticket">Buy Tickets{ price }</div></a>;
-			}
-			else if (show.price > 0) {
-				free = <span className="free">${ show.price }</span>;
-			}
-			else if (show.price < 0) {
-				free = <span className="free">FREE</span>;
-			}
-
-			if (show.soldout) {
-				ticket = <div className="soldout">Sold Out</div>;
-			}
-
-			if (show.age > 0) {
-				age = <span className="age">{ show.age }+</span>;
-			}
-
-			shows.push(<div className="search__row__day__show"><div className="search__row__show__info"><span className="time">{ DateManager.formatShowTime(show.date) }</span>{ free }{ age }</div>{ title }{ headliner }{ opener }{ ticket }</div>);
+		if (show.title !== '' && show.headliners !== '') {
+			title = <a href={ show.website } target="_blank" onClick={ this.registerEvent }><div className="title">{ show.title }</div></a>;
+		}
+		
+		if (show.headliners !== '') {
+			headliner = <a href={ show.website } target="_blank" onClick={ this.registerEvent }><div className="headliner">{ show.headliners }</div></a>;
 		}
 
+		if (show.openers !== '') {
+			opener =  <a href={ show.website } target="_blank" onClick={ this.registerEvent }><div className="opener">{ show.openers }</div></a>;
+		}
 		
+		if (show.price < 0) {
+			free = <span className="free" style={ accentColor }>FREE</span>;
+		}
+
+		if (show.soldout) {
+			ticket = <div className="soldout">Sold Out</div>;
+		}
+
+		if (show.age > 0) {
+			age = <span className="age" style={ accentColor }>{ show.age }+</span>;
+		}
+
+		if (!onsale) {
+			saleDate = <span className="date">{ DateManager.formatSaleDate(show.onsale) }</span>;
+			ticket = <a href={ show.ticket } target="_blank" onClick={ this.registerTicketEvent }><div className="onsale">On Sale { saleDate }</div></a>;
+		}
+		else if (show.ticket !== '') {
+			var price = "";
+
+			if (show.price > 0) {
+				price = <span className="price">${ show.price }</span>;
+			}
+
+			ticket = <div className="button ticket">Buy Tickets { price }</div>;
+		}
+
+		if (show.soldout) {
+			ticket = <div className="soldout">Sold Out</div>;
+		}
 
 
 		return (
-			<div className="search__row__day">
-				<div className="search__row__day__date">
-					<div>{ month }</div>
-					<div>{ day }</div>
+			<div className="recent--day__show__block">
+				<div className="recent--day__show__info" style={ primaryColor }>
+					<span className="venue" style={ secondaryColor }>{ venue.name }</span>
+					<span className="time" style={ accentColor }>{ DateManager.formatShowTime(show.date) }</span>
+					{ free }{ age }
 				</div>
-
-				<div className="search__row__day__shows">
-					{ shows }
+				<div className="recent--day--middle">
+					<div className="recent--day__show__date">
+						<div>{ month }</div>
+						<div>{ day }</div>
+					</div>
+					<div className="recent--day__show__bands">
+						{ title }
+						{ headliner }
+						{ opener }
+					</div>
+				</div>
+				<div className="recent--day__show__actions">
+					{ ticket }
 				</div>
 			</div>
-		)
+		);
 	}
 });
 

@@ -1,3 +1,86 @@
+/**
+ * @license
+ * MyFonts Webfont Build ID 3068012, 2015-07-30T09:19:05-0400
+ * 
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are 
+ * explicitly restricted from using the Licensed Webfonts(s).
+ * 
+ * You may obtain a valid license at the URLs below.
+ * 
+ * Webfont: ProximaNovaSoft-Medium by Mark Simonson
+ * URL: http://www.myfonts.com/fonts/marksimonson/proxima-nova-soft/medium/
+ * 
+ * Webfont: ProximaNovaSoft-Semibold by Mark Simonson
+ * URL: http://www.myfonts.com/fonts/marksimonson/proxima-nova-soft/semibold/
+ * 
+ * Webfont: ProximaNovaSoft-Bold by Mark Simonson
+ * URL: http://www.myfonts.com/fonts/marksimonson/proxima-nova-soft/bold/
+ * 
+ * Webfont: ProximaNovaSoft-Regular by Mark Simonson
+ * URL: http://www.myfonts.com/fonts/marksimonson/proxima-nova-soft/regular/
+ * 
+ * 
+ * License: http://www.myfonts.com/viewlicense?type=web&buildid=3068012
+ * Licensed pageviews: 1,000,000
+ * Webfonts copyright: Copyright (c) Mark Simonson, 2010. All rights reserved.
+ * 
+ * © 2015 MyFonts Inc
+*/
+
+
+/* @import must be at top of file, otherwise CSS will not work */
+@import url("//hello.myfonts.net/count/2ed06c");
+
+  
+ 
+  
+@font-face {
+	font-family:'Proxima Nova Soft';
+	font-weight:300;
+
+	src:url('webfonts/2ED06C_3_0.eot');
+	src:url('webfonts/2ED06C_3_0.eot?#iefix') format('embedded-opentype'),
+		url('webfonts/2ED06C_3_0.woff2') format('woff2'),
+		url('webfonts/2ED06C_3_0.woff') format('woff'),
+		url('webfonts/2ED06C_3_0.ttf') format('truetype');
+}
+
+@font-face {
+	font-family:'Proxima Nova Soft';
+	font-weight:400;
+
+	src:url('webfonts/2ED06C_0_0.eot');
+	src:url('webfonts/2ED06C_0_0.eot?#iefix') format('embedded-opentype'),
+		url('webfonts/2ED06C_0_0.woff2') format('woff2'),
+		url('webfonts/2ED06C_0_0.woff') format('woff'),
+		url('webfonts/2ED06C_0_0.ttf') format('truetype');
+}
+ 
+  
+@font-face {
+	font-family:'Proxima Nova Soft';
+	font-weight:700;
+
+	src:url('webfonts/2ED06C_1_0.eot');
+	src:url('webfonts/2ED06C_1_0.eot?#iefix') format('embedded-opentype'),
+		url('webfonts/2ED06C_1_0.woff2') format('woff2'),
+		url('webfonts/2ED06C_1_0.woff') format('woff'),
+		url('webfonts/2ED06C_1_0.ttf') format('truetype');
+}
+ 
+  
+@font-face {
+	font-family:'Proxima Nova Soft';
+	font-weight:bold;
+
+	src:url('webfonts/2ED06C_2_0.eot');
+	src:url('webfonts/2ED06C_2_0.eot?#iefix') format('embedded-opentype'),
+		url('webfonts/2ED06C_2_0.woff2') format('woff2'),
+		url('webfonts/2ED06C_2_0.woff') format('woff'),
+		url('webfonts/2ED06C_2_0.ttf') format('truetype');
+}
+ 
 /*
    Animation example, for spinners
 */
@@ -105,9 +188,9 @@
 .icon-heart--full:before { content: '\e811'; } /* '' */
 @font-face {
   font-family: 'showgrid--icons';
-  src: url('../../font/showgrid--icons.eot?28457035');
-  src: url('../../font/showgrid--icons.eot?28457035#iefix') format('embedded-opentype'),
-       url('../../font/showgrid--icons.svg?28457035#showgrid--icons') format('svg');
+  src: url('./webfonts/showgrid--icons.eot?28457035');
+  src: url('./webfonts/showgrid--icons.eot?28457035#iefix') format('embedded-opentype'),
+       url('./webfonts/showgrid--icons.svg?28457035#showgrid--icons') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -226,11 +309,11 @@
 .icon-heart--full { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe811;&nbsp;'); }
 @font-face {
   font-family: 'showgrid--icons';
-  src: url('../../font/showgrid--icons.eot?72911463');
-  src: url('../../font/showgrid--icons.eot?72911463#iefix') format('embedded-opentype'),
-       url('../../font/showgrid--icons.woff?72911463') format('woff'),
-       url('../../font/showgrid--icons.ttf?72911463') format('truetype'),
-       url('../../font/showgrid--icons.svg?72911463#showgrid--icons') format('svg');
+  src: url('./webfonts/showgrid--icons.eot?72911463');
+  src: url('./webfonts/showgrid--icons.eot?72911463#iefix') format('embedded-opentype'),
+       url('./webfonts/showgrid--icons.woff?72911463') format('woff'),
+       url('./webfonts/showgrid--icons.ttf?72911463') format('truetype'),
+       url('./webfonts/showgrid--icons.svg?72911463#showgrid--icons') format('svg');
   font-weight: normal;
   font-style: normal;
 }

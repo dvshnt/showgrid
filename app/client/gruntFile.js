@@ -3,6 +3,12 @@ module.exports = function(grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 
 		copy: {
+			fonts: {
+            	expand: true,
+				cwd: 'public/css/fonts/webfonts',
+				src: ['**'],
+				dest: '../static/showgrid/css/webfonts',
+			},
 			css: {
 				expand: true,
 				flatten: true,
@@ -40,7 +46,7 @@ module.exports = function(grunt) {
 					style: 'compressed'
 				},
 				files: {
-					'./public/css/base.css' : './public/css/base.css'
+					'./public/css/base.css' : './public/css/sass/base.scss'
 				}
 			}
 		},
@@ -68,7 +74,10 @@ module.exports = function(grunt) {
 					files: {
 						'./public/css/fonts.css': [
 							'./public/css/fonts/*.css'
-						]
+						],
+						'./public/css/base.css': [
+							'./public/css/base.css'
+						],
 					}
 				}
 			}
@@ -138,5 +147,5 @@ module.exports = function(grunt) {
 
 	//// Registered Tasks
 	grunt.registerTask('default', ['watch']);
-	grunt.registerTask('build', ['sass:prod', 'browserify:build', 'copy:css', 'copy:js']);
+	grunt.registerTask('build', ['sass:prod', 'concat:basic', 'browserify:build', 'copy:fonts', 'cssmin:prod', 'copy:css', 'uglify:build', 'copy:js']);
 }

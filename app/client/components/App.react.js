@@ -178,8 +178,17 @@ module.exports = App = React.createClass({
 			results: "pending"
 		});
 
-		var query = $(".search--bar__text").val().trim();
+
+		// Hacky way to work around double search bars for mobile and desktop (500px = breakpoint)
+		var query = "";
+		if (window.innerWidth > 500) {
+			query = $(".search--bar__text").val().trim();
+		}
+		else {
+			query = $("#header__mobile .search--bar__text").val().trim();
+		}
 	
+
         ga('send', 'event', 'search', 'query', query);    
 
 		$.ajax({

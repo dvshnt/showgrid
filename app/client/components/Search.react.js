@@ -23,7 +23,7 @@ module.exports = Search = React.createClass({
 				var key = this.props.results[i].id,
 					result = this.props.results[i];
 
-				results.push(<SearchResultsRow key={ key } result={ result }/>)
+				results.push(<SearchResultsShow key={ key } show={ result }/>)
 			}
 		}
 		else if (this.props.results.length <= 0) {
