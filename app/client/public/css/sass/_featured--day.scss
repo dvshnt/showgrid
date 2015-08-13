@@ -1,0 +1,21 @@
+.featured--day {
+	margin:0 0 120px 0;
+
+	h2 {
+		margin:0 0 8px 0;
+
+		color:rgba(0,0,0,0.6);
+		font-size:28px;
+		font-weight:700;
+	}
+}
+
+@media screen and (max-width: 500px ) {
+	.featured--day {
+		h2 {
+			margin:8px 0 20px 0;
+		
+			font-size:24px;
+		}
+	}
+}

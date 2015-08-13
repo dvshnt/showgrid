@@ -4,13 +4,14 @@ var $ = require('jquery'),
 
 	GridEngine = require('../util/GridEngine'),
 
-	FeaturedShow = React.createFactory(require('./FeaturedShow.react')),
+	FeaturedDay = React.createFactory(require('./FeaturedDay.react')),
 
 	moment = require('moment');
 
 module.exports = Featured = React.createClass({
 	getInitialState: function() {
 		return {
+			page: 1,
 			featured: []
 		}
 	},
@@ -24,12 +25,19 @@ module.exports = Featured = React.createClass({
 
 		$.ajax({
 			type: "GET",
-			url: GridEngine.domain + "/i/featured"
+			url: GridEngine.domain + "/i/featured?page=" + _this.state.page
 		}).success(function(data, status) {
+			if (status === "nocontent") {
+				$(".featured-more").remove();
+				return;
+			}
+
 			_this.setState({
-				featured: data
+				featured: _this.state.featured.concat(data)
 			});
-		});	
+
+			_this.state.page += 1;
+		});
 	},
 
 	render: function() {
@@ -37,15 +45,18 @@ module.exports = Featured = React.createClass({
 
 		if (this.state.featured.length > 0) {
 			for (var i=0; i < this.state.featured.length; i++) {
-				var key = this.state.featured[i].id,
-					show = this.state.featured[i];
+				var day = this.state.featured[i];
 
-				results.push(<FeaturedShow key={ key } show={ show }/>)
+				results.push(<FeaturedDay day={ day }/>)
 			}
 		}
 
 		return (
-			<div className="search--results rec">{ results }</div>
+			<div className="featured--container">
+				{ results }
+				<div className="featured-more" onClick={ this.getFeaturedShows }>See More Recommended Shows...</div>
+			</div>
+
 		)
 	}
 });

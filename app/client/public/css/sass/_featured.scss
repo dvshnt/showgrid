@@ -1,13 +1,51 @@
 .featured--container {
-	display:-webkit-flex;
-	display:		flex;
+	width:800px;
 
-	-webkit-flex-flow:column nowrap;
-			flex-flow:column nowrap;
+	margin:0 auto; padding:0;
 
-	width:100vw; height:auto;
+	font-family:"Proxima Nova Soft";
 
-	padding:0; margin:72px 0 0 0;
+	@include transform(translate(0, 90px));
 }
 
-@import "featured__show";
+.featured-more {
+	width:100%;
+
+	padding:25px 0;
+
+	color:rgb(0, 181, 255);
+	font-size:14px;
+	font-weight:300;
+
+	text-align:center;
+	text-decoration:underline;
+
+	cursor:pointer;
+
+	@include transition(background 0.2s ease);
+}
+
+.featured-more:hover {
+	background:rgba(0,0,0,0.05);
+}
+
+.featured-more:active {
+	background:rgba(0,0,0,0.075);
+}
+
+@media screen and (max-width: 800px ) {
+	.featured--container {
+		width:95%;
+	}
+
+	.featured-more {
+		width:100%;
+		
+		padding:30px 0;
+
+		font-size:16px;
+	}
+}
+
+@import "featured--show";
+@import "featured--day";
