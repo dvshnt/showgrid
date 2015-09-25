@@ -78,7 +78,7 @@ module.exports = SearchResultsShow = React.createClass({
 				price = <span className="price">${ show.price }</span>;
 			}
 
-			ticket = <div className="button ticket">Buy Tickets { price }</div>;
+			ticket = <a href={ show.ticket } target="_blank" onClick={ this.registerTicketEvent }><div className="button ticket">Buy Tickets { price }</div></a>;
 		}
 
 		if (show.soldout) {
