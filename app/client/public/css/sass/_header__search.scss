@@ -1,130 +1,115 @@
-.search--bar {
-	width:100%; height:44px;
+#header__search {
+	-webkit-flex:1 1 33%;
+			flex:1 1 33%;
 
-	padding:8px 0;
+	text-align:left;
 
-	text-align:center;
+	input[type=search] {
+		width:60%;
 
-	z-index:97;
+		border-radius:3px;
 
-	@include transition(all 0.2s ease);
+		margin:0 auto;
+		padding:7px 50px 5px 12px;
+
+		border:none;
+		box-shadow:none;
+		background:rgb(255,255,255);
+
+		font-weight:200;
+		font-size:16px;
+
+		@include transition(all 0.3s);
+	}
+
+
+	input[type=search].focused {
+		border-color: $show-title-color;
+		outline: 0;
+	}
+
+	input[type=search]:focus {
+		border-color: $show-title-color;
+		outline: 0;
+	}
+
+
+
+
+	input[type=submit] {
+		position:relative;
+		top:3px; left:-28px;
+
+		width:20px; height:20px;
+
+		background-repeat:no-repeat;
+		background-image: url('../img/search.gif');
+		background-size:20px;
+
+		background-color:transparent;
+		border:0;
+
+		opacity:0.5;
+
+		cursor:pointer;
+	}
+
+	input[type=submit]:hover {
+		opacity:1;
+	}
+
+	input[type=submit]:focus {
+		outline:none;
+	}
+
+	a.mobile-back {
+		display:none;
+	}
 }
-
-.search--bar.disabled {
-	height:0px; overflow:hidden;
-
-	padding:0;
-}
-
-.search--bar__input {
-	display:inline-block;
-}
-
-.search--bar__text {
-	width:420px;
-
-	border: 1px solid #CBCBD2;
-	border-radius:1px;
-
-	margin:0 auto;
-	padding:8px 50px 8px 15px;
-
-	box-shadow:none;
-
-	font-weight:200;
-	font-size:18px;
-	color: #3F3F44;
-
-	@include transition(all 0.3s);
-}
-
-.search--bar__text.focused {
-	border-color: $show-title-color;
-	outline: 0;
-}
-
-.search--bar__text:focus {
-	border-color: $show-title-color;
-	outline: 0;
-}
-
-.search--bar__button {
-	position:relative;
-	top:3.5px; left:-35px;
-
-	width:25px; height:25px;
-
-	background-repeat:no-repeat;
-	background-image: url('../img/search.gif');
-	background-size:25px;
-
-	background-color:transparent;
-	border:0;
-
-	opacity:0.5;
-
-	cursor:pointer;
-}
-
-.search--bar__button:hover {
-	opacity:1;
-}
-
-.search--bar__button:focus {
-	outline:none;
-}
-
-
 
 @media screen and (max-width: 500px ) {
-	.search--bar {
-		display:none;
+	#header__search.subhead {
+		position:relative;
 
-		width:100%;
+		display:block;
+
+		height:55px;
+
+		-webkit-flex:0 0 100%;
+				flex:0 0 100%;
+
+		background : -moz-linear-gradient(0% 50% 0deg,rgba(0, 120, 243, 1) 0%,rgba(0, 115, 243, 1) 10.02%,rgba(0, 90, 243, 1) 72.72%);
+		background : -webkit-linear-gradient(0deg, rgba(0, 120, 243, 1) 0%, rgba(0, 115, 243, 1) 10.02%, rgba(0, 90, 243, 1) 72.72%);
+		background : -webkit-gradient(linear,0% 50% ,100% 50% ,color-stop(0,rgba(0, 120, 243, 1) ),color-stop(0.1002,rgba(0, 115, 243, 1) ),color-stop(0.7272,rgba(0, 90, 243, 1) ));
+		background : -o-linear-gradient(0deg, rgba(0, 120, 243, 1) 0%, rgba(0, 115, 243, 1) 10.02%, rgba(0, 90, 243, 1) 72.72%);
+		background : -ms-linear-gradient(0deg, rgba(0, 120, 243, 1) 0%, rgba(0, 115, 243, 1) 10.02%, rgba(0, 90, 243, 1) 72.72%);
+		-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#0078F3', endColorstr='#005AF3' ,GradientType=0)";
+		background : linear-gradient(90deg, rgba(0, 120, 243, 1) 0%, rgba(0, 115, 243, 1) 10.02%, rgba(0, 90, 243, 1) 72.72%);
+		opacity : 0.9;
+		filter: alpha(opacity=90) progid:DXImageTransform.Microsoft.Alpha(opacity=90) progid:DXImageTransform.Microsoft.gradient(startColorstr='#0078F3',endColorstr='#005AF3' , GradientType=1);
 
 		text-align:center;
-	}
 
-	.search--bar__input {
-		width:100%;
-	}
+		line-height:55px;
 
-	.search--bar__text {
-		font-size:18px;
-
-		width:85%;
-
-		padding:10px 14px;
-	}
-
-	.search--bar__button {
-		display:none;
-	}
-
-	#header__mobile {
-		.search--bar {
-			display:block;
+		input[type=search] {
+			width:80%;
 
 			position:relative;
-
-			-webkit-flex:1 1 100px;
-					flex:1 1 100px;
-
-			width:100%; height:70px;
-
-			padding:0;
-
-			line-height:70px;
-
-			text-align:center;
+			top:0px;
 		}
 
-		.search--bar__text {
-			font-size:16px;
+		input[type=submit] {
+			position:absolute;
+			top:11px; right:15px; left:auto;
 
-			width:85%;
+			width:35px; height:31px;
 
-			padding:10px 14px;
+			background-color:rgba(0,0,0,0.1);
+			background-position:8px;
 		}
 	}
 }
+
+
+@import "search-results";

@@ -1,4 +1,0 @@
-{{ object.headliners }}
-{{ object.openers }}
-{{ object.title }}
-{{ object.venue }}

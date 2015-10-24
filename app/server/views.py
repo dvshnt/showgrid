@@ -1,9 +1,14 @@
 import inspect, itertools, json
 from datetime import timedelta, date, datetime
 
+import json
+import collections
+
 import datetime as datetime_2
 
 from operator import attrgetter
+
+from django.views.decorators.csrf import csrf_exempt
 
 from pytz import timezone
 
@@ -13,122 +18,138 @@ from django.http import HttpResponse
 from django.core import serializers
 from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.exceptions import ObjectDoesNotExist
 
 from haystack.query import SearchQuerySet
+
+from rest_framework import permissions, status
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+
+from server.models import *
+from server.serializers import *
 
 
 def index(request, year=None, month=None, day=None):
 	return render(request, "index.html")
 
 
-# GET CALENDAR
-def grid(request, year=None, month=None, day=None):
-	if request.method == "GET":
-		data = []
 
+class UserActions(APIView):
+	authentication_class = (TokenAuthentication,)
+	permission_classes = (IsAuthenticated,)
+
+	def get_show(self, pk):
+		try:
+			return Show.objects.get(id=pk)
+		except ObjectDoesNotExist:
+			return None
+
+	def post(self, request, action=None):
+		if action == 'favorite':
+			body_unicode = request.body.decode('utf-8')
+			body = json.loads(body_unicode)
+			show = body['show']
+
+			show = self.get_show(int(show))
+			if show != None:
+				user = request.user
+
+				print request.user
+
+				if show in user.favorites.all():
+					user.favorites.remove(show)
+					status = ""
+				else:
+					user.favorites.add(show)
+					status = "active"
+
+				user.save()
+
+			 	return Response({ 'status': status })
+			return Response({ 'status': 'failed' })
+
+		if action == 'alert':
+			body_unicode = request.body.decode('utf-8')
+			body = json.loads(body_unicode)
+			show = body['show']
+			date = body['date']
+
+			show = self.get_show(int(show))
+			if show != None:
+				import dateutil.parser
+				date = dateutil.parser.parse(date)
+
+				alert = Alert(is_active=True, show=show, date=date)
+				alert.save()
+				
+				user = request.user
+				user.alerts.add(alert)
+				user.save()
+
+			return Response({ 'status': 'active' })
+	
+
+
+
+class VenueList(APIView):
+	authentication_class = (TokenAuthentication,)
+	permission_classes = (IsAuthenticatedOrReadOnly,)
+
+	def get(self, request, year=None, month=None, day=None):
 		if year != None and month != None or day != None:
 			d1 = date(int(year), int(month), int(day))
 			d2 = d1 + timedelta(days=int(request.GET['range']))
 		else:
 			d1 = date.today()
 			d2 = d1 + timedelta(days=int(request.GET['range']))
-		
-		venues = sorted(Venue_v2.objects.filter(opened=True), key=attrgetter('alphabetical_title'), reverse=False)
-		
-		for venue in venues:
-			shows = Show_v2.objects.filter(venue=venue.id).filter(
-				date__range=[ d1.strftime("%Y-%m-%d"), d2.strftime("%Y-%m-%d") ]
-			).order_by('date')
 
-			info = venue.json()
-			info['shows'] = [ show.json_min() for show in shows ]
-			info['image_url'] = "pic " + get_venue_class(venue.image.url)
-			data.append(info)
+		venues = Venue.objects.filter(opened=True)
+		venues = sorted(venues, key=attrgetter('alphabetical_title'), reverse=False)
 
-		response = HttpResponse(json.dumps(data), content_type='application/json; charset=UTF-8')
-		response.__setitem__("Content-type", "application/json")
-		response.__setitem__("Access-Control-Allow-Origin", "*")
-		return response
-	
-	response = HttpResponse(json.dumps({"status" : "error"}), content_type='application/json; charset=UTF-8')
-	response.__setitem__("Content-type", "application/json")
-	response.__setitem__("Access-Control-Allow-Origin", "*")
-	return response
+
+		if request.user.is_authenticated():
+			serializer = VenueSerializer(venues, many=True, context={ 'start': d1, 'end': d2, 'user': request.user })
+		else:
+			serializer = VenueSerializer(venues, many=True, context={ 'start': d1, 'end': d2 })
+
+		return Response(serializer.data)
 
 
 
-# GET RECOMMENDED SHOWS
-def recommended_shows(request):
-	result = []
-
-	if request.method == "GET":
-		shows_list = Show_v2.objects.filter(star=True)
-		shows_list = shows_list.filter(date__gte=date.today())
-		shows_list = shows_list.order_by('date', 'venue')
-
-		paginator = Paginator(shows_list, 100)
-
-		page = request.GET.get('page')
-		try:
-			shows = paginator.page(page)
-		except PageNotAnInteger:
-			shows = paginator.page(1)
-		except EmptyPage:
-			response = HttpResponse(status=204)
-			response.__setitem__("Content-type", "application/json")
-			response.__setitem__("Access-Control-Allow-Origin", "*")
-			return response
-
-		result = group_shows_by_day(shows)
-
-		response = HttpResponse(json.dumps(result), content_type='application/json; charset=UTF-8')
-		response.__setitem__("Content-type", "application/json")
-		response.__setitem__("Access-Control-Allow-Origin", "*")
-		return response
 
 
-def group_shows_by_day(shows):
-	dates = []
-	results = []
+class ShowList(APIView):
+	authentication_class = (TokenAuthentication,)
+	permission_classes = (IsAuthenticatedOrReadOnly,)
 
-	for show in shows:
-		d = convert_timezone(show.date)
-		if d.strftime("%Y-%m-%d") not in dates:
-			dates.append(d.strftime("%Y-%m-%d"))
+	def get_featured_shows(self):
+		shows = Show.objects.filter(star=True)
+		shows = shows.filter(date__gte=date.today())
+		shows = shows.order_by('date', 'venue')
+		return shows
 
-	for d in dates:
-		bundle = create_day_bundle(d, shows)
-		results.append(bundle)
+	def get_recent_shows(self):
+		shows = Show.objects.filter(date__gte=date.today().strftime("%Y-%m-%d"))
+		shows = shows.filter(created_at__lte=(date.today() + timedelta(1)))
+		shows = shows.order_by('-created_at', 'date', 'venue__name')
+		return shows
 
-	return results
+	def get(self, request):
+		method = request.GET.get('method')
+		if method == 'recent':
+			shows = self.get_recent_shows()
+		elif method == 'featured':
+			shows = self.get_featured_shows()
+		else:
+			shows = Show.objects.all()
 
-
-def create_day_bundle(day, shows):
-	shows_bundle = []
-	d = day
-
-	for show in shows:
-		d_show = convert_timezone(show.date)
-		if d == d_show.strftime("%Y-%m-%d"):
-			shows_bundle.append(show.json_max())
-
-	bundle = {
-		'date': d,
-		'shows': group_shows_by_venue(shows_bundle)
-	}
-
-	return bundle
-
-## Shows recently added most recent 10
-def recently_added(request):
-	result = []
-
-	if request.method == "GET":
-		shows_list = Show_v2.objects.filter(date__gte=date.today().strftime("%Y-%m-%d"))
-		shows_list = shows_list.filter(created_at__lte=(date.today() + timedelta(1)))
-		shows_list = shows_list.order_by('-created_at', 'date', 'venue__name')
-
-		paginator = Paginator(shows_list, 100)
+		paginator = Paginator(shows, 100)
 
 		page = request.GET.get('page')
 		try:
@@ -136,73 +157,17 @@ def recently_added(request):
 		except PageNotAnInteger:
 			shows = paginator.page(1)
 		except EmptyPage:
-			response = HttpResponse(status=204)
-			response.__setitem__("Content-type", "application/json")
-			response.__setitem__("Access-Control-Allow-Origin", "*")
-			return response
-
-		result = group_shows_by_date(shows, page)
-
-		response = HttpResponse(json.dumps(result), content_type='application/json; charset=UTF-8')
-		response.__setitem__("Content-type", "application/json")
-		response.__setitem__("Access-Control-Allow-Origin", "*")
-		return response
+			return JSONResponse("Last Page", status=204)
 
 
-def group_shows_by_date(shows, page):
-	# Subtract 1 because we use 1 as first page instead of 0
-	dates = []
-	results = []
+		if request.user.is_authenticated():
+			print "USER LOGGED IN"
+			serializer = ShowListSerializer(shows, many=True, context={ 'user': request.user })
+		else:
+			print "USER NOT LOGGED IN"
+			serializer = ShowListSerializer(shows, many=True, context={  })
 
-	for show in shows:
-		if show.created_at.strftime("%Y-%m-%d") not in dates:
-			dates.append(show.created_at.strftime("%Y-%m-%d"))
-
-
-	for d in dates:
-		bundle = create_date_bundle(d, shows)
-		results.append(bundle)
-
-	return results
-
-
-
-def create_date_bundle(d, shows):
-	shows_bundle = []
-
-	for show in shows:
-		if d == show.created_at.strftime("%Y-%m-%d"):
-			shows_bundle.append(show.json_max())
-
-	bundle = {
-		'date': d,
-		'shows': shows_bundle
-	}
-
-	return bundle
-
-
-def group_shows_by_venue(shows):
-	shows_by_venue = []
-	venues = []
-
-	for show in shows:
-		if show['venue']['name'] not in venues:
-			venues.append(show['venue']['name'])
-
-	for venue in venues:
-		shows_of_venue = []
-		for show in shows:
-			if show['venue']['name'] == venue:
-				shows_of_venue.append(show)
-
-		shows_by_venue.append({
-			'venue': Venue_v2.objects.get(name=venue).json(),
-			'shows': shows_of_venue
-		})
-
-	return shows_by_venue
-
+		return Response(serializer.data)
 
 
 
@@ -213,15 +178,14 @@ def check_venues(request):
 	d2 = d1 + timedelta(days=365)
 
 	data = []
-	venues = sorted(Venue_v2.objects.all(), key=attrgetter('alphabetical_title'), reverse=False)
+	venues = sorted(Venue.objects.all(), key=attrgetter('alphabetical_title'), reverse=False)
 	for venue in venues:
-		shows = Show_v2.objects.filter(venue=venue.id).filter(date__range=
+		shows = Show.objects.filter(venue=venue.id).filter(date__range=
 			[ d1.strftime("%Y-%m-%d"), d2.strftime("%Y-%m-%d") ]
 		).order_by('date')
 
 		info = venue.json()
 		info['shows'] = [ show.json_min() for show in shows ]
-		info['image_url'] = get_venue_class(venue.image.url)
 		data.append(info)
 
 
@@ -250,7 +214,7 @@ def get_search_results(request):
 
 		querySet = SearchQuerySet().filter(text=query).order_by('date')
 
-		results = [ Show_v2.objects.get(id=show.pk).json_max() for show in querySet ]
+		results = [ Show.objects.get(id=show.pk).json_max() for show in querySet ]
 
 		result = {
 			"query": query,
@@ -262,113 +226,3 @@ def get_search_results(request):
 		response.__setitem__("Access-Control-Allow-Origin", "*")
 		return response
 
-
-def format_results(shows):
-	results = []
-	venues = [] # Tracking which venues are in the list
-
-	for show in shows:
-		if show.venue not in venues:
-			venue = Venue_v2.objects.get(name=show.venue).json()
-			venue['shows'] = []
-
-			venues.append(show.venue)
-			results.append(venue)
-
-	for show in shows:
-		for result in results:
-			if result['name'] == show.venue:
-				result['shows'].append({
-					'title': show.title,
-					'headliners': show.headliners,
-					'openers': show.openers,
-					'date': convert_timezone(show.date),
-					'website': show.website,
-					'price': show.price,
-					'age': show.age,
-					'ticket': show.ticket,
-					'soldout': show.soldout,
-					'onsale': show.onsale
-				})
-				break
-
-	for result in results:
-		result['shows'] = group_by_date(result['shows'])
-
-	results.sort(key=lambda x: x['name'], reverse=False)
-
-	return results
-
-
-def convert_timezone(date):
-	from dateutil import tz
-
-	# METHOD 1: Hardcode zones:
-	from_zone = tz.gettz('UTC')
-	to_zone = tz.gettz('America/Chicago')
-
-	# Tell the datetime object that it's in UTC time zone since 
-	# datetime objects are 'naive' by default
-	utc = date.replace(tzinfo=from_zone)
-
-	# Convert time zone
-	return utc.astimezone(to_zone)
-
-
-def group_by_date(shows):
-	array = shows
-	temp = {}
-	dates = []
-	results = []
-
-	array.sort(key=lambda x: x['date'])
-
-	for show in array:
-		tempDate = show['date'].strftime('%m-%d-%Y')
-		if tempDate not in dates:
-			dates.append(tempDate)
-			temp[tempDate] = []
-
-
-	for show in array:
-		for date in dates:
-			tempDate = show['date'].strftime('%m-%d-%Y')
-			if tempDate == date:
-				temp[tempDate].append({
-					'title': show['title'],
-					'headliners': show['headliners'],
-					'openers': show['openers'],
-					'date': str(show['date']),
-					'website': show['website'],
-					'price': show['price'],
-					'age': show['age'],
-					'ticket': show['ticket'],
-					'soldout': show['soldout'],
-					'onsale': str(show['onsale'])
-				})
-				break
-
-	for k, v in temp.iteritems():
-		results.append(v)
-
-	results.sort(key=lambda x: x[0]['date'])
-
-	return results
-
-
-
-
-def get_venue_class(url):
-	image_url = ""
-	string = str(url).split("/")
-	for part in string:
-		if "." in part:
-			image_url = part.split(".")[0]
-
-			if image_url == "3andl": image_url = "thirdandl"
-			elif image_url == "12porter": image_url = "twelveporter"
-			elif image_url == "mercylounge_1": image_url = "mercylounge"
-
-			break
-
-	return image_url

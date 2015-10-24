@@ -3,23 +3,8 @@
 	top:0; left:0;
 
 	width:100%;
-
-	background:#f6f6f6;
-	border-bottom:4px solid #e5e5e5;
 	
-	z-index:10;
-
-	@include transition--transform(.3s ease-in-out);
-}
-
-body.sleep #header {
-	@include transform(translate(0, -64px));
-}
-
-@media screen and (max-width: 500px ) {
-	body.sleep #header {
-		@include transform(translate(0, 0));
-	}
+	z-index:99;
 }
 
 @import "header__page";

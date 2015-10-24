@@ -1,2 +1,4 @@
-{{ object.band_name }}
+{{ object.headliners }}
+{{ object.openers }}
+{{ object.title }}
 {{ object.venue }}

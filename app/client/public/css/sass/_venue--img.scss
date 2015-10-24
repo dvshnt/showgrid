@@ -29,13 +29,15 @@
 	.pic.woodsatfontanel { background:url('/media/showgrid/img/venues/woodsatfontanel.jpeg'); }
 	
 	.venue .pic {
-		width:100px; height:100px;
-		margin:-10px auto 30px auto;
+		width:100%; height:auto;
+
+		margin:0 auto;
+		padding-top:100%;
 				
 		background-repeat:no-repeat;
 		background-color:transparent;
 
-		@include background-size(130px);
+		@include background-size(12em);
 	}
 
 	.mini .venue .pic {

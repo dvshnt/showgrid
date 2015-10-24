@@ -14,19 +14,13 @@
 				justify-content: baseline;
 	}
 
-	.day:nth-child(even) {
+	.day:nth-child(odd) {
 		background-color:#fdfdfd;
 	}
 
 }
 
 @media screen and (max-width: 500px ) {
-	.calendar__row {
-		.day {
-			padding:40px 0.25em;
-		}
-	}
-
 	.day:nth-child(even) {
 		background-color:transparent !important;
 	}

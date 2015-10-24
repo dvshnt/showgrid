@@ -529,7 +529,8 @@
         self.el = document.createElement('div');
         self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '') + (opts.theme ? ' ' + opts.theme : '');
 
-        addEvent(self.el, 'ontouchend' in document ? 'touchend' : 'mousedown', self._onMouseDown, true);
+        addEvent(self.el, 'mousedown', self._onMouseDown, true);
+        addEvent(self.el, 'touchend', self._onMouseDown, true);
         addEvent(self.el, 'change', self._onChange);
 
         if (opts.field) {
@@ -916,15 +917,10 @@
 
             if (window.innerWidth < 500) {
                 left = 0;
-                top = 62;
+                top = 100;
             }
             else {
-                if (document.body.className.indexOf('sleep') > -1) {
-                    top = 62;
-                }
-                else {
-                    top = 126;
-                }
+                top = 110;
             }
 
             this.el.style.cssText = [
