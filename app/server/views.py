@@ -46,7 +46,7 @@ from server.serializers import *
 def index(request, year=None, month=None, day=None):
 	return render(request, "index.html")
 
-
+import dateutil.parser
 
 class UserActions(APIView):
 	authentication_class = (TokenAuthentication,)
@@ -59,6 +59,7 @@ class UserActions(APIView):
 			return None
 
 	def post(self, request, action=None):
+		user = request.user
 		if action == 'favorite':
 			body_unicode = request.body.decode('utf-8')
 			body = json.loads(body_unicode)
@@ -66,7 +67,7 @@ class UserActions(APIView):
 
 			show = self.get_show(int(show))
 			if show != None:
-				user = request.user
+				
 
 				print request.user
 
@@ -82,26 +83,100 @@ class UserActions(APIView):
 			 	return Response({ 'status': status })
 			return Response({ 'status': 'failed' })
 
-		if action == 'alert':
+
+
+		#return false if phone is not verified
+		if action == 'phone_status':
+			return Response({'status':user.phone_verified})
+
+		#set user phone
+		if action == 'phone_set':
+			body = json.loads(request.body.decode('utf-8'))
+			if body['phone'] == None:
+				return Response({'status':'bad_query'})
+			
+			if user.phone_number == None:
+				user.phone_verified = False
+				user.phone_number = body['phone']
+				user.save()
+				return Response({'status':'phone_set',phone:user.phone_number})
+			
+			elif user.phone_verified == False:
+				user.phone_number = body['phone']
+				user.save()
+				return Response({'status':'phone_set',phone:user.phone_number})
+			
+			else:
+				alerts = Alert.objects.filter(user=user)
+				for alert in alerts:
+					alert.delete()
+				user.phone_number = body['phone']
+				user.save()
+				return Response({'status':'phone_set_alerts_cleared',phone:user.phone_number})
+
+		#send pin to user phone
+		if action == 'send_pin':
+			# if user.is_authenticated() == False:
+			# 	return Response({'status':'not_authenticated'})
+
+			if user.phone_number == None:
+				return Response({'status':'no_phone_added'})
+
+			if user.phone_verified:
+				return Response({'status': 'pin_verified'})
+
+			if user.pin_sent:
+				return Response({'status': 'pin_sent_timeout'})
+
+		
+			user.send_pin(user.generate_pin())
+			user.save()
+			return Response({'status': 'pin_sent'})
+
+		#check user pin
+		if action == 'check_pin':
+			body = json.loads(request.body.decode('utf-8'))
+			
+			if body['pin'] == None:
+				return Response({'status':'bad_query'})
+			if user.phone_verified:
+				return Response({'status': 'pin_verified'})
+			if user.check_pin(body['pin']):
+				return Response({'status': 'pin_verified'})
+			else
+				return Response({'status': 'bad_pin','phone_number': user.phone_number})
+
+		#toggle alert
+		if action == 'toggle_alert':
 			body_unicode = request.body.decode('utf-8')
 			body = json.loads(body_unicode)
 			show = body['show']
 			date = body['date']
-
 			show = self.get_show(int(show))
-			if show != None:
-				import dateutil.parser
-				date = dateutil.parser.parse(date)
+			date = dateutil.parser.parse(date)
 
-				alert = Alert(is_active=True, show=show, date=date)
+			if show == None:
+				return  Response({ 'status': 'failed' })
+
+			user_show_alerts = Alert.objects.filter(user=user,show=show)
+
+			if user_show_alerts:
+				user_show_alerts[0].delete() #assuming there is one alert per show per user
+				return  Response({ 'status': 'alert_removed' })
+			else
+				alert = Alert.create(is_active=True, show=show, date=date,user=user)
 				alert.save()
-				
-				user = request.user
-				user.alerts.add(alert)
-				user.save()
+				return  Response({ 'status': 'alert_created' })
 
-			return Response({ 'status': 'active' })
-	
+		#clear all user alerts
+		if action == 'clear_alerts':
+			user_alerts = Alert.objects.filter(user=user)
+			for alert in user_alerts
+				alert.delete()
+			return  Response({ 'status': 'alerts_cleared' })
+
+
+
 
 
 
@@ -345,180 +420,6 @@ def get_venue_class(url):
 			break
 
 	return image_url
-
-
-
-
-
-
-
-
-from dateutil.parser import parse
-
-# SEND PHONE NUMBER PIN
-def phone_send_pin(request):
-	if request.method != 'GET':
-		return HttpResponseServerError('error')
-
-	phone = request.GET.get('phone')
-	
-	#error exception
-	if phone == None:
-		return HttpResponseServerError('error')
-
-	#search db for maching phone numbers
-	matches = Phone_Account.objects.filter(phone_number=phone)
-
-	#no matches, create a new phone account
-	if not matches:
-		account = Phone_Account.objects.create(phone_number=phone)
-		account.send_pin(account.generate_pin())
-		account.save() #will return 500 error if failed
-		return JsonResponse({'status':'PIN_SENT','phone':account.phone_number})
-	else:
-		account = matches[0]
-
-
-	#return verified status if phone number is already verified
- 	if account.verified == True:
-		return JsonResponse({'status':'PIN_VERIFIED','phone':account.phone_number})
-	
-	#resend the pin if phone number is not verified
-	else:
-		account.send_pin(account.generate_pin())
-		account.save()
-		return JsonResponse({'status':'PIN_RESENT','phone':account.phone_number})
-
-
-# VERIFY PHONE NUMBER PIN
-def phone_verify_pin(request):
-	if request.method != 'GET':
-		return HttpResponseServerError('error')
-	pin = request.GET.get('pin')
-	phone = request.GET.get('phone')
-
-	if pin == None or phone == None:
-		return HttpResponseServerError('error')
-
-
-	account = Phone_Account.objects.get(phone_number=phone)
-	if account.verified == True:
-		return JsonResponse({'status':'PIN_VERIFIED','phone':account.phone_number})
-	if account.check_pin(pin):
-		account.save()
-		return JsonResponse({'status':'PIN_VERIFIED','phone':account.phone_number})
-	else:
-		return JsonResponse({'status':'NOT_VERIFIED','phone':account.phone_number})
-
-
-# VERIFY PHONE NUMBER STATUS
-def phone_check_status(request):
-	if request.method != 'GET':
-		return HttpResponseServerError('bad query')
-
-	phone = request.GET.get('phone')
-
-	if phone == None:
-		return HttpResponseServerError('invalid param')
-
-	account = Phone_Account.objects.get(phone_number=phone)
-	if account.verified == True:
-		account.save()
-		return JsonResponse({'status':'PIN_VERIFIED','phone':account.phone_number})
-	else:
-		return JsonResponse({'status':'NOT_VERIFIED','phone':account.phone_number})
-
-
-# SET PHONE NUMBER ALERT
-def phone_add_alert(request):
-	if request.method != 'GET':
-		return HttpResponseServerError('error')
-
-	phone = request.GET.get('phone')
-	alert_time = request.GET.get('time')
-	show_id = request.GET.get('show_id')
-
-	if phone == None or slert_at == None or show_id == None:
-		return HttpResponseServerError('bad query')
-
-	show = Show_v2.objects.get(id=show_id)
-	account = Phone_Account.objects.get(phone_number=phone)
-
-	if account.verified == False:
-		return JsonResponse({'status':'NOT_VERIFIED','phone':account.phone_number})
-
-	#avoid duplicate alerts
-	matches = Phone_Alert.objects.filter(phone_account = account,show = show)
-
-	#if no matching alerts
-	if not len(matches):
-		alert = Phone_Alert.objects.create(phone_account=account,time = parse(alert_time),show = show)
-		alert.save()
-		return JsonResponse({'status':'ALERT_ADDED','phone':account.phone_number,'time':alert_time})
-	
-	#else change alert
-	else:
-		alert = matches[0]
-		alert.time = parse(alert_time)
-		alert.save();
-		return JsonResponse({'status':'ALERT_CHANGED','phone':account.phone_number,'time':alert_time})
-
-
-#SHOW ALL ALERTS
-def phone_show_alerts(request):
-	if request.method != 'GET':
-		return HttpResponseServerError('error')
-	phone = request.GET.get('phone')
-	if phone == None:
-		return HttpResponseServerError('bad query')
-
-	phone_account = Phone_Account.objects.get(phone_number=phone)
-	alerts = Phone_Alert.objects.filter(phone_account=phone_account)
-
-	return JsonResponse({'alerts':account.alerts})
-
-
-#REMOVE ALERT
-def phone_remove_alert(request):
-	if request.method != 'GET':
-		return HttpResponseServerError('error')
-
-	account = Phone_Account.objects.get(phone_number=phone)
-	alert = Phone_Alert.objects.get(id=alert_id)
-
-	if account.verified == False:
-		return JsonResponse({'status':'NOT_VERIFIED','phone':account.phone_number})
-
-	alert.delete()
-	
-	return JsonResponse({'status':'ALERT_REMOVED','phone':account.phone_number})
-	
-
-
-#REMOVE ALL ALERTS
-def phone_remove_all_alerts(request):
-	if request.method != 'GET':
-		return HttpResponseServerError('error')
-
-	phone = request.GET.get('phone')
-	if phone == None:
-		return HttpResponseServerError('bad query')
-
-	account = Phone_Account.objects.get(phone_number=phone)
-
-	if account.verified == False:
-		return JsonResponse({'status':'NOT_VERIFIED','phone':account.phone_number})
-
-	alerts = Phone_Alert.objects.filter(phone_account=account)
-	
-	for alert in alerts:
-		alert.delete()
-
-	return JsonResponse({'status':'ALERTS_REMOVED','phone':account.phone_number})
-
-
-
-
 
 
 
