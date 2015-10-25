@@ -10,6 +10,6 @@ def checker():
 			alert.delete()
 
 
-schedule.every(10).minutes.do(checker)
+schedule.every(2).minutes.do(checker)
 print('alert checker started')
 checker()

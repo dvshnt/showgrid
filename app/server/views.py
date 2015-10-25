@@ -442,7 +442,7 @@ def phone_verify_pin(request):
 		account.save()
 		return JsonResponse({'status':'VERIFIED','phone':account.phone_number})
 	else:
-		return JsonResponse({'status':'BADPIN','phone':account.phone_number})
+		return JsonResponse({'status':'NOT_VERIFIED','phone':account.phone_number})
 
 
 # VERIFY PHONE NUMBER STATUS
@@ -460,7 +460,7 @@ def phone_check_status(request):
 		account.save()
 		return JsonResponse({'status':'VERIFIED','phone':account.phone_number})
 	else:
-		return JsonResponse({'status':'NOTVERIFIED','phone':account.phone_number})
+		return JsonResponse({'status':'NOT_VERIFIED','phone':account.phone_number})
 
 
 # SET PHONE NUMBER ALERT

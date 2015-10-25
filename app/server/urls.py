@@ -28,8 +28,8 @@ urlpatterns = patterns('',
  	url(r'^phone/verify_pin/$', 'server.views.phone_verify_pin', name='verify phone pin'),
  	url(r'^phone/check_status/$', 'server.views.phone_check_status', name='check phone status'),
  	url(r'^phone/add_alert/$', 'server.views.phone_add_alert', name='add alert to phone number'),
- 	url(r'^phone/remove_alert/$', 'server.views.phone_remove_alert', name='add alert to phone number'),
-
+	url(r'^phone/remove_alert/$', 'server.views.phone_remove_alert', name='add alert to phone number'),
+ 	url(r'^phone/clear_alerts/$', 'server.views.phone_remove_all_alert', name='add alert to phone number'),
 
 )
 
