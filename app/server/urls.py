@@ -20,7 +20,17 @@ urlpatterns = patterns('',
 
 	url(r'^i/recent/$', 'server.views.recently_added', name='recently added shows'),
 
- 	url(r'^i/featured/$', 'server.views.recommended_shows', name='recommended shows')
+ 	url(r'^i/featured/$', 'server.views.recommended_shows', name='recommended shows'),
+
+
+ 	#phone authentication and alerts
+ 	url(r'^phone/send_pin/$', 'server.views.phone_send_pin', name='send phone pin'),
+ 	url(r'^phone/verify_pin/$', 'server.views.phone_verify_pin', name='verify phone pin'),
+ 	url(r'^phone/check_status/$', 'server.views.phone_check_status', name='check phone status'),
+ 	url(r'^phone/add_alert/$', 'server.views.phone_add_alert', name='add alert to phone number'),
+ 	url(r'^phone/remove_alert/$', 'server.views.phone_remove_alert', name='add alert to phone number'),
+
+
 )
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns

@@ -10,11 +10,19 @@ from pytz import timezone
 from server.models import *
 
 from django.http import HttpResponse
+from django.http import HttpResponseServerError
+from django.http import JsonResponse
+
 from django.core import serializers
 from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from haystack.query import SearchQuerySet
+# from haystack.query import SearchQuerySet
+
+
+#may want to move these to settings.py (b/c thats where the other auth settings are located)
+
+
 
 
 def index(request, year=None, month=None, day=None):
@@ -372,3 +380,179 @@ def get_venue_class(url):
 			break
 
 	return image_url
+
+
+
+
+
+
+
+
+from dateutil.parser import parse
+
+# SEND PHONE NUMBER PIN
+def phone_send_pin(request):
+	if request.method != 'GET':
+		return HttpResponseServerError('error')
+
+	phone = request.GET.get('phone')
+	
+	#error exception
+	if phone == None:
+		return HttpResponseServerError('error')
+
+	#search db for maching phone numbers
+	matches = Phone_Account.objects.filter(phone_number=phone)
+
+	#no matches, create a new phone account
+	if not matches:
+		account = Phone_Account.objects.create(phone_number=phone)
+		account.send_pin(account.generate_pin())
+		account.save() #will return 500 error if failed
+		return JsonResponse({'status':'SENT','phone':account.phone_number})
+	else:
+		account = matches[0]
+
+
+	#return verified status if phone number is already verified
+ 	if account.verified == True:
+		return JsonResponse({'status':'VERIFIED','phone':account.phone_number})
+	
+	#resend the pin if phone number is not verified
+	else:
+		account.send_pin(account.generate_pin())
+		account.save()
+		return JsonResponse({'status':'PIN_RESENT','phone':account.phone_number})
+
+
+# VERIFY PHONE NUMBER PIN
+def phone_verify_pin(request):
+	if request.method != 'GET':
+		return HttpResponseServerError('error')
+	pin = request.GET.get('pin')
+	phone = request.GET.get('phone')
+
+	if pin == None or phone == None:
+		return HttpResponseServerError('error')
+
+
+	account = Phone_Account.objects.get(phone_number=phone)
+
+	if account.check_pin(pin):
+		account.save()
+		return JsonResponse({'status':'VERIFIED','phone':account.phone_number})
+	else:
+		return JsonResponse({'status':'BADPIN','phone':account.phone_number})
+
+
+# VERIFY PHONE NUMBER STATUS
+def phone_check_status(request):
+	if request.method != 'GET':
+		return HttpResponseServerError('bad query')
+
+	phone = request.GET.get('phone')
+
+	if phone == None:
+		return HttpResponseServerError('invalid param')
+
+	account = Phone_Account.objects.get(phone_number=phone)
+	if account.verified == True:
+		account.save()
+		return JsonResponse({'status':'VERIFIED','phone':account.phone_number})
+	else:
+		return JsonResponse({'status':'NOTVERIFIED','phone':account.phone_number})
+
+
+# SET PHONE NUMBER ALERT
+def phone_add_alert(request):
+	if request.method != 'GET':
+		return HttpResponseServerError('error')
+
+	phone = request.GET.get('phone')
+	alert_time = request.GET.get('time')
+	show_id = request.GET.get('show_id')
+
+	if phone == None or slert_at == None or show_id == None:
+		return HttpResponseServerError('bad query')
+
+	show = Show_v2.objects.get(id=show_id)
+	account = Phone_Account.objects.get(phone_number=phone)
+
+	if account.verified == False:
+		return JsonResponse({'status':'NOT_VERIFIED','phone':account.phone_number})
+
+	#avoid duplicate alerts
+	matches = Phone_Alert.objects.filter(phone_account = account,show = show)
+
+	#if no matching alerts
+	if not len(matches):
+		alert = Phone_Alert.objects.create(phone_account=account,time = parse(alert_time),show = show)
+		alert.save()
+		return JsonResponse({'status':'ALERT_ADDED','phone':account.phone_number,'time':alert_time})
+	
+	#else change alert
+	else:
+		alert = matches[0]
+		alert.time = parse(alert_time)
+		alert.save();
+		return JsonResponse({'status':'ALERT_CHANGED','phone':account.phone_number,'time':alert_time})
+
+
+#SHOW ALL ALERTS
+def phone_show_alerts(request):
+	if request.method != 'GET':
+		return HttpResponseServerError('error')
+	phone = request.GET.get('phone')
+	if phone == None:
+		return HttpResponseServerError('bad query')
+
+	phone_account = Phone_Account.objects.get(phone_number=phone)
+	alerts = Phone_Alert.objects.filter(phone_account=phone_account)
+
+	return JsonResponse({'alerts':account.alerts})
+
+
+#REMOVE ALERT
+def phone_remove_alert(request):
+	if request.method != 'GET':
+		return HttpResponseServerError('error')
+
+	account = Phone_Account.objects.get(phone_number=phone)
+	alert = Phone_Alert.objects.get(id=alert_id)
+
+	if account.verified == False:
+		return JsonResponse({'status':'NOT_VERIFIED','phone':account.phone_number})
+
+	alert.delete()
+	
+	return JsonResponse({'status':'ALERT_REMOVED','phone':account.phone_number})
+	
+
+
+#REMOVE ALL ALERTS
+def phone_remove_all_alerts(request):
+	if request.method != 'GET':
+		return HttpResponseServerError('error')
+
+	phone = request.GET.get('phone')
+	if phone == None:
+		return HttpResponseServerError('bad query')
+
+	account = Phone_Account.objects.get(phone_number=phone)
+
+	if account.verified == False:
+		return JsonResponse({'status':'NOT_VERIFIED','phone':account.phone_number})
+
+	alerts = Phone_Alert.objects.filter(phone_account=account)
+	
+	for alert in alerts:
+		alert.delete()
+
+	return JsonResponse({'status':'ALERTS_REMOVED','phone':account.phone_number})
+
+
+
+
+
+
+

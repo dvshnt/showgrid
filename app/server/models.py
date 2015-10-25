@@ -1,11 +1,16 @@
 import datetime
+import hashlib
+from random import randint
+import os
 
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
-from django.contrib.localflavor.us.models import USStateField
+from localflavor.us.models import USStateField
+from django.core.validators import RegexValidator
 
 from colorful.fields import RGBColorField
+
 
 class Venue_v2(models.Model):
 	name = models.CharField(max_length=200)
@@ -148,3 +153,58 @@ class Address(models.Model):
 			'city' : self.city,
 			'zip_code' : self.zip_code
 		}
+
+
+
+from server.twillio_handle import MessageClient
+import logging
+
+Sender = MessageClient()
+# from __future__ import unicode_literals
+class Phone_Account(models.Model):
+	phone_regex = RegexValidator(regex=r'^\d{10}$', message="phone is not 10 digits")
+	verified = models.BooleanField(default=False)
+	phone_number = models.CharField(validators=[phone_regex],max_length=10,blank=True) # validators should be a list
+	_pin_md5  = models.CharField(max_length=4, blank=True)
+
+
+	def generate_pin(self):
+		new_pin = ''
+		for x in range(0,4):
+			new_pin += str(randint(0,9))
+
+
+		#logging.warning(new_pin)
+		#logging.warning(hashlib.md5(str(new_pin)).hexdigest())
+		self._pin_md5 = new_pin#str(hashlib.md5(str(new_pin)).hexdigest())
+		return new_pin
+
+	def check_pin(self,pin):
+		#try_hash = str(hashlib.md5(str(pin)).hexdigest())
+		if pin == self._pin_md5:
+			self.verified = True
+			return True
+		else:
+			return False
+
+	def send_pin(self,pin):
+		msg = 'your pin is ' + pin
+		Sender.send_message(msg,self.phone_number)
+
+
+class Phone_Alert(models.Model):
+	phone_account = models.ForeignKey('Phone_Account')
+	time = models.DateTimeField()
+	show = models.ForeignKey('Show_v2')
+	sent = models.PositiveSmallIntegerField(default=0)
+
+	def check_send(self):
+		if (datetime.datetime.now().time - self.time.time) < (60 * 5) and self.sent < 1:
+			msg = self.show.title
+			Sender.send_message(msg,self.phone_account.phone_number)
+			self.sent += 1
+			self.save()
+			return True
+		return False
+
+
