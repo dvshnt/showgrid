@@ -409,14 +409,14 @@ def phone_send_pin(request):
 		account = Phone_Account.objects.create(phone_number=phone)
 		account.send_pin(account.generate_pin())
 		account.save() #will return 500 error if failed
-		return JsonResponse({'status':'SENT','phone':account.phone_number})
+		return JsonResponse({'status':'PIN_SENT','phone':account.phone_number})
 	else:
 		account = matches[0]
 
 
 	#return verified status if phone number is already verified
  	if account.verified == True:
-		return JsonResponse({'status':'VERIFIED','phone':account.phone_number})
+		return JsonResponse({'status':'PIN_VERIFIED','phone':account.phone_number})
 	
 	#resend the pin if phone number is not verified
 	else:
@@ -437,10 +437,11 @@ def phone_verify_pin(request):
 
 
 	account = Phone_Account.objects.get(phone_number=phone)
-
+	if account.verified == True:
+		return JsonResponse({'status':'PIN_VERIFIED','phone':account.phone_number})
 	if account.check_pin(pin):
 		account.save()
-		return JsonResponse({'status':'VERIFIED','phone':account.phone_number})
+		return JsonResponse({'status':'PIN_VERIFIED','phone':account.phone_number})
 	else:
 		return JsonResponse({'status':'NOT_VERIFIED','phone':account.phone_number})
 
@@ -458,7 +459,7 @@ def phone_check_status(request):
 	account = Phone_Account.objects.get(phone_number=phone)
 	if account.verified == True:
 		account.save()
-		return JsonResponse({'status':'VERIFIED','phone':account.phone_number})
+		return JsonResponse({'status':'PIN_VERIFIED','phone':account.phone_number})
 	else:
 		return JsonResponse({'status':'NOT_VERIFIED','phone':account.phone_number})
 

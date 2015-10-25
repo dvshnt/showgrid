@@ -55,11 +55,18 @@ I may be crazy, but you should then be able to run `python manage.py runserver` 
 
 
 phone alerts: (phone parameter removed when user is authenticated)
-/phone/send_pin?phone=6157157754
+
+`/phone/send_pin?phone=6157157754`
 	if pin already sent, automatically resend
-/phone/veryify_pin?phone=6157157753&pin=1293
+
+`/phone/check_pin?phone=6157157753&pin=1293`
 	return VERIFIED || NOT_VERIFIED if pin matches md5 hash
-/phone/check_status/?phone=6157157754 -> {status:'VERIFIED || NOT_VERIFIED'}
-/phone/add_alert/?show_id=1234&phone=615715754 (phone will be removed when user is auth'd)
+
+`/phone/status?phone=6157157754 -> {status:'VERIFIED || NOT_VERIFIED'}`
+
+`/phone/add_alert?show_id=1234&phone=615715754 (phone will be removed when user is auth'd)`
 	if show_id matches existing alert, alert modified
-/phone/remove_alerts/?phone=6157157754 
+
+`/phone/clear_alert?phone=6157157754?show_id=1234&phone=615715754`
+
+`/phone/clear_alerts?phone=6157157754`

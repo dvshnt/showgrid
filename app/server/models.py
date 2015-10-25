@@ -165,7 +165,7 @@ class Phone_Account(models.Model):
 	phone_regex = RegexValidator(regex=r'^\d{10}$', message="phone is not 10 digits")
 	verified = models.BooleanField(default=False)
 	phone_number = models.CharField(validators=[phone_regex],max_length=10,blank=True) # validators should be a list
-	_pin_md5  = models.CharField(max_length=4, blank=True)
+	_pin_md5  = models.TextField(blank=True)
 
 
 	def generate_pin(self):
@@ -174,14 +174,14 @@ class Phone_Account(models.Model):
 			new_pin += str(randint(0,9))
 
 
-		#logging.warning(new_pin)
-		#logging.warning(hashlib.md5(str(new_pin)).hexdigest())
-		self._pin_md5 = new_pin#str(hashlib.md5(str(new_pin)).hexdigest())
+		
+		self._pin_md5 = hashlib.md5(new_pin).hexdigest()
 		return new_pin
 
 	def check_pin(self,pin):
 		#try_hash = str(hashlib.md5(str(pin)).hexdigest())
-		if pin == self._pin_md5:
+		try_hash = hashlib.md5(pin).hexdigest()
+		if try_hash == self._pin_md5:
 			self.verified = True
 			return True
 		else:
