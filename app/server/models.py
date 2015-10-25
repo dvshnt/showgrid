@@ -4,6 +4,7 @@ import datetime
 import hashlib
 from random import randint
 import os
+import math
 
 from django.db import models
 from django.core.mail import send_mail
@@ -190,8 +191,11 @@ class Show(models.Model):
 		}
 
 
+alert_leeway = 60 * 6 # if alert time distance 5 minutes away from time of check
+
 
 class Alert(models.Model):
+	leeway
 	is_active = models.BooleanField(default=True)
 	user = models.ForeignKey('ShowgridUser')
 	time = models.DateTimeField(blank=False)
@@ -204,7 +208,7 @@ class Alert(models.Model):
 		}
 
 	def check_send(self):
-		if (datetime.datetime.now().time - self.time.time) < (60 * 5) and self.sent < 1:
+		if math.fabs(datetime.datetime.now().time - self.time.time) < alert_leeway and self.sent < 1:
 			msg = self.show.title
 			Sender.send_message(msg,self.phone_account.phone_number)
 			self.sent += 1
