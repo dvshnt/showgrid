@@ -1,8 +1,10 @@
-var moment = require('moment');
+import moment from 'moment';
+import React from 'react';
 
-module.exports = DateManager = {
 
-	formatShowTime: function(date) {
+var DateManager = {
+
+	formatShowTime(date) {
 		if (moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('mm') !== '00') {
 			return moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('h:mm A');
 		}
@@ -10,12 +12,12 @@ module.exports = DateManager = {
 		return moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('h A');
 	},
  
-	getShowsOnDate: function (day, shows) {
+	getShowsOnDate(day, shows) {
 		var result = [];
 
 		var date = moment(day.date, 'MMMM Do YYYY');
 
-		for (var i = 0, len = shows.length; i < len; i++) {
+		for(var i = 0, len = shows.length; i < len; i++) {
 			var show = shows[i];
 
 			var showDate = moment(show.date, 'YYYY-MM-DD HH:mm:ssZZ').format('MMMM Do YYYY');
@@ -28,7 +30,7 @@ module.exports = DateManager = {
 	    return result;
 	},
 
-	areTicketsOnSale: function (date) {
+	areTicketsOnSale(date) {
 		var saleDate = moment(date, 'YYYY-MM-DD HH:mm:ssZZ');
 
 		if (saleDate.isAfter(moment())) {
@@ -37,18 +39,18 @@ module.exports = DateManager = {
 		return true;
 	},
 
-	formatSaleDate: function (date) {
+	formatSaleDate(date) {
 		return moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('M/D') + " at " + moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('h a');
 	},
 
-	formatHeaderCalendarDay: function (day) {
+	formatHeaderCalendarDay(day) {
 		var date = moment(day, 'MMMM Do YYYY'),
 			date = date.format('ddd D');
 
 		return date;
 	},
 
-	getDaysArray: function(start, offset) {
+	getDaysArray(start, offset) {
 		var result = [];
 
 		var day = start;
@@ -64,30 +66,30 @@ module.exports = DateManager = {
 		return result;
 	},
 
-	getStartOfNextPage: function(end) {
+	getStartOfNextPage(end) {
 		var day = moment(end, 'MMMM Do YYYY'),
 			day = day.add(1, 'days');
 
 		return day;
 	},
 
-	getStartOfPreviousPage: function(previousStart, offset) {
+	getStartOfPreviousPage(previousStart, offset) {
 		var day = moment(previousStart, 'MMMM Do YYYY'),
 			day = day.subtract(offset, 'days');
 
 		return day;
 	},
 
-	getMonthFromDate: function(date) {
+	getMonthFromDate(date) {
 		return moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('MMM');
 	},
 
-	getDayFromDate: function(date) {
+	getDayFromDate(date) {
 		return moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('D');
 	},
 
-	getMobileDate: function(date) {
-		var currentDate = moment(date.date, 'MMMM Do YYYY');
+	getMobileDate(date) {
+		var currentDate = date;
 		var today = moment().hour(0).minute(0).second(0);
 
 		var diff = Math.round(currentDate.diff(today, 'days', true));
@@ -105,34 +107,37 @@ module.exports = DateManager = {
 			return currentDate.format("dddd").toUpperCase();
 		}
 		else {
-			return currentDate.format("dddd MMM Do").toUpperCase();
+			return currentDate.format("dddd, MMM Do").toUpperCase();
 		}
 	},
 
-	getFeaturedShowDate: function(date) {
+	getFeaturedShowDate(date) {
 		var currentDate = moment(date, 'YYYY-MM-DD');
 		var today = moment().hour(0).minute(0).second(0);
 
 		var diff = Math.round(currentDate.diff(today, 'days', true));
 
 		if (diff === 0) {
-			return "TODAY";
+			return "Today";
 		}
 		else if (diff === -1 ) {
-			return "YESTERDAY";
+			return "Yesterday";
 		}
 		else if (diff === 1 ) {
-			return "TOMORROW";
+			return "Today";
+		}
+		else if (diff === 2 ) {
+			return "Tomorrow";
 		}
 		else if (diff < 7 && diff > 1) {
-			return currentDate.format("dddd").toUpperCase();
+			return currentDate.format("dddd");
 		}
 		else {
-			return currentDate.format("dddd, MMMM Do").toUpperCase();
+			return currentDate.format("dddd, MMMM Do");
 		}
 	},
 
-	getRecentShowsDate: function(date) {
+	getRecentShowsDate(date) {
 		var currentDate = moment(date, 'YYYY-MM-DD');
 		var today = moment().hour(0).minute(0).second(0);
 
@@ -147,5 +152,32 @@ module.exports = DateManager = {
 		else {
 			return "Added " + currentDate.format("dddd, MMMM Do");
 		}
+	},
+
+	generateRecentBadge(show) {
+		var created = moment(show.created_at.split('T')[0], 'YYYY-MM-DD');
+		var today = moment().hour(0).minute(0).second(0);
+
+		var diff = Math.round(created.diff(today, 'days', true));
+
+		if (diff === 0) {
+			return <b title="Added Today" className="icon-recent"></b>;
+		}
+		else if (diff === -1 ) {
+			return <b title="Added Yesterday" className="icon-recent one"></b>;
+		}
+		else if (diff === -2 ) {
+			return <b title="Added Two Days Ago" className="icon-recent two"></b>;
+		}
+		else  {
+			return "";
+		}
+	},
+
+	getAlertDate(date, offset) {
+		return moment(date).subtract(offset.num, offset.unit);
 	}
 };
+
+
+module.exports = DateManager;

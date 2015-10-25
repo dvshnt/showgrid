@@ -2,13 +2,6 @@
 	display:block;
 
 	padding:0 0.75em 20px 0.75em;
-
-	@include transform(translate(0, 120px));
-	@include transition--transform(.3s ease-in-out);
-}
-
-body.sleep #footer {
-	@include transform(translate(0, 60px));
 }
 
 #footer {
@@ -110,15 +103,5 @@ body.sleep #footer {
 			font-size:10pt;
 			color:#999999;
 		}
-	}
-}
-
-@media screen and (max-width: 500px ) {
-	#footer {
-		@include transform(translate(0, 70px));
-	}
-
-	body.sleep #footer {
-		@include transform(translate(0, 0));
 	}
 }

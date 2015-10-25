@@ -1,208 +1,258 @@
-.calendar__row .day {
-	.show {
-		padding:20px 7px;
-	}
-}
+// If single, fill the row
+// If more than one, wrap height auto
+
 
 .calendar__row .day {
 	.show {
+		display:-webkit-flex;
+		display:		flex;
+
+		-webkit-flex-flow:column nowrap;
+				flex-flow:column nowrap;
+
+		-webkit-flex:1 1 160px;
+				flex:1 1 160px;
+
+		padding:20px 8px;
+
+		background:rgba(252,252,252,0);
+
+
+		&:hover {
+			cursor:pointer;
+		}
 
 		a {
-			color:#333;
 			text-decoration:none;
 		}
+		
+		.info {
+			-webkit-flex:0 0 20px;
+					flex:0 0 20px;
 
-		a:hover {
-			text-decoration:none;
-		}
+			.time {
+				font-size:13px;
+				color:#aaaaaa;
+			}
 
-		a:hover .main {
-			text-decoration:underline;
-		}
+			.free {
+				background:#b9b9b9;
 
-		a:hover .extra {
-			text-decoration:underline;
-		}
+				margin:-2px 0 0 10px;
+				padding:2px 4px 1px 4px;
 
-		.time {
-			font-size:13px;
-			color:#aaaaaa;
-		}
+				border-radius:1px;
 
-		.free {
-			background:#b9b9b9;
+				font-size:10px;
+				color:#f9f9f9;
+			}
 
-			margin:0 0 0 10px;
-			padding:1px 4px;
+			.age {
+				background:#d5d5d5;
 
-			border-radius:1px;
+				margin:0 0 0 10px;
+				padding:1px 4px;
 
-			font-size:10px;
-			color:#f9f9f9;
-		}
+				border-radius:1px;
 
-		.age {
-			background:#d5d5d5;
-
-			margin:0 0 0 10px;
-			padding:1px 4px;
-
-			border-radius:1px;
-
-			font-size:10px;
-			color:#ffffff;
-		}
-
-		.title {
-			margin:5px 0 0 0;
-
-			color:#666666;
-			font-size:14px;
-			font-weight:300;
-		}
-
-		.main {
-			margin:5px 0 0 0;
-
-			font-size:18px;
-			font-weight:700;
-
-			b {
-				position:relative;
-				top:-2px;
-
-				margin:0 3px 0 0;
-
-				color:rgb(251, 191, 0);
-				font-size:18px
+				font-size:10px;
+				color:#ffffff;
 			}
 		}
 
-		.extra {
-			margin:5px 0 0 0;
+		.titles {
+			-webkit-flex:1 1 100px;
+					flex:1 1 100px;
 
-			color:#898989;
-			font-size:12px;
-			font-weight:300;
+			.title {
+				margin:5px 0 0 0;
 
-			line-height:16px;
+				color:#666666;
+				font-size:14px;
+				font-weight:300;
+			}
+
+			.main {
+				margin:5px 0 0 0;
+
+				font-size:18px;
+				font-weight:700;
+
+				b {
+					position:relative;
+					top:-2px;
+
+					margin:0 3px 0 0;
+					font-size:18px
+				}
+
+				b.icon-star {
+					color:rgb(251, 191, 0);
+				}
+
+				b.icon-recent {
+					color:rgba(0,181,255,1);
+				}
+
+				b.icon-recent.one {
+					color:rgba(0,181,255,0.75);
+				}
+
+				b.icon-recent.two {
+					color:rgba(0,181,255,0.5);
+				}
+
+				b.icon-recent:hover:after {
+					content:attr(title);
+
+					position: absolute;
+					left:-55px; bottom:-40px;
+
+					width:120px;
+
+					padding:5px;
+
+					color:#ffffff;
+					font-size:10px;
+					text-align:center;
+
+					border:1px solid #212121;
+					background:#323232;
+					border-radius:5px;
+
+					z-index: 98;
+				}
+			}
+
+			.extra {
+				margin:5px 0 0 0;
+
+				color:#898989;
+				font-size:12px;
+				font-weight:300;
+
+				line-height:16px;
+			}
 		}
 
 		.actions {
 			width:100%;
 
-			padding:4px 0;
+			-webkit-flex:0 0 25px;
+					flex:0 0 25px;
 
-			font-size:24px;
+			display:-webkit-flex;
+			display:		flex;
 
-			.icon-bell {
-				color:rgb(255,0,53);
-			}
+			-webkit-align-items:center;
+					align-items:center;
 
-			.icon-heart {
-				color:rgb(134,195,0);
-			}
-		}
 
-		.ticket {
-			width:85%;
-
-			margin:15px 0 0 0;
-			padding:8px;
-
-			color:rgb(0,222,144);
-			font-size:16px;
-			font-weight:300;
-
-			text-align:left;
-
-			border:1px solid rgb(0,222,144);
-			border-radius:1px;
-
-			cursor:pointer;
-
-			-webkit-transition: all .2s ease;
-			   -moz-transition: all .2s ease;
-				 -o-transition: all .2s ease;
-					transition: all .2s ease;
-		}
-
-		.ticket:hover {
-			background:rgb(0,222,144);
-			color:#ffffff;
-		}
-
-		.soldout {
-			width:85%;
-
-			margin:10px 0 0 0;
-			padding:5px 8px;
-
-			color:rgb(255,99,99);
-			font-size:16px;
-			font-weight:300;
-
-			text-align:center;
-
-			border:1px solid rgb(255,99,99);
-			border-radius:1px;
-
-			cursor:pointer;
-
-			-webkit-transform: rotate(-4deg);
-			   -moz-transform: rotate(-4deg);
-				-ms-transform: rotate(-4deg);
-				 -o-transform: rotate(-4deg);
-					transform: rotate(-4deg);
-
-			-webkit-transition: all .2s ease;
-			   -moz-transition: all .2s ease;
-				 -o-transition: all .2s ease;
-					transition: all .2s ease;
-		}
-
-		.price {
 			position:relative;
-			top:-2px;
+			top:10px;
 
-			float:right;
+			padding:6px 0;
+			margin:20px 0 0 0;
 
-			font-size:18px;
-			font-weight:400;
-		}
+			font-size:22px;
 
-		.onsale:hover {
-			background:rgb(0,222,144);
-			color:#ffffff;
-		}
+			.ticket {
+				-webkit-flex: 1 1 50%;
+						flex: 1 1 50%;
 
-		.onsale {
-			width:85%;
+				position:relative;
+				top:2px;
 
-			margin:15px 0 0 0;
-			padding:8px;
+				color:rgb(0,222,144);
+				font-size:24px;
+				text-decoration:none;
 
-			color:rgb(0,222,144);
-			font-size:14px;
-			font-weight:300;
+				@include transform(scale(1));
+				@include transition(all 0.2s ease);
 
-			text-align:center;
 
-			border:1px solid rgb(0,222,144);
-			border-radius:1px;
+				.price {
+					position:relative;
+					top:0px;
 
-			cursor:pointer;
+					margin:0 0 0 4px;
 
-			-webkit-transition: all .2s ease;
-			   -moz-transition: all .2s ease;
-				 -o-transition: all .2s ease;
-					transition: all .2s ease;
-		}
+					font-size:14px;
+					font-weight:400;
+				}
 
-		.onsale {
-			.date {
-				font-size:16px;
-				font-weight:400;
+				&:hover {
+					
+					@include transform(scale(1.1));
+				}
+			}
+
+			.soldout {
+				-webkit-flex: 1 1 50%;
+						flex: 1 1 50%;
+
+				margin:0 15px 0 0;
+				padding:5px 0;
+
+				color:rgb(255,99,99);
+				font-size:14px;
+				font-weight:bold;
+
+				text-align:center;
+
+				border:2px solid rgb(255,99,99);
+				background:transparent;
+				border-radius:2px;
+
+				cursor:pointer;
+			}
+
+			.onsale {
+				-webkit-flex: 1 1 50%;
+						flex: 1 1 50%;
+
+				margin:0 5px 0 0;
+				padding:5px 8px;
+
+				color:rgb(0,222,144);
+				font-size:10px;
+				font-weight:300;
+
+				text-align:center;
+
+				border:1px solid rgb(0,222,144);
+				background:transparent;
+				border-radius:2px;
+
+				cursor:pointer;
+			}
+
+			.onsale {
+				.date {
+					font-size:12px;
+					font-weight:400;
+				}
+			}
+
+			b.icon-alert,
+			b.icon-heart {
+				-webkit-flex: 0 0 20%;
+						flex: 0 0 20%;
+
+				color:rgba(0,0,0,0.1);
+				font-size:20px;
+
+				&:hover {
+					color:rgba(0,0,0,0.2);
+				}
+			}
+
+			b.icon-alert.active {
+				color:#ff9929;
+			}
+
+			b.icon-heart.active {
+				color:#fc3030;
 			}
 		}
 	}
@@ -212,10 +262,16 @@
 @media screen and (max-width: 500px ) {
 	.calendar__row .day {
 		.show {
-			.ticket {
-				border:1px solid rgb(0,222,144);
-				color:rgb(0,222,144);
+			.titles {
+				.main {
+					font-size:20px;
+
+					b {
+						font-size:20px
+					}
+				}
 			}
+			
 
 			
 			.age {

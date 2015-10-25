@@ -1,0 +1,45 @@
+#list {
+	margin:75px auto;
+
+	width:800px;
+
+	& > h3 {
+		position:relative;
+		left:-25px;
+
+		margin:100px 0 30px 0;
+
+		font-size:24px;
+	}
+}
+
+@media screen and (max-width: 900px ) {
+	#list {
+		width:95%;
+	
+		& > h3 {
+			left:0;
+
+			font-size:28px;
+			text-align:center;
+		}
+	}
+}
+
+@media screen and (max-width: 500px ) {
+	#list {
+		width:100%;	
+	
+		& > h3 {
+			margin:60px 0 20px 0;
+
+		}
+
+		& > h3:not(:first-of-type) {
+			margin:140px 0 20px 0;
+
+		}
+	}
+}
+
+@import "list--item";

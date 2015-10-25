@@ -4,17 +4,16 @@
 
 	width:100%;
 
-	border-bottom:1px solid #efefef;
-}
+	margin:25px auto;
 
-.calendar__row > div {
-	padding:40px 0;
+	background:#ffffff;
+	box-shadow:0px 2px 5px rgba(0,0,0,0.05);
 }
 
 .calendar__row.mini > div {
 	padding:10px 0;
 
-	height:80px;
+	max-height:80px;
 }
 
 @media screen and (max-width: 500px ) {
@@ -25,7 +24,6 @@
 	.calendar__row:nth-child(even) {
 		background-color:#fcfcfc;
 	}
-
 }
 
 @import "calendar__row__venue";

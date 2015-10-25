@@ -1,5 +1,4 @@
 @import "mixins";
-@import "fonts";
 @import "constants";
 
 @import "generic.normalize";
@@ -9,8 +8,9 @@
 @import "header";
 
 @import "calendar";
-@import "recent";
-@import "featured";
-@import "search";
+
+@import "list";
 
 @import "footer";
+@import "set-alert";
+@import "login-modal";

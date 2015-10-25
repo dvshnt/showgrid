@@ -3,10 +3,10 @@ from dateutil import tz
 
 from haystack import indexes
 
-from server.models import Venue_v2, Show_v2
+from server.models import Venue, Show
 
 
-class ShowV2Index(indexes.SearchIndex, indexes.Indexable):
+class ShowIndex(indexes.SearchIndex, indexes.Indexable):
 	text = indexes.CharField(document=True, use_template=True)
 
 	title = indexes.CharField(model_attr='title')
@@ -26,7 +26,7 @@ class ShowV2Index(indexes.SearchIndex, indexes.Indexable):
 	venue = indexes.CharField(model_attr='venue')
 
 	def get_model(self):
-		return Show_v2
+		return Show
 
 	def index_queryset(self, using=None):
 		return self.get_model().objects.filter(date__gte=datetime.datetime.now())

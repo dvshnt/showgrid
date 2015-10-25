@@ -1,0 +1,3174 @@
+{  
+   "events":[  
+      {  
+         "_id":"56006806104fe1037e5e4d41",
+         "name":"In The Round with Mary Hartman, Joel Shewmake, Billy Droze and Rob Wolf",
+         "description":null,
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.819Z",
+            "created":"2015-09-21T18:30:37.448Z"
+         },
+         "date":{  
+            "start":"2015-09-22T23:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087142137-8"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d7d",
+         "name":"In The Round with Rob Hatch, Cary Barlowe, Jaron Boyer and Phillip Coleman, $15 - A Benefit for the American Heart Association",
+         "description":null,
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.807Z",
+            "created":"2015-09-21T18:30:37.465Z"
+         },
+         "date":{  
+            "start":"2015-09-23T02:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087142165-1"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d7b",
+         "name":"In The Row with Brandon James and Friends",
+         "description":" <p><p>In The Row with Brandon James and Friends.<br> <strong>Admission Info:</strong><br><p>Free Admission<p><br><p><br><p><strong>Individual Dates & Times:</strong> *<br>  Sep 23, 2015: 6 pm (Wed)<br><br><p> * Event durations (if noted) are approximate. Please check with the presenting organization or venue to confirm start times and duration.<p><br><p><strong>Phone: </strong>(615) 383-1461<br><p><br><strong>Accessibility Information:</strong> Currently, no accessibility information is available for this event.<br><br><p><a href=\"http://bluebirdcafe.com/event.cfm?id=219312&cart\" rel=\"nofollow\">Official Website</a><br><br><p><strong>Connect with this Organization:</strong><br><a href=\"https://www.facebook.com/pages/The-Bluebird-Cafe/15694242861\" rel=\"nofollow\">Facebook</a>  |  <a href=\"https://twitter.com/bluebirdcafeTN\" rel=\"nofollow\">Twitter</a>  |</p></p></p></p></p></p></p></p></p></p></p></p>",
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.808Z",
+            "created":"2015-09-21T18:30:37.444Z"
+         },
+         "date":{  
+            "start":"2015-09-23T05:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087327427-9"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d5a",
+         "name":"In The Row with Brandon James, Brian White, Amy Peters and Pete Good",
+         "description":null,
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.815Z",
+            "created":"2015-09-21T18:30:37.450Z"
+         },
+         "date":{  
+            "start":"2015-09-23T23:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087142127-1"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d78",
+         "name":"Pre-Sale/Pre-Pay Show: An Evening with Minton Sparks and Special Guests Anna and Elizabeth, $20",
+         "description":null,
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.809Z",
+            "created":"2015-09-21T18:30:37.455Z"
+         },
+         "date":{  
+            "start":"2015-09-24T02:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087142171-2"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d44",
+         "name":"In The Round with James Casto, Heather Morgan, Michael Logen, and Beth Wood",
+         "description":null,
+         "demand":0,
+         "banners":[  
+            {  
+               "height":480,
+               "width":480,
+               "url":"http://s3.evcdn.com/images/large/I0-001/010/910/386-5.jpeg_/james-casto-86.jpeg",
+               "_id":"56006806104fe1037e5e4d49"
+            },
+            {  
+               "height":480,
+               "width":480,
+               "url":"http://s1.evcdn.com/images/large/I0-001/003/692/436-4.jpeg_/james-casto-36.jpeg",
+               "_id":"56006806104fe1037e5e4d48"
+            },
+            {  
+               "height":480,
+               "width":480,
+               "url":"http://s4.evcdn.com/images/large/I0-001/003/820/903-8.jpeg_/james-casto-03.jpeg",
+               "_id":"56006806104fe1037e5e4d47"
+            },
+            {  
+               "height":480,
+               "width":480,
+               "url":"http://s4.evcdn.com/images/large/I0-001/022/041/931-5.jpeg_/round-james-casto-heather-morgan-michael-logen-and-31.jpeg",
+               "_id":"56006806104fe1037e5e4d46"
+            },
+            {  
+               "height":480,
+               "width":480,
+               "url":"http://s1.evcdn.com/images/large/I0-001/001/060/972-0.jpeg_/michael-logen-72.jpeg",
+               "_id":"56006806104fe1037e5e4d45"
+            }
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.819Z",
+            "created":"2015-09-21T18:30:37.447Z"
+         },
+         "date":{  
+            "start":"2015-09-24T23:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087142138-7"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d4a",
+         "name":"In The Round with Monty Criswell, Adam Craig, Murphy Elmore and Paul Jenkins, $15 - a benefit for Musician's Corner",
+         "description":null,
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.819Z",
+            "created":"2015-09-21T18:30:37.443Z"
+         },
+         "date":{  
+            "start":"2015-09-25T02:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087142166-0"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d6a",
+         "name":"In The Row with Neil Medley, Chase McGill, Clint Daniels, and Laura Veltz",
+         "description":null,
+         "demand":0,
+         "banners":[  
+            {  
+               "height":480,
+               "width":480,
+               "url":"http://s4.evcdn.com/images/large/I0-001/022/041/935-1.jpeg_/row-neil-medley-chase-mcgill-clint-daniels-and-lau-35.jpeg",
+               "_id":"56006806104fe1037e5e4d6c"
+            },
+            {  
+               "height":480,
+               "width":480,
+               "url":"http://s4.evcdn.com/images/large/I0-001/004/353/279-0.jpeg_/brent-anderson-79.jpeg",
+               "_id":"56006806104fe1037e5e4d6b"
+            }
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.811Z",
+            "created":"2015-09-21T18:30:37.452Z"
+         },
+         "date":{  
+            "start":"2015-09-25T23:30:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087142129-9"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d68",
+         "name":"An Evening with Don Schlitz, $15",
+         "description":null,
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.812Z",
+            "created":"2015-09-21T18:30:37.437Z"
+         },
+         "date":{  
+            "start":"2015-09-26T02:30:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087142131-4"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4da4",
+         "name":"Rob Harris",
+         "description":"Rob Harris",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "56004cc9443f8e877ca2303c"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"http://bluebirdcafe.com"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.822Z",
+            "created":"2015-09-21T18:30:35.292Z"
+         },
+         "date":{  
+            "start":"2015-09-26T22:30:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"reverbnation",
+               "id":"17070070"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d7a",
+         "name":"In The Round with TBA",
+         "description":null,
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.808Z",
+            "created":"2015-09-21T18:30:37.443Z"
+         },
+         "date":{  
+            "start":"2015-09-26T23:30:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087143838-7@2015092618"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d66",
+         "name":"In The Round with Don Henry and friends, $15",
+         "description":null,
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.812Z",
+            "created":"2015-09-21T18:30:37.436Z"
+         },
+         "date":{  
+            "start":"2015-09-27T02:30:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087142170-3"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d74",
+         "name":"Sunday Spotlight with Radio Champion , Adam Bruno , Writers Night with special guest Wood Newton - Hosted by Steve Goodie",
+         "description":null,
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "55df4eeaa60c6cd929787cfd"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"javascript:;"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.810Z",
+            "created":"2015-08-27T17:58:52.575Z"
+         },
+         "date":{  
+            "start":"2015-09-27T23:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087142147-5"
+            },
+            {  
+               "name":"eventful",
+               "id":"E0-001-084881602-8"
+            },
+            {  
+               "name":"reverbnation",
+               "id":"16353875"
+            },
+            {  
+               "name":"eventful",
+               "id":"E0-001-087142146-6"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d3f",
+         "name":"Danny Rongo",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "55df4eeba60c6cd929787db7"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"javascript:;"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.820Z",
+            "created":"2015-08-29T04:03:50.166Z"
+         },
+         "date":{  
+            "start":"2015-09-28T23:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-086493355-6"
+            },
+            {  
+               "name":"eventful",
+               "id":"E0-001-087142152-7"
+            },
+            {  
+               "name":"reverbnation",
+               "id":"16766893"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d3d",
+         "name":"Mike Henderson Band with Michael Rhodes and Kevin McKendree, $12",
+         "description":null,
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.821Z",
+            "created":"2015-09-21T18:30:37.446Z"
+         },
+         "date":{  
+            "start":"2015-09-29T02:30:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087142153-6"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4da1",
+         "name":"Sasha Aaron",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "55df4eeba60c6cd929787da3"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"http://bluebirdcafe.com/event.cfm?id=219326&cart"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.822Z",
+            "created":"2015-08-27T17:58:50.462Z"
+         },
+         "date":{  
+            "start":"2015-09-29T21:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"reverbnation",
+               "id":"16879889"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d72",
+         "name":"In The Round with Sasha Aaron, Bill DiLuigi, Bruce Michael Miller and Dark Waters",
+         "description":null,
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.810Z",
+            "created":"2015-09-21T18:30:37.463Z"
+         },
+         "date":{  
+            "start":"2015-09-29T23:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087142140-2"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d5b",
+         "name":"In The Round with Kellys Collins, Liz Hengber, Rick Huckaby and Mark Nesler, $20 – A Benefit for Thistle Farms $20",
+         "description":null,
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.815Z",
+            "created":"2015-09-21T18:30:37.442Z"
+         },
+         "date":{  
+            "start":"2015-09-30T02:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087142169-7"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d3e",
+         "name":"In The Round with TBA",
+         "description":null,
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.820Z",
+            "created":"2015-09-21T18:30:37.459Z"
+         },
+         "date":{  
+            "start":"2015-09-30T23:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087143838-7@2015093018"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4da0",
+         "name":"Craig Bickhardt",
+         "description":"Craig Bickhardt",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "56004cc9443f8e877ca23040",
+               "56004cc9443f8e877ca23041",
+               "56004cc9443f8e877ca23042",
+               "56004cc9443f8e877ca23043"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"http://www.bluebirdcafe.com"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.823Z",
+            "created":"2015-09-21T18:30:35.289Z"
+         },
+         "date":{  
+            "start":"2015-10-01T01:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"reverbnation",
+               "id":"17006143"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d42",
+         "name":"Idlewheel - Ellen Britton , In The Round with Craig Bickhardt, Jack Sundrud, Ellen Britton and Jim Photoglo. $12",
+         "description":" <strong>Age Limit:</strong> All Ages<br><br> Idlewheel<br><br> Ellen Brittonwebsite:http://ellenbritton.com Jim Photoglowebsite:http://jimphotoglo.com",
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.819Z",
+            "created":"2015-09-21T18:47:55.585Z"
+         },
+         "date":{  
+            "start":"2015-10-01T02:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087245468-3"
+            },
+            {  
+               "name":"eventful",
+               "id":"E0-001-087142167-9"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d6d",
+         "name":"In The Round with TBA",
+         "description":null,
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.811Z",
+            "created":"2015-09-21T18:30:37.432Z"
+         },
+         "date":{  
+            "start":"2015-10-02T23:30:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087143838-7@2015100218"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d58",
+         "name":"In The Round with Pam Rose and Friends, $TBA",
+         "description":null,
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.816Z",
+            "created":"2015-09-21T18:30:37.436Z"
+         },
+         "date":{  
+            "start":"2015-10-03T02:30:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087142179-4"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d79",
+         "name":"In The Round with TBA",
+         "description":null,
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.809Z",
+            "created":"2015-09-21T18:30:37.460Z"
+         },
+         "date":{  
+            "start":"2015-10-03T23:30:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087143838-7@2015100318"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d55",
+         "name":"AdoptTogether.org Presents: In The Round with TBA",
+         "description":null,
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.816Z",
+            "created":"2015-09-21T18:30:37.462Z"
+         },
+         "date":{  
+            "start":"2015-10-04T02:30:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087142177-6"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d9f",
+         "name":"Madison Shea",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "55df4eeba60c6cd929787db9"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"http://bluebirdcafe.com/"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.823Z",
+            "created":"2015-08-27T17:58:50.461Z"
+         },
+         "date":{  
+            "start":"2015-10-04T23:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"reverbnation",
+               "id":"16172448"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d4b",
+         "name":"Madison Shea",
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.818Z",
+            "created":"2015-08-27T17:58:52.554Z"
+         },
+         "date":{  
+            "start":"2015-10-05T00:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-084663681-7"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d5f",
+         "name":"Ruby Lovett- Tony Arata",
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.814Z",
+            "created":"2015-08-27T17:58:52.571Z"
+         },
+         "date":{  
+            "start":"2015-10-09T23:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-086473698-0"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d9e",
+         "name":"Bill Griese",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "55df4eeba60c6cd929787dba"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"http://bluebirdcafe.com/"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.823Z",
+            "created":"2015-08-27T17:58:50.461Z"
+         },
+         "date":{  
+            "start":"2015-10-12T00:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"reverbnation",
+               "id":"16436155"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d75",
+         "name":"Eric Gnezda , Bill Griese",
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.809Z",
+            "created":"2015-08-27T18:06:26.220Z"
+         },
+         "date":{  
+            "start":"2015-10-12T01:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-086462221-6"
+            },
+            {  
+               "name":"eventful",
+               "id":"E0-001-085264986-7"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d9d",
+         "name":"Lisa Marie",
+         "description":"Lisa Marie",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "56004cc9443f8e877ca23046",
+               "56004cc9443f8e877ca23047"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"javascript:;"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.823Z",
+            "created":"2015-09-21T18:30:35.287Z"
+         },
+         "date":{  
+            "start":"2015-10-16T01:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"reverbnation",
+               "id":"16979240"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d6e",
+         "name":"Kaylee Rose Music Florida",
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.811Z",
+            "created":"2015-08-27T17:58:52.575Z"
+         },
+         "date":{  
+            "start":"2015-10-18T20:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-086506093-6"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d9c",
+         "name":"Michael Braunfeld",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "55df4eeba60c6cd929787dbb"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"http://bluebirdcafe.com/"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.824Z",
+            "created":"2015-08-27T17:58:50.460Z"
+         },
+         "date":{  
+            "start":"2015-10-19T00:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"reverbnation",
+               "id":"16426786"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d71",
+         "name":"Michael Braunfeld",
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.810Z",
+            "created":"2015-08-27T17:58:52.573Z"
+         },
+         "date":{  
+            "start":"2015-10-19T01:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-085222360-5"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d9b",
+         "name":"Jeremy Dean",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "55df4eeaa60c6cd929787cd6",
+               "55df4eeba60c6cd929787dbd",
+               "55df4eeba60c6cd929787dbe"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"http://www.BluebirdCafe.com"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.824Z",
+            "created":"2015-08-27T17:58:50.459Z"
+         },
+         "date":{  
+            "start":"2015-10-26T00:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"reverbnation",
+               "id":"16828394"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d59",
+         "name":"Kurt Fortmeyer , Jeremy Dean- Reed Hess- Greg Lackey",
+         "description":" Sunday Night Writers&#39; Series hosted by Steve Goodie",
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.815Z",
+            "created":"2015-09-21T18:47:55.579Z"
+         },
+         "date":{  
+            "start":"2015-10-26T01:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087271482-2"
+            },
+            {  
+               "name":"eventful",
+               "id":"E0-001-086693764-4"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d51",
+         "name":"Jesse Terry",
+         "description":" <strong>Age Limit:</strong> All Ages<br><br> Jesse Terry<br><br> \n",
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.817Z",
+            "created":"2015-09-21T18:30:37.460Z"
+         },
+         "date":{  
+            "start":"2015-10-29T23:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-086684988-0"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d50",
+         "name":"Victoria Shaw",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "55df4eeba60c6cd929787dbf"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"http://bluebirdcafe.com"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.818Z",
+            "created":"2015-08-29T04:03:50.168Z"
+         },
+         "date":{  
+            "start":"2015-10-30T00:30:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-083846846-0"
+            },
+            {  
+               "name":"reverbnation",
+               "id":"15716244"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d99",
+         "name":"Matt Prater",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "55df4eeba60c6cd929787dc0"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"javascript:;"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.824Z",
+            "created":"2015-08-27T17:58:50.458Z"
+         },
+         "date":{  
+            "start":"2015-11-02T01:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"reverbnation",
+               "id":"16502148"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d73",
+         "name":"Matt Prater , Sami Jo",
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.810Z",
+            "created":"2015-08-27T18:06:26.169Z"
+         },
+         "date":{  
+            "start":"2015-11-02T02:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-085496830-4"
+            },
+            {  
+               "name":"eventful",
+               "id":"E0-001-085499126-9"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d98",
+         "name":"Scott Brantley",
+         "description":"Scott Brantley",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "56004cc9443f8e877ca2304e"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"javascript:;"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.825Z",
+            "created":"2015-09-21T18:30:35.302Z"
+         },
+         "date":{  
+            "start":"2015-11-04T23:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"reverbnation",
+               "id":"17042076"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d52",
+         "name":"Kelley McRae",
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.817Z",
+            "created":"2015-08-27T17:58:52.577Z"
+         },
+         "date":{  
+            "start":"2015-11-16T00:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-086494470-1"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d97",
+         "name":"Zach + Cheyloe",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "55df4eeba60c6cd929787dc1"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"javascript:;"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.825Z",
+            "created":"2015-08-27T17:58:50.458Z"
+         },
+         "date":{  
+            "start":"2015-11-16T01:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"reverbnation",
+               "id":"16501678"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d67",
+         "name":"Zach + Cheyloe , The Springs , The Springs , Zach + Cheyloe",
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.812Z",
+            "created":"2015-08-27T18:06:26.201Z"
+         },
+         "date":{  
+            "start":"2015-11-16T02:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-085496566-2"
+            },
+            {  
+               "name":"eventful",
+               "id":"E0-001-085564178-7"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d96",
+         "name":"Bob Cheevers",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "55df4eeba60c6cd929787dc2"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"javascript:;"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.825Z",
+            "created":"2015-08-27T17:58:50.457Z"
+         },
+         "date":{  
+            "start":"2015-11-18T02:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"reverbnation",
+               "id":"16576429"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d61",
+         "name":"Bob Cheevers",
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.813Z",
+            "created":"2015-08-27T17:58:52.561Z"
+         },
+         "date":{  
+            "start":"2015-11-18T03:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-085694848-3"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d62",
+         "name":"Nathan Bell",
+         "description":"Nathan Bell",
+         "demand":0,
+         "banners":[  
+            {  
+               "height":480,
+               "width":480,
+               "url":"http://s3.evcdn.com/images/large/I0-001/001/156/670-5.jpeg_/nathan-bell-70.jpeg",
+               "_id":"56006806104fe1037e5e4d64"
+            },
+            {  
+               "height":480,
+               "width":480,
+               "url":"http://s3.evcdn.com/images/large/I0-001/001/156/666-2.jpeg_/nathan-bell-66.jpeg",
+               "_id":"56006806104fe1037e5e4d63"
+            }
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "56004cc9443f8e877ca23051"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"javascript:;"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.813Z",
+            "created":"2015-08-27T17:58:52.560Z"
+         },
+         "date":{  
+            "start":"2015-11-18T23:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-086653924-8"
+            },
+            {  
+               "name":"reverbnation",
+               "id":"16908557"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d94",
+         "name":"Jon Brooks",
+         "description":"Jon Brooks",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "56004cc9443f8e877ca23052"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"javascript:;"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.826Z",
+            "created":"2015-09-21T18:30:35.299Z"
+         },
+         "date":{  
+            "start":"2015-11-19T23:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"reverbnation",
+               "id":"16932135"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d5e",
+         "name":"Jon Brooks , Andy Gullahorn",
+         "description":" w/Andy Gullahorn and Jill Phillips",
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.814Z",
+            "created":"2015-09-21T18:47:55.576Z"
+         },
+         "date":{  
+            "start":"2015-11-20T00:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087276317-4"
+            },
+            {  
+               "name":"eventful",
+               "id":"E0-001-087521151-1"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d40",
+         "name":"Jill Phillips",
+         "description":" <strong>Age Limit:</strong> All Ages<br><br> Jill Phillips<br><br> \n",
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.820Z",
+            "created":"2015-09-21T18:30:37.457Z"
+         },
+         "date":{  
+            "start":"2015-11-20T01:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087521223-7"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d93",
+         "name":"Kent Goolsby",
+         "description":"Kent Goolsby",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "56004cc9443f8e877ca23053"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"javascript:;"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.826Z",
+            "created":"2015-09-21T18:30:35.299Z"
+         },
+         "date":{  
+            "start":"2015-11-29T23:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"reverbnation",
+               "id":"17067377"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d65",
+         "name":"Madi Anne Davis",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "55df4eeba60c6cd929787dc3"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"http://bluebirdcafe.com/"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.813Z",
+            "created":"2015-08-29T04:03:50.162Z"
+         },
+         "date":{  
+            "start":"2015-12-07T00:30:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-086460908-4"
+            },
+            {  
+               "name":"reverbnation",
+               "id":"16605846"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d37",
+         "name":"Mary Gauthier",
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.822Z",
+            "created":"2015-08-27T17:58:52.579Z"
+         },
+         "date":{  
+            "start":"2015-12-11T03:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-086522675-4"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d3a",
+         "name":"Victoria Shaw",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "55df4eeba60c6cd929787dbf"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"http://bluebirdcafe.com"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.821Z",
+            "created":"2015-08-29T04:03:50.169Z"
+         },
+         "date":{  
+            "start":"2015-12-13T02:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-085069433-1"
+            },
+            {  
+               "name":"reverbnation",
+               "id":"15716249"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d3b",
+         "name":"Bellamy Baylor",
+         "description":null,
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "55df4eeba60c6cd929787dc5"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"javascript:;"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.821Z",
+            "created":"2015-08-27T17:58:50.455Z"
+         },
+         "date":{  
+            "start":"2015-12-28T00:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-086703727-9"
+            },
+            {  
+               "name":"reverbnation",
+               "id":"16873201"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d5d",
+         "name":"Matt Rogers",
+         "description":" Matt will play as part of a Writer&#39;s Night at the Bluebird.",
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.814Z",
+            "created":"2015-09-21T18:30:37.449Z"
+         },
+         "date":{  
+            "start":"2015-12-28T02:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087302358-7"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d8f",
+         "name":"Nate fredrick",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "55df4eeba60c6cd929787dc6",
+               "55df4eeba60c6cd929787dc7"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"javascript:;"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.826Z",
+            "created":"2015-08-27T17:58:50.454Z"
+         },
+         "date":{  
+            "start":"2016-01-04T01:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"reverbnation",
+               "id":"16803481"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d38",
+         "name":"Sharelle Quick",
+         "description":" Writers’ Night features 8-10 singer/songwriters playing three songs each. This entertaining show is hosted and ends with a special guest performance by a hit-writing songwriter from the Nashville music industry. Writers performing on these shows have passed an audition.",
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.821Z",
+            "created":"2015-09-21T18:30:37.426Z"
+         },
+         "date":{  
+            "start":"2016-01-04T02:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087274700-6"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d8e",
+         "name":"Effron White",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "55df4eeba60c6cd929787dc8"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"javascript:;"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.826Z",
+            "created":"2015-08-27T17:58:50.454Z"
+         },
+         "date":{  
+            "start":"2016-01-11T00:30:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"reverbnation",
+               "id":"16853305"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d4d",
+         "name":"Effron White",
+         "description":" Bluebird Sunday Writers Night",
+         "demand":0,
+         "banners":[  
+            {  
+               "height":480,
+               "width":480,
+               "url":"http://s2.evcdn.com/images/large/I0-001/003/935/341-5.jpeg_/effron-white-41.jpeg",
+               "_id":"56006806104fe1037e5e4d4f"
+            },
+            {  
+               "height":480,
+               "width":480,
+               "url":"http://s1.evcdn.com/images/large/I0-001/000/672/852-3.jpeg_/effron-white-52.jpeg",
+               "_id":"56006806104fe1037e5e4d4e"
+            }
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.818Z",
+            "created":"2015-09-21T18:30:37.423Z"
+         },
+         "date":{  
+            "start":"2016-01-11T01:30:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-086700947-0"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d8d",
+         "name":"Ryan Bizarri",
+         "description":"Ryan Bizarri",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "55df4eeba60c6cd929787da8"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"http://www.bluebirdcafe.com"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.827Z",
+            "created":"2015-09-21T18:30:35.295Z"
+         },
+         "date":{  
+            "start":"2016-01-25T01:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"reverbnation",
+               "id":"16938681"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d6f",
+         "name":"Jonathan Dean , Britney Monroe , Ryan Bizarri",
+         "description":" Sunday Writers Night",
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.811Z",
+            "created":"2015-09-21T18:47:55.551Z"
+         },
+         "date":{  
+            "start":"2016-01-25T02:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087403931-8"
+            },
+            {  
+               "name":"eventful",
+               "id":"E0-001-087400950-2"
+            },
+            {  
+               "name":"eventful",
+               "id":"E0-001-087278519-4"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d8c",
+         "name":"Caroline Watkins",
+         "description":"Caroline Watkins",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "56004cc9443f8e877ca2305b"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"javascript:;"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.827Z",
+            "created":"2015-09-21T18:30:35.294Z"
+         },
+         "date":{  
+            "start":"2016-02-01T00:30:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"reverbnation",
+               "id":"16998164"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d56",
+         "name":"Caroline Watkins",
+         "description":null,
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.816Z",
+            "created":"2015-09-21T18:30:37.428Z"
+         },
+         "date":{  
+            "start":"2016-02-01T01:30:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087299358-0"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d8b",
+         "name":"Les Kerr",
+         "description":"Les Kerr",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "56004cc9443f8e877ca2305c"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"http://www.bluebirdcafe.com"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.827Z",
+            "created":"2015-09-21T18:30:35.293Z"
+         },
+         "date":{  
+            "start":"2016-02-10T02:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"reverbnation",
+               "id":"17006631"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d5c",
+         "name":"Les Kerr",
+         "description":" Les Kerr & The Bayou Band present their 25th Anniversary Mardi Gras Concert at the Bluebird Cafe!",
+         "demand":0,
+         "banners":null,
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.815Z",
+            "created":"2015-09-21T18:30:37.422Z"
+         },
+         "date":{  
+            "start":"2016-02-10T03:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"eventful",
+               "id":"E0-001-087400824-8"
+            }
+         ]
+      },
+      {  
+         "_id":"56006806104fe1037e5e4d8a",
+         "name":"Tia McGraff",
+         "description":"Tia McGraff",
+         "demand":0,
+         "banners":[  
+
+         ],
+         "tags":[  
+
+         ],
+         "links":[  
+
+         ],
+         "artists":{  
+            "openers":[  
+
+            ],
+            "headliners":[  
+               "56004cc9443f8e877ca2305d"
+            ]
+         },
+         "users":[  
+
+         ],
+         "age":0,
+         "featured":false,
+         "private":false,
+         "tickets":[  
+            {  
+               "url":"javascript:;"
+            }
+         ],
+         "time":{  
+            "updated":"2015-09-21T20:26:55.828Z",
+            "created":"2015-09-21T18:30:35.293Z"
+         },
+         "date":{  
+            "start":"2016-02-11T02:00:00.000Z"
+         },
+         "platforms":[  
+            {  
+               "name":"reverbnation",
+               "id":"17034684"
+            }
+         ]
+      }
+   ],
+   "colors":[  
+
+   ],
+   "banners":[  
+      {  
+         "url":"http://s1.evcdn.com/images/large/I0-001/004/319/980-5.jpeg_/the-bluebird-cafe-80.jpeg",
+         "width":480,
+         "height":480,
+         "_id":"55df4fdccaaf44fa2999f927"
+      },
+      {  
+         "url":"http://s4.evcdn.com/images/large/I0-001/004/319/971-7.jpeg_/the-bluebird-cafe-71.jpeg",
+         "width":480,
+         "height":480,
+         "_id":"55df4fdccaaf44fa2999f926"
+      }
+   ],
+   "tags":[  
+      "cafe",
+      "bar",
+      "food",
+      "point_of_interest",
+      "establishment",
+      "Restaurant"
+   ],
+   "links":[  
+      {  
+         "url":"http://www.bluebirdcafe.com/"
+      },
+      {  
+         "url":"http://www.reverbnation.com/venue/989976"
+      }
+   ],
+   "location":{  
+      "address":"4104 Hillsboro Road",
+      "status":2,
+      "_gps":[  
+         -86.8645658,
+         36.0450941
+      ],
+      "components":{  
+         "city":"Nashville",
+         "statecode":"TN",
+         "state":"Tennessee",
+         "country":"United States",
+         "countrycode":"USA",
+         "zip":"37202"
+      }
+   },
+   "active":true,
+   "time":{  
+      "updated":"2015-09-21T20:26:55.807Z",
+      "created":"2015-08-27T17:58:50.448Z"
+   },
+   "platformIds":[  
+      "eventful/V0-001-000524251-2",
+      "reverbnation/1178584"
+   ]
+}

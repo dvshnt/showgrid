@@ -1,24 +1,41 @@
 from django.conf.urls import patterns, include, url
 
-from server import settings
+from server import settings, views
+from rest_framework.authtoken import views as auth_views
 
 from django.contrib import admin
 admin.autodiscover()
 
 
 urlpatterns = patterns('',
+
+    ## Standard Django admin endpoints for a crude CMS
     url(r'^admin/', include(admin.site.urls)),
-    
+
+
+    ## Authentication flow via django-rest-auth
+    url(r'^login$', auth_views.obtain_auth_token),
+        
+
+    ## static page endpoints
     url(r'^$', 'server.views.index', name='index'),
-    url(r'^check/venues$', 'server.views.check_venues', name='check_venues'),
+    url(r'^recent$', 'server.views.index', name='index'),
+    url(r'^profile$', 'server.views.index', name='index'),
+    url(r'^featured$', 'server.views.index', name='index'),
+
+
+    ## user actions
+    url(r'^user/(?P<action>\w+)$', views.UserActions.as_view(), name='favorite'),
+
+
+ 	url(r'^i/grid/$', views.VenueList.as_view(), name='grid'),
+	url(r'^i/grid/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)$', views.VenueList.as_view(), name='grid'),
 
 
     url(r'^i/search$', 'server.views.get_search_results', name='search results'),
-    
- 	url(r'^i/grid/$', 'server.views.grid', name='grid'),
-	url(r'^i/grid/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)$', 'server.views.grid', name='grid'),
 
-	url(r'^i/recent/$', 'server.views.recently_added', name='recently added shows'),
+	url(r'^i/shows/$', views.ShowList.as_view(), name='recently added shows'),
+
 
  	url(r'^i/featured/$', 'server.views.recommended_shows', name='recommended shows'),
 
@@ -30,6 +47,10 @@ urlpatterns = patterns('',
  	url(r'^phone/add_alert$', 'server.views.phone_add_alert', name='add alert to phone number'),
 	url(r'^phone/remove_alert$', 'server.views.phone_remove_alert', name='add alert to phone number'),
  	url(r'^phone/clear_alerts$', 'server.views.phone_remove_all_alert', name='add alert to phone number'),
+
+
+
+    url(r'^check/venues$', 'server.views.check_venues', name='check_venues'),
 
 )
 

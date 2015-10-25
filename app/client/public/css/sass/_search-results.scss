@@ -1,0 +1,77 @@
+#search-results {
+	display:none;
+
+	position:absolute;
+	width:500px; 
+	max-height:600px;
+
+	margin:2px 0 0 0;
+	
+	border: 1px solid #CBCBD2;
+	border-radius:2px;
+	background:#ffffff;
+
+	overflow-y:scroll;
+	overflow-x:hidden;
+	
+	-webkit-box-shadow: 0 4px 6px 2px rgba(0, 0, 0, .10);
+			box-shadow: 0 4px 6px 2px rgba(0, 0, 0, .10);
+
+	z-index:99;
+
+	h3 {
+		margin:0;
+
+		color:rgba(0,0,0,0.6);
+		text-align:center;
+	}
+
+	p {
+		text-align:center;
+
+		color:rgba(0,0,0,0.7);
+	}
+}
+
+#search-results.active {
+	display:block;
+}
+
+#search-results.waiting {
+	.working {
+		position:absolute;
+		left:-100%; top:0;
+
+		width:100%; height:3px;
+
+		border-radius:2px;
+		background:#00de90;
+
+		-webkit-animation: pulsing 1s infinite; /* Safari 4+ */
+  		   -moz-animation: pulsing 1s infinite; /* Fx 5+ */
+  			 -o-animation: pulsing 1s infinite; /* Opera 12+ */
+  				animation: pulsing 1s infinite;
+	}
+}
+
+	
+@-webkit-keyframes pulsing {
+	0%   { left:-100%; }
+	100% { left:100%; }
+}
+@-moz-keyframes pulsing {
+	0%   { left:-100%; }
+	100% { left:100%; }
+}
+@-o-keyframes pulsing {
+	0%   { left:-100%; }
+	100% { left:100%; }
+}
+@keyframes pulsing {
+	0%   { left:-100%; }
+	100% { left:100%; }
+}
+
+
+@import "search-result";
+@import "search-results-activity";

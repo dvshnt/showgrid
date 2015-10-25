@@ -11,10 +11,8 @@
     display: block;
     position: relative;
     color: #333;
-    background:#f6f6f6;
-    border:4px solid #e5e5e5;
-    border-left:0;
-    border-top:0;
+    background:#227EF5;
+    border:none;
     font-family: "Proxima Nova Soft", Helvetica, sans-serif;
 
     @include transition(height 0.3s ease);
@@ -50,6 +48,8 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 .pika-title {
     position: relative;
     text-align: center;
+
+    margin-bottom:10px;
 }
 
 .pika-label {
@@ -59,11 +59,12 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     z-index: 9999;
     overflow: hidden;
     margin: 0;
-    padding: 5px 3px;
+    padding: 5px 10px;
+    color:#ffffff;
     font-size: 14px;
     line-height: 20px;
     font-weight: 400;
-    background-color: #fff;
+    background-color:rgba(255,255,255,0.2);
 
     text-transform:uppercase;
 }
@@ -145,7 +146,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 }
 
 .pika-table th {
-    color: #999;
+    color: #e8e8e8;
     font-size: 11px;
     line-height: 25px;
     font-weight: 400;
@@ -164,11 +165,11 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     margin: 0;
     width: 100%;
     padding:8px 10px;
-    color: #666;
-    font-size: 14px;
-    line-height: 15px;
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 20px;
     text-align: center;
-    background:rgba(0,0,0,0.05);
+    background: rgba(255,255,255,0.2);
 }
 
 .pika-week {
@@ -178,7 +179,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 
 .is-today .pika-button {
     font-weight: bold;
-    font-size:13px;
+    font-size:18px;
 }
 
 .is-selected .pika-button {
@@ -192,7 +193,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 .is-disabled .pika-button {
     pointer-events: none;
     cursor: default;
-    color: #999;
+    color: #ffffff;
     opacity: .3;
 }
 
@@ -216,13 +217,13 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 
         height:0px; width:100%;
         margin:0;
+        padding:10px 0;
 
         color: #333;
-        font-family: "Raleway", Helvetica, sans-serif;
+        font-family: "Proxima Nova Soft", Helvetica, sans-serif;
 
-        background: #f6f6f6;
-        border:4px solid #e5e5e5;
-        border-top:none;
+        background:#227EF5;
+        border:none;
 
         z-index: 9999;
     }
@@ -257,6 +258,8 @@ http://nicolasgallagher.com/micro-clearfix-hack/
         position: relative;
         text-align: center;
         font-size:14px;
+    
+        margin-bottom:15px;
     }
 
     .pika-label {
@@ -266,11 +269,12 @@ http://nicolasgallagher.com/micro-clearfix-hack/
         z-index: 9999;
         overflow: hidden;
         margin: 0;
-        padding: 5px 3px;
+        padding: 5px 8px;
         font-size: 14px;
         line-height: 20px;
+        color:#ffffff;
         font-weight: 400;
-        background-color: #fff;
+        background-color:rgba(255,255,255,0.2);
 
         text-transform:uppercase;
     }
@@ -352,7 +356,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     }
 
     .pika-table th {
-        color: #999;
+        color: #e8e8e8;
         font-size: 13px;
         line-height: 25px;
         font-weight: 400;
@@ -371,11 +375,11 @@ http://nicolasgallagher.com/micro-clearfix-hack/
         margin: 0;
         width: 100%;
         padding: 5px;
-        color: #666;
-        font-size:18px;
-        line-height: 28px;
+        color: #ffffff;
+        font-size:20px;
+        line-height: 30px;
         text-align: center;
-        background: #f5f5f5;
+        background: rgba(255,255,255,0.2);
     }
 
     .pika-week {
@@ -385,7 +389,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 
     .is-today .pika-button {
         font-weight: bold;
-        font-size:18px;
+        font-size:20px;
     }
 
     .is-selected .pika-button {
@@ -399,7 +403,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     .is-disabled .pika-button {
         pointer-events: none;
         cursor: default;
-        color: #999;
+        color: #ffffff;
         opacity: .3;
     }
 

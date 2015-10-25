@@ -87,17 +87,17 @@ module.exports = function(grunt) {
 			dev: {
 				options: {
 					debug: true,
-					transform: ['reactify']
+					transform: ['babelify']
 				},
-				src: './spark.react.js',
+				src: './index.js',
 				dest: './public/js/bundle.js'
 			},
 			build: {
 				options: {
 					debug: false,
-					transform: ['reactify']
+					transform: ['babelify']
 				},
-				src: './spark.react.js',
+				src: './index.js',
 				dest: './public/js/bundle.js'
 			}
 		},
@@ -118,7 +118,12 @@ module.exports = function(grunt) {
 				}
 			},
 			js: {
-				files: ['./components/*.js', './spark.react.js', './util/*.js'],
+				files: [
+					'./components/*.js', './containers/*.js', 
+					'./store/*.js', './reducers/*.js', 
+					'./actions/*.js', './index.js', './util/*.js', 
+					'./middleware/*.js'
+				],
 				tasks: ['browserify:dev', 'copy:js'],
 				options: {
 					livereload: true,
