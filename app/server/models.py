@@ -10,15 +10,10 @@ from django.core.mail import send_mail
 from django.utils import timezone
 from django.utils.http import urlquote
 from django.utils.translation import ugettext as _
-<<<<<<< HEAD
 from localflavor.us.models import USStateField
 from django.core.validators import RegexValidator
 
 from colorful.fields import RGBColorField
-
-
-class Venue_v2(models.Model):
-=======
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -27,6 +22,54 @@ from colorful.fields import RGBColorField
 from phonenumber_field.modelfields import PhoneNumberField
 
 from rest_framework.authtoken.models import Token
+
+
+
+class Venue_v2(models.Model):
+	name = models.CharField(max_length=200)
+	address = models.ForeignKey('Address')
+	image = models.ImageField (upload_to='showgrid/img/venues/')
+	website = models.URLField()
+
+	primary_color = RGBColorField()
+	secondary_color = RGBColorField()
+	accent_color = RGBColorField()
+
+	# Sign-post for if venue is open or not
+	opened = models.BooleanField(default=True)
+
+	# Auto-fill URL for calendars without unique links
+	autofill = models.CharField(max_length=200, blank=True)
+	age = models.PositiveSmallIntegerField(default=0, blank=True)
+
+	def __unicode__ (self):
+		return self.name
+
+	def json(self):
+		return {
+			'id' : self.id,
+			'name' : self.name,
+			'website' : self.website,
+			'image' : self.image.url,
+			'address' : self.address.json(),
+			'primary_color':  self.primary_color,
+			'secondary_color':  self.secondary_color,
+			'accent_color':  self.accent_color,
+		}
+
+	@property
+	def alphabetical_title(self):
+		name = self.name
+		starts_with_flags = ['the ', 'an ', 'a ']
+
+		for flag in starts_with_flags:
+			if name.lower().startswith(flag):
+				return "%s, %s" % (name[len(flag):], name[:len(flag)-1])
+		else:
+			pass
+		
+		return self.name
+
 
 
 
@@ -50,7 +93,7 @@ class Address(models.Model):
 
 
 class Venue(models.Model):
->>>>>>> 9587cdb0e00e044dd4a5b2f88f98c918f0aee6d0
+
 	name = models.CharField(max_length=200)
 	address = models.ForeignKey(Address)
 	image = models.ImageField (upload_to='showgrid/img/venues/')
@@ -158,62 +201,6 @@ class Alert(models.Model):
 
 
 
-
-from server.twillio_handle import MessageClient
-import logging
-
-Sender = MessageClient()
-
-
-
-class Phone_Account(models.Model):
-	phone_regex = RegexValidator(regex=r'^\d{10}$', message="phone is not 10 digits")
-	verified = models.BooleanField(default=False)
-	phone_number = models.CharField(validators=[phone_regex],max_length=10,blank=True) # validators should be a list
-	_pin_md5  = models.TextField(blank=True)
-
-
-	def generate_pin(self):
-		new_pin = ''
-		for x in range(0,4):
-			new_pin += str(randint(0,9))
-
-
-		
-		self._pin_md5 = hashlib.md5(new_pin).hexdigest()
-		return new_pin
-
-	def check_pin(self,pin):
-		#try_hash = str(hashlib.md5(str(pin)).hexdigest())
-		try_hash = hashlib.md5(pin).hexdigest()
-		if try_hash == self._pin_md5:
-			self.verified = True
-			return True
-		else:
-			return False
-
-	def send_pin(self,pin):
-		msg = 'your pin is ' + pin
-		Sender.send_message(msg,self.phone_number)
-
-
-class Phone_Alert(models.Model):
-	phone_account = models.ForeignKey('Phone_Account')
-	time = models.DateTimeField()
-	show = models.ForeignKey('Show_v2')
-	sent = models.PositiveSmallIntegerField(default=0)
-
-	def check_send(self):
-		if (datetime.datetime.now().time - self.time.time) < (60 * 5) and self.sent < 1:
-			msg = self.show.title
-			Sender.send_message(msg,self.phone_account.phone_number)
-			self.sent += 1
-			self.save()
-			return True
-		return False
-
-
-
 class ShowgridUserManager(BaseUserManager):
 
 	def _create_user(self, email, password, is_active, is_staff, is_superuser, **extra_fields):
@@ -298,4 +285,65 @@ class ShowgridUser(AbstractBaseUser):
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+
+
+
+
+
+
+
+
+
+from server.twillio_handle import MessageClient
+import logging
+
+Sender = MessageClient()
+
+
+
+class Phone_Account(models.Model):
+	phone_regex = RegexValidator(regex=r'^\d{10}$', message="phone is not 10 digits")
+	verified = models.BooleanField(default=False)
+	phone_number = models.CharField(validators=[phone_regex],max_length=10,blank=True) # validators should be a list
+	_pin_md5  = models.TextField(blank=True)
+
+
+	def generate_pin(self):
+		new_pin = ''
+		for x in range(0,4):
+			new_pin += str(randint(0,9))
+
+
+		
+		self._pin_md5 = hashlib.md5(new_pin).hexdigest()
+		return new_pin
+
+	def check_pin(self,pin):
+		#try_hash = str(hashlib.md5(str(pin)).hexdigest())
+		try_hash = hashlib.md5(pin).hexdigest()
+		if try_hash == self._pin_md5:
+			self.verified = True
+			return True
+		else:
+			return False
+
+	def send_pin(self,pin):
+		msg = 'your pin is ' + pin
+		Sender.send_message(msg,self.phone_number)
+
+
+class Phone_Alert(models.Model):
+	phone_account = models.ForeignKey('Phone_Account')
+	time = models.DateTimeField()
+	show = models.ForeignKey('Show_v2')
+	sent = models.PositiveSmallIntegerField(default=0)
+
+	def check_send(self):
+		if (datetime.datetime.now().time - self.time.time) < (60 * 5) and self.sent < 1:
+			msg = self.show.title
+			Sender.send_message(msg,self.phone_account.phone_number)
+			self.sent += 1
+			self.save()
+			return True
+		return False
 
