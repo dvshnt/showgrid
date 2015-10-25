@@ -247,9 +247,12 @@ class ShowgridUserManager(BaseUserManager):
 class ShowgridUser(AbstractBaseUser):
 	username = models.CharField(_('username'), max_length=30, blank=True)
 	email = models.EmailField(_('email address'), unique=True)
-	phone = PhoneNumberField(unique=True, blank=True)
-	_pin_md5  = models.TextField(blank=True)
+	
+	phone_number = PhoneNumberField(unique=True, blank=True)
+	phone_verified = models.TextField(default=False,blank=False)
+	pin_hash  = models.TextField(blank=True)
 	pin_sent =  models.BooleanField(default=False,blank=False)
+	
 	is_active = models.BooleanField(_('active'), default=False)
 	is_admin = models.BooleanField(_('admin'), default=False)
 	is_staff = models.BooleanField(_('staff'), default=False)
@@ -262,7 +265,7 @@ class ShowgridUser(AbstractBaseUser):
 
 
 	# Favorites and Alerts
-	alerts = models.ManyToManyField(Alert)
+	# = models.ManyToManyField(Alert)
 	favorites = models.ManyToManyField(Show, related_name='show_set', blank=True)
 
 
@@ -272,14 +275,14 @@ class ShowgridUser(AbstractBaseUser):
 		for x in range(0,4):
 			new_pin += str(randint(0,9))
 
-		self._pin_md5 = hashlib.md5(new_pin).hexdigest()
+		self.pin_hash = hashlib.md5(new_pin).hexdigest()
 		return new_pin
 
 	def check_pin(self,pin):
 		#try_hash = str(hashlib.md5(str(pin)).hexdigest())
 		try_hash = hashlib.md5(pin).hexdigest()
-		if try_hash == self._pin_md5:
-			self.verified = True
+		if try_hash == self.pin_hash:
+			self.phone_verified = True
 			return True
 		else:
 			return False

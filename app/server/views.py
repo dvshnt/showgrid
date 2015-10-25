@@ -142,12 +142,17 @@ class UserActions(APIView):
 			if user.phone_verified:
 				return Response({'status': 'pin_verified'})
 			if user.check_pin(body['pin']):
+				user.phone_verified = True
+				user.save()
 				return Response({'status': 'pin_verified'})
 			else
 				return Response({'status': 'bad_pin','phone_number': user.phone_number})
 
 		#toggle alert
 		if action == 'toggle_alert':
+			if user.phone_verified == False:
+				return  Response({ 'status': 'phone_not_verified' })
+
 			body_unicode = request.body.decode('utf-8')
 			body = json.loads(body_unicode)
 			show = body['show']
