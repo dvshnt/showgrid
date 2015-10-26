@@ -102,4 +102,3 @@ remove all alerts
 
 `/user/alert_count`
 count all alerts
-

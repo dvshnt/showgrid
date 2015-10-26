@@ -154,6 +154,29 @@ export function setAlert(show, date) {
 }
 
 
+function deleteAlertForShow(show) {
+	return {
+		[CALL_API]: {
+			endpoint:  GridEngine.domain + "/user/alert",
+		    method: 'DELETE',
+		    types: ['ACTION_REQUEST', 'ACTION_SUCCESS', 'ACTION_FAILURE'],
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		    body: JSON.stringify({
+    			show: show
+    		})
+		}
+	};
+}
+
+export function deleteAlert(show) {
+	return (dispatch, getState) => {
+		return dispatch(deleteAlertForShow(show));
+	};
+}
+
+
 
 function fetchSearchResults(query) {
 	return {

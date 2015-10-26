@@ -3,23 +3,22 @@ import { showModal } from '../actions/modal';
 import { store } from '../index';
 
  
-export default function user(state={
-	waiting: false,
-	profile: {}
+export default function actions(state={
+	waiting: false
 }, action) {
 
 	switch (action.type) {
-	case 'USER_REQUEST':
+	case 'ACTION_REQUEST':
 		return  Object.assign({}, state, {
 			waiting: true
 		});
-	case 'USER_SUCCESS':
+
+	case 'ACTION_SUCCESS':
 		return  Object.assign({}, state, {
-			waiting: false,
-			profile: action.payload
+			waiting: false
 		});
 
-	case 'USER_FAILURE':
+	case 'ACTION_FAILURE':
 		return  Object.assign({}, state, {
 			waiting: false
 		});

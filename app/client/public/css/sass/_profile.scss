@@ -1,0 +1,20 @@
+#profile {
+	width:100vw; height:90vh;
+
+	display:-webkit-flex;
+	display:		flex;
+
+	-webkit-flex-flow:row wrap;
+			flex-flow:row wrap;
+
+	-webkit-justify-content:center;
+			justify-content:center;
+
+	-webkit-align-items:center;
+			align-items:center;
+}
+
+
+
+@import "user-profile";
+@import "user-actions";

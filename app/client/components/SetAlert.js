@@ -4,7 +4,11 @@ import { connect } from 'react-redux'
 
 import $ from 'jquery';
 
+<<<<<<< HEAD
 import { setAlert } from '../actions/index';
+=======
+import { setAlert, deleteAlert } from '../actions/index';
+>>>>>>> Merge branch 'feature/phone_alerts' of https://github.com/dvshnt/showgrid into feature/phone_alerts
 
 var GridEngine = require('../util/GridEngine');
 var DateManager = require('../util/DateManager');
@@ -56,6 +60,20 @@ class SetAlert extends Component {
 		});
 	}
 
+<<<<<<< HEAD
+=======
+	cancelAlert(e) {
+		var show = this.props.show;
+		
+		this.props.deleteAlert(show.id);
+
+		this.setState({
+			set: false,
+			open: false
+		});
+	}
+
+>>>>>>> Merge branch 'feature/phone_alerts' of https://github.com/dvshnt/showgrid into feature/phone_alerts
 	toggleAlert(e) {
 		if (e.target.localName === "select") return false;
 
@@ -72,7 +90,11 @@ class SetAlert extends Component {
 		return (
 			<b className={ className } onClick={ this.toggleAlert }>
 				<div className="alert-box">
+<<<<<<< HEAD
 					Alert me 
+=======
+					Alert me
+>>>>>>> Merge branch 'feature/phone_alerts' of https://github.com/dvshnt/showgrid into feature/phone_alerts
 					<select onChange={ this.createAlert }>
 						<option data-value='{"unit":"days","num":0}' selected>At time of show</option>
 						<option data-value='{"unit":"minutes","num":30}'>30 Minutes before show</option>
@@ -82,6 +104,10 @@ class SetAlert extends Component {
 						<option data-value='{"unit":"days","num":2}'>2 Days before show</option>
 						<option data-value='{"unit":"days","num":7}'>1 week before show</option>
 					</select>
+<<<<<<< HEAD
+=======
+					{ (this.state.set) ? <a href="javascript:;" onClick={ this.cancelAlert }>Cancel</a> : "" }
+>>>>>>> Merge branch 'feature/phone_alerts' of https://github.com/dvshnt/showgrid into feature/phone_alerts
 				</div>
 			</b>
 		)
@@ -95,7 +121,11 @@ function mapStateToProps(state) {
 
 
 function mapDispatchToProps(dispatch) {
+<<<<<<< HEAD
 	return bindActionCreators({ setAlert }, dispatch);
+=======
+	return bindActionCreators({ setAlert, deleteAlert }, dispatch);
+>>>>>>> Merge branch 'feature/phone_alerts' of https://github.com/dvshnt/showgrid into feature/phone_alerts
 }
 
 

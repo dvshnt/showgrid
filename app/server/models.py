@@ -6,7 +6,10 @@ from random import randint
 from django.conf import settings
 import os
 import math
+<<<<<<< HEAD
 import pytz
+=======
+>>>>>>> Merge branch 'feature/phone_alerts' of https://github.com/dvshnt/showgrid into feature/phone_alerts
 
 from django.db import models
 from django.core.mail import send_mail
@@ -194,9 +197,6 @@ class Show(models.Model):
 		}
 
 
-
-
-
 class ShowgridUserManager(BaseUserManager):
 
 	def _create_user(self, email, password, is_active, is_staff, is_superuser, **extra_fields):
@@ -316,11 +316,6 @@ DEFAULT_USER_ID = 1 #for migration
 DEFAULT_SHOW_ID = 1 #for migration
 alert_leeway = 60 * 6 # if alert time distance 5 minutes away from time of check
 
-
-
-
-
-
 class Alert(models.Model):
 	is_active = models.BooleanField(default=True)
 	user = models.ForeignKey(settings.AUTH_USER_MODEL,default=DEFAULT_USER_ID,related_name='alerts')
@@ -336,7 +331,6 @@ class Alert(models.Model):
 		}
 
 	def check_send(self):
-		
 		now_time = timezone.now()
 		alert_time = self.date
 
