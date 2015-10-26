@@ -18,9 +18,6 @@ app/client/public/css/*.css.map
 
 assets/**
 app/static/**
-app/server/**
-app/server/static/**
-app/static/admin/**
 app/server/migrations/**
 **/**/*.pyc
 **/**/.DS_Store
