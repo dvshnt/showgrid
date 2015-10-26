@@ -9,7 +9,6 @@ import datetime as datetime_2
 from operator import attrgetter
 
 from django.views.decorators.csrf import csrf_exempt
-
 from pytz import timezone
 
 from server.models import *
@@ -52,6 +51,7 @@ class UserActions(APIView):
 	authentication_class = (TokenAuthentication,)
 	permission_classes = (IsAuthenticated,)
 
+
 	def get_show(self, pk):
 		try:
 			return Show.objects.get(id=pk)
@@ -59,13 +59,12 @@ class UserActions(APIView):
 			return None
 
 	def post(self, request, action=None):
+
 		user = request.user
 		if action == 'favorite':
-			body_unicode = request.body.decode('utf-8')
-			body = json.loads(body_unicode)
-			show = body['show']
 
-			show = self.get_show(int(show))
+
+			show = self.get_show(int(request.GET.get('show')))
 			if show != None:
 				
 
@@ -87,39 +86,44 @@ class UserActions(APIView):
 
 		#return false if phone is not verified
 		if action == 'phone_status':
+			if user.phone == None:
+				return Response({'status':'no_phone_added'})
 			return Response({'status':user.phone_verified})
 
 		#set user phone
 		if action == 'phone_set':
-			body = json.loads(request.body.decode('utf-8'))
-			if body['phone'] == None:
+			phone = request.GET.get('phone')
+			
+
+
+			if phone == None:
 				return Response({'status':'bad_query'})
 			
-			if user.phone_number == None:
+			if user.phone == None:
 				user.phone_verified = False
-				user.phone_number = body['phone']
+				user.phone = phone
 				user.save()
-				return Response({'status':'phone_set',phone:user.phone_number})
+				return Response({'status':'phone_set',phone:user.phone},mimetype="application/json")
 			
 			elif user.phone_verified == False:
-				user.phone_number = body['phone']
+				user.phone = phone
 				user.save()
-				return Response({'status':'phone_set',phone:user.phone_number})
+				return Response({'status':'phone_set','phone':user.phone.format_as('GB')})
 			
 			else:
 				alerts = Alert.objects.filter(user=user)
 				for alert in alerts:
 					alert.delete()
-				user.phone_number = body['phone']
+				user.phone = phone
 				user.save()
-				return Response({'status':'phone_set_alerts_cleared',phone:user.phone_number})
+				return Response({'status':'phone_set_alerts_cleared',phone:user.phone})
 
 		#send pin to user phone
 		if action == 'send_pin':
 			# if user.is_authenticated() == False:
 			# 	return Response({'status':'not_authenticated'})
 
-			if user.phone_number == None:
+			if user.phone == None:
 				return Response({'status':'no_phone_added'})
 
 			if user.phone_verified:
@@ -135,28 +139,29 @@ class UserActions(APIView):
 
 		#check user pin
 		if action == 'check_pin':
-			body = json.loads(request.body.decode('utf-8'))
+			pin = request.GET.get('pin')
 			
-			if body['pin'] == None:
+			if pin == None:
 				return Response({'status':'bad_query'})
 			if user.phone_verified:
 				return Response({'status': 'pin_verified'})
-			if user.check_pin(body['pin']):
+			if user.check_pin(pin):
 				user.phone_verified = True
 				user.save()
 				return Response({'status': 'pin_verified'})
-			else
-				return Response({'status': 'bad_pin','phone_number': user.phone_number})
+			else:
+				return Response({'status': 'bad_pin','phone': user.phone})
 
 		#toggle alert
 		if action == 'toggle_alert':
 			if user.phone_verified == False:
 				return  Response({ 'status': 'phone_not_verified' })
 
-			body_unicode = request.body.decode('utf-8')
-			body = json.loads(body_unicode)
-			show = body['show']
-			date = body['date']
+
+
+			date = request.GET.get('date')
+			show = request.GET.get('show')
+
 			show = self.get_show(int(show))
 			date = dateutil.parser.parse(date)
 
@@ -165,10 +170,14 @@ class UserActions(APIView):
 
 			user_show_alerts = Alert.objects.filter(user=user,show=show)
 
+
+			#ALERT EXITS : DELETE
 			if user_show_alerts:
 				user_show_alerts[0].delete() #assuming there is one alert per show per user
 				return  Response({ 'status': 'alert_removed' })
-			else
+			
+			#ALERT DOES NOT EXIST : CREATE NEW
+			else:
 				alert = Alert.create(is_active=True, show=show, date=date,user=user)
 				alert.save()
 				return  Response({ 'status': 'alert_created' })
@@ -176,10 +185,10 @@ class UserActions(APIView):
 		#clear all user alerts
 		if action == 'clear_alerts':
 			user_alerts = Alert.objects.filter(user=user)
-			for alert in user_alerts
+			for alert in user_alerts:
 				alert.delete()
 			return  Response({ 'status': 'alerts_cleared' })
-
+		return  Response({ 'status': 'bad_query' })
 
 
 

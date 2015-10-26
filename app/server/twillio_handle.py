@@ -5,6 +5,7 @@ from django.core.exceptions import MiddlewareNotUsed
 import os
 import logging
 import json
+from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
@@ -23,9 +24,9 @@ def load_admins_file():
 
 
 def load_twilio_config():
-    twilio_account_sid = os.environ['TWILIO_ACCOUNT_SID']
-    twilio_auth_token = os.environ['TWILIO_AUTH_TOKEN']
-    twilio_number = os.environ['TWILIO_NUMBER']
+    twilio_account_sid = settings.TWILIO_ACCOUNT_SID
+    twilio_auth_token = settings.TWILIO_AUTH_TOKEN
+    twilio_number = settings.TWILIO_NUMBER
 
     if not all([twilio_account_sid, twilio_auth_token, twilio_number]):
         logger.error(NOT_CONFIGURED_MESSAGE)

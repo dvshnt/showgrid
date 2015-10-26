@@ -37,13 +37,7 @@ urlpatterns = patterns('',
 	url(r'^i/shows/$', views.ShowList.as_view(), name='recently added shows'),
 
 
- 	url(r'^i/featured/$', 'server.views.recommended_shows', name='recommended shows'),
-
-
-
-
     url(r'^check/venues$', 'server.views.check_venues', name='check_venues'),
-
 )
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns

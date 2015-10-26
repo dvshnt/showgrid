@@ -16,6 +16,8 @@ Second, you're going to download a ton of Python packages. I should've noted the
 
 (if your on windows pip needs to be added to the path and you have to have python using c++ redis in order to compile the packages)
 
+`pip install django-phonenumber-field`
+`pip install djangorestframework`
 `pip install python-dateutil`
 `pip install schedule`
 `pip install Pillow`
@@ -54,19 +56,4 @@ Next, run `python manage.py syncdb`.
 I may be crazy, but you should then be able to run `python manage.py runserver` to have the site up and running at `localhost:8000`.
 
 
-phone alerts: (phone parameter removed when user is authenticated)
-
-`/phone/send_pin?phone=6157157754`
-	if pin already sent, automatically resend
-
-`/phone/check_pin?phone=6157157753&pin=1293`
-	return VERIFIED || NOT_VERIFIED if pin matches md5 hash
-
-`/phone/status?phone=6157157754 -> {status:'VERIFIED || NOT_VERIFIED'}`
-
-`/phone/add_alert?show_id=1234&phone=615715754 (phone will be removed when user is auth'd)`
-	if show_id matches existing alert, alert modified
-
-`/phone/clear_alert?phone=6157157754?show_id=1234&phone=615715754`
-
-`/phone/clear_alerts?phone=6157157754`
+Run CRONS from management/commands/crons.py with python manage.py crons

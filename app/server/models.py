@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 import datetime
 import hashlib
 from random import randint
+from django.conf import settings
 import os
 import math
 
@@ -194,28 +195,6 @@ class Show(models.Model):
 alert_leeway = 60 * 6 # if alert time distance 5 minutes away from time of check
 
 
-class Alert(models.Model):
-	leeway
-	is_active = models.BooleanField(default=True)
-	user = models.ForeignKey('ShowgridUser')
-	time = models.DateTimeField(blank=False)
-	show = models.ForeignKey('Show')
-	sent = models.PositiveSmallIntegerField(default=0)
-
-	def json(self):
-		return {
-			'date' : str(self.date)
-		}
-
-	def check_send(self):
-		if math.fabs(datetime.datetime.now().time - self.time.time) < alert_leeway and self.sent < 1:
-			msg = self.show.title
-			Sender.send_message(msg,self.phone_account.phone_number)
-			self.sent += 1
-			self.save()
-			return True
-		return False
-
 
 
 
@@ -227,7 +206,8 @@ class ShowgridUserManager(BaseUserManager):
 		"""
 		Creates and saves a User with the given email and password.
 		"""
-		now = timezone.now()
+		now = datetime.datetime.now()
+
 		if not email:
 			raise ValueError('The given email must be set')
 
@@ -252,8 +232,8 @@ class ShowgridUser(AbstractBaseUser):
 	username = models.CharField(_('username'), max_length=30, blank=True)
 	email = models.EmailField(_('email address'), unique=True)
 	
-	phone_number = PhoneNumberField(unique=True, blank=True)
-	phone_verified = models.TextField(default=False,blank=False)
+	phone = PhoneNumberField(unique=True, blank=True)
+	phone_verified = models.BooleanField(default=False,blank=False)
 	pin_hash  = models.TextField(blank=True)
 	pin_sent =  models.BooleanField(default=False,blank=False)
 	
@@ -269,7 +249,6 @@ class ShowgridUser(AbstractBaseUser):
 
 
 	# Favorites and Alerts
-	# = models.ManyToManyField(Alert)
 	favorites = models.ManyToManyField(Show, related_name='show_set', blank=True)
 
 
@@ -293,7 +272,7 @@ class ShowgridUser(AbstractBaseUser):
 
 	def send_pin(self,pin):
 		msg = 'your pin is ' + pin
-		Sender.send_message(msg,self.phone_number)
+		Sender.send_message(msg,self.phone.format_as('GB'))
 
 
 
@@ -333,4 +312,30 @@ class ShowgridUser(AbstractBaseUser):
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+
+
+
+DEFAULT_USER_ID = 1 #for migration 
+DEFAULT_SHOW_ID = 1 #for migration
+
+class Alert(models.Model):
+	is_active = models.BooleanField(default=True)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL,default=DEFAULT_USER_ID,related_name='alerts')
+	date = models.DateTimeField(blank=False)
+	show = models.ForeignKey('Show',default=DEFAULT_SHOW_ID,related_name='alerts')
+	sent = models.PositiveSmallIntegerField(default=0)
+
+	def json(self):
+		return {
+			'date' : str(self.date)
+		}
+
+	def check_send(self):
+		if math.fabs(datetime.datetime.now().time - self.date.time) < alert_leeway and self.sent < 1:
+			msg = self.show.title
+			Sender.send_message(msg,self.phone.format_as('GB'))
+			self.sent += 1
+			self.save()
+			return True
+		return False
 
