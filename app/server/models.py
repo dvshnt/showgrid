@@ -140,6 +140,7 @@ class Alert(models.Model):
 
 	def json(self):
 		return {
+			'id' : self.id,
 			'date' : str(self.date)
 		}
 

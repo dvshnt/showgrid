@@ -40,6 +40,14 @@ def index(request, year=None, month=None, day=None):
 
 
 
+class UserProfile(APIView):
+	authentication_class = (TokenAuthentication,)
+	permission_classes = (IsAuthenticated,)
+
+	def get(self, request):
+		return Response({'status' : 'success'})
+
+
 class UserActions(APIView):
 	authentication_class = (TokenAuthentication,)
 	permission_classes = (IsAuthenticated,)
@@ -93,6 +101,24 @@ class UserActions(APIView):
 				user.save()
 
 			return Response({ 'status': 'active' })
+
+	def delete(self, request, action=None):
+		if action == 'favorite':
+			return Response({ 'status': '' })
+
+		if action == 'alert':
+			body_unicode = request.body.decode('utf-8')
+			body = json.loads(body_unicode)
+			show = body['show']
+
+			show = self.get_show(int(show))
+			if show != None:
+				user = request.user
+				for alert in user.alerts.all():
+					if alert.show == show:
+						user.alerts.remove(alert)
+
+			return Response({ 'status': 'success' })
 	
 
 

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import $ from 'jquery';
 
-import { setAlert } from '../actions/index';
+import { setAlert, deleteAlert } from '../actions/index';
 
 var GridEngine = require('../util/GridEngine');
 var DateManager = require('../util/DateManager');
@@ -15,6 +15,7 @@ class SetAlert extends Component {
 		super(props);
 
 		this.createAlert = this.createAlert.bind(this);
+		this.cancelAlert = this.cancelAlert.bind(this);
 		this.toggleAlert = this.toggleAlert.bind(this);
 
 		this.state = {
@@ -56,6 +57,17 @@ class SetAlert extends Component {
 		});
 	}
 
+	cancelAlert(e) {
+		var show = this.props.show;
+		
+		this.props.deleteAlert(show.id);
+
+		this.setState({
+			set: false,
+			open: false
+		});
+	}
+
 	toggleAlert(e) {
 		if (e.target.localName === "select") return false;
 
@@ -72,7 +84,7 @@ class SetAlert extends Component {
 		return (
 			<b className={ className } onClick={ this.toggleAlert }>
 				<div className="alert-box">
-					Alert me 
+					Alert me
 					<select onChange={ this.createAlert }>
 						<option data-value='{"unit":"days","num":0}' selected>At time of show</option>
 						<option data-value='{"unit":"minutes","num":30}'>30 Minutes before show</option>
@@ -82,6 +94,7 @@ class SetAlert extends Component {
 						<option data-value='{"unit":"days","num":2}'>2 Days before show</option>
 						<option data-value='{"unit":"days","num":7}'>1 week before show</option>
 					</select>
+					{ (this.state.set) ? <a href="javascript:;" onClick={ this.cancelAlert }>Cancel</a> : "" }
 				</div>
 			</b>
 		)
@@ -95,7 +108,7 @@ function mapStateToProps(state) {
 
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ setAlert }, dispatch);
+	return bindActionCreators({ setAlert, deleteAlert }, dispatch);
 }
 
 

@@ -8,6 +8,7 @@ import modal from './modal';
 import search from './search';
 import engine from './engine';
 import recent from './recent';
+import actions from './actions';
 import featured from './featured';
 
 import { routerStateReducer as router } from 'redux-router';
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
 	modal, 
 	auth,
 	router,
-	user
+	user,
+	actions
 });
 
 

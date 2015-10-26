@@ -25,7 +25,8 @@ urlpatterns = patterns('',
 
 
     ## user actions
-    url(r'^user/(?P<action>\w+)$', views.UserActions.as_view(), name='favorite'),
+    url(r'^user/$', views.UserProfile.as_view(), name='user profile'),
+    url(r'^user/(?P<action>\w+)$', views.UserActions.as_view(), name='user actions'),
 
 
  	url(r'^i/grid/$', views.VenueList.as_view(), name='grid'),
