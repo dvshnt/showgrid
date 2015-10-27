@@ -9,7 +9,7 @@ import datetime as datetime_2
 from operator import attrgetter
 
 from django.views.decorators.csrf import csrf_exempt
-from pytz import timezone
+
 
 from server.models import *
 
@@ -41,11 +41,12 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 from server.models import *
 from server.serializers import *
 
-
+import dateutil.parser
+import re
 def index(request, year=None, month=None, day=None):
 	return render(request, "index.html")
 
-import dateutil.parser
+
 
 class UserActions(APIView):
 	authentication_class = (TokenAuthentication,)
@@ -119,7 +120,7 @@ class UserActions(APIView):
 				return Response({'status':'phone_set_alerts_cleared',phone:user.phone})
 
 		#send pin to user phone
-		if action == 'send_pin':
+		if action == 'pin_send':
 			# if user.is_authenticated() == False:
 			# 	return Response({'status':'not_authenticated'})
 
@@ -138,7 +139,7 @@ class UserActions(APIView):
 			return Response({'status': 'pin_sent'})
 
 		#check user pin
-		if action == 'check_pin':
+		if action == 'pin_check':
 			pin = request.GET.get('pin')
 			
 			if pin == None:
@@ -153,7 +154,7 @@ class UserActions(APIView):
 				return Response({'status': 'bad_pin','phone': user.phone})
 
 		#toggle alert
-		if action == 'toggle_alert':
+		if action == 'alert_toggle':
 			if user.phone_verified == False:
 				return  Response({ 'status': 'phone_not_verified' })
 
@@ -162,8 +163,11 @@ class UserActions(APIView):
 			date = request.GET.get('date')
 			show = request.GET.get('show')
 
+
+			show_id = show
 			show = self.get_show(int(show))
-			date = dateutil.parser.parse(date)
+			
+			
 
 			if show == None:
 				return  Response({ 'status': 'failed' })
@@ -178,16 +182,27 @@ class UserActions(APIView):
 			
 			#ALERT DOES NOT EXIST : CREATE NEW
 			else:
-				alert = Alert.create(is_active=True, show=show, date=date,user=user)
+				if date == None:
+					return  Response({ 'status': 'bad_query' })
+				
+				date = dateutil.parser.parse(date)
+
+				if re.search('^\d+$',show_id) == None:
+					return  Response({ 'status': 'bad_query' })
+				alert = Alert(is_active=True, show=show, date=date,user=user)
 				alert.save()
 				return  Response({ 'status': 'alert_created' })
 
 		#clear all user alerts
-		if action == 'clear_alerts':
+		if action == 'alert_clearall':
 			user_alerts = Alert.objects.filter(user=user)
 			for alert in user_alerts:
 				alert.delete()
 			return  Response({ 'status': 'alerts_cleared' })
+		if action == 'alert_count':
+			user_show_alerts = Alert.objects.filter(user=user)
+			return  Response({ 'status': len(user_show_alerts) })
+
 		return  Response({ 'status': 'bad_query' })
 
 

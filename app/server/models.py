@@ -6,6 +6,7 @@ from random import randint
 from django.conf import settings
 import os
 import math
+import pytz
 
 from django.db import models
 from django.core.mail import send_mail
@@ -27,7 +28,8 @@ from rest_framework.authtoken.models import Token
 
 from server.twillio_handle import MessageClient
 Sender = MessageClient()
-
+from django.utils import timezone
+from termcolor import colored
 
 class Venue_v2(models.Model):
 	name = models.CharField(max_length=200)
@@ -192,11 +194,6 @@ class Show(models.Model):
 		}
 
 
-alert_leeway = 60 * 6 # if alert time distance 5 minutes away from time of check
-
-
-
-
 
 
 
@@ -317,6 +314,12 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 
 DEFAULT_USER_ID = 1 #for migration 
 DEFAULT_SHOW_ID = 1 #for migration
+alert_leeway = 60 * 6 # if alert time distance 5 minutes away from time of check
+
+
+
+
+
 
 class Alert(models.Model):
 	is_active = models.BooleanField(default=True)
@@ -331,9 +334,16 @@ class Alert(models.Model):
 		}
 
 	def check_send(self):
-		if math.fabs(datetime.datetime.now().time - self.date.time) < alert_leeway and self.sent < 1:
-			msg = self.show.title
-			Sender.send_message(msg,self.phone.format_as('GB'))
+		
+		now_time = timezone.now()
+		alert_time = self.date
+
+		time_diff = now_time - alert_time
+
+		if time_diff.total_seconds() < alert_leeway and self.sent < 1:
+			msg = "HELLO THIS IS A SAMPLE ALERT"
+			print colored('sending alert to '+self.user.phone.format_as('GB'),'red')
+			Sender.send_message(msg,self.user.phone.format_as('GB'))
 			self.sent += 1
 			self.save()
 			return True

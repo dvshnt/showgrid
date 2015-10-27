@@ -19,7 +19,7 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
+USE_TZ = True
 DATABASES = {
     'default': {
 

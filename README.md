@@ -57,3 +57,51 @@ I may be crazy, but you should then be able to run `python manage.py runserver` 
 
 
 Run CRONS from management/commands/crons.py with python manage.py crons
+
+
+login with basic HTTP Auth.
+
+
+run cron job to check alerts.
+`python manage.py crons`
+
+
+
+
+
+
+
+#phone setup#
+===
+`/user/phone_set?phone=6157157754`
+add a phone to a user account (if phone already exists, will REMOVE all previous alerts! user phone activated is automatically set to FALSE)
+
+`/user/phone_status`
+check if phone is activate, returns status as boolean
+
+
+
+#phone pin auth#
+===
+`/user/pin_send`
+send pin number to phone: (if phone already activated or does not exist will return accordingly)
+
+`/user/pin_check?pin=1234`
+check pin number of phone: (if phone already activated or does not exist will return accordingly)
+
+
+
+#phone alerts#
+===
+`/user/alert_toggle?date=2015-10-27T04:44:58.046Z&show=1`
+add alert to loged in user PARAMETERS: show id as integer, javascript UTC ISOString
+
+`/user/alert_toggle?show=1`
+remove the alert created previously
+
+`/user/alert_clearall`
+remove all alerts
+
+`/user/alert_count`
+count all alerts
+
