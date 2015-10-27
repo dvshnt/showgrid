@@ -68,13 +68,11 @@ run cron job to check alerts.
 
 
 
-##phone cron##
-===
+###phone cron###
 `python manage.py crons`
 
 
-##phone setup##
-===
+###phone setup###
 `/user/phone_set?phone=6157157754`
 add a phone to a user account (if phone already exists, will REMOVE all previous alerts! user phone activated is automatically set to FALSE)
 
@@ -83,8 +81,7 @@ check if phone is activate, returns status as boolean
 
 
 
-##phone pin auth##
-===
+###phone pin auth###
 `/user/pin_send`
 send pin number to phone: (if phone already activated or does not exist will return accordingly)
 
@@ -93,8 +90,7 @@ check pin number of phone: (if phone already activated or does not exist will re
 
 
 
-##phone alerts##
-===
+###phone alerts###
 `/user/alert_toggle?date=2015-10-27T04:44:58.046Z&show=1`
 add alert to loged in user PARAMETERS: show id as integer, javascript UTC ISOString
 
