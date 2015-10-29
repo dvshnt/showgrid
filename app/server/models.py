@@ -330,7 +330,9 @@ class Alert(models.Model):
 
 	def json(self):
 		return {
-			'date' : str(self.date)
+			'date' : self.date.isoformat(),
+			'show_id' : self.show.id,
+			'sent' : self.sent, #number of times sent to user
 		}
 
 	def check_send(self):

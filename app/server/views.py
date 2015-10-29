@@ -203,6 +203,9 @@ class UserActions(APIView):
 			user_show_alerts = Alert.objects.filter(user=user)
 			return  Response({ 'status': len(user_show_alerts) })
 
+		if action == 'alert_getall':
+			return  Response({ 'status': [ alert.json() for alert in user_show_alerts ] })
+
 		return  Response({ 'status': 'bad_query' })
 
 
