@@ -340,7 +340,7 @@ class Alert(models.Model):
 		now_time = timezone.now()
 		alert_time = self.date
 
-		time_diff = now_time - alert_time
+		time_diff = alert_time - now_time
 
 		if time_diff.total_seconds() < alert_leeway and self.sent < 1:
 			msg = "HELLO THIS IS A SAMPLE ALERT"
