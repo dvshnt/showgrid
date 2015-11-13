@@ -46,7 +46,6 @@ class Showgrid extends Component {
 				<ControlNext />
 				<ControlPrevious />
 				<Calendar />
-				<Footer/>
 			</section>
 		)
 	}
@@ -55,7 +54,7 @@ class Showgrid extends Component {
 
 function mapStateToProps(state) {
 	return {
-		startDate: state.grid.days[0]
+		startDate: state.state.days[0]
 	};
 }
 

@@ -22,7 +22,7 @@ from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
 
-# from haystack.query import SearchQuerySet
+from haystack.query import SearchQuerySet
 
 
 #may want to move these to settings.py (b/c thats where the other auth settings are located)
@@ -36,7 +36,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, AllowAny
 
 from server.models import *
 from server.serializers import *
@@ -45,6 +45,8 @@ import dateutil.parser
 import re
 def index(request, year=None, month=None, day=None):
 	return render(request, "index.html")
+
+
 
 
 class UserActions(APIView):
@@ -58,55 +60,128 @@ class UserActions(APIView):
 		except ObjectDoesNotExist:
 			return None
 
-	def post(self, request, action=None):
 
+	def put(self, request, action=None):
 		user = request.user
-		if action == 'favorite':
+
+		if action == 'alert':
+			body_unicode = request.body.decode('utf-8')
+			body = json.loads(body_unicode)
+			alert = body['alert']
+			date = body['date']
+			which = body['which']
+
+			try:
+				alert = Alert.objects.get(id=alert)
+				alert.date = date
+				alert.which = which
+				alert.save()
+			except:
+				return  Response({ 'status': '' })
+
+			return  Response({ 'status': 'alert_updated' })
 
 
-			show = self.get_show(int(request.GET.get('show')))
-			if show != None:
-				
-
-				print request.user
-
-				if show in user.favorites.all():
-					user.favorites.remove(show)
-					status = ""
-				else:
-					user.favorites.add(show)
-					status = "active"
-
-				user.save()
-
-			 	return Response({ 'status': status })
-			return Response({ 'status': 'failed' })
-
-
-
+	def get(self, request, action=None):
+		user = request.user
+		
 		#return false if phone is not verified
 		if action == 'phone_status':
 			if user.phone == None:
 				return Response({'status':'no_phone_added'})
 			return Response({'status':user.phone_verified})
 
+		if action == 'profile':
+			serializer = ShowgridUserSerializer(user)
+			return Response(serializer.data)
+
+
+
+
+
+	def delete(self, request, action=None):
+		user = request.user
+
+		if action == 'favorite':
+			body_unicode = request.body.decode('utf-8')
+			body = json.loads(body_unicode)
+			show = body['show']
+
+			show = self.get_show(int(show))
+			if show != None:
+				if show in user.favorites.all():
+					user.favorites.remove(show)
+					status = ""
+
+				user.save()
+
+			 	return Response({ 'status': "success", 'show': show.id })
+			return Response({ 'status': "failure", 'show': show.id })
+
+
+		#clear all user alerts
+		if action == 'alert':
+			body_unicode = request.body.decode('utf-8')
+			body = json.loads(body_unicode)
+			alert = body['alert']
+
+			try:
+				user_alert = Alert.objects.get(id=alert)
+				user_alert.delete()
+			except:
+				return  Response({ 'status': 'failure', 'alert': alert })
+
+			return  Response({ 'status': 'success', 'alert': alert })
+
+
+		#clear all user alerts
+		if action == 'alerts':
+			user_alerts = Alert.objects.filter(user=user)
+			for alert in user_alerts:
+				alert.delete()
+			return  Response({ 'status': 'alerts_cleared' })
+
+
+
+	def post(self, request, action=None):
+		user = request.user
+
+		if action == 'favorite':
+			body_unicode = request.body.decode('utf-8')
+			body = json.loads(body_unicode)
+			show = body['show']
+
+			show = self.get_show(int(show))
+			if show != None:
+				if show not in user.favorites.all():
+					user.favorites.add(show)
+					status = "active"
+
+				user.save()
+
+			 	return Response({ 'status': "success", 'show': show.id })
+			return Response({ 'status': "failure", 'show': show.id })
+
+
 		#set user phone
 		if action == 'phone_set':
-			phone = request.GET.get('phone')
+			body_unicode = request.body.decode('utf-8')
+			body = json.loads(body_unicode)
+			phone = body['phone']
 			
-
-
 			if phone == None:
 				return Response({'status':'bad_query'})
 			
 			if user.phone == None:
 				user.phone_verified = False
 				user.phone = phone
+				user.send_pin(user.generate_pin())
 				user.save()
 				return Response({'status':'phone_set',phone:user.phone},mimetype="application/json")
 			
 			elif user.phone_verified == False:
 				user.phone = phone
+				user.send_pin(user.generate_pin())
 				user.save()
 				return Response({'status':'phone_set','phone':user.phone.format_as('GB')})
 			
@@ -117,6 +192,7 @@ class UserActions(APIView):
 				user.phone = phone
 				user.save()
 				return Response({'status':'phone_set_alerts_cleared',phone:user.phone})
+
 
 		#send pin to user phone
 		if action == 'pin_send':
@@ -137,9 +213,12 @@ class UserActions(APIView):
 			user.save()
 			return Response({'status': 'pin_sent'})
 
+
 		#check user pin
 		if action == 'pin_check':
-			pin = request.GET.get('pin')
+			body_unicode = request.body.decode('utf-8')
+			body = json.loads(body_unicode)
+			pin = body['pin']
 			
 			if pin == None:
 				return Response({'status':'bad_query'})
@@ -152,64 +231,53 @@ class UserActions(APIView):
 			else:
 				return Response({'status': 'bad_pin','phone': user.phone})
 
+
 		#toggle alert
-		if action == 'alert_toggle':
+		if action == 'alert':
 			if user.phone_verified == False:
 				return  Response({ 'status': 'phone_not_verified' })
 
-
-
-			date = request.GET.get('date')
-			show = request.GET.get('show')
+			body_unicode = request.body.decode('utf-8')
+			body = json.loads(body_unicode)
+			date = body['date']
+			show = body['show']
+			which = body['which']
 
 			show_id = show
 			show = self.get_show(int(show))
 
 			if show == None:
-				return  Response({ 'status': 'failed' })
+				return  Response({ 'status': 'no such show' })
 
 			user_show_alerts = Alert.objects.filter(user=user,show=show)
 
-
-			#ALERT EXITS : DELETE
 			if user_show_alerts:
-				user_show_alerts[0].delete() #assuming there is one alert per show per user
-				return  Response({ 'status': 'alert_removed' })
-			
-			#ALERT DOES NOT EXIST : CREATE NEW
+				return  Response({ 'status': 'alert_already_set' })
 			else:
 				if date == None:
-					return  Response({ 'status': 'bad_query' })
+					return  Response({ 'status': 'bad date' })
 				
 				date = dateutil.parser.parse(date)
 
-				if re.search('^\d+$',show_id) == None:
-					return  Response({ 'status': 'bad_query' })
-				alert = Alert(is_active=True, show=show, date=date,user=user)
+				alert = Alert(is_active=True, show=show, date=date,user=user,which=which)
 				alert.save()
-				return  Response({ 'status': 'alert_created' })
 
-		#clear all user alerts
-		if action == 'alert_clearall':
-			user_alerts = Alert.objects.filter(user=user)
-			for alert in user_alerts:
-				alert.delete()
-			return  Response({ 'status': 'alerts_cleared' })
+				data = AlertSerializer(alert)
+
+				return  Response( data.data )
+
+
+		#get user alert count
 		if action == 'alert_count':
 			user_show_alerts = Alert.objects.filter(user=user)
 			return  Response({ 'status': len(user_show_alerts) })
-
-		if action == 'alert_getall':
-			user_show_alerts = Alert.objects.filter(user=user)
-			
-			return  Response({ 'status' : True , 'data' : [ alert.json() for alert in user_show_alerts ] })
 
 		return  Response({ 'status': 'bad_query' })
 
 
 class VenueList(APIView):
 	authentication_class = (TokenAuthentication,)
-	permission_classes = (IsAuthenticatedOrReadOnly,)
+	permission_classes = (AllowAny,)
 
 	def get(self, request, year=None, month=None, day=None):
 		if year != None and month != None or day != None:
@@ -223,10 +291,7 @@ class VenueList(APIView):
 		venues = sorted(venues, key=attrgetter('alphabetical_title'), reverse=False)
 
 
-		if request.user.is_authenticated():
-			serializer = VenueSerializer(venues, many=True, context={ 'start': d1, 'end': d2, 'user': request.user })
-		else:
-			serializer = VenueSerializer(venues, many=True, context={ 'start': d1, 'end': d2 })
+		serializer = VenueSerializer(venues, many=True, context={ 'start': d1, 'end': d2 })
 
 		return Response(serializer.data)
 

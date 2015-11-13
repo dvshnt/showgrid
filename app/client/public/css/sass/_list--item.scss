@@ -1,7 +1,7 @@
 .list--item {
 	width:100%;
 
-	margin-bottom:30px;
+	margin-bottom:40px;
 
 	background:#ffffff;
 
@@ -56,7 +56,7 @@
 
 			padding:0 8px;
 
-			font-size:18px;
+			font-size:14px;
 			line-height:33px;
 
 			background:rgba(255,255,255,0.05);
@@ -200,11 +200,6 @@
 				font-size:22px;
 
 				cursor:pointer;
-
-
-				&:hover {
-					color:rgba(0,0,0,0.3);
-				}
 			}
 
 			b.icon-alert.active {

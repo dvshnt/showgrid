@@ -1,17 +1,26 @@
-import { SHOW_MODAL, HIDE_MODAL } from '../actions/modal';
+import { SHOW_LOGIN_MODAL, HIDE_LOGIN_MODAL, SHOW_PHONE_MODAL, HIDE_PHONE_MODAL } from '../actions/modal';
 
 export default function modal(state={
-	visible: false
+	login: false,
+	phone: false
 }, action) {
 
 	switch (action.type) {
-	case SHOW_MODAL:
+	case SHOW_LOGIN_MODAL:
 		return  Object.assign({}, state, {
-			visible: true
+			login: true
 		});
-	case HIDE_MODAL:
+	case HIDE_LOGIN_MODAL:
 		return  Object.assign({}, state, {
-			visible: false
+			login: false
+		});
+	case SHOW_PHONE_MODAL:
+		return  Object.assign({}, state, {
+			phone: true
+		});
+	case HIDE_PHONE_MODAL:
+		return  Object.assign({}, state, {
+			phone: false
 		});
 	default:
 		return state;

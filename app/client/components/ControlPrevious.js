@@ -14,7 +14,7 @@ class ControlPrevious extends Component {
 	}
 
 	previousPage() {
-		var day = DateManager.getStartOfPreviousPage(this.props.days[0].date, this.props.cells);
+		var day = DateManager.getStartOfPreviousPage(this.props.days[0].date, this.props.days.length);
 		this.props.getGrid(day);
 	}
 
@@ -28,8 +28,7 @@ class ControlPrevious extends Component {
 
 function mapStateToProps(state) {
 	return {
-		days: state.grid.days,
-		cells: state.engine.cells
+		days: state.state.days
 	};
 }
 

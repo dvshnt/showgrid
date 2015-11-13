@@ -1,16 +1,32 @@
-export const SHOW_MODAL = 'SHOW_MODAL';
-export const HIDE_MODAL = 'HIDE_MODAL';
+export const SHOW_LOGIN_MODAL = 'SHOW_LOGIN_MODAL';
+export const HIDE_LOGIN_MODAL = 'HIDE_LOGIN_MODAL';
+
+export const SHOW_PHONE_MODAL = 'SHOW_PHONE_MODAL';
+export const HIDE_PHONE_MODAL = 'HIDE_PHONE_MODAL';
 
 
-export function showModal() {
+export function showLoginModal() {
 	return {
-		type: SHOW_MODAL
+		type: SHOW_LOGIN_MODAL
+	};
+}
+
+export function hideLoginModal() {
+	return {
+		type: HIDE_LOGIN_MODAL
 	};
 }
 
 
-export function hideModal() {
+export function showPhoneModal() {
 	return {
-		type: HIDE_MODAL
+		type: SHOW_PHONE_MODAL
+	};
+}
+
+
+export function hidePhoneModal() {
+	return {
+		type: HIDE_PHONE_MODAL
 	};
 }

@@ -1,10 +1,12 @@
 b.icon-alert {
+	position:relative;
+
 
 	.alert-box {
 		display:none;
 
 		position:absolute;
-		top:47.5px; left:95px;
+		top:35px; left:-10px;
 
 		width:230px;
 
@@ -36,6 +38,30 @@ b.icon-alert {
 			display:inline;
 
 			margin-left:15px;
+		}
+	}
+
+	.alert-info {
+		display:none;
+
+		position:absolute;
+		top:30px; left:-50px;
+
+		width:120px;
+
+		padding:0px 2px;
+
+		color:#ffffff;
+		font-size:8px;
+		text-align:center;
+
+		border:1px solid #464646;
+		background:#222222;
+	}
+
+	&.active:hover {
+		.alert-info {
+			display:block;
 		}
 	}
 

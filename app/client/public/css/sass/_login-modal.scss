@@ -27,21 +27,105 @@
 }
 
 #modal {
-	-webkit-flex:0 0 35%;
-			flex:0 0 35%;
+  display:-webkit-flex;
+  display:    flex;
 
-	width:400px; height:300px;
+  -webkit-justify-content:center;
+          justify-content:center;
+
+  -webkit-align-items:center;
+          align-items:center;
+
+  -webkit-flex-flow:column nowrap;
+          flex-flow:column nowrap;
+
+	-webkit-flex:0 0 35%;
+			   flex:0 0 35%;
+
+	width:450px;
+
+  padding:40px 0;
 
 	background:#ffffff;
 	border-radius:3px;
 
 	box-shadow:0 1px 4px rgba(0,0,0,0.3);
+
+
+  form {
+    display:block;
+
+    width:70%;
+    margin:0px auto;
+
+    text-align:center;
+  }
+
+  input {
+    width:90%;
+
+    margin:5px auto;
+  }
+
+  input[type=text],
+  input[type=password] {
+    margin:0 auto;
+    padding:10px 6px;
+
+    font-size:16px;
+
+    background:#f8f8f8;
+    border:2px solid #e2e2e2;
+    border-radius:4px 4px 0 0;
+  }
+
+  input[type=password] {
+    margin-top:-2px;
+
+    border-radius:0 0 4px 4px;
+  }
+
+  input[type=submit] {
+    width:90%;
+
+    margin:20px auto 0;
+    padding:12px 0;
+
+    color:#ffffff;
+    font-size:16px;
+    font-weight:bolder;
+    text-transform:uppercase;
+
+    border:none;
+    background:rgb(0,222,144);
+    border-radius:4px;
+  }
+
+  .banner {
+    width:200px; height:50px;
+
+    background-size:200px;
+    background-image:url('../img/logo-update-blue.png');
+    background-repeat:no-repeat;
+  }
+
+  p {
+    width:70%;
+
+    margin:40px auto;
+
+    color:#a6a6a6;
+    font-weight:bolder;
+    text-align:center;
+  }
 }
 
 #overlay.active #modal {
 	-webkit-animation: animation 800ms linear both;
   			animation: animation 800ms linear both;
 }
+
+
 
 /* Generated with Bounce.js. Edit at http://goo.gl/bkrVVq */
 

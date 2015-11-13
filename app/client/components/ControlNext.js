@@ -14,7 +14,7 @@ class ControlNext extends Component {
 	}
 
 	nextPage() {
-		var day = DateManager.getStartOfNextPage(this.props.days[this.props.cells - 1].date);
+		var day = DateManager.getStartOfNextPage(this.props.days[this.props.days.length - 1].date);
 		this.props.getGrid(day);
 	}
 
@@ -28,8 +28,7 @@ class ControlNext extends Component {
 
 function mapStateToProps(state) {
 	return {
-		days: state.grid.days,
-		cells: state.engine.cells
+		days: state.state.days
 	};
 }
 

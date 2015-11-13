@@ -6,10 +6,7 @@ from random import randint
 from django.conf import settings
 import os
 import math
-<<<<<<< HEAD
 import pytz
-=======
->>>>>>> Merge branch 'feature/phone_alerts' of https://github.com/dvshnt/showgrid into feature/phone_alerts
 
 from django.db import models
 from django.core.mail import send_mail
@@ -33,6 +30,8 @@ from server.twillio_handle import MessageClient
 Sender = MessageClient()
 from django.utils import timezone
 from termcolor import colored
+
+
 
 class Venue_v2(models.Model):
 	name = models.CharField(max_length=200)
@@ -245,7 +244,7 @@ class ShowgridUser(AbstractBaseUser):
 	USERNAME_FIELD = 'email'
 
 
-	# Favorites and Alerts
+	# Favorites
 	favorites = models.ManyToManyField(Show, related_name='show_set', blank=True)
 
 
@@ -322,13 +321,7 @@ class Alert(models.Model):
 	date = models.DateTimeField(blank=False)
 	show = models.ForeignKey('Show',default=DEFAULT_SHOW_ID,related_name='alerts')
 	sent = models.PositiveSmallIntegerField(default=0)
-
-	def json(self):
-		return {
-			'date' : self.date.isoformat(),
-			'show_id' : self.show.id,
-			'sent' : self.sent, #number of times sent to user
-		}
+	which = models.PositiveSmallIntegerField(default=0)
 
 	def check_send(self):
 		now_time = timezone.now()

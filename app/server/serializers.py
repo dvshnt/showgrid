@@ -2,42 +2,75 @@ from server.models import *
 
 from rest_framework import serializers
 from rest_auth.serializers import UserDetailsSerializer
+from datetime import timedelta, date, datetime
 
+from django.utils import timezone
 
 
 class ShowgridUserSerializer(UserDetailsSerializer):
+	profile = serializers.SerializerMethodField('get_user_profile')
+	favorites = serializers.SerializerMethodField('get_user_favorites')
+	alerts = serializers.SerializerMethodField('get_user_alerts')
 
-    class Meta:
-    	model = ShowgridUser
-        fields = ['email', 'phone']
+	class Meta:
+		model = ShowgridUser
+		fields = ['id', 'profile', 'favorites', 'alerts']
 
 
-    def update(self, instance, validated_data):
-        profile_data = validated_data.pop('showgriduser', {})
-        phone = profile_data.get('phone')
+	def update(self, instance, validated_data):
+		profile_data = validated_data.pop('showgriduser', {})
+		phone = profile_data.get('phone')
 
-        instance = super(ShowgridUserSerializer, self).update(instance, validated_data)
+		instance = super(ShowgridUserSerializer, self).update(instance, validated_data)
 
-        # get and update user profile
-        profile = instance.userprofile
-        if profile_data and phone:
-            profile.phone = company_name
-            profile.save()
-        return instance
+		# get and update user profile
+		profile = instance.userprofile
+		if profile_data and phone:
+			profile.phone = company_name
+			profile.save()
+		return instance
 
+	def get_user_profile(self, obj):
+		return {
+			'email': obj.username,
+			'phone': str(obj.phone)
+		}
+
+	def get_user_favorites(self, obj):
+		favorites = []
+		for show in obj.favorites.all():
+			if show.date > timezone.now():
+				favorites.append(show)
+
+		shows = ShowListSerializer(favorites, many=True)
+		return shows.data
+
+	def get_user_alerts(self, obj):
+		alerts = Alert.objects.filter(user=obj)
+		alerts = alerts.filter(show__date__gte=date.today())
+		alerts = alerts.order_by('show__date')
+		serialzier = AlertPanelSerializer(alerts, many=True)
+		return serialzier.data
+
+
+
+class AlertPanelSerializer(serializers.ModelSerializer):
+	show = serializers.SerializerMethodField('get_alert_show')
+
+	def get_alert_show(self, obj):
+		serializer = ShowListSerializer(obj.show)
+		return serializer.data
+
+	class Meta:
+		model = Alert
+		fields = (
+			'id', 'date', 'sent', 'user', 'show', 'which'
+		)
 
 
 class ShowListSerializer(serializers.ModelSerializer):
-	favorited = serializers.SerializerMethodField('mark_show_as_favorite')
 	venue = serializers.SerializerMethodField('get_shows_venue')
 	review = serializers.SerializerMethodField('get_shows_review')
-
-	def mark_show_as_favorite(self, obj):
-		if self.context.get("user"):
-			user = self.context.get("user")
-			if obj in user.favorites.all():
-				return True
-		return False 
 
 	def get_shows_venue(self, obj):
 		serializer = VenueListSerializer(obj.venue)
@@ -54,7 +87,7 @@ class ShowListSerializer(serializers.ModelSerializer):
 		fields = (
 			'id', 'created_at', 'title', 'headliners', 'openers', 'website', 
 			'star', 'review', 'date', 'ticket', 'price', 'soldout', 
-			'onsale', 'age', 'venue', 'favorited'
+			'onsale', 'age', 'venue'
 		)
 
 
@@ -67,33 +100,24 @@ class VenueListSerializer(serializers.ModelSerializer):
 		)
 
 
+class AlertSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Alert
+		fields = (
+			'id', 'date', 'sent', 'user', 'show'
+		)
+
+
+
+
 class ShowSerializer(serializers.ModelSerializer):
-	favorited = serializers.SerializerMethodField('mark_show_as_favorite')
-	alert = serializers.SerializerMethodField('mark_show_alert')
-
-	def mark_show_as_favorite(self, obj):
-		if self.context.get("user"):
-			user = self.context.get("user")
-			if obj in user.favorites.all():
-				return True
-		return False
-
-	def mark_show_alert(self, obj):
-		if self.context.get("user"):
-			user = self.context.get("user")
-			for alert in user.alerts.all():
-				if alert.show.headliners == obj.headliners:
-					return alert.json()
-		return False
-
-
 	class Meta:
 		model = Show
 		# ADD BACK CANCELLED
 		fields = (
 			'id', 'created_at', 'title', 'headliners', 'openers', 'website', 
 			'star', 'review', 'date', 'ticket', 'price', 'soldout', 
-			'onsale', 'age', 'favorited', 'alert'
+			'onsale', 'age'
 		)
 
 
@@ -111,10 +135,7 @@ class VenueSerializer(serializers.ModelSerializer):
 			data = data.filter(date__range=[ start, end ])
 			data = data.order_by('date')
 			
-			if self.context.get("user"):
-				serializer = ShowSerializer(data, many=True, context={ 'user': self.context.get("user") })
-			else:
-				serializer = ShowSerializer(data, many=True)
+			serializer = ShowSerializer(data, many=True)
 
 			return serializer.data
 		

@@ -1,8 +1,65 @@
 .user--profile {
-	-webkit-flex:0 0 50%;
-			flex:0 0 50%;
+	width:800px;
 
-	height:100%;
+	margin:0 auto 30px auto;
 
-	background:red;
+	background:#ffffff;
+
+	border-radius:5px;
+
+	-webkit-box-shadow:0 2px 2px rgba(0,0,0,0.05);
+			box-shadow:0 2px 2px rgba(0,0,0,0.05);
+
+
+	display:-webkit-flex;
+	display:		flex;
+
+	-webkit-flex-flow:row nowrap;
+			flex-flow:row nowrap;
+
+	-webkit-justify-content:center;
+			justify-content:center;
+
+
+	.pic {
+		-webkit-flex:0 0 170px;
+				flex:0 0 170px;
+
+		height:170px;
+
+		margin:40px;
+
+		background:rgba(0,0,0,0.4);
+		border-radius:85px;
+	}
+
+	.info {
+		-webkit-flex:1 1 400px;
+				flex:1 1 400px;
+
+		padding:30px;
+
+
+		.label, input {
+			display:block;
+		}
+
+		input[type=text],
+		input[type=password] {
+			width:250px;
+
+			padding:4px;
+
+			border:1px solid #e2e2e2;
+			border-radius:3px;
+		}
+
+		input[type=text] {
+			margin:0 0 20px 0;
+		}
+
+		input[type=password] {
+			margin:0 0 5px 0;
+		}
+	}
 }

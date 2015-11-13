@@ -12,13 +12,12 @@ class CalendarRow extends Component {
 
 		var { days } = this.props;
 		var { venue } = this.props;
-		var { cells } = this.props;
 
 		var rowClass = (venue.shows.length > 0) ? "calendar__row" : "calendar__row mini";
 
 
-		for (var i=0; i < cells; i++) {
-			shows.push( <CalendarRowDay key={ i } day={ days[i] } venue={ venue } shows={ venue.shows }/> );
+		for (var i=0; i < days.length; i++) {
+			shows.push( <CalendarRowDay key={ i } day={ days[i] } shows={ venue.shows }/> );
 		}
 
 
@@ -34,8 +33,7 @@ class CalendarRow extends Component {
 
 function mapStateToProps(state) {
 	return {
-		days: state.grid.days,
-		cells: state.engine.cells
+		days: state.state.days
 	};
 }
 

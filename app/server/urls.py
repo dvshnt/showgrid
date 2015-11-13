@@ -19,13 +19,13 @@ urlpatterns = patterns('',
 
     ## static page endpoints
     url(r'^$', 'server.views.index', name='index'),
-    url(r'^recent$', 'server.views.index', name='index'),
-    url(r'^profile$', 'server.views.index', name='index'),
-    url(r'^featured$', 'server.views.index', name='index'),
+    url(r'^recent$', 'server.views.index', name='recent'),
+    url(r'^profile$', 'server.views.index', name='profile'),
+    url(r'^featured$', 'server.views.index', name='featured'),
 
 
     ## user actions
-    url(r'^user/(?P<action>\w+)$', views.UserActions.as_view(), name='favorite'),
+    url(r'^user/(?P<action>\w+)$', views.UserActions.as_view(), name='user actions'),
 
 
  	url(r'^i/grid/$', views.VenueList.as_view(), name='grid'),

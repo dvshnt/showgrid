@@ -4,8 +4,13 @@ import { connect } from 'react-redux';
 
 import Header from '../components/Header';
 import LoginModal from '../components/LoginModal';
+import PhoneModal from '../components/PhoneModal';
+import Footer from '../components/Footer';
+
+import { getUserInfo } from '../actions/index';
 
 var GridEngine = require('../util/GridEngine');
+
 
 
 class App extends Component {
@@ -13,6 +18,12 @@ class App extends Component {
 		super(props);
 
 		GridEngine.init();
+
+		
+		var token = localStorage.getItem("token") || "";
+		if (token !== "") {
+			this.props.getUserInfo();
+		}
 	}
 
 	render() {
@@ -22,8 +33,10 @@ class App extends Component {
 		return (
 			<div>
 				<LoginModal />
+				<PhoneModal />
 				<Header />
         		{children}
+        		<Footer />
 			</div>
 		);
 	}
@@ -51,7 +64,7 @@ function mapStateToProps(state) {
 
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ }, dispatch);
+	return bindActionCreators({ getUserInfo }, dispatch);
 }
 
 

@@ -50,8 +50,10 @@ class Featured extends Component {
 
 
 function mapStateToProps(state) {
+	var featured = state.state.featured.map( s => state.state.entities.shows[s] );
+
 	return {
-		featured: state.featured.results
+		featured: featured
 	};
 }
 

@@ -176,7 +176,28 @@ var DateManager = {
 
 	getAlertDate(date, offset) {
 		return moment(date).subtract(offset.num, offset.unit);
-	}
+	},
+
+	convertAlertDate(dateId) {
+		switch(dateId) {
+		case 0:
+			return "At time of show";
+		case 1:
+			return "30 Minutes before show";
+		case 2:
+			return "1 Hour before show";
+		case 3:
+			return "2 Hours before show";
+		case 4:
+			return "1 Day before show";
+		case 5:
+			return "2 Days before show";
+		case 6:
+			return "1 week before show";
+		default:
+			return "Sometime before the show";
+		}
+	},
 };
 
 

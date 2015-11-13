@@ -7,7 +7,7 @@ import CalendarRowDayShow from './CalendarRowDayShow';
 var DateManager = require('../util/DateManager');
 
 
-export default class CalendarRowDay extends Component {
+class CalendarRowDay extends Component {
 	render() {
 		var shows = DateManager.getShowsOnDate(this.props.day, this.props.shows);
 
@@ -22,3 +22,18 @@ export default class CalendarRowDay extends Component {
 		)
 	}
 };
+
+
+function mapStateToProps(state) {
+	return {
+		
+	};
+}
+
+
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ }, dispatch);
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(CalendarRowDay);

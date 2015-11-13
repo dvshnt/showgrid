@@ -19,7 +19,7 @@ class Recent extends Component {
 		var results = [];
 		var currentDay = "";
 
-		if (this.props.recent.length > 0) {
+		if (this.props.recent && this.props.recent.length > 0) {
 			for (var i=0; i < this.props.recent.length; i++) {
 				var key = this.props.recent[i].id,
 					show = this.props.recent[i];
@@ -52,8 +52,10 @@ class Recent extends Component {
 
 
 function mapStateToProps(state) {
+	var recent = state.state.recent.map( s => state.state.entities.shows[s] );
+
 	return {
-		recent: state.recent.results
+		recent: recent
 	};
 }
 

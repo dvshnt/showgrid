@@ -7,6 +7,7 @@ import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
 
 import { authMiddleware } from '../middleware/middleware-auth';
+import { normalizrMiddleware } from '../middleware/middleware-normalizr';
 
 import { reduxReactRouter, ReduxRouter } from 'redux-router';
 
@@ -24,6 +25,7 @@ const createStoreWithMiddleware = compose(
 		thunkMiddleware,
 		authMiddleware,
 		apiMiddleware,
+		normalizrMiddleware,
 		loggerMiddleware
 	),
 	reduxReactRouter({

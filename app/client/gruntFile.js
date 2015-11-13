@@ -122,7 +122,7 @@ module.exports = function(grunt) {
 					'./components/*.js', './containers/*.js', 
 					'./store/*.js', './reducers/*.js', 
 					'./actions/*.js', './index.js', './util/*.js', 
-					'./middleware/*.js'
+					'./middleware/*.js', './schemas/*.js'
 				],
 				tasks: ['browserify:dev', 'copy:js'],
 				options: {

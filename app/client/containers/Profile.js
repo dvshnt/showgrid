@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
+
+import UserProfile from '../components/UserProfile';
+import UserActions from '../components/UserActions';
 
 
 export default class Profile extends Component {
 	render() {
 		return (
-			<div className="list--container">
-				<h1>Profile</h1>
+			<div id="profile">
+				<UserProfile/>
+				<UserActions/>
 			</div>
-
 		)
 	}
 };

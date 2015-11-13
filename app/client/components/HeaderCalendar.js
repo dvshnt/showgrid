@@ -41,7 +41,6 @@ class HeaderCalendar extends Component {
 		var headDays = [];
 
 		var { days } = this.props;
-		var { cells } = this.props;
 
 
 		var startDate = (days.length === 0) ? moment() : moment(days[0].date, 'MMMM Do YYYY');
@@ -53,7 +52,7 @@ class HeaderCalendar extends Component {
 			var month = startDate.format('MMMM');
 			var monthClass = "month";
 
-			for (var i=0; i < cells; i++) {
+			for (var i=0; i < days.length; i++) {
 				headDays.push( <HeaderCalendarDay key={ i } day={ days[i].date }/> );
 			}
 		}
@@ -75,8 +74,7 @@ class HeaderCalendar extends Component {
 
 function mapStateToProps(state) {
 	return {
-		days: state.grid.days,
-		cells: state.engine.cells
+		days: state.state.days
 	};
 }
 

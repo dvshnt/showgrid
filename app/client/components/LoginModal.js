@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import $ from 'jquery';
 
-import { hideModal } from '../actions/modal';
+import { hideLoginModal } from '../actions/modal';
 import { getUserToken } from '../actions/index';
 
 var GridEngine = require('../util/GridEngine');
@@ -28,7 +28,6 @@ class LoginModal extends Component {
 			// window.addEventListener("click", this.closeOnClick, false);
 			window.addEventListener("keydown", this.handleKeydown, false);
 
-
 			React.findDOMNode(this.refs.username).focus();
 
 			return;
@@ -48,7 +47,7 @@ class LoginModal extends Component {
 			return false;
 		}
 
-		this.props.hideModal();
+		this.props.hideLoginModal();
 		return false;
 	}
 
@@ -56,7 +55,7 @@ class LoginModal extends Component {
 		// ESC key
 		if (e.keyCode == 27) {
 			e.preventDefault();
-			this.props.hideModal();
+			this.props.hideLoginModal();
 		}
 	}
 
@@ -73,7 +72,7 @@ class LoginModal extends Component {
 			.then(function(response) {
 				// Verified Login
 				if (response.payload.hasOwnProperty('token')) {
-					_this.props.hideModal();
+					_this.props.hideLoginModal();
 
 					window.location.replace(GridEngine.domain + _this.props.route);
 				}
@@ -91,8 +90,11 @@ class LoginModal extends Component {
 
 		return (
 			<div id="overlay" className={ active }>
-
 				<div id="modal">
+					<div className="banner"></div>
+					<p>
+						Sign up for Showgrid to receive the ability to favorite shows, set show alerts, and particpate in all the conversation happening on here!
+					</p>
 					<form action="" onSubmit={ this.userLogin }>
 						<input type="text" ref="username" placeholder="Enter username"/>
 						<input type="password" ref="password" placeholder="Enter password"/>
@@ -108,14 +110,14 @@ class LoginModal extends Component {
 
 function mapStateToProps(state) {
 	return {
-		visible: state.modal.visible,
+		visible: state.modal.login,
 		route: state.router.location.pathname
 	};
 }
 
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ hideModal, getUserToken }, dispatch);
+	return bindActionCreators({ hideLoginModal, getUserToken }, dispatch);
 }
 
 

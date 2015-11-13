@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import $ from 'jquery';
 
-import { favoriteShow } from '../actions/index';
+import { unfavoriteShow, favoriteShow, getUserInfo } from '../actions/index';
 
 var DateManager = require('../util/DateManager');
 var GridEngine = require('../util/GridEngine');
@@ -17,48 +17,51 @@ class SetFavorite extends Component {
 		this.setShowAsFavorite = this.setShowAsFavorite.bind(this);
 
 		this.state = {
-			className: "icon-heart"
+			favorited: props.favorites.indexOf(props.show.id) > -1
 		};
 	}
 
-	componentDidMount() {
-		if (this.props.show.favorited) {
-			this.setState({
-				className: "icon-heart active"
-			});
-		}
+	componentWillReceiveProps(nextProps) {
+		this.state = {
+			favorited: nextProps.favorites.indexOf(nextProps.show.id) > -1
+		};
 	}
 
 	setShowAsFavorite(e) {
-		this.props.favoriteShow(this.props.show.id);
-
-		if (this.state.className === "icon-heart active") {
+		if (this.state.favorited) {
 			this.setState({
-				className: "icon-heart"
+				favorited: false
 			});
-			return;
-		}
 
-		this.setState({
-			className: "icon-heart active"
-		});	
+			this.props.unfavoriteShow(this.props.show.id);
+		} else {
+			this.setState({
+				favorited: true
+			});
+
+			this.props.favoriteShow(this.props.show.id);
+		}
 	}
 
 	render() {
+		var className = (this.state.favorited) ? "icon-heart active" : "icon-heart";
+
 		return (
-			<b className={ this.state.className } onClick={ this.setShowAsFavorite }></b>
+			<b className={ className } onClick={ this.setShowAsFavorite }></b>
 		)
 	}
 };
 
 
 function mapStateToProps(state) {
-	return { };
+	return {
+		favorites: state.state.favorites
+	};
 }
 
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ favoriteShow }, dispatch);
+	return bindActionCreators({ unfavoriteShow, favoriteShow, getUserInfo }, dispatch);
 }
 
 

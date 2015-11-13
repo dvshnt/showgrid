@@ -1,8 +1,68 @@
 .user--actions {
-	-webkit-flex:0 0 50%;
-			flex:0 0 50%;
+	width:75%;
 
-	height:100%;
+	margin:0 auto;
 
-	background:blue;
+	background:#ffffff;
+
+	border-radius:5px;
+
+	-webkit-box-shadow:0 2px 2px rgba(0,0,0,0.05);
+			box-shadow:0 2px 2px rgba(0,0,0,0.05);
+
+
+	.tabs {
+		width:100%;
+
+		display:-webkit-flex;
+		display:		flex;
+
+		-webkit-flex-flow:row nowrap;
+				flex-flow:row nowrap;
+
+		-webkit-align-items:center;
+				align-items:center;
+
+		-webkit-justify-content:center;
+				justify-content:center;
+
+
+		.tab {
+			-webkit-flex:0 0 45%;
+					flex:0 0 45%;
+
+			margin:0 2%;
+			padding:15px 0;
+
+			border-bottom:2px solid #e2e2e2;
+
+			color:#d2d2d2;
+			font-size:20px;
+			text-align:center;
+
+			cursor:pointer;
+
+			b {
+				margin-right:15px;
+			}
+		}
+
+		.tab.alerts.selected {
+			color:#ff6429;
+
+			border-bottom:2px solid #ff6429;
+		}
+
+		.tab.favorites.selected {
+			color:#fc3030;
+
+			border-bottom:2px solid #fc3030;
+		}
+	}
+
+	.actions {
+		width:100%;
+	}
 }
+
+@import "user-actions-alerts";

@@ -1,4 +1,8 @@
 import { CALL_API } from 'redux-api-middleware';
+import { Schemas } from '../schemas/index';
+import { arrayOf } from 'normalizr';
+
+
 
 var GridEngine = require('../util/GridEngine');
 
@@ -28,6 +32,76 @@ export function getUserToken(username, password) {
 }
 
 
+function getUser() {
+	return {
+		[CALL_API]: {
+			endpoint: GridEngine.domain + '/user/profile',
+		    method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		    types: ['USER_REQUEST', 'USER_SUCCESS', 'USER_FAILURE'],
+		    schema: Schemas.USER
+		}
+	};
+}
+
+// Fetches a single user from Github API unless it is cached.
+// Relies on Redux Thunk middleware.
+export function getUserInfo() {
+	return (dispatch, getState) => {
+		return dispatch(getUser());
+	};
+}
+
+
+
+function submitNumber(number) {
+	return {
+		[CALL_API]: {
+			endpoint: GridEngine.domain + '/user/phone_set',
+		    method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		    types: ['ACTION_REQUEST', 'ACTION_SUCCESS', 'ACTION_FAILURE'],
+		    body: JSON.stringify({
+    			phone: number
+    		})
+		}
+	};
+}
+
+export function submitUserPhone(number) {
+	return (dispatch, getState) => {
+		return dispatch(submitNumber(number));
+	};
+}
+
+
+
+function submitPin(pin) {
+	return {
+		[CALL_API]: {
+			endpoint: GridEngine.domain + '/user/pin_check',
+		    method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		    types: ['ACTION_REQUEST', 'ACTION_SUCCESS', 'ACTION_FAILURE'],
+		    body: JSON.stringify({
+    			pin: pin
+    		})
+		}
+	};
+}
+
+export function submitPhonePin(pin) {
+	return (dispatch, getState) => {
+		return dispatch(submitPin(pin));
+	};
+}
+
 
 
 function fetchGrid(date) {
@@ -50,8 +124,12 @@ function fetchGrid(date) {
 					payload: (action, state) => ({ date: date })
 				},
 		    	'GRID_SUCCESS', 
-		    	'GRID_FAILURE'
-		    ]
+		    	'FETCH_FAILURE'
+		    ],
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		    schema: arrayOf(Schemas.VENUE_LIST)
 		}
 	};
 }
@@ -72,7 +150,8 @@ function fetchRecent() {
 		[CALL_API]: {
 			endpoint: GridEngine.domain + '/i/shows?method=recent',
 		    method: 'GET',
-		    types: ['RECENT_REQUEST', 'RECENT_SUCCESS', 'RECENT_FAILURE']
+		    types: ['FETCH_REQUEST', 'RECENT_SUCCESS', 'FETCH_FAILURE'],
+		    schema: arrayOf(Schemas.SHOW)
 		}
 	};
 }
@@ -92,7 +171,8 @@ function fetchFeatured() {
 		[CALL_API]: {
 			endpoint: GridEngine.domain + '/i/shows?method=featured',
 		    method: 'GET',
-		    types: ['FEATURED_REQUEST', 'FEATURED_SUCCESS', 'FEATURED_FAILURE']
+		    types: ['FETCH_REQUEST', 'FEATURED_SUCCESS', 'FEATURED_FAILURE'],
+		    schema: arrayOf(Schemas.SHOW)
 		}
 	};
 }
@@ -111,7 +191,7 @@ function markShowAsFavorite(show) {
 		[CALL_API]: {
 			endpoint:  GridEngine.domain + "/user/favorite",
 		    method: 'POST',
-		    types: ['ACTION_REQUEST', 'ACTION_SUCCESS', 'ACTION_FAILURE'],
+		    types: ['FAVORITE_REQUEST', 'SET_FAVORITE_SUCCESS', 'SET_FAVORITE_FAILURE'],
 			headers: {
 				'Content-Type': 'application/json'
 			},
@@ -130,36 +210,12 @@ export function favoriteShow(show) {
 
 
 
-function setAlertForShow(show, date) {
+function removeShowAsFavorite(show) {
 	return {
 		[CALL_API]: {
-			endpoint:  GridEngine.domain + "/user/alert",
-		    method: 'POST',
-		    types: ['ACTION_REQUEST', 'ACTION_SUCCESS', 'ACTION_FAILURE'],
-			headers: {
-				'Content-Type': 'application/json'
-			},
-		    body: JSON.stringify({
-    			show: show,
-    			date: date
-    		})
-		}
-	};
-}
-
-export function setAlert(show, date) {
-	return (dispatch, getState) => {
-		return dispatch(setAlertForShow(show, date));
-	};
-}
-
-
-function deleteAlertForShow(show) {
-	return {
-		[CALL_API]: {
-			endpoint:  GridEngine.domain + "/user/alert",
+			endpoint:  GridEngine.domain + "/user/favorite",
 		    method: 'DELETE',
-		    types: ['ACTION_REQUEST', 'ACTION_SUCCESS', 'ACTION_FAILURE'],
+		    types: ['FAVORITE_REQUEST', 'REMOVE_FAVORITE_SUCCESS', 'REMOVE_FAVORITE_FAILURE'],
 			headers: {
 				'Content-Type': 'application/json'
 			},
@@ -170,9 +226,86 @@ function deleteAlertForShow(show) {
 	};
 }
 
-export function deleteAlert(show) {
+export function unfavoriteShow(show) {
 	return (dispatch, getState) => {
-		return dispatch(deleteAlertForShow(show));
+		return dispatch(removeShowAsFavorite(show));
+	};
+}
+
+
+
+function setAlertForShow(show, date, which) {
+	return {
+		[CALL_API]: {
+			endpoint:  GridEngine.domain + "/user/alert",
+		    method: 'POST',
+		    types: ['ALERT_SET_REQUEST', 'ALERT_SET_SUCCESS', 'ALERT_SET_SUCCESS'],
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		    body: JSON.stringify({
+    			show: show,
+    			date: date,
+    			which: which
+    		}),
+		    schema: Schemas.ALERT
+		}
+	};
+}
+
+export function setAlert(show, date, which) {
+	return (dispatch, getState) => {
+		return dispatch(setAlertForShow(show, date, which));
+	};
+}
+
+
+
+function changeAlertForShow(alert, date, which) {
+	return {
+		[CALL_API]: {
+			endpoint:  GridEngine.domain + "/user/alert",
+		    method: 'PUT',
+		    types: ['ALERT_CHANGE_REQUEST', 'ALERT_CHANGE_SUCCESS', 'ALERT_CHANGE_FAILURE'],
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		    body: JSON.stringify({
+    			alert: alert,
+    			date: date,
+    			which: which
+    		})
+		}
+	};
+}
+
+export function changeAlert(alert, date, which) {
+	return (dispatch, getState) => {
+		return dispatch(changeAlertForShow(alert, date, which));
+	};
+}
+
+
+
+function deleteAlertForShow(alert) {
+	return {
+		[CALL_API]: {
+			endpoint:  GridEngine.domain + "/user/alert",
+		    method: 'DELETE',
+		    types: ['ALERT_DELETE_REQUEST', 'ALERT_DELETE_SUCCESS', 'ALERT_DELETE_FAILURE'],
+			headers: {
+				'Content-Type': 'application/json'
+			},
+		    body: JSON.stringify({
+    			alert: alert
+    		})
+		}
+	};
+}
+
+export function deleteAlert(alert) {
+	return (dispatch, getState) => {
+		return dispatch(deleteAlertForShow(alert));
 	};
 }
 
@@ -187,7 +320,10 @@ function fetchSearchResults(query) {
 				return url;
 			},
 		    method: 'GET',
-		    types: ['SEARCH_REQUEST', 'SEARCH_SUCCESS', 'SEARCH_FAILURE']
+		    types: ['SEARCH_REQUEST', 'SEARCH_SUCCESS', 'SEARCH_FAILURE'],
+			headers: {
+				'Content-Type': 'application/json'
+			}
 		}
 	};
 }
