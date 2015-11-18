@@ -12,7 +12,9 @@ var DateManager = require('../util/DateManager');
 class Featured extends Component {
 	componentDidMount() {
 	    // Fetching first recent shows
-	    this.props.getFeatured();
+	    if (this.props.featured.length === 0) {
+	    	this.props.getFeatured();
+	    }
 	}
 
 	render() {
@@ -33,9 +35,6 @@ class Featured extends Component {
 			}
 
 			results.push(<div className="list-paginator">See More New Shows...</div>);
-		}
-		else {
-			results = <h2>No Recently Added Shows</h2>;
 		}
 
 

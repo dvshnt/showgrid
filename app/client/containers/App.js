@@ -28,14 +28,21 @@ class App extends Component {
 
 	render() {
 		// Injected by React Router
+		var loading = "";
+
 		const { children } = this.props;
 
+		if (this.props.waiting) {
+			loading = <div className="loading"><div className="spinner"></div></div>
+		} 
+
 		return (
-			<div>
+			<div id="container">
 				<LoginModal />
 				<PhoneModal />
 				<Header />
-        		{children}
+				{ loading }
+        		{ children }
         		<Footer />
 			</div>
 		);
@@ -58,7 +65,7 @@ App.contextTypes = {
 
 function mapStateToProps(state) {
 	return {
-		
+		waiting: state.state.waiting
 	};
 }
 

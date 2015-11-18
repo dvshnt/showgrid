@@ -6,7 +6,7 @@ var GridEngine = require('../util/GridEngine');
 var DateManager = require('../util/DateManager');
 
 
-export default function state(state={ days:[], user:[], grid:[], favorites:[], alerts:[], featured:[], recent:[], entities:{} }, action) {
+export default function state(state={ waiting:true, days:[], user:"", grid:[], favorites:[], alerts:[], featured:[], recent:[], entities:{} }, action) {
 	switch (action.type) {
 	case "FETCH_REQUEST":
 		return Object.assign({}, state, {
@@ -75,6 +75,11 @@ export default function state(state={ days:[], user:[], grid:[], favorites:[], a
 			});
 		}
 		return state;
+
+	case "USER_FAILURE":
+		return Object.assign({}, state, {
+			waiting: false
+		});
 
 
 	// FAVORITING ACTIONS

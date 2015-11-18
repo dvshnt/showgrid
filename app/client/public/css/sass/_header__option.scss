@@ -1,7 +1,11 @@
 #header__options {
-	span.logout {
+	span.loginout {
+		margin:0 0 0 10px;
+
 		color:#ffffff;
+		font-size:14px;
 		font-weight:bolder;
+		text-shadow:0 1px rgba(255,255,255,0.4);
 		text-decoration:underline;
 		
 		cursor:pointer;

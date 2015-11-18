@@ -7,6 +7,8 @@ import $ from 'jquery';
 import { hidePhoneModal } from '../actions/modal';
 import { submitUserPhone, submitPhonePin } from '../actions/index';
 
+import FormButton from './FormButton';
+
 var GridEngine = require('../util/GridEngine');
 
 
@@ -20,34 +22,34 @@ class PhoneModal extends Component {
 		this.closeOnClick = this.closeOnClick.bind(this);
 
 		this.state = {
-			token: null,
-			verify: false
+			error: false,
+			verify: false,
+			success: false
 		};
 	}
 
 	componentWillUpdate(nextProps, nextState) {
 		if (nextProps.visible) {
-			// window.addEventListener("click", this.closeOnClick, false);
+			window.addEventListener("click", this.closeOnClick, false);
 			window.addEventListener("keydown", this.handleKeydown, false);
 
 			return;
 		}
 		
-		// window.removeEventListener("click", this.closeOnClick);
+		window.removeEventListener("click", this.closeOnClick);
 		window.removeEventListener("keydown", this.handleKeydown);
 	}
 
 	componentWillUnmount() {
-		// window.removeEventListener("click", this.closeOnClick);
+		window.removeEventListener("click", this.closeOnClick);
 		window.removeEventListener("keydown", this.handleKeydown);
 	}
 
 	closeOnClick(e) {
-		if (e.target.id === "modal") {
-			return false;
+		if (e.target.id === "overlay") {
+			this.props.hidePhoneModal();
 		}
 
-		this.props.hidePhoneModal();
 		return false;
 	}
 
@@ -69,10 +71,15 @@ class PhoneModal extends Component {
 			.then(function(data) {
 				if (data.payload.status === "pin_verified") {
 					_this.setState({
-						verify: false
+						verify: false,
+						success: true
 					});
+				}
 
-					_this.props.hidePhoneModal();
+				else {
+					_this.setState({
+						error: true
+					});
 				}
 			});
 	}
@@ -87,8 +94,15 @@ class PhoneModal extends Component {
 			.then(function(data) {
 				if (data.payload.status === "phone_set") {
 					_this.setState({
-						verify: true
+						verify: true,
+						error: false
 					});
+				}
+
+				else {
+					_this.setState({
+						error: true
+					})
 				}
 			});
 	}
@@ -98,11 +112,11 @@ class PhoneModal extends Component {
 		var form = (
 			<div>
 				<p>
-					In order to keep you on track about shows, we will text you a reminder before the show. The text will include a ticket link so should you decide to go, you can buy tickets right away!
+					In order to keep you in the loop, we will text you a reminder before the show. The text will include a ticket link so should you decide to go, you can buy tickets right away!
 				</p>
 				<form action="" onSubmit={ this.userSubmitPhone }>
-					<input type="text" ref="phonenumber" placeholder="Enter phonenumber"/>
-					<input type="submit" placeholder="Submit"/>
+					<input type="tel" pattern="[0-9]{11}" ref="phonenumber" placeholder="Phone Number" title=""/>
+					<FormButton error={ this.state.error } errorMessage="Invalid Phone Number" submitMessage="Submit"/>
 				</form>
 			</div>
 		);
@@ -115,8 +129,17 @@ class PhoneModal extends Component {
 					</p>
 					<form action="" onSubmit={ this.userSubmitPin }>
 						<input type="text" ref="pin" size="4"/>
-						<input type="submit" placeholder="Submit"/>
+						<FormButton error={ this.state.error } errorMessage="Invalid PIN" submitMessage="Submit"/>
 					</form>
+				</div>
+			);
+		}
+
+		if (this.state.success) {
+			form = (
+				<div>
+					<h3>Phone Number Verified!</h3>
+					<p>Set all the alerts you need. We won&#39;t bother you otherwise.</p>
 				</div>
 			);
 		}

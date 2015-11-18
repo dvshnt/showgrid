@@ -34,7 +34,10 @@ class Showgrid extends Component {
 
 	    // Fetching first grid data
 	    var startDate = (this.props.startDate) ? moment(this.props.startDate.date, 'MMMM Do YYYY') : moment()
-	    this.props.getGrid(startDate);
+	    
+	    if (this.props.grid.length === 0) {
+	    	this.props.getGrid(startDate);
+	    }
 
 	    // Attaching grid dimension resizer on window size change
 		window.addEventListener('resize', adjustGrid, true);
@@ -54,6 +57,7 @@ class Showgrid extends Component {
 
 function mapStateToProps(state) {
 	return {
+		grid: state.state.grid,
 		startDate: state.state.days[0]
 	};
 }

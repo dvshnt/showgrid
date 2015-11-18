@@ -39,10 +39,10 @@
   -webkit-flex-flow:column nowrap;
           flex-flow:column nowrap;
 
-	-webkit-flex:0 0 35%;
-			   flex:0 0 35%;
+	-webkit-flex:0 0 520px;
+			     flex:0 0 520px;
 
-	width:450px;
+  position:relative;
 
   padding:40px 0;
 
@@ -51,6 +51,15 @@
 
 	box-shadow:0 1px 4px rgba(0,0,0,0.3);
 
+
+  #close {
+    position:absolute;
+    top:15px; left:10px;
+
+    font-size:24px;
+
+    cursor:pointer;
+  }
 
   form {
     display:block;
@@ -61,6 +70,16 @@
     text-align:center;
   }
 
+  span.error {
+    position:relative;
+    top:8px;
+    color:red;
+  }
+
+  label {
+    font-size:12px;
+  }
+
   input {
     width:90%;
 
@@ -68,7 +87,8 @@
   }
 
   input[type=text],
-  input[type=password] {
+  input[type=password],
+  input[type=tel] {
     margin:0 auto;
     padding:10px 6px;
 
@@ -101,6 +121,12 @@
     border-radius:4px;
   }
 
+  input[type=submit].error {
+    background:#fc3030;
+
+    
+  }
+
   .banner {
     width:200px; height:50px;
 
@@ -109,10 +135,14 @@
     background-repeat:no-repeat;
   }
 
-  p {
-    width:70%;
+  h3 {
+    text-align:center;
+  }
 
-    margin:40px auto;
+  p {
+    width:82.5%;
+
+    margin:20px auto 40px;
 
     color:#a6a6a6;
     font-weight:bolder;

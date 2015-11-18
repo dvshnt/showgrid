@@ -24,6 +24,8 @@ class UserProfile extends Component {
 
 					<label>Phone Number</label>
 					<input type="text" value={ number }/>
+					
+					<input type="submit" value="Save Changes"/>
 				</div>
 			</div>
 		)

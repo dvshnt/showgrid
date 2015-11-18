@@ -27,6 +27,8 @@ class Search extends Component {
 		if (results.length > 0) {
 			var list = [];
 
+			list.push(<h4>Search results for: <i>{ this.props.query }</i></h4>);
+
 			for (var i=0; i < results.length; i++) {
 				list.push( <ListItem key={ results[i].id } show={ results[i] } showDate={ true } showStar={ true } /> );
 			}
@@ -49,6 +51,7 @@ class Search extends Component {
 
 function mapStateToProps(state) {
 	return { 
+		query: state.search.query, 
 		results: state.search.results,
 		waiting: state.search.waiting,
 		searching: state.search.searching

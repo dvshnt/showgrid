@@ -49,11 +49,29 @@ class UserActions extends Component {
 			for (var i=0; i < this.props.alerts.length; i++) {
 				items.push(<UserAlert alert={ this.props.alerts[i] }/>);
 			}
+
+			if (items.length === 0) {
+				items = (
+					<div className="info-text">
+						<h2>No Alerts Set</h2>
+						<p>Set a reminder on a show by clicking the <b className="icon-alert"></b> icon and selecting a time. You will receive a text at the chosen time reminding you about the show and providing you with a link to buy tickets.</p>
+					</div>
+				);
+			}
 		}
 
 		if (this.state.favoriteTab) {
 			for (var i=0; i < this.props.favorites.length; i++) {
 				items.push(<UserFavorite show={ this.props.favorites[i] }/>);
+			}
+
+			if (items.length === 0) {
+				items = (
+					<div className="info-text">
+						<h2>No Shows Favorited</h2>
+						<p>Favorite a show by clicking the <b className="icon-heart"></b> icon on any show you might like. Favoriting helps you track shows that you might go to.</p>
+					</div>
+				);
 			}
 		}
 

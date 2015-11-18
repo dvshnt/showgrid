@@ -48,6 +48,7 @@ class ShowgridUserSerializer(UserDetailsSerializer):
 	def get_user_alerts(self, obj):
 		alerts = Alert.objects.filter(user=obj)
 		alerts = alerts.filter(show__date__gte=date.today())
+		alerts = alerts.filter(sent=0)
 		alerts = alerts.order_by('show__date')
 		serialzier = AlertPanelSerializer(alerts, many=True)
 		return serialzier.data

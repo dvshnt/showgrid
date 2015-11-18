@@ -3,7 +3,53 @@
 
 	margin:0;
 
-	margin-top:130px;
+	padding-top:110px;
+}
+
+.loading {
+	display:-webkit-flex;
+	display:		flex;
+
+	-webkit-justify-content:center;
+			justify-content:center;
+
+	-webkit-align-items:center;
+			align-items:center;
+
+
+	width:100vw; height:100vh;
+}
+
+.spinner {
+	width: 40px;
+	height: 40px;
+	margin: 100px auto;
+	background-color: #222222;
+
+	border-radius: 100%;  
+	-webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+	animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-scaleout {
+	0% { -webkit-transform: scale(0) }
+	100% {
+		-webkit-transform: scale(1.0);
+		opacity: 0;
+	}
+}
+
+@keyframes sk-scaleout {
+	0% { 
+		-webkit-transform: scale(0);
+			transform: scale(0);
+	} 
+	100% {
+		-webkit-transform: scale(1.0);
+				transform: scale(1.0);
+		
+		opacity: 0;
+	}
 }
 
 @media screen and (max-width: 500px ) {

@@ -7,6 +7,8 @@ import $ from 'jquery';
 import { hideLoginModal } from '../actions/modal';
 import { getUserToken } from '../actions/index';
 
+import FormButton from './FormButton';
+
 var GridEngine = require('../util/GridEngine');
 
 
@@ -15,17 +17,20 @@ class LoginModal extends Component {
 		super(props);
 
 		this.userLogin = this.userLogin.bind(this);
+		this.resetError = this.resetError.bind(this);
+		this.closeModal = this.closeModal.bind(this);
 		this.closeOnClick = this.closeOnClick.bind(this);
 		this.handleKeydown = this.handleKeydown.bind(this);
 
 		this.state = {
-			token: null
+			token: null,
+			error: false
 		};
 	}
 
 	componentWillUpdate(nextProps, nextState) {
 		if (nextProps.visible) {
-			// window.addEventListener("click", this.closeOnClick, false);
+			window.addEventListener("click", this.closeOnClick, false);
 			window.addEventListener("keydown", this.handleKeydown, false);
 
 			React.findDOMNode(this.refs.username).focus();
@@ -33,22 +38,26 @@ class LoginModal extends Component {
 			return;
 		}
 		
-		// window.removeEventListener("click", this.closeOnClick);
+		window.removeEventListener("click", this.closeOnClick);
 		window.removeEventListener("keydown", this.handleKeydown);
 	}
 
 	componentWillUnmount() {
-		// window.removeEventListener("click", this.closeOnClick);
+		window.removeEventListener("click", this.closeOnClick);
 		window.removeEventListener("keydown", this.handleKeydown);
 	}
 
 	closeOnClick(e) {
-		if (e.target.id === "modal") {
-			return false;
+		if (e.target.id === "overlay") {
+			this.closeModal();
+			return true;
 		}
 
-		this.props.hideLoginModal();
 		return false;
+	}
+
+	closeModal() {
+		this.props.hideLoginModal();
 	}
 
 	handleKeydown(e) {
@@ -56,6 +65,14 @@ class LoginModal extends Component {
 		if (e.keyCode == 27) {
 			e.preventDefault();
 			this.props.hideLoginModal();
+		}
+	}
+
+	resetError(e) {
+		if (this.state.error) {
+			this.setState({
+				error: false
+			});
 		}
 	}
 
@@ -78,8 +95,10 @@ class LoginModal extends Component {
 				}
 
 				// Handle Login Errors
-				else {
-
+				else if (response.type === "TOKEN_FAILURE") {
+					_this.setState({
+						error: true
+					});
 				}
 			});
 
@@ -91,17 +110,17 @@ class LoginModal extends Component {
 		return (
 			<div id="overlay" className={ active }>
 				<div id="modal">
+					<b id="close" className="icon-close" onClick={ this.closeModal }></b>
 					<div className="banner"></div>
 					<p>
 						Sign up for Showgrid to receive the ability to favorite shows, set show alerts, and particpate in all the conversation happening on here!
 					</p>
 					<form action="" onSubmit={ this.userLogin }>
-						<input type="text" ref="username" placeholder="Enter username"/>
-						<input type="password" ref="password" placeholder="Enter password"/>
-						<input type="submit" placeholder="Sign In"/>
+						<input type="text" ref="username" placeholder="Enter username" onChange={ this.resetError }/>
+						<input type="password" ref="password" placeholder="Enter password" onChange={ this.resetError }/>
+						<FormButton error={ this.state.error } errorMessage="Invalid Username or Password" submitMessage="Sign In" />
 					</form>
 				</div>
-
 			</div>
 		)
 	}

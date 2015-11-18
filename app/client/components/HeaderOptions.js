@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, IndexLink } from 'react-router';
 
 import HeaderPageOption from './HeaderPageOption';
+import LogInOut from './LogInOut';
 
 var GridEngine = require('../util/GridEngine');
 
@@ -47,7 +48,7 @@ export default class HeaderOptions extends Component {
 				<HeaderPageOption symbol="icon-star" text="Featured" link="/featured"/>
 				<HeaderPageOption symbol="icon-user" text="My Profile" link="/profile"/>
 				<HeaderPageOption symbol="icon-search" text="Search" link="/search"/>
-				<span className="logout" onClick={ this.logout }>Log Out</span>
+				<LogInOut />
 			</div>
 		)
 	}
