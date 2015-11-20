@@ -137,7 +137,6 @@ export default class ListItem extends Component {
 					<div className="user">
 						<SetAlert show={ show }/>
 						<SetFavorite show={ show }/>
-						<b className="icon-comment"></b>
 					</div>
 				</footer>
 			</div>

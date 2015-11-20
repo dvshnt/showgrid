@@ -9,9 +9,8 @@ export default class Header extends Component {
 
 				<nav>
 					<a href="">About</a>
-					<a href="">Blog</a>
-					<a href="">Contact</a>
-					<a href="">Facebook</a>
+					<a href="mailto:info@showgrid.com">Contact</a>
+					<a target="_blank" href="https://www.facebook.com/showgrid">Facebook</a>
 				</nav>
 			</footer>
 		)

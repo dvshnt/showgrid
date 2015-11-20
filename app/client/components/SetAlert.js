@@ -29,7 +29,7 @@ class SetAlert extends Component {
 
 	checkIfAlertSet(alerts, show) {
 		for (var i = 0, len = alerts.length; i < len; i++) {
-		    if (alerts[i].show.id === show) {
+		    if (alerts[i].show === show || alerts[i].show.id === show) {
 		    	return alerts[i];
 		    }
 		}

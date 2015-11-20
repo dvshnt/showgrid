@@ -16,6 +16,7 @@ class PhoneModal extends Component {
 	constructor(props) {
 		super(props);
 
+		this.goToNextPinInput = this.goToNextPinInput.bind(this);
 		this.userSubmitPhone = this.userSubmitPhone.bind(this);
 		this.userSubmitPin = this.userSubmitPin.bind(this);
 		this.handleKeydown = this.handleKeydown.bind(this);
@@ -64,7 +65,10 @@ class PhoneModal extends Component {
 	userSubmitPin(e) {
 		e.preventDefault();
 		
-		var pin = React.findDOMNode(this.refs.pin).value;
+		var pin = React.findDOMNode(this.refs.pinOne).value;
+		pin += React.findDOMNode(this.refs.pinTwo).value;
+		pin += React.findDOMNode(this.refs.pinThree).value;
+		pin += React.findDOMNode(this.refs.pinFour).value;
 
 		var _this = this;
 		this.props.submitPhonePin(pin)
@@ -82,6 +86,27 @@ class PhoneModal extends Component {
 					});
 				}
 			});
+	}
+
+	goToNextPinInput(e) {
+		var classes = e.target.className;
+
+		if (classes.indexOf("pin-1") > -1) {
+			React.findDOMNode(this.refs.pinTwo).focus();
+			return true;
+		}
+
+		if (classes.indexOf("pin-2") > -1) {
+			React.findDOMNode(this.refs.pinThree).focus();
+			return true;
+		}
+
+		if (classes.indexOf("pin-3") > -1) {
+			React.findDOMNode(this.refs.pinFour).focus();
+			return true;
+		}
+
+		return false;
 	}
 
 	userSubmitPhone(e) {
@@ -111,11 +136,15 @@ class PhoneModal extends Component {
 		var active = (this.props.visible) ? "active" : "";
 		var form = (
 			<div>
+				<h3>Sign Up to Receive Text Alerts</h3>
 				<p>
-					In order to keep you in the loop, we will text you a reminder before the show. The text will include a ticket link so should you decide to go, you can buy tickets right away!
+					To complete the process, you will receive a 4-digit pin at the number you provide. Enter the PIN when prompted to get started receiveing alerts!
+				</p>
+				<p>
+					Text alerts will include a link to buy tickets as well as information about the show.
 				</p>
 				<form action="" onSubmit={ this.userSubmitPhone }>
-					<input type="tel" pattern="[0-9]{11}" ref="phonenumber" placeholder="Phone Number" title=""/>
+					<input className="phone" type="tel" pattern="[0-9]{11}" ref="phonenumber" placeholder="Phone Number" title=""/>
 					<FormButton error={ this.state.error } errorMessage="Invalid Phone Number" submitMessage="Submit"/>
 				</form>
 			</div>
@@ -124,11 +153,16 @@ class PhoneModal extends Component {
 		if (this.state.verify) {
 			form = (
 				<div>
+					<h3>Confirm your phone number</h3>
 					<p>
 						Enter the 4-digit PIN you receive to start getting alerts.
 					</p>
 					<form action="" onSubmit={ this.userSubmitPin }>
-						<input type="text" ref="pin" size="4"/>
+						<input maxLength="1" className="pin pin-1" type="text" ref="pinOne" size="1" onChange={ this.goToNextPinInput }/>
+						<input maxLength="1" className="pin pin-2" type="text" ref="pinTwo" size="1" onChange={ this.goToNextPinInput }/>
+						<input maxLength="1" className="pin pin-3" type="text" ref="pinThree" size="1" onChange={ this.goToNextPinInput }/>
+						<input maxLength="1" className="pin pin-4" type="text" ref="pinFour" size="1" onChange={ this.goToNextPinInput }/>
+
 						<FormButton error={ this.state.error } errorMessage="Invalid PIN" submitMessage="Submit"/>
 					</form>
 				</div>

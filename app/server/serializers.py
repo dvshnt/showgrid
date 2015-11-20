@@ -112,13 +112,20 @@ class AlertSerializer(serializers.ModelSerializer):
 
 
 class ShowSerializer(serializers.ModelSerializer):
+	# venue = serializers.SerializerMethodField('get_show_venue')
+
+	# def get_show_venue(self, obj):
+	# 	data = Venue.objects.get(id=obj.venue.id)
+	# 	serializer = VenueSerializer(data)
+	# 	return serializer.data
+
 	class Meta:
 		model = Show
 		# ADD BACK CANCELLED
 		fields = (
 			'id', 'created_at', 'title', 'headliners', 'openers', 'website', 
 			'star', 'review', 'date', 'ticket', 'price', 'soldout', 
-			'onsale', 'age'
+			'onsale', 'age' #, 'venue'
 		)
 
 
