@@ -25,7 +25,7 @@ Second, you're going to download a ton of Python packages. I should've noted the
 `pip install django-localflavor`
 `pip install django-colorful`
 `pip install MySQL-python`
-`pip install django==1.5.5`
+`pip install django==1.8.5`
 `pip install django-haystack`
 
 There will inevitably be a bevy of other libraries you need to download now. Most likely, these will show up when launching the server and running into various errors.
