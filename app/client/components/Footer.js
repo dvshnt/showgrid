@@ -5,7 +5,7 @@ export default class Header extends Component {
 	render() {
 		return (
 			<footer id="footer">
-				<span>&copy; 2015 Showgrid, Nashville, TN</span>
+				<span>Produced by Davis Hunt, &copy; 2015 Showgrid, Nashville, TN</span>
 
 				<nav>
 					<a href="">About</a>

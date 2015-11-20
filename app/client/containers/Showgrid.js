@@ -9,8 +9,7 @@ import ControlPrevious from '../components/ControlPrevious';
 import Calendar from '../components/Calendar';
 import Footer from '../components/Footer';
 
-import { getGrid } from '../actions/index';
-import { adjustWindowSize } from '../actions/engine';
+import { getGrid, adjustWindowSize } from '../actions/index';
 
 var GridEngine = require('../util/GridEngine');
 
@@ -20,17 +19,15 @@ class Showgrid extends Component {
 		// Listener run when window changes size
 		var _this = this;
 		var adjustGrid = function() {
-			var width = document.documentElement.clientWidth || window.innerWidth;
 			var cells = GridEngine.calculateCellCount();
 
-			_this.props.adjustWindowSize(width, cells);
+			_this.props.adjustWindowSize(cells);
 		};
 
 
 		// Intializing the grid dimensions
-		var width = document.documentElement.clientWidth || window.innerWidth;
 		var cells = GridEngine.calculateCellCount();
-	    this.props.adjustWindowSize(width, cells);
+	    this.props.adjustWindowSize(cells);
 
 	    // Fetching first grid data
 	    var startDate = (this.props.startDate) ? moment(this.props.startDate.date, 'MMMM Do YYYY') : moment()

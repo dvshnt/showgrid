@@ -10,8 +10,7 @@ class CalendarRow extends Component {
 	render() {
 		var shows = [];
 
-		var { days } = this.props;
-		var { venue } = this.props;
+		var { days, venue } = this.props;
 
 		var rowClass = (venue.shows.length > 0) ? "calendar__row" : "calendar__row mini";
 

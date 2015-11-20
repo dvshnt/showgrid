@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import omit from 'lodash/object/omit';
 import merge from 'lodash/object/merge';
 import remove from 'lodash/array/remove';
@@ -11,6 +13,11 @@ export default function state(state={ waiting:true, days:[], user:"", grid:[], f
 	case "FETCH_REQUEST":
 		return Object.assign({}, state, {
 			waiting: true
+		});
+
+	case "ADJUST_SIZE":
+		return  Object.assign({}, state, {
+			days: DateManager.getDaysArray(state.days[0] || moment(), action.cells)
 		});
 
 	case "GRID_REQUEST":

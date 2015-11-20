@@ -6,6 +6,15 @@ import { arrayOf } from 'normalizr';
 
 var GridEngine = require('../util/GridEngine');
 
+
+export function adjustWindowSize(cells) {
+	return {
+		type: "ADJUST_SIZE",
+		cells: cells
+	}
+}
+
+
 function loginUser(username, password) {
 	return {
 		[CALL_API]: {

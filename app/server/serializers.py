@@ -112,12 +112,12 @@ class AlertSerializer(serializers.ModelSerializer):
 
 
 class ShowSerializer(serializers.ModelSerializer):
-	# venue = serializers.SerializerMethodField('get_show_venue')
+	venue = serializers.SerializerMethodField('get_show_venue')
 
-	# def get_show_venue(self, obj):
-	# 	data = Venue.objects.get(id=obj.venue.id)
-	# 	serializer = VenueSerializer(data)
-	# 	return serializer.data
+	def get_show_venue(self, obj):
+		data = Venue.objects.get(id=str(obj.venue.id))
+		serializer = VenueListSerializer(data)
+		return serializer.data
 
 	class Meta:
 		model = Show
@@ -125,7 +125,7 @@ class ShowSerializer(serializers.ModelSerializer):
 		fields = (
 			'id', 'created_at', 'title', 'headliners', 'openers', 'website', 
 			'star', 'review', 'date', 'ticket', 'price', 'soldout', 
-			'onsale', 'age' #, 'venue'
+			'onsale', 'age', 'venue'
 		)
 
 
