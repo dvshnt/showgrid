@@ -1,8 +1,8 @@
 @font-face {
   font-family: 'showgrid--icons';
-  src: url('../font/showgrid--icons.eot?37477634');
-  src: url('../font/showgrid--icons.eot?37477634#iefix') format('embedded-opentype'),
-       url('../font/showgrid--icons.svg?37477634#showgrid--icons') format('svg');
+  src: url('webfonts/showgrid--icons.eot?37477634');
+  src: url('webfonts/showgrid--icons.eot?37477634#iefix') format('embedded-opentype'),
+       url('webfonts/showgrid--icons.svg?37477634#showgrid--icons') format('svg');
   font-weight: normal;
   font-style: normal;
 }

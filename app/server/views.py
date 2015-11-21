@@ -15,7 +15,6 @@ from server.models import *
 
 from django.http import HttpResponse
 from django.http import HttpResponseServerError
-from django.http import JsonResponse
 
 from django.core import serializers
 from django.shortcuts import render

@@ -228,7 +228,7 @@ class ShowgridUser(AbstractBaseUser):
 	username = models.CharField(_('username'), max_length=30, blank=True)
 	email = models.EmailField(_('email address'), unique=True)
 	
-	phone = PhoneNumberField(unique=True, blank=True)
+	phone = PhoneNumberField(unique=True, blank=True, default=None, null=True)
 	phone_verified = models.BooleanField(default=False,blank=False)
 	pin_hash  = models.TextField(blank=True)
 	pin_sent =  models.BooleanField(default=False,blank=False)
