@@ -13,6 +13,16 @@ class Search extends Component {
 	}
 
 	displaySearchResults(results) {
+		if (this.props.query === "") {
+			return (
+				<div className="fail">
+					<p>For best results, search by venue or artist.</p>
+					<p>For example, <i>mercy lounge</i> or <i>alabama shakes</i></p>
+					<p>To look at a particular date, use the date selector at the top of the calender.</p>
+				</div>
+			);
+		}
+		
 		if (results.length === 0 ) {
 			return (
 				<div className="fail">

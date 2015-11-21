@@ -11,16 +11,9 @@ export default class ListItem extends Component {
 		var show = this.props.show;
 		var venue = show.venue;
 
-		var primaryColor = {
-			'background': venue.primary_color || '#000000'
-		};
-
-		var secondaryColor = {
-			'color': venue.secondary_color || '#FFFFFF'
-		};
-
-		var accentColor = {
-			'color': venue.accent_color || '#F2F2F2'
+		var boxStyle = {
+			'background': venue.primary_color || '#000000',
+			'border': "2px solid " + (venue.secondary_color || '#FFFFFF')
 		};
 
 		var onsale = DateManager.areTicketsOnSale(show.onsale);
@@ -53,14 +46,14 @@ export default class ListItem extends Component {
 		var time = DateManager.formatShowTime(show.date);
 
 		if (show.age > 0) {
-			age = <span className="age" style={ accentColor }>{ show.age }+</span>;
+			age = <span className="age">{ show.age }+</span>;
 		}
 
 		if (show.price < 0) {
-			price = <span className="price" style={ accentColor }>FREE</span>;
+			price = <span className="price">FREE</span>;
 		}
 		else if (show.price > 0) {
-			price = <span className="price" style={ accentColor }>${ show.price }</span>;
+			price = <span className="price">${ show.price }</span>;
 		}
 
 
@@ -87,7 +80,7 @@ export default class ListItem extends Component {
 		}
 
 		if (show.headliners !== '') {
-			headliner = <h3>{ show.headliners }</h3>;
+			headliner = <h3>{ star }{ show.headliners }</h3>;
 		}
 
 		if (show.openers !== '') {
@@ -115,15 +108,15 @@ export default class ListItem extends Component {
 
 		return (
 			<div className="list--item">
-				<header style={ primaryColor }>
-					{ star }
-					<h4 style={ secondaryColor }>{ venue.name }</h4>
-					<span className="time" style={ accentColor }>{ time }</span>
+				<header>
+					<div className="pic" style={ boxStyle }></div>
+					<h4>{ venue.name }</h4>
 					{ age }{ price }
 				</header>
 				<div className="info">
 					{ date }
 					<div className="artists">
+						<span className="time">{ time }</span>
 						{ title }
 						{ headliner }
 						{ opener }
