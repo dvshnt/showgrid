@@ -1,3 +1,4 @@
+
 app/server/*.pyc
 app/server/wsgi.py
 app/server/settings.py
@@ -17,6 +18,5 @@ app/client/public/css/*.css
 app/client/public/css/*.css.map
 
 assets/**
-app/static/**
 **/**/*.pyc
 **/**/.DS_Store
