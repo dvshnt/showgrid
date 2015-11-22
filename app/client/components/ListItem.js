@@ -12,8 +12,8 @@ export default class ListItem extends Component {
 		var venue = show.venue;
 
 		var boxStyle = {
-			'background': venue.primary_color || '#000000',
-			'border': "2px solid " + (venue.secondary_color || '#FFFFFF')
+			//'background': venue.primary_color || '#000000',
+			'border-top': "8px solid " + (venue.primary_color || '#FFFFFF') 
 		};
 
 		var onsale = DateManager.areTicketsOnSale(show.onsale);
@@ -36,7 +36,7 @@ export default class ListItem extends Component {
 		}
 
 
-		if (show.review !== "") {
+		if (show.review && show.review !== "") {
 			review = <article dangerouslySetInnerHTML={{__html: show.review}}></article>;
 		}
 
@@ -107,9 +107,9 @@ export default class ListItem extends Component {
 
 
 		return (
-			<div className="list--item">
+			<div className="list--item"  style={ boxStyle }>
 				<header>
-					<div className="pic" style={ boxStyle }></div>
+					<div className="pic"></div>
 					<h4>{ venue.name }</h4>
 					{ age }{ price }
 				</header>

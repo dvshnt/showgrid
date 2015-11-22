@@ -14,12 +14,16 @@
 		font-size:24px;
 	}
 
-	&.search-list {
-		margin-top:10px;
+	& > h3:first-of-type {
+		margin-top:40px;
+	}
 
-		h4 {
+	&.search-list-full {
+		margin-top:15px;
+
+		h4.query {
 			color:rgba(0,0,0,0.5);
-			font-weight:100;
+			font-weight:200;
 		}
 	}
 }
@@ -52,7 +56,7 @@
 
 		}
 
-		&.search-list {
+		&.search-list-full {
 			margin-top:70px;
 
 			h4 {

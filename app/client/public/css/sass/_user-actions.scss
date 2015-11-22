@@ -53,7 +53,9 @@
 			margin:0 2%;
 			padding:15px 0;
 
+			border:none;
 			border-bottom:2px solid #e2e2e2;
+			background:none;
 
 			color:#d2d2d2;
 			font-size:20px;
@@ -61,8 +63,12 @@
 
 			cursor:pointer;
 
-			b {
-				margin-right:15px;
+			span {
+    			pointer-events: none;
+
+				b {
+					margin-right:15px;
+				}
 			}
 		}
 
