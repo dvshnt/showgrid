@@ -15,6 +15,9 @@
 			display:-webkit-flex;
 			display:		flex;
 
+			-webkit-flex-flow:row wrap;
+					flex-flow:row wrap;
+
 			-webkit-align-items:center;
 					align-items:center;
 
@@ -80,6 +83,19 @@
 					margin:0 0 0 15px;
 
 					font-size:14px;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 500px ) {
+	.user--actions {
+		.actions {
+			.alert-block {
+				.alert {
+					-webkit-flex:0 0 100%;
+							flex:0 0 100%;
 				}
 			}
 		}
