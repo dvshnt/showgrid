@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, IndexLink } from 'react-router';
+import { connect } from 'react-redux';
 
 import HeaderPageOption from './HeaderPageOption';
 import LogInOut from './LogInOut';
@@ -7,7 +8,7 @@ import LogInOut from './LogInOut';
 var GridEngine = require('../util/GridEngine');
 
 
-export default class HeaderOptions extends Component {
+class HeaderOptions extends Component {
 	constructor(props) {
 		super(props);
 
@@ -43,14 +44,24 @@ export default class HeaderOptions extends Component {
 					<br></br>
 					<span>Calendar</span>
 				</Link>
-
 				<HeaderPageOption symbol="icon-recent" text="New Shows" link="/recent"/>
 				<HeaderPageOption symbol="icon-star" text="Featured" link="/featured"/>
-				<HeaderPageOption symbol="icon-user" text="My Profile" link="/profile"/>
+				{(()=>{
+					if(this.props.user !== "") return (<HeaderPageOption symbol="icon-user" text="My Profile" link="/profile"/>)
+				})()}
 				<HeaderPageOption symbol="icon-search" text="Search" link="/search"/>
 				<LogInOut />
 			</div>
 		)
 	}
 };
+
+function mapStateToProps(state) {
+	return { 
+		user: state.state.user
+	};
+}
+
+
+export default connect(mapStateToProps)(HeaderOptions);
 				

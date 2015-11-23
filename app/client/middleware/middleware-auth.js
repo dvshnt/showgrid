@@ -16,8 +16,8 @@ function authMiddleware({ getState }) {
 		var token = localStorage.getItem("token") || "";
 		if (token !== "") {
 			action[CALL_API].headers = {
-				'Authorization': 'Token ' + token
-			};
+				'Authorization' : 'Token ' + token
+			}
 		}
 		else if (token === "" && (action[CALL_API].method === "POST" ||  action[CALL_API].method === "DELETE")) {
 			store.dispatch(showLoginModal());

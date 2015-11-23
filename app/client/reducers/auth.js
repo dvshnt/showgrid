@@ -9,14 +9,15 @@ export default function recent(state={
 			});
 
 		case "TOKEN_SUCCESS":
-			console.log("GOT TOKEN",action.payload.token);
+			console.log("GOT TOKEN")
+			console.log(action.payload.token);
 			localStorage.setItem("token", action.payload.token);
-
 			return  Object.assign({}, state, {
 				waiting: false
 			});
 
 		case "TOKEN_FAILURE":
+			localStorage.removeItem("token");
 			console.log(action.payload);
 			return  Object.assign({}, state, {
 				waiting: false

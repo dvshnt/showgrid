@@ -2,6 +2,7 @@
 app/server/*.pyc
 app/server/wsgi.py
 app/server/settings.py
+app/server/migrations
 app/server/whoosh_index/*
 
 app/media/**

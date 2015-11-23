@@ -8,6 +8,7 @@ import { hideLoginModal } from '../actions/modal';
 import { getUserToken, signupUser } from '../actions/index';
 
 import FormButton from './FormButton';
+
 import classNames from 'classnames';
 
 var GridEngine = require('../util/GridEngine');
@@ -80,7 +81,7 @@ class AuthModal extends Component {
 			isSignUp: false
 		})
 		this.props.hideLoginModal();
-		window.location.replace(GridEngine.domain + _this.props.route);
+		window.location.replace(GridEngine.domain + this.props.route);
 	}
 
 

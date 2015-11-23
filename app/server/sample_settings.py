@@ -14,19 +14,18 @@ TWILIO_NUMBER = '+1 931-444-6735'
 
 
 
+
 ADMINS = (
     ('Yury', 'yurisido@gmail.com')
 )
 
 MANAGERS = ADMINS
-
 USE_TZ = True
-
 DATABASES = {
     'default': {
 
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'showgriddb', # Or path to database file if using sqlite3.
+        'NAME': 'eve', # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'root',
         'PASSWORD': '',
@@ -77,19 +76,20 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = '/Users/arxii/Documents/showgrid/app/static/'
+STATIC_ROOT = ''
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = ( os.path.join('static'), )
 
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -116,6 +116,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     )
 }
 
@@ -128,8 +129,20 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(BASE_DIR, 'templates'),
+    '/Users/arxii/Documents/showgrid/app/client/views/',
+    #os.path.join(BASE_DIR, 'client', 'views')
 )
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
+        'URL': 'http://localhost:9001/solr/default',
+        'TIMEOUT': 60 * 5,
+        'INCLUDE_SPELLING': True,
+        'BATCH_SIZE': 100,
+        'EXCLUDED_INDEXES': ['thirdpartyapp.search_indexes.BarIndex'],
+    },
+}
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -141,8 +154,54 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'rest_framework',
     'rest_framework.authtoken',
+    # 'social.apps.django_app.default',
     'server',
 )
+
+AUTHENTICATION_BACKENDS = (
+    # 'social.backends.twitter.FacebookOAuth2',
+    # 'social.backends.facebook.FacebookAppOAuth2',
+    # 'social.backends.twitter.TwitterOAuth',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    # 'social.apps.django_app.context_processors.backends',
+    # 'social.apps.django_app.context_processors.login_redirect',
+)
+
+
+# #auth keys
+# SOCIAL_AUTH_FACEBOOK_KEY = '868089599911045'
+# SOCIAL_AUTH_FACEBOOK_SECRET = '02801ae29d77605a491125911a47e4b8'
+# SOCIAL_AUTH_URL_NAMESPACE = 'social'
+# SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+# SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+#   'fields': 'id, name, email, age_range'
+# }
+# SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
+
+# LOGIN_URL = '/login/'
+# LOGIN_REDIRECT_URL = '/'
+
+# SOCIAL_AUTH_PIPELINE = (
+#     # Get the information we can about the user and return it in a simple
+#     # format to create the user instance later. On some cases the details are
+#     # already part of the auth response from the provider, but sometimes this
+#     # could hit a provider API.
+#     'social.pipeline.social_auth.social_details',
+
+#     # Get the social uid from whichever service we're authing thru. The uid is
+#     # the unique identifier of the given user in the provider.
+#     'social.pipeline.social_auth.social_uid',
+
+#     # Verifies that the current auth process is valid within the current
+#     # project, this is were emails and domains whitelists are applied (if
+#     # defined).
+#     'social.pipeline.social_auth.auth_allowed',
+#     'server.views.socialAuth',
+# )
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

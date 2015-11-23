@@ -76,7 +76,10 @@ def signupUser(request):
 
 	#200 create a new user and generate token
 	user = ShowgridUser.objects.create_user(email, password)
+	user.is_active=True
+ 	user.save()
 	token = Token.objects.get_or_create(user=user)
+
 	return Response({"token":token[0].key})
 
 def socialAuth(backend, user, response, *args, **kwargs):
