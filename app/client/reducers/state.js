@@ -68,7 +68,6 @@ export default function state(state={ waiting:true, days:[], user:"", grid:[], f
 	case "USER_SUCCESS":
 		if (action.payload && action.payload.entities && action.payload.entities.users) {
 			var index = action.payload.result;
-			localStorage.setItem("token", action.payload.token);
 			return Object.assign({}, state, {
 				waiting: false,
 				user: index,
