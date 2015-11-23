@@ -159,7 +159,7 @@ class AuthModal extends Component {
 								<FormButton error={ this.state.error } errorMessage="Invalid Username or Password" submitMessage="Sign In" />
 							</form>
 							<p>
-								forgot your password? email <a href="mailto:info@showgrid.com?Subject=Password%20RESET" target="_top" ><b>info@showgrid.com</b></a>
+								Forgot your password? email <a href="mailto:info@showgrid.com?Subject=Password%20RESET" target="_top" ><b>info@showgrid.com</b></a>
 							</p>
 						</div>
 						<div className= 'modalScreen' id='SignUpModalScreen'>
