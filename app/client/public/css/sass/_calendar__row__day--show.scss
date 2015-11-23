@@ -76,7 +76,7 @@
 				margin:5px 0 0 0;
 
 				font-size:18px;
-				font-weight:700;
+				font-weight:500;
 
 				b {
 					position:relative;
@@ -236,8 +236,8 @@
 
 			b.icon-alert,
 			b.icon-heart {
-				-webkit-flex: 0 0 20%;
-						flex: 0 0 20%;
+				-webkit-flex: 0 0 17.5%;
+						flex: 0 0 17.5%;
 
 				color:rgba(0,0,0,0.1);
 				font-size:20px;
@@ -260,7 +260,7 @@
 		.show {
 			.titles {
 				.main {
-					font-size:20px;
+					font-size:18px;
 
 					b {
 						font-size:20px

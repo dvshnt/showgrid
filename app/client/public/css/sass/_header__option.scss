@@ -43,16 +43,16 @@
 	a:hover b,
 	a.selected b {
 		opacity:1;
-		top:5px;
+		top:4px;
 	}
 
 	a span {
 		position:relative;
-		top:-8px;
+		top:-9px;
 
 		opacity:0;
 
-		color:#ffffff;
+		color:rgba(255,255,255,0.8);
 		font-size:8px;
 		font-weight:500;
 		text-transform:uppercase;
@@ -68,7 +68,7 @@
 	a:hover span,
 	a.selected span {
 		opacity:1;
-		top:-12px;
+		top:-13px;
 	}
 
 	a:last-of-type {
@@ -83,7 +83,7 @@
 					flex:1 1 40px;
 
 			margin:0;
-			padding:0 8px;
+			padding:3px 8px;
 		}
 
 		a b {
@@ -117,6 +117,9 @@
 
 		a:last-of-type {
 			display:block;
+		}
+		span.loginout {
+			display:none;
 		}
 	}
 }

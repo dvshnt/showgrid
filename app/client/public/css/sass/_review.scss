@@ -1,9 +1,9 @@
 .list--item {
 	article {
-
-
 		margin-bottom:20px;
-		padding:15px 40px 5px 40px;
+		padding:25px 40px 25px 40px;
+
+		text-align:center;
 
 
 		img {
@@ -13,11 +13,20 @@
 		    margin: 0 20px 10px 0;
 		}
 
+		img.full {
+			width:100%;
+			margin:0 0 40px 0;
+		}
+
 		p {
 			margin-top:0;
 
 			font-size:18px;
 		    text-align: justify;
+		}
+
+		iframe {
+			margin:30px auto 0;
 		}
 	}
 }
@@ -27,11 +36,25 @@
 	.list--item {
 
 		article {
-			padding:15px 30px 5px;
+			padding:15px 15px 5px;
 
 			img {
 				width:100%;
 				margin-bottom:30px;
+			}
+
+			img.full {
+				margin:0 0 20px 0;
+			}
+
+			p {
+				font-size:16px;
+			}
+
+			iframe {
+				max-width:300px;
+
+				margin:10px auto 0;
 			}
 		}
 	}

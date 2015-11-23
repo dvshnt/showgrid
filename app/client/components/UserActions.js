@@ -79,8 +79,8 @@ class UserActions extends Component {
 		return (
 			<div className="user--actions">
 				<div className="tabs">
-					<span onClick={ this.selectTab } className={ favoritesTabClass }><b className="icon-heart"></b>Favorites</span>
-					<span onClick={ this.selectTab } className={ alertTabClass }><b className="icon-alert"></b> Alerts</span>
+					<button onClick={ this.selectTab } className={ favoritesTabClass }><span><b className="icon-heart"></b>Favorites</span></button>
+					<button onClick={ this.selectTab } className={ alertTabClass }><span><b className="icon-alert"></b> Alerts</span></button>
 				</div>
 				<div className="actions">
 					{ items }

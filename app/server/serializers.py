@@ -113,6 +113,12 @@ class AlertSerializer(serializers.ModelSerializer):
 
 class ShowSerializer(serializers.ModelSerializer):
 	venue = serializers.SerializerMethodField('get_show_venue')
+	review = serializers.SerializerMethodField('get_shows_review')
+
+	def get_shows_review(self, obj):
+		if obj.review:
+			return obj.review.read().decode('utf-8')
+		return ""
 
 	def get_show_venue(self, obj):
 		data = Venue.objects.get(id=str(obj.venue.id))

@@ -1,11 +1,11 @@
 .user--actions {
-	width:75%;
+	width:800px;
 
 	margin:0 auto;
 
 	background:#ffffff;
 
-	border-radius:5px;
+	border-radius:2px;
 
 	-webkit-box-shadow:0 2px 2px rgba(0,0,0,0.05);
 			box-shadow:0 2px 2px rgba(0,0,0,0.05);
@@ -53,7 +53,9 @@
 			margin:0 2%;
 			padding:15px 0;
 
+			border:none;
 			border-bottom:2px solid #e2e2e2;
+			background:none;
 
 			color:#d2d2d2;
 			font-size:20px;
@@ -61,8 +63,12 @@
 
 			cursor:pointer;
 
-			b {
-				margin-right:15px;
+			span {
+    			pointer-events: none;
+
+				b {
+					margin-right:15px;
+				}
 			}
 		}
 
@@ -81,6 +87,22 @@
 
 	.actions {
 		width:100%;
+	}
+}
+
+@media screen and (max-width: 500px ) {
+	.user--actions {
+		width:100%;
+
+		.tabs {
+			.tab {
+				font-size:16px;
+
+				b {
+					font-size:16px;
+				}
+			}
+		}
 	}
 }
 

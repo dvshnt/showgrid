@@ -21,6 +21,7 @@ urlpatterns = patterns('',
 
     ## static page endpoints
     url(r'^$', 'server.views.index', name='index'),
+    url(r'^search$', 'server.views.index', name='search'),
     url(r'^recent$', 'server.views.index', name='recent'),
     url(r'^profile$', 'server.views.index', name='profile'),
     url(r'^featured$', 'server.views.index', name='featured'),

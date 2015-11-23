@@ -13,6 +13,16 @@ class Search extends Component {
 	}
 
 	displaySearchResults(results) {
+		if (this.props.query === "") {
+			return (
+				<div className="fail">
+					<p>For best results, search by venue or artist.</p>
+					<p>For example, <i>mercy lounge</i> or <i>alabama shakes</i></p>
+					<p>To look at a particular date, use the date selector at the top of the calender.</p>
+				</div>
+			);
+		}
+		
 		if (results.length === 0 ) {
 			return (
 				<div className="fail">
@@ -27,7 +37,7 @@ class Search extends Component {
 		if (results.length > 0) {
 			var list = [];
 
-			list.push(<h4>Search results for: <i>{ this.props.query }</i></h4>);
+			list.push(<h4 className="query">Search results for: <i>{ this.props.query }</i></h4>);
 
 			for (var i=0; i < results.length; i++) {
 				list.push( <ListItem key={ results[i].id } show={ results[i] } showDate={ true } showStar={ true } /> );
@@ -41,7 +51,7 @@ class Search extends Component {
 		var results = this.displaySearchResults(this.props.results.results);
 
 		return (
-			<div id="list" className="search-list">
+			<div id="list" className="search-list-full">
 				{ results }
 			</div>
 		)
