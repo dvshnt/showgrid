@@ -4,6 +4,8 @@ from datetime import timedelta, date, datetime
 import json
 import collections
 
+import re #regex
+
 import datetime as datetime_2
 
 from operator import attrgetter
@@ -44,6 +46,49 @@ import dateutil.parser
 import re
 def index(request, year=None, month=None, day=None):
 	return render(request, "index.html")
+
+from rest_framework.authtoken.models import Token
+from rest_framework.decorators import api_view
+
+
+
+
+
+#signup a user and respond with token or 500 error.
+@api_view(['POST'])
+def signupUser(request):
+	body = json.loads(request.body.decode('utf-8'))
+	email = body['email']
+	password = body['password']
+	
+	#500 invalid parameters
+	if email == None or password == None:
+		return Response({"status":"bad_params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+	
+
+	users = ShowgridUser.objects.filter(email=email)
+	#500 user with same email exists.
+	if len(users) > 0:
+		return Response({"status":"user_exists"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+	#name = re.split("@",email)[0]
+
+
+	#200 create a new user and generate token
+	user = ShowgridUser.objects.create_user(email, password)
+	token = Token.objects.get_or_create(user=user)
+	return Response({"token":token[0].key})
+
+def socialAuth(backend, user, response, *args, **kwargs):
+	if backend.name == 'facebook':
+		profile = user.get_profile()
+        if profile is None:
+            profile = Profile(user_id=user.id)
+        # profile.gender = response.get('gender')
+        # profile.link = response.get('link')
+        # profile.timezone = response.get('timezone')
+        #profile.save()
+
 
 
 

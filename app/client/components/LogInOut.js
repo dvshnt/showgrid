@@ -58,5 +58,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(LogInOut);
+export default connect(mapStateToProps, bindActionCreators.bind(null,{showLoginModal}))(LogInOut);
 				

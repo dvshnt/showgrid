@@ -12,10 +12,12 @@ urlpatterns = patterns('',
     ## Standard Django admin endpoints for a crude CMS
     url(r'^admin/', include(admin.site.urls)),
 
+   
 
     ## Authentication flow via django-rest-auth
     url(r'^login$', auth_views.obtain_auth_token),
-        
+    url(r'^signup$', 'server.views.signupUser', name='signup'), #normal signup (returns token)
+
 
     ## static page endpoints
     url(r'^$', 'server.views.index', name='index'),
@@ -26,7 +28,6 @@ urlpatterns = patterns('',
 
     ## user actions
     url(r'^user/(?P<action>\w+)$', views.UserActions.as_view(), name='user actions'),
-
 
  	url(r'^i/grid/$', views.VenueList.as_view(), name='grid'),
 	url(r'^i/grid/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)$', views.VenueList.as_view(), name='grid'),

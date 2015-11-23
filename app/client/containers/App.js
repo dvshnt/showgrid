@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import Header from '../components/Header';
-import LoginModal from '../components/LoginModal';
+import AuthModal from '../components/AuthModal';
 import PhoneModal from '../components/PhoneModal';
 import Footer from '../components/Footer';
 
@@ -38,7 +38,7 @@ class App extends Component {
 
 		return (
 			<div id="container">
-				<LoginModal />
+				<AuthModal />
 				<PhoneModal />
 				<Header />
 				{ loading }

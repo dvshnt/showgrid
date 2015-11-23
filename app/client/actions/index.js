@@ -32,6 +32,7 @@ function loginUser(username, password) {
 	};
 }
 
+
 // Fetches a single user from Github API unless it is cached.
 // Relies on Redux Thunk middleware.
 export function getUserToken(username, password) {
@@ -40,6 +41,24 @@ export function getUserToken(username, password) {
 	};
 }
 
+export function signupUser(email, password) {
+	return (dispatch, getState) => {
+		return dispatch({
+			[CALL_API]: {
+				endpoint: GridEngine.domain + '/signup',
+			    method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+			    types: ['TOKEN_REQUEST', 'TOKEN_SUCCESS', 'TOKEN_FAILURE'],
+			    body: JSON.stringify({
+	    			email: email,
+	    			password: password
+	    		})
+			}			
+		});
+	};
+};
 
 function getUser() {
 	return {
