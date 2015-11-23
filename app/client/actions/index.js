@@ -60,6 +60,25 @@ export function signupUser(email, password) {
 	};
 };
 
+export function updateProfile(name, email) {
+	return (dispatch, getState) => {
+		return dispatch({
+			[CALL_API]: {
+				endpoint: GridEngine.domain + '/user/profile',
+			    method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+			    types: ['UPDATEUSER_REQUEST', 'UPDATEUSER_SUCCESS', 'UPDATEUSER_FAILURE'],
+			    body: JSON.stringify({
+	    			name: name,
+	    			email: email
+	    		})
+			}		
+		})
+	}
+}
+
 function getUser() {
 	return {
 		[CALL_API]: {

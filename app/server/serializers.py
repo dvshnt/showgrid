@@ -32,6 +32,7 @@ class ShowgridUserSerializer(UserDetailsSerializer):
 
 	def get_user_profile(self, obj):
 		return {
+			'name': obj.name,
 			'email': obj.username,
 			'phone': str(obj.phone)
 		}

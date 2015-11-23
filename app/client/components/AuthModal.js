@@ -30,7 +30,6 @@ class AuthModal extends Component {
 		this.state = {
 			token: null,
 			error: false,
-			signup_error: false,
 			isSignUp: false,
 			facebook_login: false,
 		};
@@ -96,7 +95,6 @@ class AuthModal extends Component {
 	resetError(e) {
 		if (this.state.error) {
 			this.setState({
-				signup_error: false,
 				error: false
 			});
 		}
@@ -108,7 +106,8 @@ class AuthModal extends Component {
 		if (response.payload.hasOwnProperty('token')) return this.closeModal();
 
 		// Handle Login Errors
-		else if (response.type === "TOKEN_FAILURE") this.setState({ error: true });
+		
+		return this.setState({ error: true });
 	}
 
 	userSignup(e){

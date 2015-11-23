@@ -111,7 +111,16 @@ class UserActions(APIView):
 	def put(self, request, action=None):
 		user = request.user
 
-		if action == 'alert':
+		#update profile
+		if action == 'profile':
+			body = json.loads(request.body.decode('utf-8'))
+			user.name = body['name']
+			user.email = body['email']
+			user.save()
+			serializer = ShowgridUserSerializer(user)
+			return Response(serializer.data)
+
+		elif action == 'alert':
 			body_unicode = request.body.decode('utf-8')
 			body = json.loads(body_unicode)
 			alert = body['alert']
@@ -210,6 +219,8 @@ class UserActions(APIView):
 			return Response({ 'status': "failure", 'show': show.id })
 
 
+
+
 		#set user phone
 		if action == 'phone_set':
 			body_unicode = request.body.decode('utf-8')
@@ -224,13 +235,13 @@ class UserActions(APIView):
 				user.phone = phone
 				user.send_pin(user.generate_pin())
 				user.save()
-				return Response({'status':'phone_set',phone:user.phone})
+				return Response({'status':'phone_set','phone':user.phone})
 			
 			elif user.phone_verified == False:
 				user.phone = phone
 				user.send_pin(user.generate_pin())
 				user.save()
-				return Response({'status':'phone_set','phone':user.phone.format_as('GB')})
+				return Response({'status':'phone_set','phone':user.phone})
 			
 			else:
 				alerts = Alert.objects.filter(user=user)
@@ -238,7 +249,7 @@ class UserActions(APIView):
 					alert.delete()
 				user.phone = phone
 				user.save()
-				return Response({'status':'phone_set_alerts_cleared',phone:user.phone})
+				return Response({'status':'phone_set_alerts_cleared','phone':user.phone})
 
 
 		#send pin to user phone

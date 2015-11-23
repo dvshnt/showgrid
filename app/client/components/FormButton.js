@@ -6,7 +6,7 @@ export default class FormButton extends Component {
 		var buttonText = (this.props.error) ? this.props.errorMessage : this.props.submitMessage;
 
 		return (
-			<input type="submit" ref="formButton" className={ errorClass } value={ buttonText }/>
+			<input type="submit" ref="formButton" className={ errorClass } value={ buttonText } onClick={this.props.onClick}/>
 		)
 	}
 };

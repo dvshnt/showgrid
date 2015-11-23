@@ -49,8 +49,8 @@ class PhoneModal extends Component {
 	closeOnClick(e) {
 		if (e.target.id === "overlay") {
 			this.props.hidePhoneModal();
+			window.location.replace(GridEngine.domain + this.props.route);
 		}
-
 		return false;
 	}
 
