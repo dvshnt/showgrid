@@ -116,6 +116,10 @@ export default function state(state={ waiting:true, days:[], user:"", grid:[], f
 		return state;
 
 	case "ALERT_CHANGE_SUCCESS":
+		var index = action.payload.id;
+		var which = action.payload.which;
+
+		state.entities.alerts[index].which = which;
 		return state;
 
 	case "ALERT_DELETE_SUCCESS":

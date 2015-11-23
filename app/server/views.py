@@ -126,7 +126,7 @@ class UserActions(APIView):
 			except:
 				return  Response({ 'status': '' })
 
-			return  Response({ 'status': 'alert_updated' })
+			return  Response({ 'status': 'alert_updated', 'id': alert.id, 'which': alert.which })
 
 
 	def get(self, request, action=None):

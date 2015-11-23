@@ -107,42 +107,42 @@ class SetAlert extends Component {
 		var options = [];
 
 		if (now.isBefore(date)) {
-			options.push(<option data-value='{"id":0, "unit":"days","num":0}' selected={ alert.which === 0 }>At time of show</option>);
+			options.push(<option value="0" data-value='{"id":0, "unit":"days","num":0}' selected={ alert.which === 0 }>At time of show</option>);
 		}
 
 		if (now.isBefore(date.subtract(30, 'minutes'))) {
-			options.push(<option data-value='{"id":1, "unit":"minutes","num":30}' selected={ alert.which === 1 }>30 Minutes before show</option>);
+			options.push(<option value="1" data-value='{"id":1, "unit":"minutes","num":30}' selected={ alert.which === 1 }>30 Minutes before show</option>);
 		}
 
 		if (now.isBefore(date.subtract(1, 'hours'))) {
-			options.push(<option data-value='{"id":1, "unit":"hours","num":1}' selected={ alert.which === 2 }>1 Hour before show</option>);
+			options.push(<option value="2" data-value='{"id":2, "unit":"hours","num":1}' selected={ alert.which === 2 }>1 Hour before show</option>);
 		}
 
 
 		if (now.isBefore(date.subtract(2, 'hours'))) {
-			options.push(<option data-value='{"id":1, "unit":"hours","num":2}' selected={ alert.which === 3 }>2 Hours before show</option>);
+			options.push(<option value="3" data-value='{"id":3, "unit":"hours","num":2}' selected={ alert.which === 3 }>2 Hours before show</option>);
 		}
 
 
 		if (now.isBefore(date.subtract(1, 'days'))) {
-			options.push(<option data-value='{"id":1, "unit":"days","num":1}' selected={ alert.which === 4 }>1 Day before show</option>);
+			options.push(<option value="4" data-value='{"id":4, "unit":"days","num":1}' selected={ alert.which === 4 }>1 Day before show</option>);
 		}
 
 
 		if (now.isBefore(date.subtract(2, 'days'))) {
-			options.push(<option data-value='{"id":1, "unit":"days","num":2}' selected={ alert.which === 5 }>2 Days before show</option>);
+			options.push(<option value="5" data-value='{"id":5, "unit":"days","num":2}' selected={ alert.which === 5 }>2 Days before show</option>);
 		}
 
 
 		if (now.isBefore(date.subtract(7, 'days'))) {
-			options.push(<option data-value='{"id":1, "unit":"days","num":7}' selected={ alert.which === 6 }>1 Week before show</option>);
+			options.push(<option value="6" data-value='{"id":6, "unit":"days","num":7}' selected={ alert.which === 6 }>1 Week before show</option>);
 		}
 
 		if (options.length === 0) {
 			return "Show has already started. Get your ass over there!";
 		}
 
-		return (<span>Alert me <select onChange={ this.createAlert }>{ options }</select></span>);
+		return <select onChange={ this.createAlert }>{ options }</select>;
 	}
 
 	render() {
@@ -164,6 +164,7 @@ class SetAlert extends Component {
 		return (
 			<b className={ className } onClick={ this.toggleAlert }>
 				<div className="alert-box">
+					Alert me
 					{ options }
 				</div>
 				{ alertInfo }
