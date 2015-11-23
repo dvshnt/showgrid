@@ -75,7 +75,7 @@ def signupUser(request):
 
 
 	#200 create a new user and generate token
-	user = ShowgridUser.objects.create_user(email, password)
+	user = ShowgridUser.objects.create_user(email, password, phone=None)
 	user.is_active=True
  	user.save()
 	token = Token.objects.get_or_create(user=user)
@@ -224,7 +224,7 @@ class UserActions(APIView):
 				user.phone = phone
 				user.send_pin(user.generate_pin())
 				user.save()
-				return Response({'status':'phone_set',phone:user.phone},mimetype="application/json")
+				return Response({'status':'phone_set',phone:user.phone})
 			
 			elif user.phone_verified == False:
 				user.phone = phone

@@ -229,8 +229,7 @@ from django.core.validators import RegexValidator
 class ShowgridUser(AbstractBaseUser):
 	username = models.CharField(_('username'), max_length=30, blank=True)
 	email = models.EmailField(_('email address'), unique=True)
-	phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
-	phone = models.CharField(unique=True,validators=[phone_regex], blank=True, null=True,max_length=255) # validators should be a list
+	phone = PhoneNumberField(max_length=255,  unique=True,blank=True,null=True,default=None)
 	phone_verified = models.BooleanField(default=False,blank=False)
 	pin_hash  = models.TextField(blank=True)
 	pin_sent =  models.BooleanField(default=False,blank=False)
@@ -269,7 +268,7 @@ class ShowgridUser(AbstractBaseUser):
 			return False
 
 	def send_pin(self,pin):
-		msg = 'your pin is ' + pin
+		msg = 'Your pin is ' + pin
 		Sender.send_message(msg,self.phone.format_as('GB'))
 
 
