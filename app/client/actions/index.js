@@ -50,7 +50,7 @@ export function signupUser(email, password) {
 				headers: {
 					'Content-Type': 'application/json'
 				},
-			    types: ['TOKEN_REQUEST', 'TOKEN_SUCCESS', 'TOKEN_FAILURE'],
+			    types: ['REGISTRATION_REQUEST', 'REGISTRATION_SUCCESS', 'REGISTRATION_FAILURE'],
 			    body: JSON.stringify({
 	    			email: email,
 	    			password: password
