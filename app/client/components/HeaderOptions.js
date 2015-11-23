@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link, IndexLink } from 'react-router';
-import { connect } from 'react-redux';
 
 import HeaderPageOption from './HeaderPageOption';
 import LogInOut from './LogInOut';
@@ -8,7 +7,7 @@ import LogInOut from './LogInOut';
 var GridEngine = require('../util/GridEngine');
 
 
-class HeaderOptions extends Component {
+export default class HeaderOptions extends Component {
 	constructor(props) {
 		super(props);
 
@@ -46,9 +45,7 @@ class HeaderOptions extends Component {
 				</Link>
 				<HeaderPageOption symbol="icon-recent" text="New Shows" link="/recent"/>
 				<HeaderPageOption symbol="icon-star" text="Featured" link="/featured"/>
-				{(()=>{
-					if(this.props.user !== "") return (<HeaderPageOption symbol="icon-user" text="My Profile" link="/profile"/>)
-				})()}
+				<HeaderPageOption symbol="icon-user" text="My Profile" link="/profile"/>
 				<HeaderPageOption symbol="icon-search" text="Search" link="/search"/>
 				<LogInOut />
 			</div>
@@ -56,12 +53,12 @@ class HeaderOptions extends Component {
 	}
 };
 
-function mapStateToProps(state) {
-	return { 
-		user: state.state.user
-	};
-}
+// function mapStateToProps(state) {
+// 	return { 
+// 		user: state.state.user
+// 	};
+// }
 
 
-export default connect(mapStateToProps)(HeaderOptions);
+// export default connect(mapStateToProps)(HeaderOptions);
 				
