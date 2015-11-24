@@ -115,10 +115,10 @@ class UserActions(APIView):
 		if action == 'profile':
 			body = json.loads(request.body.decode('utf-8'))
 
-			if(body['email'] != None):
+			if(body['email'] != "None" and body['email'] != "" and body['email'] != None ):
 				user.email = body['email']
 				user.username = body['email']
-			if(body['name'] != None):
+			if(body['name'] != "None" and body['name'] != "" and body['name'] != None):
 				user.name = body['name']
 			user.save()
 			serializer = ShowgridUserSerializer(user)

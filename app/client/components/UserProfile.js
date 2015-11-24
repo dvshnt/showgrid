@@ -29,9 +29,9 @@ class UserProfile extends Component {
 	updateProfile() {
 		var name = React.findDOMNode(this.refs.name).value;
 		var email = React.findDOMNode(this.refs.email).value;
-		console.log("UPDATE",name,email);
 		this.props.updateProfile(name , email).then((response)=>{
-			if(response.type === "USERUPDATE_FAILURE") return this.setState({update_error: true});
+			console.log("UPDATE DONE",response.type)
+			if(response.type === 'UPDATEUSER_FAILURE') return this.setState({update_error: true});
 			
 			this.setState({ update_msg: 'Changes Saved!' });
 
@@ -48,24 +48,27 @@ class UserProfile extends Component {
 			name = this.props.profile.name;
 		}
 
-		var phoneClass = number === "None" ? "phone empty" : "phone";
-		var phoneValue = number === "None" ? "Register Number" : "Phone: " + number;
-
+		if(number == "None"){
+			var phone_button = <input ref="phone" className = "err" type="submit" value={"Register Phone"} onClick={this.props.showPhoneModal}/>
+		}else{
+			var phone_button = <input ref="phone" type="submit" value={"Change Phone: (+1) ("+ String(number).slice(1)+")"} onClick={this.props.showPhoneModal}/>
+		}
+			
 
 		return (
 			<div className="user--profile">
+				<div className="pic"></div>
 				<div className="info">
 					
 					<label>Name</label>
 					<input onChange = {this.resetState} ref="name" type="text" placeholder= {name || "Your Name" } />
 					
-					<label>Email Address</label>
+					<label>Email/Username</label>
 					<input onChange = {this.resetState} ref="email" type="text" placeholder={email || "Your Email" } />
-
-					<label>Change Phone Number</label>
-					<input ref="phone" type="submit" className={ phoneClass } value={ phoneValue } onClick={this.props.showPhoneModal}/>
 					
 					<FormButton error = { this.state.update_error } errorMessage="update failed" submitMessage={this.state.update_msg} onClick={ this.updateProfile } />
+					{phone_button}
+					
 				</div>
 			</div>
 		)
