@@ -59,6 +59,10 @@ class SetAlert extends Component {
 			.then(function(data) {
 				if (data.payload.status === "phone_not_verified") {
 					_this.props.showPhoneModal();
+					
+					_this.setState({
+						open: false
+					});
 				}
 				else if (data.payload.entities) {
 					var index = data.payload.result;
