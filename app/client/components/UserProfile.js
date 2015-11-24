@@ -34,16 +34,14 @@ class UserProfile extends Component {
 			if(response.type === "USERUPDATE_FAILURE") return this.setState({update_error: true});
 			
 			this.setState({ update_msg: 'Changes Saved!' });
-			setTimeout(()=>{
-				this.render();
-			}, 500);
+
 		})
 	}
 
 	render() {
 		var name, email, number = "";
 
-		console.log("RENDER")
+
 		if (this.props.profile) {
 			email = this.props.profile.email;
 			number = this.props.profile.phone;

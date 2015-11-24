@@ -114,8 +114,12 @@ class UserActions(APIView):
 		#update profile
 		if action == 'profile':
 			body = json.loads(request.body.decode('utf-8'))
-			user.name = body['name']
-			user.email = body['email']
+
+			if(body['email'] != None):
+				user.email = body['email']
+				user.username = body['email']
+			if(body['name'] != None):
+				user.name = body['name']
 			user.save()
 			serializer = ShowgridUserSerializer(user)
 			return Response(serializer.data)
