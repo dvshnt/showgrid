@@ -64,6 +64,10 @@
 			-webkit-flex:1 1 100px;
 					flex:1 1 100px;
 
+			a:hover div {
+				text-decoration:underline;
+			}
+
 			.title {
 				margin:5px 0 0 0;
 
@@ -75,6 +79,7 @@
 			.main {
 				margin:5px 0 0 0;
 
+				color:#000000;
 				font-size:18px;
 				font-weight:500;
 

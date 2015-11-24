@@ -78,6 +78,16 @@
 
 		padding:30px 0 40px;
 
+		a {
+			text-decoration:none;
+		}
+
+		a:hover h3,
+		a:hover h4,
+		a:hover h5 {
+			text-decoration:underline;
+		}
+
 
 		.date {
 			-webkit-flex:0 0 110px;
@@ -246,6 +256,20 @@
 
 		div.info {
 			padding:25px 10px 35px;
+
+			.artists {
+				h3 {
+					font-size:20px;
+				}
+
+				h4 {
+					font-size:12px;
+				}
+
+				h5 {
+					font-size:12px;
+				}
+			}
 
 			.date {
 				-webkit-flex:0 0 55px;
