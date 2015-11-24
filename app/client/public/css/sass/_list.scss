@@ -26,6 +26,21 @@
 			font-weight:200;
 		}
 	}
+
+	.list-paginator {
+		width:100%;
+
+		margin-top:40px;
+		padding:15px 0;
+
+		text-align:center;
+
+		cursor:pointer;
+	}
+
+	.list-paginator:hover {
+		text-decoration:underline;
+	}
 }
 
 @media screen and (max-width: 900px ) {

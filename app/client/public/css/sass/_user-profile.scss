@@ -1,4 +1,6 @@
 .user--profile {
+	position:relative;
+
 	width:800px;
 
 	margin:0 auto 30px auto;
@@ -22,6 +24,7 @@
 	-webkit-justify-content:center;
 			justify-content:center;
 
+
 	.pic {
 		-webkit-flex:0 0 170px;
 				flex:0 0 170px;
@@ -34,6 +37,11 @@
 		background-image: url('/static/showgrid/img/blank_avatar_240x240.gif');
 		background-position: center;
 		border-radius:85px;
+	}
+	
+	#logout-profile {
+		display:none;
+
 	}
 
 	.info {
@@ -116,9 +124,19 @@
 	.user--profile {
 		width:100%;
 
-		.pic {
-			-webkit-flex:0 0 100%;
-					flex:0 0 100%;
+		padding-top:20px;
+
+		#logout-profile {
+			display:block;
+
+			position:absolute;
+			right:15px; top:10px;
+
+			color:#005AF4;
+			font-size:14px;
+			text-decoration:underline;
+
+			cursor:pointer;
 		}
 	}
 }

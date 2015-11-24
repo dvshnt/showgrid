@@ -396,8 +396,9 @@ class ShowList(APIView):
 		except PageNotAnInteger:
 			shows = paginator.page(1)
 		except EmptyPage:
-			return JSONResponse("Last Page", status=204)
-
+			response = Response()
+			response.data = {"status": "last_page"}
+			return response
 
 		if request.user.is_authenticated():
 			print "USER LOGGED IN"

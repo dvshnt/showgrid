@@ -29,18 +29,14 @@ class Profile extends Component {
 			<article>
 
 				<p>
-					We&#39;re still in beta mode here. To deal with the influx of traffic, we&#39;re manually creating accounts. To get one, email <a href="mailto:accounts@showgrid.com">accounts@showgrid.com</a> and ask for one.
+					Thanks for your interest in Showgrid. Sign up below or Login to your existing profile to get started tracking shows around Nashville!
 				</p>
 
 				<p>
-					With an account, you&#39;ll be able to favorite shows, set alerts, and talk about shows with the rest of Showgrid. Expect many more features in the coming months and thanks for coming aboard!
+					In the coming weeks and months, we will continue to build out Showgrid to make as useful and easy to use as possible. If you have any recommendations, do not hesitate to contact us. You can reach us at <a href="mailto:info@showgrid.com">info@showgrid.com</a>.
 				</p>
 
-				<p>
-					If you already have an account, you can sign in below.
-				</p>
-
-				<input type="button" value="Sign In" onClick={ this.userLogin }/>
+				<input type="button" value="Sign Up" onClick={ this.userLogin }/>
 			</article>
 		)
 	}

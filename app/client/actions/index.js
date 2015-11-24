@@ -192,10 +192,10 @@ export function getGrid(date) {
 
 
 
-function fetchRecent() {
+function fetchRecent(page) {
 	return {
 		[CALL_API]: {
-			endpoint: GridEngine.domain + '/i/shows?method=recent',
+			endpoint: GridEngine.domain + '/i/shows?method=recent&page=' + page,
 		    method: 'GET',
 		    types: ['FETCH_REQUEST', 'RECENT_SUCCESS', 'FETCH_FAILURE'],
 		    schema: arrayOf(Schemas.SHOW)
@@ -205,18 +205,18 @@ function fetchRecent() {
 
 // Fetches a single user from Github API unless it is cached.
 // Relies on Redux Thunk middleware.
-export function getRecent() {
+export function getRecent(page) {
 	return (dispatch, getState) => {
-		return dispatch(fetchRecent());
+		return dispatch(fetchRecent(page));
 	};
 }
 
 
 
-function fetchFeatured() {
+function fetchFeatured(page) {
 	return {
 		[CALL_API]: {
-			endpoint: GridEngine.domain + '/i/shows?method=featured',
+			endpoint: GridEngine.domain + '/i/shows?method=featured&page=' + page,
 		    method: 'GET',
 		    types: ['FETCH_REQUEST', 'FEATURED_SUCCESS', 'FEATURED_FAILURE'],
 		    schema: arrayOf(Schemas.SHOW)
@@ -225,9 +225,9 @@ function fetchFeatured() {
 }
 // Fetches a single user from Github API unless it is cached.
 // Relies on Redux Thunk middleware.
-export function getFeatured() {
+export function getFeatured(page) {
 	return (dispatch, getState) => {
-		return dispatch(fetchFeatured());
+		return dispatch(fetchFeatured(page));
 	};
 }
 
