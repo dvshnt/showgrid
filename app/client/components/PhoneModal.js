@@ -152,6 +152,7 @@ class PhoneModal extends Component {
 				</p>
 				<form action="" onSubmit={ this.userSubmitPhone }>
 					<span> <span><b>+1</b></span> <input className="phone" type="tel" pattern="[0-9]{10}" ref="phonenumber" placeholder="Your 9 Digit Phone #" title="" onChange={ this.resetState }/></span>
+					<br></br>
 					<FormButton error={ this.state.error } errorMessage="Invalid Phone Number" submitMessage="Submit"/>
 				</form>
 			</div>
@@ -169,7 +170,7 @@ class PhoneModal extends Component {
 						<input maxLength="1" className="pin pin-2" type="text" ref="pinTwo" size="1" onChange={ this.goToNextPinInput }/>
 						<input maxLength="1" className="pin pin-3" type="text" ref="pinThree" size="1" onChange={ this.goToNextPinInput }/>
 						<input maxLength="1" className="pin pin-4" type="text" ref="pinFour" size="1" onChange={ this.goToNextPinInput }/>
-
+						<br></br>
 						<FormButton error={ this.state.error } errorMessage="Invalid PIN" submitMessage="Submit"/>
 					</form>
 				</div>
@@ -193,7 +194,7 @@ class PhoneModal extends Component {
 
 		return (
 			<div id="overlay" className={ active }>
-				<div id="modal">{ form }</div>
+				<div id="modal"><b id="close" className="icon-close" onClick={ this.props.hidePhoneModal }></b>{ form }</div>
 			</div>
 		)
 	}

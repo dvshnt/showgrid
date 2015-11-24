@@ -157,7 +157,7 @@ class AuthModal extends Component {
 								<input required type="password" ref="password" placeholder="Enter password" onChange={ this.resetError }/>
 								<FormButton error={ this.state.error } errorMessage="Invalid Username or Password" submitMessage="Sign In" />
 							</form>
-							<p>
+							<p className="sub">
 								Forgot your password? email <a href="mailto:info@showgrid.com?Subject=Password%20RESET" target="_top" ><b>info@showgrid.com</b></a>
 							</p>
 						</div>
