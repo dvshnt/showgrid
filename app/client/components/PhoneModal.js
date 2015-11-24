@@ -49,7 +49,7 @@ class PhoneModal extends Component {
 	closeOnClick(e) {
 		if (e.target.id === "overlay") {
 			this.props.hidePhoneModal();
-			window.location.replace(GridEngine.domain + this.props.route);
+			//window.location.replace(GridEngine.domain + this.props.route); this is probably bad. (causes screen lag)
 		}
 		return false;
 	}
@@ -115,7 +115,7 @@ class PhoneModal extends Component {
 		var phonenumber = React.findDOMNode(this.refs.phonenumber).value;
 
 		var _this = this;
-		this.props.submitUserPhone(phonenumber)
+		this.props.submitUserPhone("1"+phonenumber)
 			.then(function(data) {
 				if (data.payload.status === "phone_set") {
 					_this.setState({
@@ -144,7 +144,7 @@ class PhoneModal extends Component {
 					Text alerts will include a link to buy tickets as well as information about the show.
 				</p>
 				<form action="" onSubmit={ this.userSubmitPhone }>
-					<input className="phone" type="tel" pattern="[0-9]{11}" ref="phonenumber" placeholder="Phone Number" title=""/>
+					<span> <span><b>+1</b></span> <input className="phone" type="tel" pattern="[0-9]{10}" ref="phonenumber" placeholder="Your 9 Digit Phone #" title=""/></span>
 					<FormButton error={ this.state.error } errorMessage="Invalid Phone Number" submitMessage="Submit"/>
 				</form>
 			</div>
