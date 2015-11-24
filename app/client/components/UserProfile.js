@@ -48,12 +48,12 @@ class UserProfile extends Component {
 			name = this.props.profile.name;
 		}
 
-
+		var phoneClass = number === "None" ? "phone empty" : "phone";
+		var phoneValue = number === "None" ? "Register Number" : "Phone: " + number;
 
 
 		return (
 			<div className="user--profile">
-				<div className="pic"></div>
 				<div className="info">
 					
 					<label>Name</label>
@@ -61,10 +61,11 @@ class UserProfile extends Component {
 					
 					<label>Email Address</label>
 					<input onChange = {this.resetState} ref="email" type="text" placeholder={email || "Your Email" } />
+
+					<label>Change Phone Number</label>
+					<input ref="phone" type="submit" className={ phoneClass } value={ phoneValue } onClick={this.props.showPhoneModal}/>
 					
 					<FormButton error = { this.state.update_error } errorMessage="update failed" submitMessage={this.state.update_msg} onClick={ this.updateProfile } />
-
-					<input ref="phone" type="submit" value={"Phone: "+number} onClick={this.props.showPhoneModal}/>
 				</div>
 			</div>
 		)
