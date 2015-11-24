@@ -170,12 +170,18 @@ class PhoneModal extends Component {
 		}
 
 		if (this.state.success) {
+			var _this = this;
+
 			form = (
 				<div>
 					<h3>Phone Number Verified!</h3>
 					<p>Set all the alerts you need. We won&#39;t bother you otherwise.</p>
 				</div>
 			);
+
+			setTimeout(function() {
+				_this.props.hidePhoneModal();
+			}, 800);
 		}
 
 		return (
