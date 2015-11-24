@@ -5,12 +5,15 @@ import { showPhoneModal } from '../actions/modal';
 import { updateProfile } from '../actions/index';
 import FormButton from './FormButton';
 
+var GridEngine = require('../util/GridEngine');
+
 class UserProfile extends Component {
 	constructor(props) {
 		super(props);
 
 		this.updateProfile = this.updateProfile.bind(this);
 		this.resetState = this.resetState.bind(this);
+		this.logout = this.logout.bind(this);
 
 		this.resetState();
 		this.state = {
@@ -38,6 +41,13 @@ class UserProfile extends Component {
 		})
 	}
 
+	logout() {
+		if (localStorage.getItem("token") !== null) {
+			localStorage.removeItem("token");
+			window.location.replace(GridEngine.domain);
+		}
+	}
+
 	render() {
 		var name, email, number = "";
 
@@ -54,8 +64,8 @@ class UserProfile extends Component {
 
 		return (
 			<div className="user--profile">
+				<div onClick={ this.logout } id="logout-profile">Logout</div>
 				<div className="info">
-					
 					<label>Name</label>
 					<input onChange = {this.resetState} ref="name" type="text" placeholder= {name || "Your Name" } />
 					
