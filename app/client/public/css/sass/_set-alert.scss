@@ -1,7 +1,4 @@
 b.icon-alert {
-	position:relative;
-
-
 	.alert-box {
 		display:none;
 
@@ -32,6 +29,10 @@ b.icon-alert {
 		    border-style:solid;
 		    border-width:0px 8px 8px 8px;
 		    border-color:transparent transparent #222222 transparent;
+		}
+
+		.artist-info {
+			display:none;
 		}
 
 		select {
@@ -81,7 +82,97 @@ b.icon-alert {
 @media screen and (max-width: 500px ) {
 	b.icon-alert {
 		.alert-box {
-			left:-230px;
+			height:25%; width:90%;
+			
+			top:37.5%; left:5%;
+
+			font-size:18px;
+			text-align:center;
+			line-height:45px;
+
+			padding:0 0 20px 0;
+
+			border-radius:0px;
+
+			background:#ff9929;
+
+
+			&:before {
+		    	border-color:transparent transparent transparent transparent;
+			}
+
+			select {
+				margin-left:30px;
+			}
+
+			.artist-info {
+				display:block;
+
+				text-align:left;
+
+				padding:5px 25px 20px;
+				margin:0 0 15px 0;
+
+				background:rgba(255,255,255,0.05);
+
+				span {
+					position:relative;
+					left:-8px;
+
+					color:rgba(255,255,255,0.5);
+					font-size:14px;
+					line-height:12px;
+				}
+
+				h4, h5 {
+					margin:5px 0;
+					line-height:18px;
+				}
+
+				h5 {
+					color:rgba(255,255,255,0.8);
+					font-weight:500;
+				}
+			}
+		}
+
+		&.open {
+			position:fixed;
+			top:0; left:0;
+
+			width:100vw; height:100vh;
+
+			display:-webkit-flex;
+			display:		flex;
+
+			-webkit-justify-content:center;
+					justify-content:center;
+
+			-webkit-align-items:center;
+					align-items:center;
+
+			background:rgba(0,0,0,0.2);
+
+			z-index:999999;
+		}
+
+		&.active:hover {
+			.alert-info {
+				display:none;
+			}
+		}
+	}
+
+	.list--item {
+		b.icon-alert {
+			&.open {
+				position:fixed;
+				top:0; left:-2.5%;
+			}
+
+			.alert-box {
+				top:37.5%; left:5%;
+			}
 		}
 	}
 }
