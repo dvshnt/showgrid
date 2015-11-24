@@ -59,7 +59,7 @@ class UserProfile extends Component {
 		}
 
 		if(number == "None"){
-			var phone_button = <input ref="phone" className = "err" type="submit" value={"Register Phone"} onClick={this.props.showPhoneModal}/>
+			var phone_button = <input ref="phone" className = "error" type="submit" value={"Register Phone"} onClick={this.props.showPhoneModal}/>
 		}else{
 			var phone_button = <input ref="phone" type="submit" value={"Change Phone: (+1) ("+ String(number).slice(1)+")"} onClick={this.props.showPhoneModal}/>
 		}
