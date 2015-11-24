@@ -239,12 +239,14 @@ class UserActions(APIView):
 				user.phone = phone
 				user.save()
 				user.send_pin(user.generate_pin())
+				user.save()
 				return Response({'status':'phone_set','phone':user.phone})
 			
 			elif user.phone_verified == False:
 				user.phone = phone
 				user.save()
 				user.send_pin(user.generate_pin())
+				user.save()
 				return Response({'status':'phone_set','phone':user.phone})
 			
 			else:
