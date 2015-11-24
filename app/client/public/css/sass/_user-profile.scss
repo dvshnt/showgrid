@@ -20,19 +20,6 @@
 	-webkit-justify-content:center;
 			justify-content:center;
 
-
-	.pic {
-		-webkit-flex:0 0 170px;
-				flex:0 0 170px;
-
-		height:170px;
-
-		margin:40px;
-
-		background:rgba(0,0,0,0.4);
-		border-radius:85px;
-	}
-
 	.info {
 		-webkit-flex:1 1 400px;
 				flex:1 1 400px;
@@ -65,7 +52,7 @@
 		input[type=submit] {
 			width:150px;
 
-			margin:20px 0;
+			margin:40px auto 10px;
 			padding:15px 0;
 
 			color:#ffffff;
@@ -76,6 +63,27 @@
 			border:none;
 			background:rgb(0,222,144);
 			border-radius:4px;
+		}
+
+		input[type=submit].phone {
+			width:260px;
+
+			margin:5px 0 20px;
+			padding:6px 4px;
+
+			color:rgb(0,171,111);
+			font-weight:400;
+			text-transform:none;
+
+			background:rgba(0,222,144,0.25);
+			border:2px solid rgb(0,171,111);
+		}
+
+		input[type=submit].phone.empty {
+			color:rgb(245,4,4);
+
+			background:rgba(240,48,48,0.25);
+			border:2px solid rgb(245,4,4);
 		}
 	}
 }
