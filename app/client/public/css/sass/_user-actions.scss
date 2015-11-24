@@ -45,7 +45,9 @@
 		-webkit-justify-content:center;
 				justify-content:center;
 
-
+		.tab:focus {
+			 outline: 0;
+		}
 		.tab {
 			-webkit-flex:0 0 45%;
 					flex:0 0 45%;
