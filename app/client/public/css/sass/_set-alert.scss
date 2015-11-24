@@ -77,3 +77,11 @@ b.icon-alert {
 		}
 	}
 }
+
+@media screen and (max-width: 500px ) {
+	b.icon-alert {
+		.alert-box {
+			left:-230px;
+		}
+	}
+}

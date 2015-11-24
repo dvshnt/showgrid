@@ -85,9 +85,11 @@ export default class CalendarRowDayShow extends Component {
 	            	{ age }
 				</div>
 				<div className="titles">
+					<a href={ show.website } target="_blank">
 					{ title }
 					{ headliner }
 					{ opener }
+					</a>
 				</div>
 				<div className="actions">
 					{ ticket }

@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -26,17 +28,13 @@ class Recent extends Component {
 				var key = this.props.recent[i].id,
 					show = this.props.recent[i];
 
-				if (currentDay === "" || show.created_at !== currentDay) {
+				if (currentDay === "" || moment(show.created_at).isAfter(currentDay, 'days')) {
 					currentDay = show.created_at;
 					results.push(<h3 key={ i }>{ DateManager.getRecentShowsDate(currentDay.split('T')[0]) }</h3>);
 				}
 
-				//results.push(<h5>{ show.headliners }</h5>);
-
 				results.push(<ListItem key={ key } show={ show } showDate={ true } showStar={ true } />);
 			}
-
-			results.push(<div className="list-paginator">See More New Shows...</div>);
 		}
 
 
