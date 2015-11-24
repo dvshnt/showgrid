@@ -155,6 +155,14 @@ class SetAlert extends Component {
 			alertInfo = <div className="alert-info">{ alertText }</div>;
 		}
 
+		var artistInfo = (
+			<div className="artist-info">
+				<span>{ moment(this.props.show.date).format("ddd MMM Mo, h A") }</span>
+				<h4>{ this.props.show.headliners }</h4>
+				<h5>{ this.props.show.openers }</h5>
+			</div>	
+		);
+
 		var className = (this.state.open) ? "icon-alert open" : "icon-alert";
 		className += (this.state.active) ? " active" : "";
 
@@ -164,6 +172,7 @@ class SetAlert extends Component {
 		return (
 			<b className={ className } onClick={ this.toggleAlert }>
 				<div className="alert-box">
+					{ artistInfo }
 					Alert me
 					{ options }
 				</div>
