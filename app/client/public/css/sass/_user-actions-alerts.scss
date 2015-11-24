@@ -32,11 +32,11 @@
 				text-align:center;
 
 				div:first-of-type {
-					font-size:14px;
+					font-size:12px;
 				}
 
 				div:last-of-type {
-					font-size:24px;
+					font-size:20px;
 				}
 			}
 
@@ -93,9 +93,42 @@
 	.user--actions {
 		.actions {
 			.alert-block {
+				width:100%;
+
 				.alert {
 					-webkit-flex:0 0 100%;
 							flex:0 0 100%;
+
+					margin-top:10px;
+
+					text-align:center;
+				}
+
+				.date {
+					-webkit-flex:0 0 60px;
+							flex:0 0 60px;
+
+					div:first-of-type {
+						font-size:12px;
+					}
+
+					div:last-of-type {
+						font-size:18px;
+					}
+				}
+
+				.info {
+					h3 {
+						font-size:18px;
+					}
+
+					h4 {
+						font-size:14px;
+					}
+
+					h5 {
+						font-size:12px;
+					}
 				}
 			}
 		}

@@ -48,8 +48,12 @@ class UserProfile extends Component {
 			name = this.props.profile.name;
 		}
 
-
-
+		if(number == "None"){
+			var phone_button = <input ref="phone" className = "err" type="submit" value={"Register Phone"} onClick={this.props.showPhoneModal}/>
+		}else{
+			var phone_button = <input ref="phone" type="submit" value={"Change Phone: (+1) ("+ String(number).slice(1)+")"} onClick={this.props.showPhoneModal}/>
+		}
+			
 
 		return (
 			<div className="user--profile">
@@ -63,8 +67,8 @@ class UserProfile extends Component {
 					<input onChange = {this.resetState} ref="email" type="text" placeholder={email || "Your Email" } />
 					
 					<FormButton error = { this.state.update_error } errorMessage="update failed" submitMessage={this.state.update_msg} onClick={ this.updateProfile } />
-
-					<input ref="phone" type="submit" value={"Change Phone: (+1) ("+ String(number).slice(1)+")"} onClick={this.props.showPhoneModal}/>
+					{phone_button}
+					
 				</div>
 			</div>
 		)

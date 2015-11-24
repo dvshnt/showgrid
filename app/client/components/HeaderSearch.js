@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { searchIfNeeded, prepareSearch } from '../actions/search';
+import { prepareSearch, getSearchResults } from '../actions/index';
 
 import SearchResults from './SearchResults';
 
@@ -40,7 +40,7 @@ class HeaderSearch extends Component {
 	}
 
 	search(query) {
-		this.props.searchIfNeeded(query);
+		this.props.getSearchResults(query);
 	}
 
 	prepareToSearch() {
@@ -85,14 +85,12 @@ class HeaderSearch extends Component {
 	}
 
 	render() {
-		var { mode } = this.props;
+		var results = <SearchResults active={ this.state.active } hide={ this.hideSearchResults }/>;
 
-		var results = (mode === "subhead") ? "" : <SearchResults active={ this.state.active } hide={ this.hideSearchResults }/>;
-
-		var changeListener = (mode === "subhead" || this.context.history.isActive('/search')) ? function() {} : this.prepareToSearch;
+		var changeListener = this.context.history.isActive('/search') ? function() {} : this.prepareToSearch;
 
 		return (
-			<form id="header__search" className={ mode } action="" onSubmit={ this.submitSearchForm }>
+			<form id="header__search" action="" onSubmit={ this.submitSearchForm }>
 				<input type="search" ref="searchQuery" placeholder="Search by venue or artist" onChange={ changeListener } onFocus={ this.showSearchResults }/>
 				<input type="submit" value=""/>
 				{ results }
@@ -122,7 +120,7 @@ function mapStateToProps(state) {
 
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({ searchIfNeeded, prepareSearch }, dispatch);
+	return bindActionCreators({ getSearchResults, prepareSearch }, dispatch);
 }
 
 

@@ -357,6 +357,12 @@ export function deleteAlert(alert) {
 }
 
 
+export function prepareSearch() {
+	return {
+		type: 'SEARCH_WAIT'
+	};
+}
+
 
 function fetchSearchResults(query) {
 	return {
@@ -367,10 +373,18 @@ function fetchSearchResults(query) {
 				return url;
 			},
 		    method: 'GET',
-		    types: ['SEARCH_REQUEST', 'SEARCH_SUCCESS', 'SEARCH_FAILURE'],
+		    types: [
+				{
+					type: 'SEARCH_REQUEST', 
+					payload: (action, state) => ({ query: query })
+				}, 
+				'SEARCH_SUCCESS', 
+				'SEARCH_FAILURE'
+			],
 			headers: {
 				'Content-Type': 'application/json'
-			}
+			},
+		    schema: arrayOf(Schemas.SHOW)
 		}
 	};
 }
@@ -378,5 +392,11 @@ function fetchSearchResults(query) {
 export function getSearchResults(query) {
 	return (dispatch, getState) => {
 		return dispatch(fetchSearchResults(query));
+	};
+}
+
+export function pageLoaded() {
+	return {
+		type: "PAGE_LOADED"
 	};
 }

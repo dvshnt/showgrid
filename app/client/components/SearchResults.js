@@ -85,7 +85,7 @@ class SearchResults extends Component {
 	}
 
 	render() {
-		var { results, waiting, searching } = this.props;
+		var { results, waiting, searching, query } = this.props;
 
 		var className = (this.props.active) ? "active" : "";
 
@@ -93,7 +93,7 @@ class SearchResults extends Component {
 			className += " waiting";
 		}
 		
-		var data = this.displaySearchResults(results.query, results.results);
+		var data = this.displaySearchResults(query, results);
 		
 
 		return (
@@ -108,9 +108,10 @@ class SearchResults extends Component {
 
 function mapStateToProps(state) {
 	return { 
-		results: state.search.results,
-		waiting: state.search.waiting,
-		searching: state.search.searching
+		query: state.state.search.query,
+		results: state.state.search.results.map( s => state.state.entities.shows[s] ),
+		waiting: state.state.waiting,
+		searching: state.state.search.searching
 	};
 }
 

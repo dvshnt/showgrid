@@ -11,10 +11,7 @@ export default class ListItem extends Component {
 		var show = this.props.show;
 		var venue = show.venue;
 
-		show.website += '?utm_source=showgridnashville&utm_medium=web&utm_campaign=calendar';
-		if (show.ticket !== "") {
-			show.ticket += '?utm_source=showgridnashville&utm_medium=web&utm_campaign=calendar';
-		}
+		var website = show.website + '?utm_source=showgridnashville&utm_medium=web&utm_campaign=calendar';
 
 		var boxStyle = {
 			//'background': venue.primary_color || '#000000',
@@ -122,7 +119,7 @@ export default class ListItem extends Component {
 					{ date }
 					<div className="artists">
 						<span className="time">{ time }</span>
-						<a href={ show.website } target="_blank">
+						<a href={ website } target="_blank">
 						{ title }
 						{ headliner }
 						{ opener }
