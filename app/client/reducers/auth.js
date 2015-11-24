@@ -29,6 +29,9 @@ export default function recent(state={
 		});
 
 	case "REGISTRATION_SUCCESS":
+		console.log("GOT TOKEN")
+		console.log(action.payload.token);
+		localStorage.setItem("token", action.payload.token);
 		return  Object.assign({}, state, {
 			waiting: false
 		});

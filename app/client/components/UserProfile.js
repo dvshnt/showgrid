@@ -59,12 +59,12 @@ class UserProfile extends Component {
 					<label>Name</label>
 					<input onChange = {this.resetState} ref="name" type="text" placeholder= {name || "Your Name" } />
 					
-					<label>Email Address</label>
+					<label>Email/Username</label>
 					<input onChange = {this.resetState} ref="email" type="text" placeholder={email || "Your Email" } />
 					
 					<FormButton error = { this.state.update_error } errorMessage="update failed" submitMessage={this.state.update_msg} onClick={ this.updateProfile } />
 
-					<input ref="phone" type="submit" value={"Phone: "+number} onClick={this.props.showPhoneModal}/>
+					<input ref="phone" type="submit" value={"Change Phone: (+1) ("+ String(number).slice(1)+")"} onClick={this.props.showPhoneModal}/>
 				</div>
 			</div>
 		)
