@@ -12,11 +12,44 @@ var DateManager = require('../util/DateManager');
 
 
 class Recent extends Component {
+	constructor(props) {
+		super(props);
+
+		this.getNextPage = this.getNextPage.bind(this);
+
+		this.state = {
+			page: 1,
+			lastPage: false
+		};
+	}
+
 	componentDidMount() {
 	    // Fetching first recent shows
 	    if (this.props.recent.length === 0) {
-	    	this.props.getRecent();
+	    	this.props.getRecent(this.state.page);
 	    }
+	}
+
+	getNextPage() {
+		if (!this.state.lastPage) {
+			var _this = this;
+	
+			var page = this.state.page;
+	
+			this.props.getRecent(page + 1)
+				.then(function(response) {
+					if (response.payload.status === "last_page") {
+						_this.setState({
+							lastPage: true
+						});
+						return;
+					}
+	
+					_this.setState({
+						page: page + 1
+					});
+				});
+		}
 	}
 
 	render() {
@@ -35,6 +68,12 @@ class Recent extends Component {
 
 				results.push(<ListItem key={ key } show={ show } showDate={ true } showStar={ true } />);
 			}
+
+			results.push(
+				<div onClick={ this.getNextPage } className="list-paginator">
+					{ this.state.lastPage ? "No more new shows." : "See More New Shows..." }
+				</div>
+			);
 		}
 
 

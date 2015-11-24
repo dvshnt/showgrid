@@ -50,29 +50,38 @@ export default function state(state={
 			days: DateManager.getDaysArray(action.payload.date, GridEngine.getCellCount())
 		});
 
+
 	case "FEATURED_SUCCESS":
 		if (action.payload && action.payload.entities && action.payload.entities.shows) {
 			return Object.assign({}, state, {
 				waiting: false,
-				featured: action.payload.result,
+				featured: state.featured.concat(action.payload.result),
 				entities: Object.assign({}, state.entities, {
 					shows: merge({}, state.entities.shows, action.payload.entities.shows)
 				})
 			});
 		}
-		return state;
+		
+		return Object.assign({}, state, {
+			waiting: false,
+		});
+
 
 	case "RECENT_SUCCESS":
 		if (action.payload && action.payload.entities && action.payload.entities.shows) {
 			return Object.assign({}, state, {
 				waiting: false,
-				recent: action.payload.result,
+				recent: state.recent.concat(action.payload.result),
 				entities: Object.assign({}, state.entities, {
 					shows: merge({}, state.entities.shows, action.payload.entities.shows)
 				})
 			});
 		}
-		return state;
+
+		return Object.assign({}, state, {
+			waiting: false,
+		});
+
 
 	case "GRID_SUCCESS":
 		if (action.payload && action.payload.entities && action.payload.entities.venues) {
