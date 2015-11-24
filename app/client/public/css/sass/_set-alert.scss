@@ -1,4 +1,6 @@
 b.icon-alert {
+	position:relative;
+
 	.alert-box {
 		display:none;
 
@@ -81,6 +83,8 @@ b.icon-alert {
 
 @media screen and (max-width: 500px ) {
 	b.icon-alert {
+		position:static;
+
 		.alert-box {
 			height:25%; width:90%;
 			
