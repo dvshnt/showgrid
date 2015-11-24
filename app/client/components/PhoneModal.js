@@ -21,12 +21,19 @@ class PhoneModal extends Component {
 		this.userSubmitPin = this.userSubmitPin.bind(this);
 		this.handleKeydown = this.handleKeydown.bind(this);
 		this.closeOnClick = this.closeOnClick.bind(this);
+		this.resetState = this.resetState.bind(this);
 
 		this.state = {
 			error: false,
 			verify: false,
 			success: false
 		};
+	}
+
+	resetState(){
+		this.setState({
+			error: false
+		});
 	}
 
 	componentWillUpdate(nextProps, nextState) {
@@ -144,7 +151,7 @@ class PhoneModal extends Component {
 					Text alerts will include a link to buy tickets as well as information about the show.
 				</p>
 				<form action="" onSubmit={ this.userSubmitPhone }>
-					<span> <span><b>+1</b></span> <input className="phone" type="tel" pattern="[0-9]{10}" ref="phonenumber" placeholder="Your 9 Digit Phone #" title=""/></span>
+					<span> <span><b>+1</b></span> <input className="phone" type="tel" pattern="[0-9]{10}" ref="phonenumber" placeholder="Your 9 Digit Phone #" title="" onChange={ this.resetState }/></span>
 					<FormButton error={ this.state.error } errorMessage="Invalid Phone Number" submitMessage="Submit"/>
 				</form>
 			</div>
