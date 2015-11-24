@@ -13,12 +13,28 @@
 
 	display:-webkit-flex;
 	display:		flex;
+	
+	align-items: center;
 
 	-webkit-flex-flow:row wrap;
 			flex-flow:row wrap;
 
 	-webkit-justify-content:center;
 			justify-content:center;
+
+	.pic {
+		-webkit-flex:0 0 170px;
+				flex:0 0 170px;
+
+		height:170px;
+		max-width:170px;
+
+		margin:40px;
+
+		background-image: url('/static/showgrid/img/blank_avatar_240x240.gif');
+		background-position: center;
+		border-radius:85px;
+	}
 
 	.info {
 		-webkit-flex:1 1 400px;
@@ -42,6 +58,7 @@
 		}
 
 		input[type=text] {
+			padding:10px;
 			margin:0 0 20px 0;
 		}
 
@@ -50,10 +67,12 @@
 		}
 
 		input[type=submit] {
-			width:150px;
+			width:auto;
 
-			margin:40px auto 10px;
-			padding:15px 0;
+
+			padding:15px 15px;
+
+			margin:15px 0;
 
 			color:#ffffff;
 			font-size:14px;
@@ -65,11 +84,16 @@
 			border-radius:4px;
 		}
 
+		input[type=submit].error {
+			background:rgb(222,144,0);
+		}
+
 		input[type=submit].phone {
+			padding:15px 15px;
 			width:260px;
 
 			margin:5px 0 20px;
-			padding:6px 4px;
+			
 
 			color:rgb(0,171,111);
 			font-weight:400;
