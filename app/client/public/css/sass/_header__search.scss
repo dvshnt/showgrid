@@ -68,7 +68,7 @@
 }
 
 @media screen and (max-width: 500px ) {
-	#header__search.subhead {
+	#header__search {
 		position:relative;
 
 		display:block;
@@ -78,13 +78,13 @@
 		-webkit-flex:0 0 100%;
 				flex:0 0 100%;
 
-		background:#2a2a2a;
+		background:#222222;
 		text-align:center;
 
 		line-height:55px;
 
 		input[type=search] {
-			width:80%;
+			width:75%;
 
 			position:relative;
 			top:0px;
@@ -92,7 +92,7 @@
 
 		input[type=submit] {
 			position:absolute;
-			top:11px; right:8px; left:auto;
+			top:11px; right:15px; left:auto;
 
 			width:35px; height:31px;
 
