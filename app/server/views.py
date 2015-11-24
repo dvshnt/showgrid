@@ -48,7 +48,7 @@ def index(request, year=None, month=None, day=None):
 	return render(request, "index.html")
 
 from rest_framework.authtoken.models import Token
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 
 
 
@@ -399,10 +399,10 @@ class ShowList(APIView):
 
 		if request.user.is_authenticated():
 			print "USER LOGGED IN"
-			serializer = ShowListSerializer(shows, many=True, context={ 'user': request.user })
+			serializer = ShowListSerializer(shows, many=True)
 		else:
 			print "USER NOT LOGGED IN"
-			serializer = ShowListSerializer(shows, many=True, context={  })
+			serializer = ShowListSerializer(shows, many=True)
 
 		return Response(serializer.data)
 
@@ -429,21 +429,18 @@ def check_venues(request):
 	return render(request, 'venues.html', { 'venues': data })
 
 
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticatedOrReadOnly])
 def get_search_results(request):
 	if request.method == "GET":
 		query = request.GET['q']
 
 		querySet = SearchQuerySet().filter(text=query).order_by('date')
 
-		results = [ Show.objects.get(id=show.pk).json_max() for show in querySet ]
+		shows = [ Show.objects.get(id=show.pk) for show in querySet ]
 
-		result = {
-			"query": query,
-			"results": results
-		}
+		serializer = ShowListSerializer(shows, many=True)
 
-		response = HttpResponse(json.dumps(result), content_type='application/json; charset=UTF-8')
-		response.__setitem__("Content-type", "application/json")
-		response.__setitem__("Access-Control-Allow-Origin", "*")
-		return response
+		return Response(serializer.data)
 
