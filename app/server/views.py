@@ -388,7 +388,7 @@ class ShowList(APIView):
 		else:
 			shows = Show.objects.all()
 
-		paginator = Paginator(shows, 4)
+		paginator = Paginator(shows, 100)
 
 		page = request.GET.get('page')
 		try:
