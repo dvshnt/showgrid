@@ -42,6 +42,10 @@ b.icon-alert {
 
 			margin-left:15px;
 		}
+
+		#close {
+			display:none;
+		}
 	}
 
 	.alert-info {
@@ -90,11 +94,11 @@ b.icon-alert {
 			
 			top:37.5%; left:5%;
 
-			font-size:18px;
+			font-size:16px;
 			text-align:center;
 			line-height:45px;
 
-			padding:0 0 20px 0;
+			padding:20px 0 20px 0;
 
 			border-radius:0px;
 
@@ -114,10 +118,8 @@ b.icon-alert {
 
 				text-align:left;
 
-				padding:5px 25px 20px;
+				padding:15px 25px 20px;
 				margin:0 0 15px 0;
-
-				background:rgba(255,255,255,0.05);
 
 				span {
 					position:relative;
@@ -129,7 +131,7 @@ b.icon-alert {
 				}
 
 				h4, h5 {
-					margin:5px 0;
+					margin:0px 0;
 					line-height:18px;
 				}
 
@@ -137,6 +139,16 @@ b.icon-alert {
 					color:rgba(255,255,255,0.8);
 					font-weight:500;
 				}
+			}
+
+			#close {
+				display:block;
+
+				position:absolute;
+				top:8px; left:8px;
+
+				color:#ffffff;
+				font-size:18px;
 			}
 		}
 
