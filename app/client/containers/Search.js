@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import ListItem from '../components/ListItem';
+import { pageLoaded } from '../actions/index';
 
 
 class Search extends Component {
@@ -10,6 +11,10 @@ class Search extends Component {
 		super(props);
 
 		this.displaySearchResults = this.displaySearchResults.bind(this);
+	}
+
+	componentDidMount() {
+		this.props.pageLoaded();
 	}
 
 	displaySearchResults(results) {
@@ -48,7 +53,7 @@ class Search extends Component {
 	}
 
 	render() {
-		var results = this.displaySearchResults(this.props.results.results);
+		var results = this.displaySearchResults(this.props.results);
 
 		return (
 			<div id="list" className="search-list-full">
@@ -61,16 +66,16 @@ class Search extends Component {
 
 function mapStateToProps(state) {
 	return { 
-		query: state.search.query, 
-		results: state.search.results,
-		waiting: state.search.waiting,
-		searching: state.search.searching
+		query: state.state.search.query, 
+		results: state.state.search.results.map( s => state.state.entities.shows[s] ),
+		waiting: state.state.waiting,
+		searching: state.state.search.searching
 	};
 }
 
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators({  }, dispatch);
+	return bindActionCreators({ pageLoaded }, dispatch);
 }
 
 

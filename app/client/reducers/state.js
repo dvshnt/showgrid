@@ -8,7 +8,31 @@ var GridEngine = require('../util/GridEngine');
 var DateManager = require('../util/DateManager');
 
 
-export default function state(state={ waiting:true, days:[], user:"", grid:[], favorites:[], alerts:[], featured:[], recent:[], entities:{} }, action) {
+export default function state(state={ 
+		waiting:true, 
+
+		days:[], 
+
+		user:"", 
+
+		grid:[], 
+		recent:[], 
+		featured:[], 
+
+		search:{
+			query:"", 
+			searching: false,
+			results: []
+		}, 
+
+		favorites:[], 
+		alerts:[], 
+
+		entities:{} 
+	}, action) 
+{
+
+
 	switch (action.type) {
 	case "FETCH_REQUEST":
 		return Object.assign({}, state, {
@@ -52,7 +76,7 @@ export default function state(state={ waiting:true, days:[], user:"", grid:[], f
 
 	case "GRID_SUCCESS":
 		if (action.payload && action.payload.entities && action.payload.entities.venues) {
-			var newOBJ = Object.assign({}, state, {
+			return Object.assign({}, state, {
 				waiting: false,
 				grid: action.payload.result,
 				entities: Object.assign({}, state.entities, {
@@ -60,8 +84,6 @@ export default function state(state={ waiting:true, days:[], user:"", grid:[], f
 					venues: action.payload.entities.venues,
 				})
 			});
-
-			return newOBJ;
 		}
 		return state;
 
@@ -128,6 +150,43 @@ export default function state(state={ waiting:true, days:[], user:"", grid:[], f
 		return Object.assign({}, state, {
 			alerts: state.alerts.filter( a => a !== index )
 		});
+
+
+	case "SEARCH_WAIT":
+		return Object.assign({}, state, {
+			search: Object.Object.assign({}, state.search, {
+				searching: true
+			})
+		});
+
+	case "SEARCH_REQUEST":
+		return  Object.assign({}, state, {
+			waiting: false,
+			search: Object.assign({}, state.search, {
+				searching: false,
+				query: action.payload.query
+			})
+		});
+
+	case "SEARCH_SUCCESS":
+		return  Object.assign({}, state, {
+			waiting: false,
+			search: Object.assign({}, state.search, {
+				results: action.payload.result
+			}),
+			entities: Object.assign({}, state.entities, {
+				shows: merge({}, state.entities.shows, action.payload.entities.shows)
+			})
+		});
+
+	
+	case "PAGE_LOADED":
+	case "SEARCH_FAILURE":
+		return  Object.assign({}, state, {
+			waiting: false
+		});
+
+
 
 
 	default:
