@@ -37,6 +37,15 @@ class UserProfile extends Component {
 		var pass1 = React.findDOMNode(this.refs.pass1).value;
 		var pass2 = React.findDOMNode(this.refs.pass2).value;
 
+
+
+		if( name == "" && email == "" && pass1 == "" && pass2 == ""){
+			return this.setState({
+				update_error_msg: "Nothing to save!",
+				update_error: true
+			})
+		}
+
 		if(pass1 !== pass2){
 			return this.setState({
 				update_error_msg: "Passwords dont match!",
