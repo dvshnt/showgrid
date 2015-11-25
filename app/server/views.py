@@ -118,8 +118,11 @@ class UserActions(APIView):
 			if(body['email'] != "None" and body['email'] != "" and body['email'] != None ):
 				user.email = body['email']
 				user.username = body['email']
+
 			if(body['name'] != "None" and body['name'] != "" and body['name'] != None):
 				user.name = body['name']
+			if(body['pass'] != "None" and body['pass'] != "" and body['pass'] != None):
+				user.set_password(body['pass'])
 			user.save()
 			serializer = ShowgridUserSerializer(user)
 			return Response(serializer.data)

@@ -60,7 +60,7 @@ export function signupUser(email, password) {
 	};
 };
 
-export function updateProfile(name, email) {
+export function updateProfile(name, email, pass) {
 	return (dispatch, getState) => {
 		return dispatch({
 			[CALL_API]: {
@@ -72,7 +72,8 @@ export function updateProfile(name, email) {
 			    types: ['UPDATEUSER_REQUEST', 'UPDATEUSER_SUCCESS', 'UPDATEUSER_FAILURE'],
 			    body: JSON.stringify({
 	    			name: name,
-	    			email: email
+	    			email: email,
+	    			pass: pass
 	    		})
 			}		
 		})
