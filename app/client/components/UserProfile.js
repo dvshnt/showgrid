@@ -70,14 +70,18 @@ class UserProfile extends Component {
 
 				<div onClick={ this.logout } id="logout-profile">Logout</div>
 				<div className="info">
-					<label>Name</label>
-					<input onChange = {this.resetState} ref="name" type="text" placeholder= {name || "Your Name" } />
-					
-					<label>Email/Username</label>
-					<input onChange = {this.resetState} ref="email" type="text" placeholder={email || "Your Email" } />
-					
-					<FormButton error = { this.state.update_error } errorMessage="update failed" submitMessage={this.state.update_msg} onClick={ this.updateProfile } />
-					{phone_button}
+
+					<div className="section fields">
+						
+						<input onChange = {this.resetState} ref="name" type="text" placeholder= {name || "Your Name" } />
+						
+						
+						<input onChange = {this.resetState} ref="email" type="text" placeholder={email || "Your Email" } />
+					</div>
+					<div className="section buttons">
+						<FormButton error = { this.state.update_error } errorMessage="update failed" submitMessage={this.state.update_msg} onClick={ this.updateProfile } />
+						{phone_button}
+					</div>
 				</div>
 			</div>
 		)
