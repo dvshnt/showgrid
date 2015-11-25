@@ -16,7 +16,8 @@
 	display:-webkit-flex;
 	display:		flex;
 	
-	align-items: center;
+	-webkit-align-items:center;
+			align-items:center;
 
 	-webkit-flex-flow:row wrap;
 			flex-flow:row wrap;
@@ -24,54 +25,53 @@
 	-webkit-justify-content:center;
 			justify-content:center;
 
-
-	// .pic {
-	// 	-webkit-flex:0 0 170px;
-	// 			flex:0 0 170px;
-
-	// 	height:170px;
-	// 	max-width:170px;
-
-	// 	margin:40px;
-
-	// 	background-image: url('/static/showgrid/img/blank_avatar_240x240.gif');
-	// 	background-position: center;
-	// 	border-radius:85px;
-	// }
-
 	#logout-profile {
 		display:none;
 
 	}
 
 
-
 	.info {
-		-webkit-flex:1 1 400px;
-				flex:1 1 400px;
+		display:-webkit-flex;
+		display:		flex;
+	
+		-webkit-align-items:center;
+				align-items:center;
+
+		-webkit-flex-flow:row wrap;
+				flex-flow:row wrap;
+
+		-webkit-justify-content:center;
+				justify-content:center;
+
+		padding-bottom:20px;
+
 
 		.section{
-			width: auto;
+			-webkit-flex:1 1 250px;
+					flex:1 1 250px;
+
 			display:-webkit-flex;
 			display:		flex;
 
-			flex-direction: column;
+			-webkit-flex-flow:column wrap;
+					flex-flow:column wrap;
 
-			-webkit-flex-flow:row wrap;
-					flex-flow:row wrap;
 			padding: 10px;
+
+			margin-top:20px;
+			margin-bottom:20px;
 
 		}
 
 		.section.fields{
 			-webkit-justify-content:center;
 			justify-content: space-around;
-			background: rgb(250,250,250);
 		}
 
-		.section.buttons{
+		.section.buttons {
 			-webkit-justify-content:center;
-			justify-content: center;
+					justify-content: center;
 		}
 
 		.label, input {
@@ -86,6 +86,16 @@
 			border-radius:5px;
 		}
 
+		label {
+			color:rgba(0,0,0,0.7);
+			font-size:12px;
+			margin-left:10px;
+		}
+
+		label:not(:first-of-type) {
+			margin-top:20px;
+		}
+
 		input[type=submit] {
 			min-width: auto;
 			color:#ffffff;
@@ -95,6 +105,13 @@
 			border:none;
 			background:rgb(0,222,144);
 			border-radius:4px;
+		}
+
+		.section.buttons input[type=submit]:first-of-type {
+			color:rgba(0,222,144,1);
+
+			border: 2px solid rgba(0,222,144,1);
+			background:rgba(0,222,144,0.1);
 		}
 
 		input[type=submit].error {
@@ -129,13 +146,13 @@
 	.user--profile {
 		width:100%;
 
-		padding-top:20px;
+		padding-top:40px;
 
 		#logout-profile {
 			display:block;
 
 			position:absolute;
-			right:15px; top:10px;
+			right:20px; top:15px;
 
 			color:#005AF4;
 			font-size:14px;

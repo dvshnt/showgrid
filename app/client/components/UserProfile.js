@@ -92,17 +92,19 @@ class UserProfile extends Component {
 				<div className="info">
 
 					<div className="section fields">
-						
+						<label>Name</label>
 						<input onChange = {this.resetState} ref="name" type="text" placeholder= {name || "Your Name" } />
+						<label>Email</label>
 						<input onChange = {this.resetState} ref="email" type="text" placeholder={email || "Your Email" } />
 					</div>
 					<div className="section fields">
+						<label>Change Password</label>
 						<input onChange = {this.resetState} ref="pass1" type="password" placeholder= {"Change Your Password" } />
 						<input onChange = {this.resetState} ref="pass2" type="password" placeholder= {"Confirm New Password" } />
 					</div>
 					<div className="section buttons">
-						<FormButton error = { this.state.update_error } errorMessage={ this.state.update_error_msg } submitMessage={this.state.update_msg} onClick={ this.updateProfile } />
 						{phone_button}
+						<FormButton error = { this.state.update_error } errorMessage={ this.state.update_error_msg } submitMessage={this.state.update_msg} onClick={ this.updateProfile } />
 					</div>
 				</div>
 			</div>
