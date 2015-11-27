@@ -112,10 +112,9 @@ var DateManager = {
 	},
 
 	getFeaturedShowDate(date) {
-		var currentDate = moment(date, 'YYYY-MM-DD');
 		var today = moment().hour(0).minute(0).second(0);
 
-		var diff = Math.round(currentDate.diff(today, 'days', true));
+		var diff = Math.round(date.diff(today, 'days', true));
 
 		if (diff === 0) {
 			return "Today";
@@ -130,10 +129,10 @@ var DateManager = {
 			return "Tomorrow";
 		}
 		else if (diff < 7 && diff > 1) {
-			return currentDate.format("dddd");
+			return date.format("dddd");
 		}
 		else {
-			return currentDate.format("dddd, MMMM Do");
+			return date.format("dddd, MMMM Do");
 		}
 	},
 

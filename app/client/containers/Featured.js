@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -59,9 +61,9 @@ class Featured extends Component {
 				var key = this.props.featured[i].id,
 					show = this.props.featured[i];
 
-				if (currentDay === "" || show.date.split('T')[0] !== currentDay) {
-					currentDay = show.date.split('T')[0];
-					results.push(<h3 key={ i }>{ DateManager.getFeaturedShowDate(currentDay.split('T')[0]) }</h3>);
+				if (currentDay === "" || currentDay.isSame(show.date, 'days')) {
+					currentDay = moment(show.date);
+					results.push(<h3 key={ i }>{ DateManager.getFeaturedShowDate(currentDay) }</h3>);
 				}
 
 				results.push(<ListItem key={ key } show={ show } showDate={ false } showStar={ false } />);
