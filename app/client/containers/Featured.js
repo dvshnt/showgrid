@@ -61,7 +61,7 @@ class Featured extends Component {
 				var key = this.props.featured[i].id,
 					show = this.props.featured[i];
 
-				if (currentDay === "" || currentDay.isSame(show.date, 'days')) {
+				if (currentDay === "" || !currentDay.isSame(moment(show.date), 'days')) {
 					currentDay = moment(show.date);
 					results.push(<h3 key={ i }>{ DateManager.getFeaturedShowDate(currentDay) }</h3>);
 				}
