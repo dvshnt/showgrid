@@ -94,7 +94,7 @@ export default class ListItem extends Component {
 
 		// Actions
 		if (!onsale) {
-			saleDate = <span className="date">{ DateManager.formatSaleDate(show.onsale) }</span>;
+			var saleDate = <span className="date">{ DateManager.formatSaleDate(show.onsale) }</span>;
 			ticket = <div className="onsale">On Sale { saleDate }</div>;
 		}
 		else if (show.ticket !== '') {
