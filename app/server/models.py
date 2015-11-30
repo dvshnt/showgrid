@@ -326,6 +326,36 @@ class Alert(models.Model):
 	which = models.PositiveSmallIntegerField(default=0)
 
 	def check_send(self):
+
+		def get_show_time_from_now(which, date):
+			if which == 0: return "right now"
+			if which == 1: return "in 30 minutes"
+			if which == 2: return "in an hour"
+			if which == 3: return "in 2 hours"
+			if which == 4: return "tomorrow"
+			if which == 5: return "in 2 days"
+			if which == 6: return "in a week"
+
+			return date.strftime('%a, %b %d at %I:%M %p')
+
+		def construct_text_message(alert):
+			show = Show.objects.get(id=alert.show.id)
+			venue = Venue.objects.get(id=show.venue.id)
+
+			headliner = show.headliners
+			venue = venue.name
+
+			if show.ticket:
+				ticket = "Get your tickets here: %s" % show.ticket
+			else:
+				ticket = ""
+
+			when = get_show_time_from_now(alert.which, show.date)
+
+			msg = "Showgrid here reminding you that %s plays at %s %s.\n\n %s" % (headliner, venue, when, ticket,)
+
+			return msg
+
 		now_time = timezone.now()
 		alert_time = self.date
 
@@ -333,41 +363,12 @@ class Alert(models.Model):
 
 		if time_diff.total_seconds() < alert_leeway and self.sent < 1:
 			msg = construct_text_message(self)
-			print colored('sending alert to '+self.user.phone.format_as('GB'),'on_green')
-			Sender.send_message(msg,self.user.phone.format_as('GB'))
+			print colored('sending alert to '+self.user.phone, 'green')
+			Sender.send_message(msg,self.user.phone)
 			self.sent += 1
 			self.save()
 			return True
 		return False
-
-	def construct_text_message(alert):
-		show = Show.objects.get(id=alert.show)
-		venue = Venue.objects.get(id=show.venue)
-
-		headliner = show.headliners
-		venue = venue.name
-
-		if show.ticket:
-			ticket = "Get your tickets here: %s" % show.ticket
-		else:
-			ticket = ""
-
-		when = get_show_time_from_now(alert.which, show.date)
-
-		msg = "Showgrid here reminding you that %s plays at %s %s.\n\n %s" % headliner, venue, when, ticket
-
-		return msg
-
-	def get_show_time_from_now(which, date):
-		if which == 0: return "right now"
-		if which == 1: return "in 30 minutes"
-		if which == 2: return "in an hour"
-		if which == 3: return "in 2 hours"
-		if which == 4: return "tomorrow"
-		if which == 5: return "in 2 days"
-		if which == 6: return "in a week"
-
-		return date.strftime('%a, %b %d at %I:%M %p')
 
 
 
