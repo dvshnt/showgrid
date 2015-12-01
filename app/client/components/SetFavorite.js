@@ -28,6 +28,8 @@ class SetFavorite extends Component {
 	}
 
 	setShowAsFavorite(e) {
+		var _this = this;
+
 		if (this.state.favorited) {
 			this.setState({
 				favorited: false
@@ -39,7 +41,15 @@ class SetFavorite extends Component {
 				favorited: true
 			});
 
-			this.props.favoriteShow(this.props.show.id);
+			this.props.favoriteShow(this.props.show.id).then(function(response) {
+				if (response.error) {
+					_this.setState({
+						favorited: false
+					});
+				}
+
+				return;
+			});
 		}
 	}
 

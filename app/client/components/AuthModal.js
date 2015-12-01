@@ -79,8 +79,8 @@ class AuthModal extends Component {
 			error: false,
 			isSignUp: false
 		})
+
 		this.props.hideLoginModal();
-		window.location.replace(GridEngine.domain + this.props.route);
 	}
 
 
