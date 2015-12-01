@@ -199,30 +199,34 @@
 				cursor:pointer;
 			}
 
-			.onsale {
+
+			.onsale-link {
 				-webkit-flex: 1 1 50%;
 						flex: 1 1 50%;
+				
+				.onsale {
 
-				margin:0 5px 0 0;
-				padding:5px 8px;
+					margin:0 5px 0 0;
+					padding:5px 8px;
 
-				color:rgb(0,222,144);
-				font-size:10px;
-				font-weight:300;
+					color:rgb(0,222,144);
+					font-size:10px;
+					font-weight:300;
 
-				text-align:center;
+					text-align:center;
 
-				border:1px solid rgb(0,222,144);
-				background:transparent;
-				border-radius:2px;
+					border:2px solid rgb(0,222,144);
+					background:transparent;
+					border-radius:2px;
 
-				cursor:pointer;
-			}
+					cursor:pointer;
+				}
 
-			.onsale {
-				.date {
-					font-size:12px;
-					font-weight:400;
+				.onsale {
+					.date {
+						font-size:12px;
+						font-weight:400;
+					}
 				}
 			}
 

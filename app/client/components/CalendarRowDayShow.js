@@ -51,7 +51,7 @@ export default class CalendarRowDayShow extends Component {
 
 		if (!onsale) {
 			saleDate = <span className="date">{ DateManager.formatSaleDate(show.onsale) }</span>;
-			ticket = <a href={ show.ticket } target="_blank" onClick={ this.registerTicketEvent }><div className="onsale">On Sale<br></br>{ saleDate }</div></a>;
+			ticket = <a className="onsale-link" href={ show.ticket } target="_blank" onClick={ this.registerTicketEvent }><div className="onsale">On Sale<br></br>{ saleDate }</div></a>;
 		}
 		else if (show.ticket !== "") {
 			var price = "";
