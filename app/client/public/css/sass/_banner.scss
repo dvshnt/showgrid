@@ -1,0 +1,68 @@
+#banner {
+	display:none;
+
+	position:fixed;
+	left:0; bottom:0;
+
+	width:100%; height:auto;
+
+	padding:16px 0;
+
+	color:#015f3e;
+	font-weight:500;
+	text-align:center;
+	text-shadow:0 1px #2dfeb4;
+
+	background:#01DE90;
+
+	&.active {
+		display:block;
+	}
+
+	.text {
+		display:inline-block;
+
+		width:95%;
+		margin:0 auto;
+
+		text-align:center;
+	}
+
+	.close {
+		display:inline-block;
+
+		color:rgba(255,255,255,0.85);
+		font-size:18px;
+		text-shadow:none;
+		line-height:20px;
+
+		cursor:pointer;
+
+		vertical-align:top;
+	}
+
+	.close:hover {
+		color:rgba(255,255,255,1);
+	}
+
+	a  {
+		color:#00462e;
+		font-weight:bold;
+		text-shadow:none;
+	}
+}
+
+@media screen and (max-width: 500px ) {
+	#banner {
+		text-align:left;
+
+		.text {
+			display:block;
+		}
+
+		.close {
+			display:block;
+		}
+	}
+
+}

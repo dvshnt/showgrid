@@ -6,6 +6,8 @@ import SubHeader from './SubHeader';
 
 export default class Header extends Component {
 	render() {
+		
+		
 		return (
 			<header id="header">
 				<HeaderPage />

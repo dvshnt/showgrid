@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import ControlNext from '../components/ControlNext';
 import ControlPrevious from '../components/ControlPrevious';
 import Calendar from '../components/Calendar';
-import Footer from '../components/Footer';
 
 import { getGrid, adjustWindowSize } from '../actions/index';
 

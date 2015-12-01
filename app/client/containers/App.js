@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import AuthModal from '../components/AuthModal';
 import PhoneModal from '../components/PhoneModal';
 import Footer from '../components/Footer';
+import Banner from '../components/Banner';
 
 import { getUserInfo } from '../actions/index';
 
@@ -44,6 +45,7 @@ class App extends Component {
 				{ loading }
         		{ children }
         		<Footer />
+				<Banner />
 			</div>
 		);
 	}
