@@ -74,10 +74,14 @@ export default class CalendarRowVenue extends Component {
 			fadeUp.color = this.props.venue.accent_color;
 		}
 
+		var image = {
+			'background-image': 'url(' + GridEngine.domain + this.props.venue.image + ')'
+		};
+
 
 		return (
 			<div className="venue" style={ primaryColor }>
-				<img src={ GridEngine.domain + this.props.venue.image }/>
+				<div className="image" style={ image }></div>
 				<div className="overlay">
 			    	<h3 className="name" style={ fadeDown }>
 			    		<a style={ titleColor } href={ this.props.venue.website } target="_blank">{ this.props.venue.name }</a>
