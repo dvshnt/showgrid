@@ -256,7 +256,10 @@ class UserActions(APIView):
 				alerts = Alert.objects.filter(user=user)
 				for alert in alerts:
 					alert.delete()
+				user.phone_verified = False
 				user.phone = phone
+				user.save()
+				user.send_pin(user.generate_pin())
 				user.save()
 				return Response({'status':'phone_set_alerts_cleared','phone':user.phone})
 
