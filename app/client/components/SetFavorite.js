@@ -57,7 +57,7 @@ class SetFavorite extends Component {
 		var className = (this.state.favorited) ? "icon-heart active" : "icon-heart";
 
 		return (
-			<b className={ className } onClick={ this.setShowAsFavorite }></b>
+			<b className={ className } onClick={ this.setShowAsFavorite } onTouchStart={ this.setShowAsFavorite }></b>
 		)
 	}
 };
