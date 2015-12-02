@@ -257,6 +257,8 @@ class UserActions(APIView):
 				for alert in alerts:
 					alert.delete()
 				user.phone_verified = False
+				user.phone = None
+				user.save()
 				user.phone = phone
 				user.save()
 				user.send_pin(user.generate_pin())
