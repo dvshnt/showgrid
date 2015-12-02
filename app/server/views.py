@@ -258,7 +258,8 @@ class UserActions(APIView):
 					alert.delete()
 				user.phone_verified = False
 				user.phone = None
-				user.save()
+				if(phone == user.phone):
+					return Response({'status':'phone_same','phone':user.phone})
 				user.phone = phone
 				user.save()
 				user.send_pin(user.generate_pin())
