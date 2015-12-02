@@ -151,7 +151,7 @@ class PhoneModal extends Component {
 					Text alerts will include a link to buy tickets as well as information about the show.
 				</p>
 				<form action="" onSubmit={ this.userSubmitPhone }>
-					<span> <span><b>+1</b></span> <input className="phone" type="tel" pattern="[0-9]{10}" ref="phonenumber" placeholder="Your 9 Digit Phone #" title="" onChange={ this.resetState }/></span>
+					<span> <span><b>+1</b></span> <input className="phone" type="tel" pattern="[0-9]{10}" ref="phonenumber" placeholder="Your 10 Digit Phone #" title="" onChange={ this.resetState }/></span>
 					<br></br>
 					<FormButton error={ this.state.error } errorMessage="Invalid Phone Number" submitMessage="Submit"/>
 				</form>
