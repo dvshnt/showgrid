@@ -40,8 +40,15 @@ export default function state(state={
 		});
 
 	case "ADJUST_SIZE":
+		var start = moment();
+		if (state.days[0]) {
+			start = moment(state.days[0].date, "MMMM Do YYYY");
+		}
+
+		var days = DateManager.getDaysArray(start, action.cells);
+
 		return  Object.assign({}, state, {
-			days: DateManager.getDaysArray(state.days[0] || moment(), action.cells)
+			days: days
 		});
 
 	case "GRID_REQUEST":
