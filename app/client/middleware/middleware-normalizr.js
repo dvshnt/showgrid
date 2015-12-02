@@ -7,7 +7,7 @@ import { normalize } from 'normalizr';
 
 function normalizrMiddleware({ getState }) {
 	return (next) => (action) => {
-		if (action.type.indexOf("SUCCESS") > -1 && action.schema && !action.payload.status) {
+		if (action.type.indexOf("SUCCESS") > -1 && action.schema && action.payload && !action.payload.status) {
 			action.payload = normalize(action.payload, action.schema);	
 		}
 
