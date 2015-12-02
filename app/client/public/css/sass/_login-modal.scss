@@ -142,10 +142,8 @@
   }
 
   input[type=submit] {
-    width:auto;
-
     margin:16px auto 0;
-    padding:12px 50px;
+    padding:12px 0;
     max-width: 80%;
 
     color:#ffffff;
@@ -179,8 +177,6 @@
 
   input[type=submit].error {
     background:#fc3030;
-
-    
   }
 
   .banner {
