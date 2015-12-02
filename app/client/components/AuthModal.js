@@ -35,14 +35,11 @@ class AuthModal extends Component {
 		};
 	}
 
-
 	componentWillUpdate(nextProps, nextState) {
 		if (nextProps.visible) {
 			window.addEventListener("click", this.toggleRegister, false);
 			window.addEventListener("click", this.closeOnClick, false);
 			window.addEventListener("keydown", this.handleKeydown, false);
-
-			React.findDOMNode(this.refs.username).focus();
 
 			return;
 		}
@@ -71,6 +68,13 @@ class AuthModal extends Component {
 			error: false,
 			isSignUp: !this.state.isSignUp
 		});
+
+		if (this.state.isSignUp) {
+			this.refs.username.getDOMNode().focus(); 
+			return;
+		}
+
+		this.refs.register_email.getDOMNode().focus(); 
 	}
 
 
