@@ -315,7 +315,7 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 
 DEFAULT_USER_ID = 1 #for migration 
 DEFAULT_SHOW_ID = 1 #for migration
-alert_leeway = 60 * 2 + 30 # if alert time distance 2:30 minutes away from time of check
+alert_leeway = 30 # if alert time distance :30 seconds away from time of check
 
 class Alert(models.Model):
 	is_active = models.BooleanField(default=True)
