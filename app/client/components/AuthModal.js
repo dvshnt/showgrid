@@ -35,12 +35,17 @@ class AuthModal extends Component {
 		};
 	}
 
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+			isSignUp: (nextProps.mode === "signup")
+		});
+	}
+
 	componentWillUpdate(nextProps, nextState) {
 		if (nextProps.visible) {
 			window.addEventListener("click", this.toggleRegister, false);
 			window.addEventListener("click", this.closeOnClick, false);
 			window.addEventListener("keydown", this.handleKeydown, false);
-
 			return;
 		}
 		
@@ -61,7 +66,14 @@ class AuthModal extends Component {
 		return false;
 	}
 
-
+	componentDidUpdate(prevProps, prevState) {
+		if (this.state.isSignUp) {
+			this.refs.register_email.getDOMNode().focus();
+		}
+		else {
+			this.refs.username.getDOMNode().focus();
+		}
+	}
 
 	toggleScreen(e){
 		this.setState({
@@ -140,7 +152,6 @@ class AuthModal extends Component {
 	render() {
 		var active = (this.props.visible) ? "active" : "";
 
-		console.log(this.state.isSignUp);
 		var container_state= classNames({
 			'modalScreenContainer' : true,
 			'page2': this.state.isSignUp == true ? true : false 
@@ -189,6 +200,7 @@ class AuthModal extends Component {
 
 function mapStateToProps(state) {
 	return {
+		mode: state.modal.mode,
 		visible: state.modal.login,
 		route: state.router.location.pathname
 	};

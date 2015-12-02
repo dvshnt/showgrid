@@ -21,7 +21,7 @@ class Profile extends Component {
 	userLogin(e) {
 		e.preventDefault();
 		
-		this.props.showLoginModal();
+		this.props.showLoginModal("signup");
 	}
 
 	render() {

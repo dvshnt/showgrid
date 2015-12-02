@@ -5,9 +5,10 @@ export const SHOW_PHONE_MODAL = 'SHOW_PHONE_MODAL';
 export const HIDE_PHONE_MODAL = 'HIDE_PHONE_MODAL';
 
 
-export function showLoginModal() {
+export function showLoginModal(mode) {
 	return {
-		type: SHOW_LOGIN_MODAL
+		type: SHOW_LOGIN_MODAL,
+		mode: mode || "login"
 	};
 }
 
