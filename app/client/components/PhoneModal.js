@@ -54,6 +54,15 @@ class PhoneModal extends Component {
 		window.removeEventListener("keydown", this.handleKeydown);
 	}
 
+	componentDidUpdate(prevProps, prevState) {
+		if (this.state.verify && !prevState.verify) {
+			React.findDOMNode(this.refs.pinOne).focus();
+			return;
+		}
+
+		React.findDOMNode(this.refs.phonenumber).focus();
+	}
+
 	closeOnClick(e) {
 		if (e.target.id === "overlay") {
 			this.props.hidePhoneModal();
@@ -133,17 +142,16 @@ class PhoneModal extends Component {
 		var _this = this;
 		this.props.submitUserPhone("1"+phonenumber)
 			.then(function(data) {
-				if (data.payload.status === "phone_set") {
+				if (data.payload.status === "bad_query") {
+					_this.setState({
+						error: true
+					})
+				}
+				else {
 					_this.setState({
 						verify: true,
 						error: false
 					});
-				}
-
-				else {
-					_this.setState({
-						error: true
-					})
 				}
 			});
 	}

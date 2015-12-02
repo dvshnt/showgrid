@@ -119,7 +119,10 @@ class AuthModal extends Component {
 	isGood(response){
 		// Verified Login
 		console.log('DONE AUTH',response.payload.hasOwnProperty('token'))
-		if (response.payload.hasOwnProperty('token')) return this.closeModal();
+		if (response.payload.hasOwnProperty('token')) {
+			window.location.reload(true);
+			return;
+		} 
 
 		// Handle Login Errors
 		
