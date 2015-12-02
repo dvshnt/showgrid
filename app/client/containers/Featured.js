@@ -15,8 +15,6 @@ class Featured extends Component {
 	constructor(props) {
 		super(props);
 
-		this.getNextPage = this.getNextPage.bind(this);
-
 		this.state = {
 			page: 1,
 			lastPage: false
@@ -28,28 +26,6 @@ class Featured extends Component {
 	    if (this.props.featured.length === 0) {
 	    	this.props.getFeatured(this.state.page);
 	    }
-	}
-
-	getNextPage() {
-		if (!this.state.lastPage) {
-			var _this = this;
-	
-			var page = this.state.page;
-	
-			this.props.getFeatured(page + 1)
-				.then(function(response) {
-					if (response.payload.status === "last_page") {
-						_this.setState({
-							lastPage: true
-						});
-						return;
-					}
-	
-					_this.setState({
-						page: page + 1
-					});
-				});
-		}
 	}
 
 	render() {
@@ -68,12 +44,6 @@ class Featured extends Component {
 
 				results.push(<ListItem key={ key } show={ show } showDate={ false } showStar={ false } />);
 			}
-
-			results.push(
-				<div onClick={ this.getNextPage } className="list-paginator">
-					{ this.state.lastPage ? "No more featured shows." : "See More Featured Shows..." }
-				</div>
-			);
 		}
 
 
