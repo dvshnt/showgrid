@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
 
 export default class FormButton extends Component {
+	componentDidMount() {
+		if (this.props.focus) {
+			React.findDOMNode(this.refs.formButton).focus();
+		}
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		if (this.props.focus) {
+			React.findDOMNode(this.refs.formButton).focus();
+		}
+	}
+
 	render() {
 		var errorClass = (this.props.error) ? "error" : "";
 		var buttonText = (this.props.error) ? this.props.errorMessage : this.props.submitMessage;

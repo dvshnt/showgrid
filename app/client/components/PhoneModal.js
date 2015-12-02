@@ -26,7 +26,8 @@ class PhoneModal extends Component {
 		this.state = {
 			error: false,
 			verify: false,
-			success: false
+			success: false,
+			focusButton: false
 		};
 	}
 
@@ -113,6 +114,14 @@ class PhoneModal extends Component {
 			return true;
 		}
 
+		if (classes.indexOf("pin-4") > -1) {
+			this.setState({
+				focusButton: true
+			});
+
+			return true;
+		}
+
 		return false;
 	}
 
@@ -171,7 +180,7 @@ class PhoneModal extends Component {
 						<input maxLength="1" className="pin pin-3" type="text" ref="pinThree" size="1" onChange={ this.goToNextPinInput }/>
 						<input maxLength="1" className="pin pin-4" type="text" ref="pinFour" size="1" onChange={ this.goToNextPinInput }/>
 						<br></br>
-						<FormButton error={ this.state.error } errorMessage="Invalid PIN" submitMessage="Submit"/>
+						<FormButton error={ this.state.error } errorMessage="Invalid PIN" submitMessage="Submit" focus={ this.state.focusButton }/>
 					</form>
 				</div>
 			);
