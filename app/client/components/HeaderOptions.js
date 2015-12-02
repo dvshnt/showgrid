@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, IndexLink } from 'react-router';
+import SGLink from './SGLink';
 
 import HeaderPageOption from './HeaderPageOption';
 import LogInOut from './LogInOut';
@@ -38,11 +38,11 @@ export default class HeaderOptions extends Component {
 	render() {
 		return (
 			<div id="header__options">
-				<Link to="/" activeClassName="selected" onlyActiveOnIndex="true">
+				<SGLink to="/" activeClassName="selected" onlyActiveOnIndex="true">
 					<b className="icon-calendar"></b>
 					<br></br>
 					<span>Calendar</span>
-				</Link>
+				</SGLink>
 				<HeaderPageOption symbol="icon-recent" text="New Shows" link="/recent"/>
 				<HeaderPageOption symbol="icon-star" text="Featured" link="/featured"/>
 				<HeaderPageOption symbol="icon-user" text="My Profile" link="/profile"/>
