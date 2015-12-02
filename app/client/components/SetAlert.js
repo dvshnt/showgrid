@@ -176,7 +176,7 @@ class SetAlert extends Component {
 		return (
 			<b className={ className } onClick={ this.toggleAlert }>
 				<div className="alert-box">
-					<b id="close" className="icon-close" onClick={ this.props.toggleAlert } onTouchStart={ this.toggleAlert }></b>
+					<b id="close" className="icon-close" onClick={ this.props.toggleAlert }></b>
 					{ artistInfo }
 					Alert me
 					{ options }
