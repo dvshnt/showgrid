@@ -60,15 +60,15 @@
 				margin:5px 0 0 0;
 
 				color:#666666;
-				font-size:14px;
+				font-size:12px;
 				font-weight:300;
 			}
 
 			.main {
-				margin:5px 0 0 0;
+				margin:8px 0;
 
 				color:#000000;
-				font-size:18px;
+				font-size:16px;
 				font-weight:500;
 
 				b {
@@ -156,7 +156,7 @@
 				top:2px;
 
 				color:rgb(0,222,144);
-				font-size:24px;
+				font-size:20px;
 				text-decoration:none;
 
 				@include transform(scale(1));
@@ -240,7 +240,7 @@
 						flex: 0 0 17.5%;
 
 				color:rgba(0,0,0,0.1);
-				font-size:20px;
+				font-size:18px;
 			}
 
 			b.icon-alert.active {
