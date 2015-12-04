@@ -427,7 +427,7 @@ class ShowList(APIView):
 
 			# Search has a different branch as it utilizes Haystack
 			if query != None:
-				querySet = SearchQuerySet().filter(text=query)
+				querySet = SearchQuerySet().filter(text=query).order_by('date')
 				shows = [ Show.objects.get(id=show.pk) for show in querySet ]
 				serializer = ShowListSerializer(shows, many=True)
 				return Response(serializer.data)
@@ -517,20 +517,4 @@ def check_venues(request):
 
 
 	return render(request, 'venues.html', { 'venues': data })
-
-
-@api_view(['GET'])
-@authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticatedOrReadOnly])
-def get_search_results(request):
-	if request.method == "GET":
-		query = request.GET['q']
-
-		querySet = SearchQuerySet().filter(text=query).order_by('date')
-
-		shows = [ Show.objects.get(id=show.pk) for show in querySet ]
-
-		serializer = ShowListSerializer(shows, many=True)
-
-		return Response(serializer.data)
 
