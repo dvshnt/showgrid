@@ -100,7 +100,6 @@ class Address(models.Model):
 
 
 class Venue(models.Model):
-
 	name = models.CharField(max_length=200)
 	address = models.ForeignKey(Address)
 	image = models.ImageField (upload_to='showgrid/img/venues/')

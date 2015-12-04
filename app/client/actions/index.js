@@ -156,13 +156,13 @@ function fetchGrid(date) {
 	return {
 		[CALL_API]: {
 			endpoint: function() {
-				var day = date;
+				var start = date;
+				var end = date.clone().add(GridEngine.getCellCount(), 'days');
 
-				var url = GridEngine.domain + '/i/grid/';
-				url += day.format('YYYY') + '/';
-				url += day.format('M') + '/';
-				url += day.format('D') + '?range=' + GridEngine.getCellCount();
-
+				var url = GridEngine.domain + '/v1/venues';
+				url += '?opened=True';
+				url += '&start=' + start.format('YYYY') + '-' + start.format('M')  + '-' + start.format('D')
+				url += '&end=' + end.format('YYYY') + '-' + end.format('M')  + '-' + end.format('D')
 				return url;
 			},
 		    method: 'GET',
@@ -196,7 +196,12 @@ export function getGrid(date) {
 function fetchRecent(page) {
 	return {
 		[CALL_API]: {
-			endpoint: GridEngine.domain + '/i/shows?method=recent&page=' + page,
+			endpoint: function() {
+				var url = GridEngine.domain + '/v1/shows';
+				url += '?page=' + page;
+				url += '&orderby=-created_at,date,venue';
+				return url;
+			},
 		    method: 'GET',
 		    types: ['FETCH_REQUEST', 'RECENT_SUCCESS', 'FETCH_FAILURE'],
 		    schema: arrayOf(Schemas.SHOW)
@@ -217,7 +222,13 @@ export function getRecent(page) {
 function fetchFeatured(page) {
 	return {
 		[CALL_API]: {
-			endpoint: GridEngine.domain + '/i/shows?method=featured&page=' + page,
+			endpoint: function() {
+				var url = GridEngine.domain + '/v1/shows';
+				url += '?featured=True';
+				url += '&page=' + page;
+				url += '&orderby=date,venue';
+				return url;
+			},
 		    method: 'GET',
 		    types: ['FETCH_REQUEST', 'FEATURED_SUCCESS', 'FEATURED_FAILURE'],
 		    schema: arrayOf(Schemas.SHOW)
@@ -369,7 +380,7 @@ function fetchSearchResults(query) {
 	return {
 		[CALL_API]: {
 			endpoint: function() {
-				var url = GridEngine.domain + '/i/search?';
+				var url = GridEngine.domain + '/v1/shows?';
 				url += 'q=' + encodeURIComponent(query);
 				return url;
 			},

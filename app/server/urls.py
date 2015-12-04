@@ -30,14 +30,8 @@ urlpatterns = patterns('',
     ## user actions
     url(r'^user/(?P<action>\w+)$', views.UserActions.as_view(), name='user actions'),
 
- 	url(r'^i/grid/$', views.VenueList.as_view(), name='grid'),
-	url(r'^i/grid/(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)$', views.VenueList.as_view(), name='grid'),
-
-
-    url(r'^i/search$', 'server.views.get_search_results', name='search results'),
-
-	url(r'^i/shows/$', views.ShowList.as_view(), name='recently added shows'),
-
+    url(r'^v1/venues/$', views.VenueList.as_view(), name='grid'),
+    url(r'^v1/shows/$', views.ShowList.as_view(), name='grid'),
 
     url(r'^check/venues$', 'server.views.check_venues', name='check_venues'),
 )

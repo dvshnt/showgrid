@@ -108,25 +108,33 @@ class UserActions(APIView):
 			return None
 
 
+
 	def put(self, request, action=None):
 		user = request.user
 
-		#update profile
+		# Update users profile
 		if action == 'profile':
 			body = json.loads(request.body.decode('utf-8'))
 
+			# Change email
 			if(body['email'] != "None" and body['email'] != "" and body['email'] != None ):
 				user.email = body['email']
 				user.username = body['email']
 
+			# Change name
 			if(body['name'] != "None" and body['name'] != "" and body['name'] != None):
 				user.name = body['name']
+
+			# Change password
 			if(body['pass'] != "None" and body['pass'] != "" and body['pass'] != None):
 				user.set_password(body['pass'])
+
 			user.save()
 			serializer = ShowgridUserSerializer(user)
 			return Response(serializer.data)
 
+
+		# Edit alert
 		elif action == 'alert':
 			body_unicode = request.body.decode('utf-8')
 			body = json.loads(body_unicode)
@@ -143,6 +151,7 @@ class UserActions(APIView):
 				return  Response({ 'status': '' })
 
 			return  Response({ 'status': 'alert_updated', 'id': alert.id, 'which': alert.which })
+
 
 
 	def get(self, request, action=None):
@@ -348,24 +357,51 @@ class UserActions(APIView):
 		return  Response({ 'status': 'bad_query' })
 
 
+
 class VenueList(APIView):
 	authentication_class = (TokenAuthentication,)
 	permission_classes = (AllowAny,)
 
-	def get(self, request, year=None, month=None, day=None):
-		if year != None and month != None or day != None:
-			d1 = date(int(year), int(month), int(day))
-			d2 = d1 + timedelta(days=int(request.GET['range']))
-		else:
+	def get(self, request, id=None):
+		if id == None:
+			orderby = request.GET.get('orderby', 'alpha')
+			opened = request.GET.get('opened', False)
+			start = request.GET.get('start', None)
+			end = request.GET.get('end', None)
+
 			d1 = date.today()
-			d2 = d1 + timedelta(days=int(request.GET['range']))
+			d2 = date.today() + timedelta(days=365)
 
-		venues = Venue.objects.filter(opened=True)
-		venues = sorted(venues, key=attrgetter('alphabetical_title'), reverse=False)
+			if start != None:
+				start = start.split("-")
+				d1 = date(int(start[0]), int(start[1]), int(start[2]))
+
+			if end != None:
+				end = end.split("-")
+				d2 = date(int(end[0]), int(end[1]), int(end[2]))
 
 
-		serializer = VenueSerializer(venues, many=True, context={ 'start': d1, 'end': d2 })
+			if opened:
+				venues = Venue.objects.filter(opened=opened)
+			else:
+				venues = Venue.objects.all()
 
+
+			if orderby == 'alpha':
+				venues = sorted(venues, key=attrgetter('alphabetical_title'), reverse=False)
+
+
+			serializer = VenueSerializer(venues, many=True, context={ 'start': d1, 'end': d2 })
+			return Response(serializer.data)
+
+
+
+		try:
+			venue = Venue.objects.get(id=id)
+		except ObjectDoesNotExist:
+			return  Response({ 'status': 'bad_query' })
+
+		serializer = VenueSerializer(venue)
 		return Response(serializer.data)
 
 
@@ -376,49 +412,91 @@ class ShowList(APIView):
 	authentication_class = (TokenAuthentication,)
 	permission_classes = (IsAuthenticatedOrReadOnly,)
 
-	def get_featured_shows(self):
-		shows = Show.objects.filter(star=True)
-		shows = shows.filter(date__gte=date.today())
-		shows = shows.order_by('date', 'venue')
-		return shows
+	def get(self, request, id=None):
+		if id == None:
+			query = request.GET.get('q', None)
+			featured = request.GET.get('featured', None)
+			orderby = request.GET.get('orderby', 'date').split(",")
+			soldout = request.GET.get('soldout', None)
+			onsale = request.GET.get('onsale', None)
+			start = request.GET.get('state', None)
+			end = request.GET.get('end', None)
+			show_date = request.GET.get('date', None)
 
-	def get_recent_shows(self):
-		shows = Show.objects.filter(date__gte=date.today().strftime("%Y-%m-%d"))
-		shows = shows.filter(created_at__lte=(date.today() + timedelta(1)))
-		shows = shows.order_by('-created_at', 'date', 'venue__name')
-		return shows
 
-	def get(self, request):
-		method = request.GET.get('method')
-		if method == 'recent':
-			shows = self.get_recent_shows()
-		elif method == 'featured':
-			shows = self.get_featured_shows()
-		else:
-			shows = Show.objects.all()
 
-		paginator = Paginator(shows, 100)
+			# Search has a different branch as it utilizes Haystack
+			if query != None:
+				querySet = SearchQuerySet().filter(text=query)
+				shows = [ Show.objects.get(id=show.pk) for show in querySet ]
+				serializer = ShowListSerializer(shows, many=True)
+				return Response(serializer.data)
 
-		page = request.GET.get('page')
+
+
+			if start != None and end != None:
+				start = start.split("-")
+				d1 = date(int(start[0]), int(start[1]), int(start[2]))
+
+				end = end.split("-")
+				d2 = date(int(end[0]), int(end[1]), int(end[2]))
+
+				shows = Show.objects.filter(date__range=[d1, d2])
+			elif show_date != None:
+				show_date = show_date.split("-")
+				shows = Show.objects.filter(
+					date__year=int(show_date[0]), date__month=int(show_date[1]), date__day=int(show_date[2])
+				)
+			else:
+				shows = Show.objects.filter(date__gte=date.today())
+
+
+
+			print len(shows)
+
+			if featured != None:
+				shows = shows.filter(star=featured)
+
+			if soldout != None:
+				shows = shows.filter(soldout=soldout)
+
+			if onsale != None:
+				shows = shows.filter(onsale__gte=date.today())
+
+			# ORDER BY
+			shows = shows.order_by(*orderby)
+
+
+			paginator = Paginator(shows, 100)
+
+			page = request.GET.get('page', 1)
+			try:
+				shows = paginator.page(page)
+			except PageNotAnInteger:
+				shows = paginator.page(1)
+			except EmptyPage:
+				response = Response()
+				response.data = {"status": "last_page"}
+				return response
+
+			if request.user.is_authenticated():
+				print "USER LOGGED IN"
+				serializer = ShowListSerializer(shows, many=True)
+			else:
+				print "USER NOT LOGGED IN"
+				serializer = ShowListSerializer(shows, many=True)
+
+			return Response(serializer.data)
+
+
+
 		try:
-			shows = paginator.page(page)
-		except PageNotAnInteger:
-			shows = paginator.page(1)
-		except EmptyPage:
-			response = Response()
-			response.data = {"status": "last_page"}
-			return response
+			show = Show.objects.get(id=id)
+		except ObjectDoesNotExist:
+			return  Response({ 'status': 'bad_query' })
 
-		if request.user.is_authenticated():
-			print "USER LOGGED IN"
-			serializer = ShowListSerializer(shows, many=True)
-		else:
-			print "USER NOT LOGGED IN"
-			serializer = ShowListSerializer(shows, many=True)
-
+		serializer = ShowListSerializer(show)
 		return Response(serializer.data)
-
-
 
 
 
