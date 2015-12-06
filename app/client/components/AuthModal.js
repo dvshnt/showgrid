@@ -37,6 +37,7 @@ class AuthModal extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		window.scrollTo(0,0)
 		this.setState({
 			isSignUp: (nextProps.mode === "signup")
 		});
@@ -160,10 +161,7 @@ class AuthModal extends Component {
 		this.props.getUserToken(username, password).then(this.isGood.bind(this));
 	}
 
-	shouldComponentUpdate(){
-		window.scrollTo(0,0)
-		return true
-	}
+
 
 	render() {
 
