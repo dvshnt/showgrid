@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import $ from 'jquery';
-
+var GridEngine = require('../util/GridEngine');
 import { hideLoginModal } from '../actions/modal';
 import { getUserToken, signupUser } from '../actions/index';
 
@@ -122,8 +122,15 @@ class AuthModal extends Component {
 	isGood(response){
 		// Verified Login
 		console.log('DONE AUTH',response.payload.hasOwnProperty('token'))
+
+		console.log(response.payload.hasOwnProperty('token'))
 		if (response.payload.hasOwnProperty('token')) {
-			//window.location.reload(true);
+			this.props.hideLoginModal();
+			window.location.replace(GridEngine.domain);
+			
+			//window.app.render();
+
+			//window.location.reload(true); //RERENDER APP INSTEAD
 			return;
 		} 
 

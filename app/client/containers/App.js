@@ -16,7 +16,9 @@ var GridEngine = require('../util/GridEngine');
 
 class App extends Component {
 	constructor(props) {
+
 		super(props);
+		window.app = this;
 
 		GridEngine.init();
 
