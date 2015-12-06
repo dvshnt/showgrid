@@ -32,6 +32,7 @@ class AuthModal extends Component {
 			error: false,
 			isSignUp: false,
 			facebook_login: false,
+			animate: true,
 		};
 	}
 
@@ -51,9 +52,11 @@ class AuthModal extends Component {
 		
 		window.removeEventListener("click", this.closeOnClick);
 		window.removeEventListener("keydown", this.handleKeydown);
+		//window.addEventListener("touchstart", this.closeOnClick);
 	}
 
 	componentWillUnmount() {
+		//window.removeEventListener("touchstart", this.closeOnClick);
 		window.removeEventListener("click", this.closeOnClick);
 		window.removeEventListener("keydown", this.handleKeydown);
 	}
@@ -68,10 +71,10 @@ class AuthModal extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		if (this.state.isSignUp) {
-			this.refs.register_email.getDOMNode().focus();
+			this.refs.register_email.getDOMNode()//.focus();
 		}
 		else {
-			this.refs.username.getDOMNode().focus();
+			this.refs.username.getDOMNode()//.focus();
 		}
 	}
 
@@ -82,11 +85,11 @@ class AuthModal extends Component {
 		});
 
 		if (this.state.isSignUp) {
-			this.refs.username.getDOMNode().focus(); 
+			this.refs.username.getDOMNode()//.focus(); 
 			return;
 		}
 
-		this.refs.register_email.getDOMNode().focus(); 
+		this.refs.register_email.getDOMNode()//.focus(); 
 	}
 
 
@@ -120,7 +123,7 @@ class AuthModal extends Component {
 		// Verified Login
 		console.log('DONE AUTH',response.payload.hasOwnProperty('token'))
 		if (response.payload.hasOwnProperty('token')) {
-			window.location.reload(true);
+			//window.location.reload(true);
 			return;
 		} 
 
@@ -150,10 +153,18 @@ class AuthModal extends Component {
 		this.props.getUserToken(username, password).then(this.isGood.bind(this));
 	}
 
-
+	shouldComponentUpdate(){
+		window.scrollTo(0,0)
+		return true
+	}
 
 	render() {
-		var active = (this.props.visible) ? "active" : "";
+
+		console.log("RENDER ??")
+		var active = classNames({
+			"active": this.props.visible,
+			"animate" : true
+		})
 
 		var container_state= classNames({
 			'modalScreenContainer' : true,
@@ -168,7 +179,10 @@ class AuthModal extends Component {
 					<div className = {container_state}>
 						<div className= 'modalScreen' id='LogInModalScreen'>
 							<p>
-								<span ><b><a href="#" onClick={ this.toggleScreen }>Sign up</a></b></span> for Showgrid to receive the ability to favorite shows, set show alerts, and particpate in all the conversation happening on here!
+							<span><a className="signup-button" href="#" onClick={ this.toggleScreen }>Sign up</a> for Showgrid</span> 
+							</p>
+							<p>
+								Favorite shows, set show alerts, and particpate in all the conversation happening on here!
 							</p>
 							<form action="" onSubmit={ this.userLogin }>
 								<input required type="text" ref="username" placeholder="Enter username" onChange={ this.resetError }/>
