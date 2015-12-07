@@ -31,7 +31,7 @@
   height: auto;
   display:-webkit-flex;
   display: flex;
-  transition: transform 250ms  cubic-bezier(.25,.1,.25,1);
+  transition: transform 350ms  cubic-bezier(.45,0,.27,.99);
   transform: translate(0%,0%);
 }
 
@@ -136,9 +136,17 @@
 
   input {
     width:90%;
-
+    transition: box-shadow 500ms linear;
     margin:5px auto;
   }
+  
+  input:focus{
+    outline: 0;
+    outline: none;
+    box-shadow: inset 0px 0px 20px rgba(255,255,155,0.2);
+  }
+
+
   input[type=email],
   input[type=text],
   input[type=password],

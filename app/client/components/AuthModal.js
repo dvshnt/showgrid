@@ -8,7 +8,7 @@ import { hideLoginModal } from '../actions/modal';
 import { getUserToken, signupUser } from '../actions/index';
 
 import FormButton from './FormButton';
-
+import windowScroll from '../util/windowScroll';
 import classNames from 'classnames';
 
 var GridEngine = require('../util/GridEngine');
@@ -17,6 +17,8 @@ var GridEngine = require('../util/GridEngine');
 class AuthModal extends Component {
 	constructor(props) {
 		super(props);
+
+		window.auth = this;
 		
 		this.userSignup = this.userSignup.bind(this);
 		this.userLogin = this.userLogin.bind(this);
@@ -37,13 +39,32 @@ class AuthModal extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		window.scrollTo(0,0)
+		console.log("GOT NEW PROPS")
+
+		var top = (window.pageYOffset || window.scrollY)
+		var left = (window.pageXOffset || window.scrollX)
+		if(top == null || left == null){
+			console.log("BAD SCROLL INPUT")
+			window.scrollTo(0,0)
+		}
+		// if( !nextProps.visible){
+		// 	windowScroll.enable();
+		// }else{
+		// 	windowScroll.disable();
+		// }
 		this.setState({
+			scrollTop: top || 0,
+			scrollLeft: left || 0,
 			isSignUp: (nextProps.mode === "signup")
 		});
 	}
 
 	componentWillUpdate(nextProps, nextState) {
+		// console.log("GOT NEW STATE")
+		// console.log(this.state)
+
+
+
 		if (nextProps.visible) {
 			window.addEventListener("click", this.toggleRegister, false);
 			window.addEventListener("click", this.closeOnClick, false);
@@ -71,12 +92,7 @@ class AuthModal extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if (this.state.isSignUp) {
-			this.refs.register_email.getDOMNode()//.focus();
-		}
-		else {
-			this.refs.username.getDOMNode()//.focus();
-		}
+		window.scrollTo(this.state.scrollLeft,this.state.scrollTop);
 	}
 
 	toggleScreen(e){
@@ -84,15 +100,7 @@ class AuthModal extends Component {
 			error: false,
 			isSignUp: !this.state.isSignUp
 		});
-
-		if (this.state.isSignUp) {
-			this.refs.username.getDOMNode()//.focus(); 
-			return;
-		}
-
-		this.refs.register_email.getDOMNode()//.focus(); 
 	}
-
 
 	closeModal() {
 		this.setState({
@@ -102,7 +110,6 @@ class AuthModal extends Component {
 
 		this.props.hideLoginModal();
 	}
-
 
 	handleKeydown(e) {
 		// ESC key
@@ -165,7 +172,6 @@ class AuthModal extends Component {
 
 	render() {
 
-		console.log("RENDER ??")
 		var active = classNames({
 			"active": this.props.visible,
 			"animate" : true
@@ -175,9 +181,10 @@ class AuthModal extends Component {
 			'modalScreenContainer' : true,
 			'page2': this.state.isSignUp == true ? true : false 
 		})
-
+		//console.log(this.state.scrollLeft,this.state.scrollTop);
+		//window.scrollTo(this.state.scrollLeft,this.state.scrollTop);
 		return (
-			<div id="overlay" className={ active }>
+			<div id="overlay" className={ active } style={{top: this.state.scrollTop,left: this.state.scrollLeft}}>
 				<div id="modal">
 					<b id="close" className="icon-close" onClick={ this.closeModal }></b>
 					<div className="banner"></div>
