@@ -11,7 +11,7 @@ export default class ListItem extends Component {
 		var show = this.props.show;
 		var venue = show.venue;
 
-		var website = show.website + '?utm_source=showgridnashville&utm_medium=web&utm_campaign=calendar';
+		var website = show.website + (show.website.indexOf('?') > -1 ? '&' : '?') + 'utm_source=showgridnashville&utm_medium=web&utm_campaign=calendar';
 
 		var boxStyle = {
 			//'background': venue.primary_color || '#000000',

@@ -18,9 +18,9 @@ export default class CalendarRowDayShow extends Component {
 			onsale = DateManager.areTicketsOnSale(show.onsale),
 			time = DateManager.formatShowTime(show.date);
 
-		show.website += '?utm_source=showgridnashville&utm_medium=web&utm_campaign=calendar';
+		show.website += (show.website.indexOf('?') > -1 ? '&' : '?') + 'utm_source=showgridnashville&utm_medium=web&utm_campaign=calendar';
 		if (show.ticket !== "") {
-			show.ticket += '?utm_source=showgridnashville&utm_medium=web&utm_campaign=calendar';
+			show.ticket += (show.ticket.indexOf('?') > -1 ? '&' : '?') + 'utm_source=showgridnashville&utm_medium=web&utm_campaign=calendar';
 		}
 
 		var	title = "",
