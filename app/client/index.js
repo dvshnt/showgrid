@@ -28,8 +28,7 @@ const routes = (
         <ReduxRouter>
 			<Router history={history}>
 				<Route path="/" component={App}>
-					<IndexRoute component={Splash}/>
-					<Route path="calendar" component={Showgrid}/>
+					<IndexRoute component={Showgrid}/>
 					<Route path="recent" component={Recent}/>
 					<Route path="featured" component={Featured}/>
 					<Route path="profile" component={Profile}/>

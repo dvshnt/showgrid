@@ -38,7 +38,7 @@ export default class HeaderOptions extends Component {
 	render() {
 		return (
 			<div id="header__options">
-				<HeaderPageOption symbol="icon-calendar" text="Calendar" link="/calendar"/>
+				<HeaderPageOption symbol="icon-calendar" text="Calendar" link="/"/>
 				<HeaderPageOption symbol="icon-recent" text="New Shows" link="/recent"/>
 				<HeaderPageOption symbol="icon-star" text="Featured" link="/featured"/>
 				<HeaderPageOption symbol="icon-user" text="My Profile" link="/profile"/>
