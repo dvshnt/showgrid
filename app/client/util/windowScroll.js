@@ -5,12 +5,12 @@ function preventDefault(e) {
   e.returnValue = false;  
 }
 
-function preventDefaultForScrollKeys(e) {
-    if (keys[e.keyCode]) {
-        preventDefault(e);
-        return false;
-    }
-}
+// function preventDefaultForScrollKeys(e) {
+//     if (keys[e.keyCode]) {
+//         preventDefault(e);
+//         return false;
+//     }
+// }
 
 function disableScroll() {
   if (window.addEventListener) // older FF
@@ -18,7 +18,7 @@ function disableScroll() {
   window.onwheel = preventDefault; // modern standard
   window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
   window.ontouchmove  = preventDefault; // mobile
-  document.onkeydown  = preventDefaultForScrollKeys;
+ // document.onkeydown  = preventDefaultForScrollKeys;
 }
 
 function enableScroll() {
@@ -27,7 +27,7 @@ function enableScroll() {
     window.onmousewheel = document.onmousewheel = null; 
     window.onwheel = null; 
     window.ontouchmove = null;  
-    document.onkeydown = null;  
+ //   document.onkeydown = null;  
 }
 
 module.exports = {
