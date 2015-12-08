@@ -49,6 +49,9 @@ class Featured extends Component {
 
 		return (
 			<div id="list">
+				<p>
+					You will notice a few shows that have some writing. This will be the focus of the Featured shows section as we expand. We will be writing a ton. We will write with verve, elasticity and any other exciting adjectives you can imagine that bring to mind motion and sound.
+				</p>
 				{ results }
 			</div>
 		)
