@@ -148,10 +148,12 @@
   }
   
   input:focus{
+    font-weight: light;
     outline: 0;
     outline: none;
-    box-shadow: inset 0px 0px 20px rgba(0,255,255,0.2);
+    box-shadow: inset 0px 0px 20px rgba(155,205,255,0.2);
   }
+  
 
 
   input[type=email],
