@@ -47,7 +47,6 @@ class App extends Component {
 				{ loading }
         		{ children }
         		<Footer />
-				<Banner />
 			</div>
 		);
 	}
