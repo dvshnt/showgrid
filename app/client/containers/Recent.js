@@ -37,7 +37,7 @@ class Recent extends Component {
 				var key = this.props.recent[i].id,
 					show = this.props.recent[i];
 
-				if (currentDay === "" || moment(show.created_at).isAfter(currentDay, 'days')) {
+				if (currentDay === "" || moment(show.created_at).isBefore(currentDay, 'days')) {
 					currentDay = show.created_at;
 					results.push(<h3 key={ i }>{ DateManager.getRecentShowsDate(currentDay.split('T')[0]) }</h3>);
 				}
