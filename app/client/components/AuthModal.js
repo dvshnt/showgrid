@@ -47,11 +47,13 @@ class AuthModal extends Component {
 			console.log("BAD SCROLL INPUT")
 			window.scrollTo(0,0)
 		}
-		// if( !nextProps.visible){
-		// 	windowScroll.enable();
-		// }else{
-		// 	windowScroll.disable();
-		// }
+
+		if( !nextProps.visible){
+			windowScroll.enable();
+		}else{
+			windowScroll.disable();
+		}
+
 		this.setState({
 			scrollTop: top || 0,
 			scrollLeft: left || 0,
@@ -92,7 +94,7 @@ class AuthModal extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		window.scrollTo(this.state.scrollLeft,this.state.scrollTop);
+		//window.scrollTo(this.state.scrollLeft,this.state.scrollTop);
 	}
 
 	toggleScreen(e){
@@ -100,6 +102,7 @@ class AuthModal extends Component {
 			error: false,
 			isSignUp: !this.state.isSignUp
 		});
+		return false;
 	}
 
 	closeModal() {
@@ -129,9 +132,9 @@ class AuthModal extends Component {
 
 	isGood(response){
 		// Verified Login
-		console.log('DONE AUTH',response.payload.hasOwnProperty('token'))
+		//console.log('DONE AUTH',response.payload.hasOwnProperty('token'))
 
-		console.log(response.payload.hasOwnProperty('token'))
+		//console.log(response.payload.hasOwnProperty('token'))
 		if (response.payload.hasOwnProperty('token')) {
 			this.props.hideLoginModal();
 			window.location.replace(GridEngine.domain);
@@ -171,6 +174,7 @@ class AuthModal extends Component {
 
 
 	render() {
+		console.log("RENDER AUTH",this.state)
 
 		var active = classNames({
 			"active": this.props.visible,
@@ -219,7 +223,6 @@ class AuthModal extends Component {
 							<span><b><a href="#" onClick={ this.toggleScreen }>Log In</a></b></span>
 						</div>
 					</div>
-
 				</div>
 			</div>
 		)
