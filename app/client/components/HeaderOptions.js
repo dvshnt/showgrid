@@ -38,7 +38,11 @@ export default class HeaderOptions extends Component {
 	render() {
 		return (
 			<div id="header__options">
-				<HeaderPageOption symbol="icon-calendar" text="Calendar" link="/"/>
+				<SGLink to="/" activeClassName="selected" onlyActiveOnIndex="true">
+					<b className="icon-calendar"></b>
+					<br></br>
+					<span>Calendar</span>
+				</SGLink>
 				<HeaderPageOption symbol="icon-recent" text="New Shows" link="/recent"/>
 				<HeaderPageOption symbol="icon-star" text="Featured" link="/featured"/>
 				<HeaderPageOption symbol="icon-user" text="My Profile" link="/profile"/>
