@@ -214,10 +214,11 @@ class AuthModal extends Component {
 								Sign up with your email and a password.
 							</p>
 							<form action="" onSubmit={ this.userSignup }>
-								<input required type="email" autocomplete="off" ref="register_email" placeholder="Enter Email" onChange={ this.resetError }/>
-								<input required type="password" autocomplete="off" ref="register_password" placeholder="Enter password" onChange={ this.resetError }/>
-								<input required type="password" autocomplete="off" ref="register_password2" placeholder="Confirm password" onChange={ this.resetError }/>
+								<input required type="email" autoComplete="off" ref="register_email" placeholder="Enter Email" onChange={ this.resetError }/>
+								<input required type="password" autoComplete="off" ref="register_password" placeholder="Enter password" onChange={ this.resetError }/>
+								<input required type="password" autoComplete="off" ref="register_password2" placeholder="Confirm password" onChange={ this.resetError }/>
 								<FormButton error = { this.state.error } errorMessage="hm...try again" submitMessage="Sign Up" />
+
 							</form>
 							<br/>
 							<span><b><a href="#" onClick={ this.toggleScreen }>Log In</a></b></span>
