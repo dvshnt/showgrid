@@ -227,6 +227,7 @@ class AuthModal extends Component {
 				</div>
 			</div>
 		)
+
 	}
 };
 
