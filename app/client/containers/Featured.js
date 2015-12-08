@@ -24,7 +24,7 @@ class Featured extends Component {
 	componentDidMount() {
 	    // Fetching first recent shows
 	    if (this.props.featured.length === 0) {
-	    	this.props.getFeatured(this.state.page, '2015-12-05');
+	    	this.props.getFeatured(this.state.page, moment().format('YYYY-MM-DD'));
 	    }
 	}
 
