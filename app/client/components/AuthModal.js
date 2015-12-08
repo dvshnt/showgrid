@@ -32,19 +32,19 @@ class AuthModal extends Component {
 		this.state = {
 			token: null,
 			error: false,
-			isSignUp: false,
+			isSignUp: true,
 			facebook_login: false,
 			animate: true,
 		};
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log("GOT NEW PROPS")
+		//console.log("GOT NEW PROPS",nextProps)
 
 		var top = (window.pageYOffset || window.scrollY)
 		var left = (window.pageXOffset || window.scrollX)
 		if(top == null || left == null){
-			console.log("BAD SCROLL INPUT")
+			//console.log("BAD SCROLL INPUT")
 			window.scrollTo(0,0)
 		}
 
@@ -54,10 +54,18 @@ class AuthModal extends Component {
 			windowScroll.disable();
 		}
 
+
+		var pagemode = this.state.isSignUp
+		if(nextProps.mode == null){
+			pagemode = this.state.isSignUp
+		}else{
+			pagemode = (nextProps.mode == "signup") ? true : false
+		}
+
 		this.setState({
 			scrollTop: top || 0,
 			scrollLeft: left || 0,
-			isSignUp: (nextProps.mode === "signup")
+			isSignUp: pagemode
 		});
 	}
 
@@ -94,7 +102,7 @@ class AuthModal extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		//window.scrollTo(this.state.scrollLeft,this.state.scrollTop);
+		window.scrollTo(this.state.scrollLeft,this.state.scrollTop);
 	}
 
 	toggleScreen(e){
@@ -108,7 +116,6 @@ class AuthModal extends Component {
 	closeModal() {
 		this.setState({
 			error: false,
-			isSignUp: false
 		})
 
 		this.props.hideLoginModal();
@@ -123,6 +130,7 @@ class AuthModal extends Component {
 	}
 
 	resetError(e) {
+
 		if (this.state.error) {
 			this.setState({
 				error: false
@@ -131,26 +139,19 @@ class AuthModal extends Component {
 	}
 
 	isGood(response){
-		// Verified Login
-		//console.log('DONE AUTH',response.payload.hasOwnProperty('token'))
-
-		//console.log(response.payload.hasOwnProperty('token'))
+		//hide modal,
 		if (response.payload.hasOwnProperty('token')) {
 			this.props.hideLoginModal();
 			window.location.replace(GridEngine.domain);
-			
-			//window.app.render();
-
-			//window.location.reload(true); //RERENDER APP INSTEAD
-			return;
-		} 
-
-		// Handle Login Errors
-		
-		return this.setState({ error: true });
+		//display error
+		}else{
+			//console.log('SET ERROR',this.state.isSignUp);
+			return this.setState({error: true });
+		}
 	}
 
 	userSignup(e){
+		//console.log("SIGNUP")
 		e.preventDefault();
 
 		var email = React.findDOMNode(this.refs.register_email).value;
@@ -163,6 +164,7 @@ class AuthModal extends Component {
 	}
 
 	userLogin(e) {
+		//console.log("SIGNIN")
 		e.preventDefault();
 
 		var username = React.findDOMNode(this.refs.username).value;
@@ -174,7 +176,7 @@ class AuthModal extends Component {
 
 
 	render() {
-		console.log("RENDER AUTH",this.state)
+		//console.log("RENDER AUTH",this.state)
 
 		var active = classNames({
 			"active": this.props.visible,
@@ -200,7 +202,7 @@ class AuthModal extends Component {
 							<p>
 								Favorite shows, set show alerts, and particpate in all the conversation happening on here!
 							</p>
-							<form action="" onSubmit={ this.userLogin }>
+							<form id = "signin" action="" onSubmit={ this.userLogin }>
 								<input required type="text" ref="username" placeholder="Enter username" onChange={ this.resetError }/>
 								<input required type="password" ref="password" placeholder="Enter password" onChange={ this.resetError }/>
 								<FormButton error={ this.state.error } errorMessage="Invalid Username or Password" submitMessage="Sign In" />
@@ -213,7 +215,7 @@ class AuthModal extends Component {
 							<p>
 								Sign up with your email and a password.
 							</p>
-							<form action="" onSubmit={ this.userSignup }>
+							<form id = "signup" action="" onSubmit={ this.userSignup }>
 								<input required type="email" autoComplete="off" ref="register_email" placeholder="Enter Email" onChange={ this.resetError }/>
 								<input required type="password" autoComplete="off" ref="register_password" placeholder="Enter password" onChange={ this.resetError }/>
 								<input required type="password" autoComplete="off" ref="register_password2" placeholder="Confirm password" onChange={ this.resetError }/>

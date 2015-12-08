@@ -20,8 +20,7 @@ class Profile extends Component {
 
 	userLogin(e) {
 		e.preventDefault();
-		
-		this.props.showLoginModal("signup");
+		this.props.showLoginModal(); //had to change this to login because signup has some wierd callback to (SHOW_LOGIN_MODAL) which changes the props back to login.
 	}
 
 	render() {

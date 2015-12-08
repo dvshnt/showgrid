@@ -102,7 +102,11 @@
 
 
   a {
-    color:#005AF4;
+    font-size: 12px;
+    color: #777777;
+    text-decoration: none;
+    background: #DADADA;
+    padding: 5px;
   }
 
 
@@ -136,7 +140,7 @@
 
   input {
     width:90%;
-    font-weight: lighter;
+    font-weight: normal;
     //transition: box-shadow 500ms cubic-bezier(0, 0, 0.02, 0.98);
     margin:5px auto;
   }
@@ -148,13 +152,11 @@
   }
   
   input:focus{
-    font-weight: light;
+    font-weight: normal;
     outline: 0;
     outline: none;
     box-shadow: inset 0px 0px 20px rgba(155,205,255,0.2);
   }
-  
-
 
   input[type=email],
   input[type=text],
