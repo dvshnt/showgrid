@@ -424,7 +424,6 @@ class ShowList(APIView):
 			show_date = request.GET.get('date', None)
 
 
-
 			# Search has a different branch as it utilizes Haystack
 			if query != None:
 				querySet = SearchQuerySet().filter(text=query).order_by('date')
@@ -444,15 +443,12 @@ class ShowList(APIView):
 				shows = Show.objects.filter(date__range=[d1, d2])
 			elif show_date != None:
 				show_date = show_date.split("-")
-				shows = Show.objects.filter(
-					date__year=int(show_date[0]), date__month=int(show_date[1]), date__day=int(show_date[2])
-				)
+				target_date = date(int(show_date[0]), int(show_date[1]), int(show_date[2]))
+				
+				shows = Show.objects.filter(date__date=target_date)
 			else:
 				shows = Show.objects.filter(date__gte=date.today())
 
-
-
-			print len(shows)
 
 			if featured != None:
 				shows = shows.filter(star=featured)
@@ -480,10 +476,8 @@ class ShowList(APIView):
 				return response
 
 			if request.user.is_authenticated():
-				print "USER LOGGED IN"
 				serializer = ShowListSerializer(shows, many=True)
 			else:
-				print "USER NOT LOGGED IN"
 				serializer = ShowListSerializer(shows, many=True)
 
 			return Response(serializer.data)
