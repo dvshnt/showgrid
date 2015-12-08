@@ -14,7 +14,7 @@ export default class Header extends Component {
 	getSubHead() {
 		var location = window.location.href.toString().split(window.location.host)[1];
 
-		if (location === "/") {
+		if (location === "/calendar") {
 			return <HeaderCalendar />;
 		}
 

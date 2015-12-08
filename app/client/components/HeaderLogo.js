@@ -28,7 +28,7 @@ export default class HeaderLogo extends Component {
 
 		return (
 			<div id="header__logo">
-				<a href="/#/"><div className="logo"></div></a>
+				<a href="/"><div className="logo"></div></a>
 				<span className="location">Nashville</span>
 				<span className="page-title">{ title }</span>
 			</div>

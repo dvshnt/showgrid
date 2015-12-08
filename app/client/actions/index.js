@@ -219,7 +219,7 @@ export function getRecent(page) {
 
 
 
-function fetchFeatured(page) {
+function fetchFeatured(page, date) {
 	return {
 		[CALL_API]: {
 			endpoint: function() {
@@ -227,6 +227,7 @@ function fetchFeatured(page) {
 				url += '?featured=True';
 				url += '&page=' + page;
 				url += '&orderby=date,venue';
+				url += (date ? '&date=' + date : '');
 				return url;
 			},
 		    method: 'GET',
@@ -237,9 +238,9 @@ function fetchFeatured(page) {
 }
 // Fetches a single user from Github API unless it is cached.
 // Relies on Redux Thunk middleware.
-export function getFeatured(page) {
+export function getFeatured(page, date) {
 	return (dispatch, getState) => {
-		return dispatch(fetchFeatured(page));
+		return dispatch(fetchFeatured(page, date));
 	};
 }
 

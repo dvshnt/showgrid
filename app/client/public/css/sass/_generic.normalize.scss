@@ -24,10 +24,20 @@ body {
   margin: 0;
   //background:#FFF9E7;
   background:#E9EAED;
+  height:100vh;
 }
 
-body.mobile--open {
+body.mobile--open,
+body.lock {
   overflow:hidden;
+}
+
+#container {
+  position:relative;
+
+  min-height:calc(100vh - 110px);
+
+  padding-bottom:110px;
 }
 
 

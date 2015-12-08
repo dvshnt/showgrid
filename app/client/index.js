@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { Router, IndexRoute, Route } from 'react-router';
 
 import App from './containers/App';
+import Splash from './containers/Splash';
 import Showgrid from './containers/Showgrid';
 import Featured from './containers/Featured';
 import Recent from './containers/Recent';
@@ -27,7 +28,8 @@ const routes = (
         <ReduxRouter>
 			<Router history={history}>
 				<Route path="/" component={App}>
-					<IndexRoute component={Showgrid}/>
+					<IndexRoute component={Splash}/>
+					<Route path="calendar" component={Showgrid}/>
 					<Route path="recent" component={Recent}/>
 					<Route path="featured" component={Featured}/>
 					<Route path="profile" component={Profile}/>
