@@ -15,6 +15,8 @@ from pytz import timezone
 
 from server.models import *
 
+from django.utils import dateparse
+
 from django.http import HttpResponse
 from django.http import HttpResponseServerError
 
@@ -419,9 +421,8 @@ class ShowList(APIView):
 			orderby = request.GET.get('orderby', 'date').split(",")
 			soldout = request.GET.get('soldout', None)
 			onsale = request.GET.get('onsale', None)
-			start = request.GET.get('state', None)
+			start = request.GET.get('start', None)
 			end = request.GET.get('end', None)
-			show_date = request.GET.get('date', None)
 
 
 			# Search has a different branch as it utilizes Haystack
@@ -434,18 +435,10 @@ class ShowList(APIView):
 
 
 			if start != None and end != None:
-				start = start.split("-")
-				d1 = date(int(start[0]), int(start[1]), int(start[2]))
-
-				end = end.split("-")
-				d2 = date(int(end[0]), int(end[1]), int(end[2]))
+				d1 = dateparse.parse_datetime(start).date()
+				d2 = dateparse.parse_datetime(end).date()
 
 				shows = Show.objects.filter(date__range=[d1, d2])
-			elif show_date != None:
-				show_date = show_date.split("-")
-				target_date = date(int(show_date[0]), int(show_date[1]), int(show_date[2]))
-				
-				shows = Show.objects.filter(date__date=target_date)
 			else:
 				shows = Show.objects.filter(date__gte=date.today())
 

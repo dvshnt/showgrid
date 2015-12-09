@@ -116,16 +116,13 @@ var DateManager = {
 
 		var diff = Math.round(date.diff(today, 'days', true));
 
-		if (diff === 0) {
-			return "Today";
-		}
-		else if (diff === -1 ) {
+		if (diff === -1) {
 			return "Yesterday";
 		}
-		else if (diff === 1 ) {
+		else if (diff === 0) {
 			return "Today";
 		}
-		else if (diff === 2 ) {
+		else if (diff === 1 ) {
 			return "Tomorrow";
 		}
 		else if (diff < 7 && diff > 1) {

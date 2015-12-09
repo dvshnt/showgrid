@@ -18,6 +18,7 @@ export default function state(state={
 		grid:[], 
 		recent:[], 
 		featured:[], 
+		featuredDay: "",
 
 		search:{
 			query:"", 
@@ -59,10 +60,10 @@ export default function state(state={
 
 
 	case "FEATURED_SUCCESS":
-		if (action.payload && action.payload.entities && action.payload.entities.shows) {
+		if (action.payload && action.payload.entities) {
 			return Object.assign({}, state, {
 				waiting: false,
-				featured: state.featured.concat(action.payload.result),
+				featured: action.payload.result,
 				entities: Object.assign({}, state.entities, {
 					shows: merge({}, state.entities.shows, action.payload.entities.shows)
 				})

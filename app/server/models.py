@@ -31,27 +31,6 @@ from django.utils import timezone
 from termcolor import colored
 
 
-
-
-
-class MySQLDatetimeDate(models.Transform):
-    """
-    This implements a custom SQL lookup when using `__date` with datetimes.
-    To enable filtering on datetimes that fall on a given date, import
-    this transform and register it with the DateTimeField.
-    """
-    lookup_name = 'date'
-
-    def as_sql(self, compiler, connection):
-        lhs, params = compiler.compile(self.lhs)
-        return 'DATE({})'.format(lhs), params
-
-    @property
-    def output_field(self):
-        return models.DateField()
-
-models.DateTimeField.register_lookup(MySQLDatetimeDate)
-
 class Venue_v2(models.Model):
 	name = models.CharField(max_length=200)
 	address = models.ForeignKey('Address')
