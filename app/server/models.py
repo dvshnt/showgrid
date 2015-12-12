@@ -31,54 +31,6 @@ from django.utils import timezone
 from termcolor import colored
 
 
-class Venue_v2(models.Model):
-	name = models.CharField(max_length=200)
-	address = models.ForeignKey('Address')
-	image = models.ImageField (upload_to='showgrid/img/venues/')
-	website = models.URLField()
-
-	primary_color = RGBColorField()
-	secondary_color = RGBColorField()
-	accent_color = RGBColorField()
-
-	# Sign-post for if venue is open or not
-	opened = models.BooleanField(default=True)
-
-	# Auto-fill URL for calendars without unique links
-	autofill = models.CharField(max_length=200, blank=True)
-	age = models.PositiveSmallIntegerField(default=0, blank=True)
-
-	def __unicode__ (self):
-		return self.name
-
-	def json(self):
-		return {
-			'id' : self.id,
-			'name' : self.name,
-			'website' : self.website,
-			'image' : self.image.url,
-			'address' : self.address.json(),
-			'primary_color':  self.primary_color,
-			'secondary_color':  self.secondary_color,
-			'accent_color':  self.accent_color,
-		}
-
-	@property
-	def alphabetical_title(self):
-		name = self.name
-		starts_with_flags = ['the ', 'an ', 'a ']
-
-		for flag in starts_with_flags:
-			if name.lower().startswith(flag):
-				return "%s, %s" % (name[len(flag):], name[:len(flag)-1])
-		else:
-			pass
-		
-		return self.name
-
-
-
-
 class Address(models.Model):
 	street = models.CharField(_("street"), max_length=128)
 	city = models.CharField(_("city"), max_length=64)
@@ -107,7 +59,6 @@ class Venue(models.Model):
 	primary_color = RGBColorField()
 	secondary_color = RGBColorField()
 	accent_color = RGBColorField()
-
 	# Sign-post for if venue is open or not
 	opened = models.BooleanField(default=True)
 

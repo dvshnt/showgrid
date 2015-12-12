@@ -20,6 +20,7 @@ class Recent extends Component {
 			lastPage: false
 		};
 	}
+	
 
 	componentDidMount() {
 	    // Fetching first recent shows

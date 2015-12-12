@@ -27,7 +27,6 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from haystack.query import SearchQuerySet
 
-
 #may want to move these to settings.py (b/c thats where the other auth settings are located)
 
 
@@ -435,10 +434,12 @@ class ShowList(APIView):
 
 
 			if start != None and end != None:
-				d1 = dateparse.parse_datetime(start).date()
-				d2 = dateparse.parse_datetime(end).date()
+				d1 = dateparse.parse_datetime(start)
+				d2 = dateparse.parse_datetime(end)
 
-				shows = Show.objects.filter(date__range=[d1, d2])
+				d3 = d2 + timedelta(hours=11.99)
+				d1 = d1 + timedelta(hours=11.99)
+				shows = Show.objects.filter(date__range=[d1.date(), d3.date()])
 			else:
 				shows = Show.objects.filter(date__gte=date.today())
 
