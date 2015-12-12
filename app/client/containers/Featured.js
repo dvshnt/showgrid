@@ -19,6 +19,7 @@ class Featured extends Component {
 		this.previousDay = this.previousDay.bind(this);
 
 		this.state = {
+			display_day: moment().hour(0).minute(0).second(0),
 			day: moment(),
 			page: 1,
 			lastPage: false
@@ -29,9 +30,9 @@ class Featured extends Component {
 	    // Fetching first recent shows
 	    if (this.props.featured.length === 0) {
 	    	var start = this.state.day.format();
-	    	var end = this.state.day.clone().add(1, 'days').format();
-
-	    	this.props.getFeatured(this.state.page, start, end);
+	    	var end = this.state.day.clone().add(1, 'days');
+	    
+	    	this.props.getFeatured(this.state.page, start, end.format());
 	    }
 	}
 
@@ -42,6 +43,7 @@ class Featured extends Component {
 	    this.props.getFeatured(this.state.page, start.format(), end.format());
 
 	    this.setState({
+	    	display_day: start.hour(0).minute(0).second(0),
 	    	day: start
 	    });
 	}
@@ -53,6 +55,7 @@ class Featured extends Component {
 	    this.props.getFeatured(this.state.page, start.format(), end.format());
 
 	    this.setState({
+	    	display_day: start.hour(0).minute(0).second(0),
 	    	day: start
 	    });
 	}
@@ -60,8 +63,8 @@ class Featured extends Component {
 	render() {
 		var results = [];
 		var currentDay = "";
-
-		results.push(<h3 key={ i }>{ DateManager.getFeaturedShowDate( this.state.day ) }</h3>);
+		
+		results.push(<h3 key={ i }>{ DateManager.getFeaturedShowDate( this.state.display_day ) }</h3>);
 
 		if (this.props.featured.length > 0) {
 			for (var i=0; i < this.props.featured.length; i++) {
