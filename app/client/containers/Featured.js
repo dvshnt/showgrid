@@ -19,7 +19,7 @@ class Featured extends Component {
 		this.previousDay = this.previousDay.bind(this);
 
 		this.state = {
-			display_day: moment().hour(0).minute(0).second(0),
+			day_offset: 0,
 			day: moment(),
 			page: 1,
 			lastPage: false
@@ -27,44 +27,35 @@ class Featured extends Component {
 	}
 
 	componentDidMount() {
-	    // Fetching first recent shows
-	    if (this.props.featured.length === 0) {
-	    	var start = this.state.day.format();
-	    	var end = this.state.day.clone().add(1, 'days');
-	    
-	    	this.props.getFeatured(this.state.page, start, end.format());
-	    }
+		if (this.props.featured.length === 0) {
+	   		this.props.getFeatured(this.state.page, this.state.day.clone().add(this.state.day_offset,"days").toISOString(), this.state.day.clone().add(this.state.day_offset+1,"days").toISOString());
+		}
 	}
 
 	nextDay() {
-		var start = this.state.day.clone().add(1, 'days');
-		var end = start.clone().add(1, 'days');
-
-	    this.props.getFeatured(this.state.page, start.format(), end.format());
-
-	    this.setState({
-	    	display_day: start.hour(0).minute(0).second(0),
-	    	day: start
-	    });
+		var offset = this.state.day_offset+1;
+		this.props.getFeatured(this.state.page, this.state.day.clone().add(offset,"days").toISOString(),this.state.day.clone().add(offset+1,"days").toISOString());
+		this.setState({
+			day_offset: offset,
+		});
 	}
 
 	previousDay() {
-		var start = this.state.day.clone().subtract(1, 'days');
-		var end = this.state.day;
-
-	    this.props.getFeatured(this.state.page, start.format(), end.format());
-
-	    this.setState({
-	    	display_day: start.hour(0).minute(0).second(0),
-	    	day: start
-	    });
+		var offset = this.state.day_offset-1;
+		this.props.getFeatured(this.state.page, this.state.day.clone().add(offset,"days").toISOString(),this.state.day.clone().add(offset+1,"days").toISOString());
+		this.setState({
+			day_offset: offset,
+		});
 	}
+
+
 
 	render() {
 		var results = [];
 		var currentDay = "";
-		
-		results.push(<h3 key={ i }>{ DateManager.getFeaturedShowDate( this.state.display_day ) }</h3>);
+		//console.log("OFFSET",this.state.day_offset)
+		var day = this.state.day.clone().add(this.state.day_offset,"days").hour(0).minute(0).second(0);
+		results.push(<h3 key={ i }>{ DateManager.getFeaturedShowDate(day) }</h3>);
 
 		if (this.props.featured.length > 0) {
 			for (var i=0; i < this.props.featured.length; i++) {
