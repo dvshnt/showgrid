@@ -67,6 +67,7 @@ export default class ListItem extends Component {
 
 			date = (
 				<div className="date">
+					<div>{ time }</div>
 					<div>{ month }</div>
 					<div>{ day }</div>
 				</div>
@@ -118,7 +119,7 @@ export default class ListItem extends Component {
 				<div className="info">
 					{ date }
 					<div className="artists">
-						<span className="time">{ time }</span>
+						
 						<a href={ website } target="_blank">
 						{ title }
 						{ headliner }
