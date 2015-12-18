@@ -438,7 +438,7 @@ class ShowList(APIView):
 				d2 = dateparse.parse_datetime(end)
 
 				#d3 = d2 + timedelta(hours=11.99)
-				print d1.date(), d2.date()
+				#print d1.date(), d2.date()
 				shows = Show.objects.filter(date__range=[d1.date(), d2.date()])
 			else:
 				shows = Show.objects.filter(date__gte=date.today())

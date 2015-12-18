@@ -1,4 +1,5 @@
 import moment from 'moment';
+import 'moment-timezone';
 
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
@@ -19,32 +20,37 @@ class Featured extends Component {
 		this.previousDay = this.previousDay.bind(this);
 
 		this.state = {
-			day_offset: 0,
-			day: moment(),
+			day: moment().tz('America/Chicago').hour(0).minute(0).second(0),
 			page: 1,
 			lastPage: false
 		};
 	}
 
 	componentDidMount() {
-		if (this.props.featured.length === 0) {
-	   		this.props.getFeatured(this.state.page, this.state.day.clone().add(this.state.day_offset,"days").toISOString(), this.state.day.clone().add(this.state.day_offset+1,"days").toISOString());
-		}
+		var start = this.state.day.clone();
+		var end = this.state.day.clone().hour(23).minute(59).second(59);
+
+   		this.props.getFeatured(this.state.page, start.toISOString(), end.toISOString());
 	}
 
 	nextDay() {
-		var offset = this.state.day_offset+1;
-		this.props.getFeatured(this.state.page, this.state.day.clone().add(offset,"days").toISOString(),this.state.day.clone().add(offset+1,"days").toISOString());
+		var start = this.state.day.clone().add(1, 'days');
+		var end = this.state.day.clone().add(1, 'days').hour(23).minute(59).second(59);
+
+		this.props.getFeatured(this.state.page, start.toISOString(), end.toISOString());
 		this.setState({
-			day_offset: offset,
+			day: this.state.day.clone().add(1, 'days')
 		});
 	}
 
 	previousDay() {
-		var offset = this.state.day_offset-1;
-		this.props.getFeatured(this.state.page, this.state.day.clone().add(offset,"days").toISOString(),this.state.day.clone().add(offset+1,"days").toISOString());
+		var start = this.state.day.clone().subtract(1, 'days');
+		var end = this.state.day.clone().subtract(1, 'days').hour(23).minute(59).second(59);
+
+		this.props.getFeatured(this.state.page, start.toISOString(), end.toISOString());
+		
 		this.setState({
-			day_offset: offset,
+			day: this.state.day.clone().subtract(1, 'days')
 		});
 	}
 
@@ -53,9 +59,8 @@ class Featured extends Component {
 	render() {
 		var results = [];
 		var currentDay = "";
-		//console.log("OFFSET",this.state.day_offset)
-		var day = this.state.day.clone().add(this.state.day_offset,"days").hour(0).minute(0).second(0);
-		results.push(<h3 key={ i }>{ DateManager.getFeaturedShowDate(day) }</h3>);
+		
+		results.push(<h3 key={ i }>{ DateManager.getFeaturedShowDate(this.state.day) }</h3>);
 
 		if (this.props.featured.length > 0) {
 			for (var i=0; i < this.props.featured.length; i++) {

@@ -18,7 +18,6 @@ export default function state(state={
 		grid:[], 
 		recent:[], 
 		featured:[], 
-		featuredDay: "",
 
 		search:{
 			query:"", 
