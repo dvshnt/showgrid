@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 import HeaderCalendar from './HeaderCalendar';
 import HeaderSearch from './HeaderSearch';
 
 
-export default class Header extends Component {
+class SubHeader extends Component {
 	constructor(props) {
 		super(props);
 
@@ -12,9 +14,7 @@ export default class Header extends Component {
 	}
 
 	getSubHead() {
-		var location = window.location.href.toString().split(window.location.host)[1];
-
-		if (location === "/") {
+		if (this.props.route === "/calendar") {
 			return <HeaderCalendar />;
 		}
 
@@ -33,3 +33,18 @@ export default class Header extends Component {
 		return this.getSubHead();
 	}
 };
+
+
+function mapStateToProps(state) {
+	return {
+		route: state.router.location.pathname
+	};
+}
+
+
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({  }, dispatch);
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SubHeader);
