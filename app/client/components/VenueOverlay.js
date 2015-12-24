@@ -73,10 +73,12 @@ export default class VenueOverlay extends Component {
 				<div className="image" style={ image }></div>
 				<div className="overlay-gradient" style={this.overlayStyle}></div>
 				<div className="content">
-			    	<a className="name" target="_blank">{ this.props.venue.name }</a>
-			    	<div  className="address" >
-						{ this.props.venue.address.street } { this.props.venue.address.city },  { this.props.venue.address.state } { this.props.venue.address.zip_code }
-			    	</div>
+					<div className="content-top">
+						<a className="name" target="_blank">{ this.props.venue.name }</a>
+						<div  className="address" >
+							{ this.props.venue.address.street } { this.props.venue.address.city },  { this.props.venue.address.state } { this.props.venue.address.zip_code }
+						</div>
+					</div>
 			    	<div className="description">
 			    		<p>
 			    			{ this.props.venue.description }
