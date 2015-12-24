@@ -19,6 +19,10 @@ export default class VenueOverlay extends Component {
 	    var g = parseInt(hex.substring(2,4), 16);
 	    var b = parseInt(hex.substring(4,6), 16);
 
+	    if(!b) b = 0
+	    if(!g) g = 0
+	    if(!r) r = 0
+
 	   	this.overlayStyle = {
 	   		background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 5%,rgba("+r+","+g+","+b+",1) 50%,rgba("+r+","+g+","+b+",1) 100%), rgba("+r+","+g+","+b+",0.3)"
 	   	}
