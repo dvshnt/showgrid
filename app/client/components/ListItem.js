@@ -20,16 +20,18 @@ export default class ListItem extends Component {
 
 		var onsale = DateManager.areTicketsOnSale(show.onsale);
 
-		var	title = "",
-			headliner = "",
-			opener = "",
-			ticket = "",
-			price = "",
-			date = "",
-			star = "",
-			review = "",
-			free = "",
-			age = "";
+		var	title,
+			headliner,
+			opener,
+			ticket,
+			price,
+			date,
+			time,
+			star,
+			review,
+			free,
+			age,
+			venue_header
 
 
 
@@ -45,17 +47,17 @@ export default class ListItem extends Component {
 
 
 		// Header
-		var time = DateManager.formatShowTime(show.date);
+		var _time = DateManager.formatShowTime(show.date);
 
 		if (show.age > 0) {
-			age = <span className="age">{ show.age }+</span>;
+			age = <div className="age">{ show.age }+</div>;
 		}
 
 		if (show.price < 0) {
-			price = <span className="price">FREE</span>;
+			price = <div className="price">FREE</div>;
 		}
 		else if (show.price > 0) {
-			price = <span className="price">${ show.price }</span>;
+			price = <div className="price">${ show.price }</div>;
 		}
 
 
@@ -67,13 +69,16 @@ export default class ListItem extends Component {
 
 			date = (
 				<div className="date">
-					<div>{ time }</div>
+					<div>{ _time }</div>
 					<div>{ month }</div>
 					<div>{ day }</div>
 				</div>
 			);
+		}else if(this.props.showTime){
+			time = (
+				<div className="time">{ _time }</div>
+			);		
 		}
-
 
 
 
@@ -99,28 +104,48 @@ export default class ListItem extends Component {
 			ticket = <div className="onsale">On Sale { saleDate }</div>;
 		}
 		else if (show.ticket !== '') {
-			ticket = <a className="ticket" href={ show.ticket } target="_blank" onClick={ this.registerTicketEvent }><b className="icon-ticket"></b>Buy Tickets</a>;
+			if(this.props.ticket_price){
+				ticket = (
+					<span className="ticket">
+						<b className="icon-ticket" />
+						<b className="ticket-price"> ${show.price}</b>
+					</span>
+				)
+			}else{
+				ticket = <a className="ticket" href={ show.ticket } target="_blank" onClick={ this.registerTicketEvent }><b className="icon-ticket"></b>Buy Tickets</a>;
+			}
+			
 		}
 
 		if (show.soldout) {
 			ticket = <div className="soldout">Sold Out</div>;
 		}
 
+		if(this.props.ticket_price) price = null
 
+
+		if(!this.props.skip_header){
+			venue_header = (
+				<header>
+					<div className="pic"></div>
+					{venue.name}
+				</header>
+			)
+		}
 
 
 		return (
 			<div className="list--item"  style={ boxStyle }>
-				<header>
-					<div className="pic"></div>
-					<h4>{ venue.name }</h4>
-					{ age }{ price }
-				</header>
+				<div className="extra-info">
+					{ age }{price}
+				</div>
+				{venue_header}
 				<div className="info">
 					{ date }
 					<div className="artists">
 						
 						<a href={ website } target="_blank">
+						{ time }
 						{ title }
 						{ headliner }
 						{ opener }

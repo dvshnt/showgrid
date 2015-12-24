@@ -1,4 +1,4 @@
-.venue {
+.venue-overlay{
 
 
 	position:relative;
@@ -62,9 +62,8 @@
 		.name a:hover {
 			text-decoration:underline;
 		}
-
+		
 		.address {
-
 			position:absolute;
 			bottom:0; left:0;
 
@@ -75,71 +74,8 @@
 
 			text-align:center;
 			font-size:12px;
-			color:rgba(255,255,255,0.7);
-			margin-bottom: 0;
+			color:#aaaaaa;
 		}
 	}
 
 }
-.calendar__row {
-
-}
-
-.calendar__row.mini {
-	.venue {
-		padding:10px 0;
-	}
-
-	.image {
-		display:none;
-	}
-
-
-
-	.overlay {
-		position:relative;
-		height:auto;
-
-		.name {
-			margin:5px 0;
-
-			font-size:14px;
-		}
-
-		.name a {
-			color:#666666;
-		}
-
-		.address {
-			position:relative;
-
-			margin:5px 0;
-			padding-top:0;
-
-			font-size:10px;
-			color:#afafaf;
-		}
-	}
-	
-} 
-
-@media screen and (max-width: 500px ) {
-	.calendar__row {
-
-		.venue {
-			.user {
-				font-size: 32px;
-			}
-			-webkit-flex:0 0 42.5%;
-					flex:0 0 42.5%;
-		}
-
-		.overlay {
-			.name {
-				font-size:16px;
-			}
-		}
-	}
-}
-
-@import "venue--img";

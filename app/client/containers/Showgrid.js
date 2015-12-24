@@ -9,7 +9,8 @@ import ControlPrevious from '../components/ControlPrevious';
 import Calendar from '../components/Calendar';
 
 import { getGrid, adjustWindowSize } from '../actions/index';
-
+import DocMeta from 'react-doc-meta'
+import Loader from '../components/Loader';
 var GridEngine = require('../util/GridEngine');
 
 
@@ -40,8 +41,21 @@ class Showgrid extends Component {
 	}
 
 	render() {
+		var tags = [
+			{name: "description", content: "lorem ipsum dolor"},
+			{itemProp: "name", content: "The Name or Title Here"},
+			{itemProp: "description", content: "This is the page description"},
+			{name: "twitter:card", content: "product"},
+			{name: "twitter:title", content: "Page Title"},
+			{property: "og:title", content: "Title Here"},	
+		]
+
+		if(this.props.grid.length == 0){
+			return <Loader/>
+		}
 		return (
 			<section id="container">
+				<DocMeta tags={tags} />
 				<ControlNext />
 				<ControlPrevious />
 				<Calendar />

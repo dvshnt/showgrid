@@ -1,6 +1,7 @@
 #footer {
 	position:absolute;
 	bottom:0; left:0;
+	background: #F1F1F1;
 
 	display:block;
 
@@ -46,7 +47,8 @@
 
 @media screen and (max-width: 500px ) {
 	#footer {
-		margin-top:20px;
+		background: #F1F1F1;
+		padding-top:20px;
 
 		span {
 			width:100%;

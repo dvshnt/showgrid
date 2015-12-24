@@ -54,7 +54,7 @@ from django.core.management.base import NoArgsCommand
 
 
 class Command(NoArgsCommand):
-	help = "check alerts, clear pin timouts, cleear phones, clear alert send timeouts"
+	help = "check alerts, clear pin timouts, clear phones, clear alert send timeouts"
 	def handle_noargs(self, **options):
 
 		

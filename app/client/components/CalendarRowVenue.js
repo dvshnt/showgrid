@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router';
+
 
 var GridEngine = require('../util/GridEngine');
 
@@ -20,8 +22,8 @@ export default class CalendarRowVenue extends Component {
 	    var b = parseInt(hex.substring(4,6), 16);
 
 	    return {
-	    	start: 'rgba('+r+','+g+','+b+',1)',
-	    	end: 'rgba('+r+','+g+','+b+',0)'
+	    	start: 'rgba('+0+','+0+','+0+',1)',
+	    	end: 'rgba('+0+','+0+','+0+',0)'
 	   	};
 	}
 
@@ -29,6 +31,7 @@ export default class CalendarRowVenue extends Component {
 		var { start, end } = this.convertHex(color);
 
 		return {
+			'opacity': '1',
 			'background': '-moz-linear-gradient(top, ' + start + ' 0%, ' + start + ' 4%, ' + end + ' 100%)',
 			'background': '-webkit-gradient(linear, left top, left bottom, color-stop(0%,' + start + '), color-stop(4%,' + start + '), color-stop(100%,' + end + '))',
 			'background': '-webkit-linear-gradient(top, ' + start + ' 0%,' + start + ' 4%,' + end + ' 100%)',
@@ -42,6 +45,7 @@ export default class CalendarRowVenue extends Component {
 		var { start, end } = this.convertHex(color);
 
 		return {
+			'opacity': '1',
 			'background': '-moz-linear-gradient(bottom, ' + start + ' 0%, ' + start + ' 4%, ' + end + ' 100%)',
 			'background': '-webkit-gradient(linear, left bottom, left top, color-stop(0%,' + start + '), color-stop(4%,' + start + '), color-stop(100%,' + end + '))',
 			'background': '-webkit-linear-gradient(bottom, ' + start + ' 0%,' + start + ' 4%,' + end + ' 100%)',
@@ -79,14 +83,19 @@ export default class CalendarRowVenue extends Component {
 		};
 
 
+
+
+		var link = '/venue/'+this.props.venue.id;
+
 		return (
 			<div className="venue" style={ primaryColor }>
 				<div className="image" style={ image }></div>
 				<div className="overlay">
-			    	<h3 className="name" style={ fadeDown }>
-			    		<a style={ titleColor } href={ this.props.venue.website } target="_blank">{ this.props.venue.name }</a>
-			    	</h3>
-					
+			    		<Link to={link}>
+			    		<h3 className="name" style={ fadeDown }>
+			    			<a style={ {color:"#fff",cursor:"pointer"} } target="_blank">{ this.props.venue.name }</a>
+			    		</h3>
+			    		</Link>
 					<div  className="address" style={ fadeUp }>
 				    	<div>
 			    			{ this.props.venue.address.street }

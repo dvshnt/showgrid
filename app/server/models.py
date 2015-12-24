@@ -55,6 +55,11 @@ class Venue(models.Model):
 	address = models.ForeignKey(Address)
 	image = models.ImageField (upload_to='showgrid/img/venues/')
 	website = models.URLField()
+	description = models.TextField(default="This is a description")
+	twitter_url = models.CharField(max_length=200)
+	facebook_url = models.CharField(max_length=200)
+	phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+	phone = models.CharField(unique=True,validators=[phone_regex], blank=True, null=True,max_length=255) # validators should be a list
 
 	primary_color = RGBColorField()
 	secondary_color = RGBColorField()
@@ -84,6 +89,9 @@ class Venue(models.Model):
 
 	def json(self):
 		return {
+			'description': self.description,
+			'twitter': self.twitter_url,
+			'facebook': self.facebook_url,
 			'id' : self.id,
 			'name' : self.name,
 			'website' : self.website,
@@ -273,6 +281,7 @@ class Alert(models.Model):
 	show = models.ForeignKey('Show',default=DEFAULT_SHOW_ID,related_name='alerts')
 	sent = models.PositiveSmallIntegerField(default=0)
 	which = models.PositiveSmallIntegerField(default=0)
+	sale = models.BooleanField(default=False)
 
 	def check_send(self):
 
@@ -286,6 +295,24 @@ class Alert(models.Model):
 			if which == 6: return "in a week"
 
 			return date.strftime('%a, %b %d at %I:%M %p')
+
+		def construct_sale_message(alert):
+			show = Show.objects.get(id=alert.show.id)
+			venue = Venue.objects.get(id=show.venue.id)
+
+			headliner = show.headliners
+			venue = venue.name
+
+			if show.ticket:
+				ticket = "Get your tickets here: %s" % show.ticket
+			else:
+				ticket = ""
+
+			when = get_show_time_from_now(alert.which, show.date)
+
+			msg = "Tickets for %s at %s are on sale %s! %s" % (headliner, venue, when, ticket)
+
+			return msg			
 
 		def construct_text_message(alert):
 			show = Show.objects.get(id=alert.show.id)
@@ -311,8 +338,12 @@ class Alert(models.Model):
 		time_diff = alert_time - now_time
 
 		if time_diff.total_seconds() < alert_leeway and self.sent < 1:
-			msg = construct_text_message(self)
-			print colored('sending alert to '+self.user.phone, 'green')
+
+			if self.sale:
+				msg = construct_sale_message(self)
+			else:
+				msg = construct_text_message(self)
+			print colored('sending alert to '+self.user.phone+' ( is sale ? : '+self.sale+' ) ', 'green')
 			Sender.send_message(msg,self.user.phone)
 			self.sent += 1
 			self.save()

@@ -94,6 +94,9 @@ function getUser() {
 	};
 }
 
+
+
+
 // Fetches a single user from Github API unless it is cached.
 // Relies on Redux Thunk middleware.
 export function getUserInfo() {
@@ -152,7 +155,26 @@ export function submitPhonePin(pin) {
 
 
 
+export function getVenue(id) {
+	console.log("GET VENUE")
+	return (dispatch, getState) => {
+		return dispatch({
+			[CALL_API]: {
+				endpoint: GridEngine.domain + '/v1/venues/'+id,
+			    method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+			    types: ['VENUE_REQUEST', 'VENUE_SUCCESS', 'VENUE_FAILURE'],
+			    schema: Schemas.VENUE
+			}
+		})
+	}
+}
+
 function fetchGrid(date) {
+
+	console.log("FETCH GRID")
 	return {
 		[CALL_API]: {
 			endpoint: function() {
@@ -248,6 +270,7 @@ export function getFeatured(page, start, end) {
 
 
 function markShowAsFavorite(show) {
+	console.log("MARK SHOW AS FAVORITE")
 	return {
 		[CALL_API]: {
 			endpoint:  GridEngine.domain + "/user/favorite",
@@ -260,7 +283,7 @@ function markShowAsFavorite(show) {
     			show: show
     		})
 		}
-	};
+	}
 }
 
 export function favoriteShow(show) {
@@ -295,7 +318,7 @@ export function unfavoriteShow(show) {
 
 
 
-function setAlertForShow(show, date, which) {
+function setAlertForShow(show, date, which, sale) {
 	return {
 		[CALL_API]: {
 			endpoint:  GridEngine.domain + "/user/alert",
@@ -307,16 +330,17 @@ function setAlertForShow(show, date, which) {
 		    body: JSON.stringify({
     			show: show,
     			date: date,
-    			which: which
+    			which: which,
+    			sale: sale
     		}),
 		    schema: Schemas.ALERT
 		}
 	};
 }
 
-export function setAlert(show, date, which) {
+export function setAlert(show, date, which, sale) {
 	return (dispatch, getState) => {
-		return dispatch(setAlertForShow(show, date, which));
+		return dispatch(setAlertForShow(show, date, which, sale));
 	};
 }
 

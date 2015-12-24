@@ -4,10 +4,11 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import ListItem from '../components/ListItem';
+import Show from '../components/ListItem';
 
 import { getRecent } from '../actions/index';
-
+import { Loader } from '../components/Loader';
+import DocMeta from 'react-doc-meta'
 var DateManager = require('../util/DateManager');
 
 
@@ -30,30 +31,43 @@ class Recent extends Component {
 	}
 
 	render() {
-		var results = [];
-		var currentDay = "";
+		var tags = [
+			{name: "description", content: "lorem ipsum dolor"},
+			{itemProp: "name", content: "The Name or Title Here"},
+			{itemProp: "description", content: "This is the page description"},
+			{name: "twitter:card", content: "product"},
+			{name: "twitter:title", content: "Page Title"},
+			{property: "og:title", content: "Title Here"},	
+		]
 
-		if (this.props.recent && this.props.recent.length > 0) {
-			for (var i=0; i < this.props.recent.length; i++) {
-				var key = this.props.recent[i].id,
-					show = this.props.recent[i];
+		var items = [];
 
-				if (currentDay === "" || moment(show.created_at).isBefore(currentDay, 'days')) {
-					currentDay = show.created_at;
-					results.push(<h3 key={ i }>{ DateManager.getRecentShowsDate(currentDay.split('T')[0]) }</h3>);
-				}
+		
 
-				results.push(<ListItem key={ key } show={ show } showDate={ true } showStar={ true } />);
+		var last_day = null
+		for (var i=0;i<this.props.recent.length;i++){
+			var show = this.props.recent[i];
+
+			var day = DateManager.getRecentShowsDate(moment(show.created_at));
+
+			if(last_day == null || day != last_day){
+				console.log("DAY",day);
+				items.push(<h3>{day}</h3>);
+				last_day = day;
 			}
+			items.push(<Show showStar={true} showTime={true} ticket_price={true} skip_header={true} showDate={false} show={show} />)
 		}
 
 
+		
 		return (
-			<div id="list">
-				{ results }
+			<div style={{ width : '100%' }}>
+				<DocMeta tags={tags} />
+				<div id="list">
+					{items}
+				</div>
 			</div>
 		)
-
 	}
 };
 

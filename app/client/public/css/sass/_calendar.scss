@@ -7,6 +7,8 @@
 }
 
 .loading {
+	position: absolute;
+	z-index: 10;
 	display:-webkit-flex;
 	display:		flex;
 

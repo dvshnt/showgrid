@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 import ListItem from '../components/ListItem';
 import { pageLoaded } from '../actions/index';
-
-
+import DocMeta from 'react-doc-meta'
+import Loader from '../components/Loader';
 class Search extends Component {
 	constructor(props) {
 		super(props);
@@ -53,10 +53,21 @@ class Search extends Component {
 	}
 
 	render() {
-		var results = this.displaySearchResults(this.props.results);
+		var tags = [
+			{name: "description", content: "lorem ipsum dolor"},
+			{itemProp: "name", content: "The Name or Title Here"},
+			{itemProp: "description", content: "This is the page description"},
+			{name: "twitter:card", content: "product"},
+			{name: "twitter:title", content: "Page Title"},
+			{property: "og:title", content: "Title Here"},	
+		]
 
+		var results = this.displaySearchResults(this.props.results);
+		if( ! this.results.length ) return <Loader/>
+		
 		return (
 			<div id="list" className="search-list-full">
+				<DocMeta tags={tags} />
 				{ results }
 			</div>
 		)

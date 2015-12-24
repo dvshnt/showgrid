@@ -48,8 +48,7 @@ class ShowgridUserSerializer(UserDetailsSerializer):
 
 	def get_user_alerts(self, obj):
 		alerts = Alert.objects.filter(user=obj)
-		alerts = alerts.filter(show__date__gte=date.today())
-		alerts = alerts.filter(sent=0)
+		alerts = alerts.filter(show__date__gte=date.today(),sent=0)
 		alerts = alerts.order_by('show__date')
 		serialzier = AlertPanelSerializer(alerts, many=True)
 		return serialzier.data
@@ -66,7 +65,7 @@ class AlertPanelSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Alert
 		fields = (
-			'id', 'date', 'sent', 'user', 'show', 'which'
+			'id', 'date', 'sent', 'user', 'show', 'which', 'sale'
 		)
 
 
@@ -98,7 +97,7 @@ class VenueListSerializer(serializers.ModelSerializer):
 		model = Venue
 		# ADD BACK ADDRESS INFO LATER
 		fields = (
-			'name', 'primary_color', 'secondary_color', 'accent_color'
+			'name', 'primary_color', 'secondary_color', 'accent_color','id'
 		)
 
 
@@ -106,7 +105,7 @@ class AlertSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Alert
 		fields = (
-			'id', 'date', 'sent', 'user', 'show'
+			'id', 'date', 'sent', 'user', 'show', 'sale'
 		)
 
 
@@ -171,6 +170,7 @@ class VenueSerializer(serializers.ModelSerializer):
 		model = Venue
 		# ADD BACK ADDRESS INFO LATER
 		fields = (
+			'description','phone','facebook_url','twitter_url',
 			'id', 'name', 'image', 'website', 'address',
 			'primary_color', 'secondary_color', 'accent_color', 
 			'opened', 'autofill', 'age', 'shows'

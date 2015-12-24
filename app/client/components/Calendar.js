@@ -17,7 +17,7 @@ class Calendar extends Component {
 			</section>
 		)
 	}
-};
+}
 
 
 function mapStateToProps(state) {

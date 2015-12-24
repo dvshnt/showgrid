@@ -51,6 +51,11 @@ export default function state(state={
 			days: days
 		});
 
+	case "VENUE_REQUEST":
+		return Object.assign({}, state, {
+			waiting: true,
+		});		
+
 	case "GRID_REQUEST":
 		return Object.assign({}, state, {
 			waiting: true,
@@ -89,6 +94,29 @@ export default function state(state={
 			waiting: false,
 		});
 
+	case "VENUE_SUCCESS":
+		if (action.payload && action.payload && !action.payload.status) {
+			console.log(action.payload)
+			var new_state = Object.assign({}, state, {
+				waiting: false,
+				entities: Object.assign({}, state.entities, {
+					venues: merge({}, state.entities.venues, action.payload.entities.venue),
+				})
+			});
+			console.log("GOT VENUE")
+			console.log(new_state)
+			return new_state
+		}
+
+		return Object.assign({}, state, {
+			waiting: false,
+		});
+
+	case "VENUE_FAILURE":
+		console.error("FAILED TO FETCH VENUE")
+		return Object.assign({}, state, {
+			waiting: false
+		});
 
 	case "GRID_SUCCESS":
 		if (action.payload && action.payload.entities && action.payload.entities.venues) {

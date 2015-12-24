@@ -28,7 +28,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from haystack.query import SearchQuerySet
 
 #may want to move these to settings.py (b/c thats where the other auth settings are located)
-
+# from django.http import JsonResponse
 
 
 from rest_framework import permissions, status
@@ -92,7 +92,6 @@ def socialAuth(backend, user, response, *args, **kwargs):
         # profile.link = response.get('link')
         # profile.timezone = response.get('timezone')
         #profile.save()
-
 
 
 
@@ -297,6 +296,8 @@ class UserActions(APIView):
 			return Response({'status': 'pin_sent'})
 
 
+
+
 		#check user pin
 		if action == 'pin_check':
 			body_unicode = request.body.decode('utf-8')
@@ -314,7 +315,6 @@ class UserActions(APIView):
 			else:
 				return Response({'status': 'bad_pin','phone': user.phone})
 
-
 		#toggle alert
 		if action == 'alert':
 			if user.phone_verified == False:
@@ -325,14 +325,14 @@ class UserActions(APIView):
 			date = body['date']
 			show = body['show']
 			which = body['which']
-
+			sale = ( body['sale'] or False )
 			show_id = show
 			show = self.get_show(int(show))
 
 			if show == None:
 				return  Response({ 'status': 'no such show' })
 
-			user_show_alerts = Alert.objects.filter(user=user,show=show)
+			user_show_alerts = Alert.objects.filter(user=user,show=show,sale=sale)
 
 			if user_show_alerts:
 				return  Response({ 'status': 'alert_already_set' })
@@ -342,7 +342,7 @@ class UserActions(APIView):
 				
 				date = dateutil.parser.parse(date)
 
-				alert = Alert(is_active=True, show=show, date=date,user=user,which=which)
+				alert = Alert(is_active=True, show=show, date=date,user=user,which=which,sale=sale)
 				alert.save()
 
 				data = AlertSerializer(alert)
@@ -358,30 +358,30 @@ class UserActions(APIView):
 		return  Response({ 'status': 'bad_query' })
 
 
-
 class VenueList(APIView):
 	authentication_class = (TokenAuthentication,)
 	permission_classes = (AllowAny,)
 
 	def get(self, request, id=None):
+
+		start = request.GET.get('start', None)
+		end = request.GET.get('end', None)
+
+
+		if start != None:
+			start = start.split("-")
+			d1 = date(int(start[0]), int(start[1]), int(start[2]))
+		else:
+			d1 = date.today()
+		if end != None:
+			end = end.split("-")
+			d2 = date(int(end[0]), int(end[1]), int(end[2]))
+		else:
+			d2 = date.today() + timedelta(days=365)
+
 		if id == None:
 			orderby = request.GET.get('orderby', 'alpha')
 			opened = request.GET.get('opened', False)
-			start = request.GET.get('start', None)
-			end = request.GET.get('end', None)
-
-			d1 = date.today()
-			d2 = date.today() + timedelta(days=365)
-
-			if start != None:
-				start = start.split("-")
-				d1 = date(int(start[0]), int(start[1]), int(start[2]))
-
-			if end != None:
-				end = end.split("-")
-				d2 = date(int(end[0]), int(end[1]), int(end[2]))
-
-
 			if opened:
 				venues = Venue.objects.filter(opened=opened)
 			else:
@@ -396,17 +396,13 @@ class VenueList(APIView):
 			return Response(serializer.data)
 
 
-
 		try:
 			venue = Venue.objects.get(id=id)
 		except ObjectDoesNotExist:
 			return  Response({ 'status': 'bad_query' })
 
-		serializer = VenueSerializer(venue)
+		serializer = VenueSerializer(venue,context={ 'start': d1, 'end': d2 })
 		return Response(serializer.data)
-
-
-
 
 
 class ShowList(APIView):
@@ -485,7 +481,6 @@ class ShowList(APIView):
 
 		serializer = ShowListSerializer(show)
 		return Response(serializer.data)
-
 
 
 def check_venues(request):

@@ -25,11 +25,12 @@ urlpatterns = patterns('',
     url(r'^recent$', 'server.views.index', name='recent'),
     url(r'^profile$', 'server.views.index', name='profile'),
     url(r'^featured$', 'server.views.index', name='featured'),
+     url(r'^venue/\d+$', 'server.views.index', name='venues'),
 
 
     ## user actions
     url(r'^user/(?P<action>\w+)$', views.UserActions.as_view(), name='user actions'),
-
+    url(r'^v1/venues/(?P<id>\d+)$', views.VenueList.as_view(), name='venue'),
     url(r'^v1/venues/$', views.VenueList.as_view(), name='grid'),
     url(r'^v1/shows/$', views.ShowList.as_view(), name='grid'),
 

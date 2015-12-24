@@ -31,6 +31,7 @@ module.exports = function(grunt) {
 			},
 		},
 
+
 		// SASS Compilation
 		sass: {
 			dev: {
@@ -51,39 +52,56 @@ module.exports = function(grunt) {
 			}
 		},
 
-		cssmin: {
-			fonts: {
-				options: {
-					shorthandCompacting: false,
-					roundingPrecision: -1
-				},
-				target: {
-					files: {
-						'./public/css/fonts.css': [
-							'./public/css/fonts/*.css'
-						]
-					}
+
+		// cssmin: {
+		// 	fonts: {
+		// 		options: {
+		// 			shorthandCompacting: false,
+		// 			roundingPrecision: -1
+		// 		},
+		// 		target: {
+		// 			files: {
+		// 				'./public/css/fonts.css': [
+		// 					'./public/css/fonts/*.css'
+		// 				]
+		// 			}
+		// 		}
+		// 	},
+		// 	prod: {
+		// 		options: {
+		// 			shorthandCompacting: false,
+		// 			roundingPrecision: -1
+		// 		},
+		// 		target: {
+		// 			files: {
+		// 				'./public/css/fonts.css': [
+		// 					'./public/css/fonts/*.css'
+		// 				],
+		// 				'./public/css/base.css': [
+		// 					'./public/css/base.css'
+		// 				],
+		// 			}
+		// 		}
+		// 	}
+		// },
+	
+		autoprefixer: {
+			options: {
+			// Task-specific options go here.
+			},
+			css: {
+				files: {
+					'./public/css/base.css' : './public/css/base.css'
 				}
 			},
-			prod: {
-				options: {
-					shorthandCompacting: false,
-					roundingPrecision: -1
-				},
-				target: {
-					files: {
-						'./public/css/fonts.css': [
-							'./public/css/fonts/*.css'
-						],
-						'./public/css/base.css': [
-							'./public/css/base.css'
-						],
-					}
-				}
-			}
 		},
-	
-		browserify: {
+
+		browserify: {	
+			options: {
+			browserifyOptions: {
+			debug: true
+			}
+			},
 			dev: {
 				options: {
 					debug: true,
@@ -112,7 +130,7 @@ module.exports = function(grunt) {
 		watch: { 
 			css: {
 				files: './public/css/sass/*.scss', 
-				tasks: ['sass:dev', 'copy:css'],
+				tasks: ['sass:dev','autoprefixer','copy:css'],
 				options: {
 					livereload: true,
 				}
@@ -148,6 +166,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-autoprefixer');
 
 
 	//// Registered Tasks

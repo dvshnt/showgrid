@@ -12,7 +12,7 @@ var GridEngine = require('../util/GridEngine');
 var DateManager = require('../util/DateManager');
 
 
-class SetAlert extends Component {	
+class SetAlert extends Component {
 	constructor(props) {
 		super(props);
 
@@ -23,17 +23,22 @@ class SetAlert extends Component {
 		var _this = this;
 		this.state = {
 			open: false,
-			active: _this.checkIfAlertSet(props.alerts, props.show.id)
+			active: this.checkIfAlertSet(props.alerts, props.show.id,false),
+			sale: this.checkIfAlertSet(props.alerts, props.show.id,true)
 		};
 	}
 
-	checkIfAlertSet(alerts, show) {
+	checkIfAlertSet(alerts, show, sale) {
+		var alrt = null
+
 		for (var i = 0, len = alerts.length; i < len; i++) {
 		    if (alerts[i].show === show || alerts[i].show.id === show) {
-		    	return alerts[i];
+		    	alrt =  alerts[i];
 		    }
 		}
 
+		if(alrt === null) return null
+		if(sale === alrt.sale) return alrt
 		return null;
 	}
 
@@ -54,8 +59,11 @@ class SetAlert extends Component {
 		}
 
 		var alertDate = DateManager.getAlertDate(date, value);
+
+
+		value.sale = value.sale || false
 		
-		this.props.setAlert(show.id, alertDate.format(), value.id)
+		this.props.setAlert(show.id, alertDate.format(), value.id, value.sale)
 			.then(function(data) {
 				if (data.payload.status === "phone_not_verified") {
 					_this.props.showPhoneModal();
@@ -69,7 +77,8 @@ class SetAlert extends Component {
 					var alert = data.payload.entities.alerts[index];
 
 					_this.setState({
-						active: alert
+						active: alert.sale == true ? null : alert,
+						sale: alert.sale == true ? alert : null
 					});
 				}
 
@@ -80,18 +89,25 @@ class SetAlert extends Component {
 	}
 
 	cancelAlert() {
-		this.props.deleteAlert(this.state.active.id);
+
+		if(this.state.sale){
+			this.props.deleteAlert(this.state.sale.id);
+		}else if(this.state.active){
+			this.props.deleteAlert(this.state.active.id);
+		}
+	
 
 		this.setState({
 			active: null,
-			open: false
+			open: false,
+			sale: null
 		});
 	}
 
 	toggleAlert(e) {
 		if (e.target.localName === "select") return false;
 
-		if (this.state.active) {
+		if (this.state.active || this.state.sale) {
 			this.cancelAlert();
 		}
 		else {
@@ -110,21 +126,41 @@ class SetAlert extends Component {
 
 		var options = [];
 
+		
+
+		
+		if(show.onsale){
+			var sale_date = moment(show.onsale, 'YYYY-MM-DD HH:mm:ssZZ');
+			if (now.isBefore(sale_date)) {
+				options.push(<option value="7"  data-value='{"sale":true, "id":0, "unit":"minutes","num":0}' selected={ alert.which === 0 }>when ticket sale starts</option>);
+			}
+			if (now.isBefore(sale_date.subtract(30, 'minutes'))) {
+				options.push(<option value="8" data-value='{"sale":true, "id":1, "unit":"hours","num":30}' selected={ alert.which === 1 }>30 minutes before ticket sale</option>);
+			}
+			if (now.isBefore(sale_date.subtract(2, 'hours'))) {
+				options.push(<option value="9" data-value='{"sale":true, "id":3, "unit":"hours","num":2}' selected={ alert.which === 3 }>2 hours before ticket sale</option>);
+			}
+			if (now.isBefore(sale_date.subtract(1, 'days'))) {
+				options.push(<option value="10" data-value='{"sale":true, id":4, "unit":"days","num":1}' selected={ alert.which === 4 }>1 day before ticket sale starts</option>);
+			}
+		}
+
+
 		if (now.isBefore(date)) {
-			options.push(<option value="0" data-value='{"id":0, "unit":"days","num":0}' selected={ alert.which === 0 }>At time of show</option>);
+			options.push(<option value="0" data-value='{"id":4, "unit":"days","num":0}' selected={ alert.which === 0 }>At time of show</option>);
 		}
 
 		if (now.isBefore(date.subtract(30, 'minutes'))) {
-			options.push(<option value="1" data-value='{"id":1, "unit":"minutes","num":30}' selected={ alert.which === 1 }>30 Minutes before show</option>);
+			options.push(<option value="1" data-value='{"id":5, "unit":"minutes","num":30}' selected={ alert.which === 1 }>30 Minutes before show</option>);
 		}
 
 		if (now.isBefore(date.subtract(1, 'hours'))) {
-			options.push(<option value="2" data-value='{"id":2, "unit":"hours","num":1}' selected={ alert.which === 2 }>1 Hour before show</option>);
+			options.push(<option value="2" data-value='{"id":6, "unit":"hours","num":1}' selected={ alert.which === 2 }>1 Hour before show</option>);
 		}
 
 
 		if (now.isBefore(date.subtract(2, 'hours'))) {
-			options.push(<option value="3" data-value='{"id":3, "unit":"hours","num":2}' selected={ alert.which === 3 }>2 Hours before show</option>);
+			options.push(<option value="3" data-value='{"id":7, "unit":"hours","num":2}' selected={ alert.which === 3 }>2 Hours before show</option>);
 		}
 
 
@@ -142,11 +178,8 @@ class SetAlert extends Component {
 			options.push(<option value="6" data-value='{"id":6, "unit":"days","num":7}' selected={ alert.which === 6 }>1 Week before show</option>);
 		}
 
-		if (options.length === 0) {
-			return "Show has already started. Get your ass over there!";
-		}
-
-		return <select onChange={ this.createAlert }>{ options }</select>;
+		//console.log(options);
+		return <select onBlur={this.createAlert} onChange={ this.createAlert }>{ options }</select>;
 	}
 
 	render() {
@@ -167,8 +200,10 @@ class SetAlert extends Component {
 			</div>	
 		);
 
+
+
 		var className = (this.state.open) ? "icon-alert open" : "icon-alert";
-		className += (this.state.active) ? " active" : "";
+		className += (this.state.active) ? " active" : (this.state.sale ? " sale" : "");
 
 		var options = this.getEligibleAlertTimes();
 

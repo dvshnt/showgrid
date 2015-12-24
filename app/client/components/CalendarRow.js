@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-	
+// import { Link, Navigation } from 'react-router';
 import CalendarRowVenue from './CalendarRowVenue';
 import CalendarRowDay from './CalendarRowDay';
 
@@ -21,8 +21,8 @@ class CalendarRow extends Component {
 
 
 		return (
-			<div className={ rowClass }>
-				<CalendarRowVenue venue={ venue }/>
+			<div className={ rowClass }>				
+				<CalendarRowVenue venue={ venue } />
 				{ shows }
 			</div>
 		)

@@ -136,6 +136,7 @@ var DateManager = {
 	},
 
 	getRecentShowsDate(date) {
+		
 		var currentDate = moment(date, 'YYYY-MM-DD');
 		var today = moment().hour(0).minute(0).second(0);
 

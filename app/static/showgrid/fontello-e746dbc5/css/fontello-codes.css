@@ -1,0 +1,17 @@
+
+.icon-facebook-rect:before { content: '\e800'; } /* '' */
+.icon-twitter-bird:before { content: '\e801'; } /* '' */
+.icon-blank:before { content: '\e807'; } /* '' */
+.icon-logo:before { content: '\e81b'; } /* '' */
+.icon-recent:before { content: '\e81c'; } /* '' */
+.icon-ticket:before { content: '\e81d'; } /* '' */
+.icon-calendar:before { content: '\e81e'; } /* '' */
+.icon-alert:before { content: '\e81f'; } /* '' */
+.icon-search:before { content: '\e820'; } /* '' */
+.icon-comment-1:before { content: '\e821'; } /* '' */
+.icon-close:before { content: '\e822'; } /* '' */
+.icon-star:before { content: '\e823'; } /* '' */
+.icon-back:before { content: '\e824'; } /* '' */
+.icon-dot:before { content: '\e825'; } /* '' */
+.icon-heart:before { content: '\e826'; } /* '' */
+.icon-user:before { content: '\e827'; } /* '' */
