@@ -8,7 +8,7 @@ import { hidePhoneModal } from '../actions/modal';
 import { submitUserPhone, submitPhonePin } from '../actions/index';
 
 import FormButton from './FormButton';
-
+import windowScroll from '../util/windowScroll';
 var GridEngine = require('../util/GridEngine');
 
 
@@ -39,11 +39,16 @@ class PhoneModal extends Component {
 
 	componentWillUpdate(nextProps, nextState) {
 		if (nextProps.visible) {
+			windowScroll.disable();
+
 			window.addEventListener("click", this.closeOnClick, false);
 			window.addEventListener("keydown", this.handleKeydown, false);
 
 			return;
 		}
+		
+		windowScroll.enable();
+		
 		
 		window.removeEventListener("click", this.closeOnClick);
 		window.removeEventListener("keydown", this.handleKeydown);
@@ -55,12 +60,12 @@ class PhoneModal extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if (this.state.verify && !prevState.verify) {
-			React.findDOMNode(this.refs.pinOne).focus();
-			return;
-		}
+		// if (this.state.verify && !prevState.verify) {
+		// 	React.findDOMNode(this.refs.pinOne).focus();
+		// 	return;
+		// }
 
-		React.findDOMNode(this.refs.phonenumber).focus();
+		// React.findDOMNode(this.refs.phonenumber).focus();
 	}
 
 	closeOnClick(e) {
@@ -210,7 +215,7 @@ class PhoneModal extends Component {
 		}
 
 		return (
-			<div id="overlay" className={ active }>
+			<div id="overlay" className={ active } style = {{top: window.scrollY+'px'}}>
 				<div id="modal"><b id="close" className="icon-close" onClick={ this.props.hidePhoneModal }></b>{ form }</div>
 			</div>
 		)
