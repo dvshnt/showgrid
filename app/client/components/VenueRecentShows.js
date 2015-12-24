@@ -78,7 +78,7 @@ class VenueRecentShows extends Component{
 		
 		var children = [];
 		var tc = 0;
-		console.log("MAX SHOWS",this.state.max_shows)
+		//console.log("MAX SHOWS",this.state.max_shows)
 
 		var sorted_shows = sortBy(map(this.props.venue.shows,function(show){
 			show.created_at = moment(show.created_at)
@@ -87,7 +87,7 @@ class VenueRecentShows extends Component{
 			return show.created_at
 		})
 
-		console.log("SORTED:",sorted_shows)
+		//console.log("SORTED:",sorted_shows)
 
 
 

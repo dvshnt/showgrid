@@ -20,7 +20,7 @@ export default class VenueOverlay extends Component {
 	    var b = parseInt(hex.substring(4,6), 16);
 
 	   	this.overlayStyle = {
-	   		background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 5%,rgba("+r+","+g+","+b+",1) 50%,rgba("+r+","+g+","+b+",1) 100%)"
+	   		background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 5%,rgba("+r+","+g+","+b+",1) 50%,rgba("+r+","+g+","+b+",1) 100%), rgba("+r+","+g+","+b+",0.3)"
 	   	}
 	}
 
@@ -57,7 +57,7 @@ export default class VenueOverlay extends Component {
 
 
 		var link = '/venue/'+this.props.venue.id;
-		console.log(link);
+		//console.log(link);
 
 		var icons = [
 			this.props.venue.twitter_url != null ? ( <a href={this.props.venue.twitter_url} ><b className='icon icon-twitter-bird'></b></a> ) : null,

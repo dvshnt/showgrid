@@ -44,8 +44,8 @@ class App extends Component {
 		const { children } = this.props;
 
 		if (this.props.waiting) {
-			loading = <div className="loading"><div className="spinner"></div></div>
-		} 
+			loading = <Loader />
+		}
 
 		return (
 			<div id="container">
