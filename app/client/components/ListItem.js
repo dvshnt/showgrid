@@ -128,21 +128,11 @@ export default class ListItem extends Component {
 		if(this.props.ticket_price) price = null
 
 
-		if(!this.props.skip_header){
-			venue_header = (
-				<header>
-					<div className="pic"></div>
-					{venue.name}
-				</header>
-			)
-		}
-
-
 		return (
 			<div className="list--item"  style={ boxStyle }>
 				<header>
 					<div className="pic"></div>
-					<h4>{ venue.name }</h4>
+					<h4>{this.props.showVenueName === false ? null : venue.name}</h4>
 					<div className="extra-info">
 						{ age }{price}
 					</div>

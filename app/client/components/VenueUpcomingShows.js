@@ -33,7 +33,7 @@ class VenueUpcomingShows extends Component{
 			var next_time = DateManager.getFeaturedShowDate(date);
 			if(next_time != prev_time) children.push(this.dateSeperator(next_time));
 			prev_time = next_time
-			children.push(<Show showStar={true} showTime={true} ticket_price={true} skip_header={true} showDate={false} show={show}/>);
+			children.push(<Show showVenueName={false} showStar={true} showTime={true} ticket_price={true} skip_header={true} showDate={false} show={show}/>);
 		}
 
 		if(this.props.venue.shows.length) var header = <header>Upcoming Shows</header>
