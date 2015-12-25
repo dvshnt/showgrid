@@ -57,7 +57,13 @@
 	}
 
 	&.search-list-full {
-		margin-top:15px;
+		padding-top:90px;
+
+
+		.fail {
+			font-size:18px;
+			text-align:center;
+		}
 
 		h4.query {
 			color:rgba(0,0,0,0.5);
