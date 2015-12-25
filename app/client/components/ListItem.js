@@ -64,8 +64,6 @@ export default class ListItem extends Component {
 			price = <div className="price">${ show.price }</div>;
 		}
 
-
-		console.log("SHOW DATE",this.props.showDate);
 		// Info --> Date 
 		if (this.props.showDate) {
 			var month = DateManager.getMonthFromDate(show.date);
