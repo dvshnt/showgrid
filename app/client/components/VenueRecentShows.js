@@ -30,7 +30,7 @@ class VenueRecentShows extends Component{
 
 	formatShowName(show){
 		return (
-			<div className='name' key = {show.id} >{show.headliners} - {moment(show.created_at).format('ddd. DD/MM ')}</div>
+			<div className='name' key = {show.id} >{show.headliners} - {moment(show.date).format('ddd. DD/MM ')}</div>
 		)
 	}
 
