@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 
 import SetAlert from './SetAlert';
 import SetFavorite from './SetFavorite';
-
+import {Link} from 'react-router';
 var DateManager = require('../util/DateManager');
 
 
@@ -132,7 +132,16 @@ export default class ListItem extends Component {
 			<div className="list--item"  style={ boxStyle }>
 				<header>
 					<div className="pic"></div>
-					<h4>{this.props.showVenueName === false ? null : venue.name}</h4>
+					{
+						(()=>{
+							if(this.props.showVenueName === false) return null
+							return (
+								<Link to={'/venue/'+venue.id}>
+									<h4 style={{cursor:'pointer'}}>{venue.name}</h4>
+								</Link>
+							)
+						})()
+					}
 					<div className="extra-info">
 						{ age }{price}
 					</div>
