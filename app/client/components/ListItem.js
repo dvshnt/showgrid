@@ -1,3 +1,7 @@
+
+
+
+
 import React, { Component } from 'react';
 
 import SetAlert from './SetAlert';
@@ -61,7 +65,7 @@ export default class ListItem extends Component {
 		}
 
 
-
+		console.log("SHOW DATE",this.props.showDate);
 		// Info --> Date 
 		if (this.props.showDate) {
 			var month = DateManager.getMonthFromDate(show.date);
@@ -74,7 +78,9 @@ export default class ListItem extends Component {
 					<div>{ day }</div>
 				</div>
 			);
-		}else if(this.props.showTime){
+		}
+
+		if(this.props.showTime){
 			time = (
 				<div className="time">{ _time }</div>
 			);		
@@ -136,9 +142,14 @@ export default class ListItem extends Component {
 
 		return (
 			<div className="list--item"  style={ boxStyle }>
-				<div className="extra-info">
-					{ age }{price}
-				</div>
+				<header>
+					<div className="pic"></div>
+					<h4>{ venue.name }</h4>
+					<div className="extra-info">
+						{ age }{price}
+					</div>
+				</header>
+
 				{venue_header}
 				<div className="info">
 					{ date }
