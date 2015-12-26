@@ -18,6 +18,8 @@ class Search extends Component {
 	}
 
 	displaySearchResults(results) {
+		if(!this.props.results || !this.props.results.length) return (<Loader />)			
+		
 		if (this.props.query === "") {
 			return (
 				<div className="fail">
@@ -28,7 +30,7 @@ class Search extends Component {
 			);
 		}
 		
-		if (results.length === 0 ) {
+		if ( !results || results.length === 0 ) {
 			return (
 				<div className="fail">
 					<h3>We couldn&#39;t find anything related to your query.</h3>
@@ -62,8 +64,9 @@ class Search extends Component {
 			{property: "og:title", content: "Title Here"},	
 		]
 
+
 		var results = this.displaySearchResults(this.props.results);
-		if( ! this.results.length ) return <Loader/>
+	
 		
 		return (
 			<div id="list" className="search-list-full">

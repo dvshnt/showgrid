@@ -48,6 +48,7 @@ class SearchResults extends Component {
 	}
 
 	displaySearchResults(query, results) {
+
 		if (query === "") {
 			return (
 				<div className="fail">
@@ -56,6 +57,10 @@ class SearchResults extends Component {
 					<p>To look at a particular date, use the date selector at the top of the calender.</p>
 				</div>
 			);
+		}
+
+		if((!results || results.length === 0) && (this.props.waiting || this.props.searching)){
+			return (<Loader />);
 		}
 
 		if (results.length === 0 ) {
@@ -98,7 +103,7 @@ class SearchResults extends Component {
 
 		return (
 			<div id="search-results" className={ className }>
-				<div className="working"></div>
+				
 				{ data }
 			</div>
 		)
