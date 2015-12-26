@@ -18,7 +18,7 @@ class Search extends Component {
 	}
 
 	displaySearchResults(results) {
-		if(!this.props.results || !this.props.results.length) return (<Loader />)			
+		// if(!this.props.results || !this.props.results.length) return (<Loader />)			
 		
 		if (this.props.query === "") {
 			return (

@@ -19,7 +19,7 @@ class HeaderSearch extends Component {
 		this.backToMobileHome = this.backToMobileHome.bind(this);
 
 		this.state = {
-			active: props.initialActive
+			active: props.initialActive,
 		};
 	}
 
@@ -40,6 +40,7 @@ class HeaderSearch extends Component {
 	}
 
 	search(query) {
+		console.log("SEARCH!")
 		this.props.getSearchResults(query);
 	}
 
@@ -85,6 +86,7 @@ class HeaderSearch extends Component {
 	}
 
 	render() {
+		console.log("RENDER HEADER SEARCH",this.state.waiting);
 		var results = <SearchResults active={ this.state.active } hide={ this.hideSearchResults }/>;
 
 		var changeListener = this.context.history.isActive('/search') ? function() {} : this.prepareToSearch;

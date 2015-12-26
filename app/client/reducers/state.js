@@ -199,23 +199,25 @@ export default function state(state={
 	case "SEARCH_WAIT":
 		return Object.assign({}, state, {
 			search: Object.Object.assign({}, state.search, {
-				searching: true
+				waiting: true
 			})
 		});
 
 	case "SEARCH_REQUEST":
 		return  Object.assign({}, state, {
-			waiting: false,
+			//waiting: true,
 			search: Object.assign({}, state.search, {
-				searching: false,
+				waiting: true,
+				results: [],
 				query: action.payload.query
 			})
 		});
 
 	case "SEARCH_SUCCESS":
 		return  Object.assign({}, state, {
-			waiting: false,
+			//waiting: false,
 			search: Object.assign({}, state.search, {
+				waiting: false,
 				results: action.payload.result
 			}),
 			entities: Object.assign({}, state.entities, {
@@ -226,8 +228,9 @@ export default function state(state={
 	
 	case "PAGE_LOADED":
 	case "SEARCH_FAILURE":
-		return  Object.assign({}, state, {
-			waiting: false
+		return Object.assign({}, state.search, {
+			waiting: false,
+			results: []
 		});
 
 
