@@ -18,7 +18,7 @@ class VenueRecentShows extends Component{
 		super(props);
 
 		props.default_min = props.default_min || 3
-		props.default_max = props.default_max || 100
+		props.default_max = props.default_max || 10
 
 
 		this.state = {
@@ -30,7 +30,7 @@ class VenueRecentShows extends Component{
 
 	formatShowName(show){
 		return (
-			<div className='name' key = {show.id} >{show.headliners} - {moment(show.date).format('ddd. DD/MM ')}</div>
+			<a className='name' key = {show.id} target="_blank" href={ show.website }>{moment(show.date).format('ddd. M/D ')} &nbsp;-&nbsp; {show.headliners}</a>
 		)
 	}
 
@@ -41,7 +41,7 @@ class VenueRecentShows extends Component{
 	}
 
 	media_check_primitive(){
-		if(window.innerWidth<700){
+		if(window.innerWidth < 700){
 			if(this.state.mini == true) return;
 			else{
 				this.setState({
@@ -85,7 +85,8 @@ class VenueRecentShows extends Component{
 			return show
 		}),function(show){
 			return show.created_at
-		})
+		});
+		sorted_shows = sorted_shows.slice(0, 10);
 
 		//console.log("SORTED:",sorted_shows)
 
