@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SGLink from './SGLink';
 
 export default class HeaderLogo extends Component {
 	constructor(props) {
@@ -28,7 +29,9 @@ export default class HeaderLogo extends Component {
 
 		return (
 			<div id="header__logo">
-				<a href="/"><div className="logo"></div></a>
+				<SGLink to="/">
+					<div className="logo"></div>
+				</SGLink>
 				<span className="location">Nashville</span>
 				<span className="page-title">{ title }</span>
 			</div>
