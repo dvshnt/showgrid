@@ -198,7 +198,7 @@ export default function state(state={
 
 	case "SEARCH_WAIT":
 		return Object.assign({}, state, {
-			search: Object.Object.assign({}, state.search, {
+			search: Object.assign({}, state.search, {
 				waiting: true
 			})
 		});
@@ -228,9 +228,11 @@ export default function state(state={
 	
 	case "PAGE_LOADED":
 	case "SEARCH_FAILURE":
-		return Object.assign({}, state.search, {
-			waiting: false,
-			results: []
+		return  Object.assign({}, state, {
+			search: Object.assign({}, state.search, {
+				waiting: false,
+				results: []
+			})
 		});
 
 
