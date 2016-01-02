@@ -14,7 +14,7 @@ class SubHeader extends Component {
 	}
 
 	getSubHead() {
-		if (this.props.route === "/calendar") {
+		if (this.props.route === "/") {
 			return <HeaderCalendar />;
 		}
 
