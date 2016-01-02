@@ -53,37 +53,37 @@ module.exports = function(grunt) {
 		},
 
 
-		// cssmin: {
-		// 	fonts: {
-		// 		options: {
-		// 			shorthandCompacting: false,
-		// 			roundingPrecision: -1
-		// 		},
-		// 		target: {
-		// 			files: {
-		// 				'./public/css/fonts.css': [
-		// 					'./public/css/fonts/*.css'
-		// 				]
-		// 			}
-		// 		}
-		// 	},
-		// 	prod: {
-		// 		options: {
-		// 			shorthandCompacting: false,
-		// 			roundingPrecision: -1
-		// 		},
-		// 		target: {
-		// 			files: {
-		// 				'./public/css/fonts.css': [
-		// 					'./public/css/fonts/*.css'
-		// 				],
-		// 				'./public/css/base.css': [
-		// 					'./public/css/base.css'
-		// 				],
-		// 			}
-		// 		}
-		// 	}
-		// },
+		cssmin: {
+			fonts: {
+				options: {
+					shorthandCompacting: false,
+					roundingPrecision: -1
+				},
+				target: {
+					files: {
+						'./public/css/fonts.css': [
+							'./public/css/fonts/*.css'
+						]
+					}
+				}
+			},
+			prod: {
+				options: {
+					shorthandCompacting: false,
+					roundingPrecision: -1
+				},
+				target: {
+					files: {
+						'./public/css/fonts.css': [
+							'./public/css/fonts/*.css'
+						],
+						'./public/css/base.css': [
+							'./public/css/base.css'
+						],
+					}
+				}
+			}
+		},
 	
 		autoprefixer: {
 			options: {
