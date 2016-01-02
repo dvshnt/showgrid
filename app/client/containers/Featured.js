@@ -67,7 +67,7 @@ class Featured extends Component {
 				var key = this.props.featured[i].id,
 					show = this.props.featured[i];
 
-				results.push(<ListItem key={ key } show={ show } showDate={ false } showStar={ false } />);
+				results.push(<ListItem key={ key } show={ show } showDate={ false } showStar={ false } showTime={ true }/>);
 			}
 		}
 		else {
