@@ -88,6 +88,8 @@
 
 
 	div.info {
+		width:100%;
+
 		display:-webkit-flex;
 		display:		flex;
 
@@ -332,15 +334,15 @@
 				padding:0 20px;
 
 				h3 {
-					font-size:25px;
+					font-size:20px;
 				}
 
 				h4 {
-					font-size:14px;
+					font-size:12px;
 				}
 
 				h5 {
-					font-size:14px;
+					font-size:12px;
 				}
 			}
 
