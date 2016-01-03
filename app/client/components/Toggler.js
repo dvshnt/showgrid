@@ -24,12 +24,13 @@ export default class Toggle extends Component {
 	componentDidMount(){
 		var el = React.findDOMNode(this.refs.toggler);
 
-		el.addEventListener('touchend',this.toggle.bind(this));
-		el.addEventListener('mouseup',this.toggle.bind(this));
 
+		if(window.is_touch) el.addEventListener('touchend',this.toggle.bind(this));
+		else el.addEventListener('mouseup',this.toggle.bind(this));
+		
 		if(this.props.hook){
-			el.addEventListener('touchend',this.props.hook);
-			el.addEventListener('mouseup',this.props.hook);
+			if(window.is_touch) el.addEventListener('touchend',this.props.hook);
+			else el.addEventListener('mouseup',this.props.hook);
 		}
 	}
 
