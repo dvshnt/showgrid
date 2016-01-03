@@ -56,10 +56,10 @@ class Venue(models.Model):
 	image = models.ImageField (upload_to='showgrid/img/venues/')
 	website = models.URLField()
 	description = models.TextField(default="This is a description")
-	twitter_url = models.CharField(max_length=200)
-	facebook_url = models.CharField(max_length=200)
+	twitter_url = models.CharField(max_length=200, default=None)
+	facebook_url = models.CharField(max_length=200, default=None)
 	phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
-	phone = models.CharField(unique=True,validators=[phone_regex], blank=True, null=True,max_length=255) # validators should be a list
+	phone = models.CharField(validators=[phone_regex], blank=True, null=True,max_length=255) # validators should be a list
 
 	primary_color = RGBColorField()
 	secondary_color = RGBColorField()
@@ -119,6 +119,7 @@ class Show(models.Model):
 
 	star = models.BooleanField(default=False)
 
+	banner = models.ImageField(upload_to='showgrid/banners/', default='', blank=True)
 	review = models.FileField(upload_to='showgrid/reviews/', default='', blank=True)
 	
 	price = models.SmallIntegerField(default=-1, blank=True)
@@ -126,7 +127,7 @@ class Show(models.Model):
 
 	# cancelled = models.BooleanField(default=False)
 	soldout = models.BooleanField(default=False)
-	onsale = models.DateTimeField(default=datetime.datetime.now(), blank=True)
+	onsale = models.DateTimeField(default=None, blank=True)
 
 	age = models.PositiveSmallIntegerField(default=0, blank=True)
 

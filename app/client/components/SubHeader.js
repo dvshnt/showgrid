@@ -14,11 +14,11 @@ class SubHeader extends Component {
 	}
 
 	getSubHead() {
-		if (this.props.route === "/calendar") {
+		if (this.props.route === "/") {
 			return <HeaderCalendar />;
 		}
 
-		if (location === "/search" 
+		if (this.props.route === "/search" 
 			&& (window.innerWidth <= 500
 			|| document.documentElement.clientWidth <= 500
 			|| document.body.clientWidth <= 500)) {

@@ -17,19 +17,26 @@
 		flex-direction: row;
 		align-items: flex-start;
 		justify-content: space-around;
-		height: 30px;
 		min-width: 30px;
 		/* width: 50px; */
 		padding: 2.5px;	
+
+		position:relative;
+		top:-5px;
+
 		div {
 			color: #ffffff;
 			margin: 2.5px;
 			text-align: center;
-			line-height: 30px;
-			background: rgba(0, 0, 0, 0.25);
+			background: rgba(0, 0, 0, 0.4);
 			border-radius: 2px;
 			min-width: 30px;
 			font-size: 10px;
+			padding:4px 0;
+		}
+
+		div:first-of-type {
+			background: rgba(0, 0, 0, 0.3);
 		}
 	}
 
@@ -49,17 +56,25 @@
 			width:100%; height:5px;
 		}
 
-		h4 {
-			// text-decoration: none;
-			color: #000;
-			display:inline;
+		a {
+			text-decoration: none;
 
-			margin-top:5px;
-			margin-left:10px;
-			margin-right:20px;
 
-			font-size:16px;
-			font-weight: bold !important;
+			&:hover {
+				text-decoration:underline;
+			}
+
+			h4 {
+				color: #000;
+				display:inline;
+
+				margin-top:5px;
+				margin-left:10px;
+				margin-right:20px;
+
+				font-size:16px;
+				font-weight: bold !important;
+			}
 		}
 	}
 	
@@ -73,13 +88,15 @@
 
 
 	div.info {
+		width:100%;
+
 		display:-webkit-flex;
 		display:		flex;
 
 		-webkit-align-items:center;
 				align-items:center;
 
-		padding:15px 0 40px;
+		padding:35px 0 35px;
 
 		a {
 			text-decoration:none;
@@ -109,20 +126,14 @@
 			text-align:center;
 
 
-			div:nth-of-type(2) {
+			div:nth-of-type(1) {
 				font-size:14px;
 				font-weight:400;
 				text-transform:uppercase;
 			}
 
-			div:nth-of-type(3) {
+			div:nth-of-type(2) {
 				font-size:24px;
-			}
-
-			div:nth-of-type(1) {
-				padding-bottom:12px;
-
-				font-size:12px;
 			}
 		}
 
@@ -151,9 +162,8 @@
 			h3 {
 
 				margin:7px 0;
-				line-height: 40px;
 				color:#222222;
-				font-size:30px;
+				font-size:22px;
 				font-weight:500;
 
 				b.rec {
@@ -166,15 +176,14 @@
 
 			h4 {
 				color:#494949;
-				font-size:18px;
-				font-weight:200;
+				font-size:14px;
+				font-weight:300;
 
 			}
 
 			h5 {
 				color:#676767;
-				font-size:22px;
-				padding-left: 5px;
+				font-size:14px;
 				font-weight:normal;	
 			}
 		}
@@ -190,7 +199,7 @@
 				align-items:center;
 
 
-		padding:8px 15px 15px;
+		padding:7px 15px 15px;
 
 		border-radius:0 0 5px 5px;
 
@@ -208,14 +217,18 @@
 
 				@include transform(scale(1));
 				@include transition(all 0.2s ease);
+
 				.ticket-price{
 					font-size: 18px;
+
+					span {
+						font-size:16px;
+					}
 				}
+
 				b {
-					font-weight: 500;
 					color:rgb(0,232,134);
 					font-size:22px;
-
 				}
 
 				&:hover {
@@ -321,15 +334,15 @@
 				padding:0 20px;
 
 				h3 {
-					font-size:25px;
+					font-size:20px;
 				}
 
 				h4 {
-					font-size:14px;
+					font-size:12px;
 				}
 
 				h5 {
-					font-size:14px;
+					font-size:12px;
 				}
 			}
 

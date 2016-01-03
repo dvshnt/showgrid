@@ -71,7 +71,6 @@ export default class ListItem extends Component {
 
 			date = (
 				<div className="date">
-					<div>{ _time }</div>
 					<div>{ month }</div>
 					<div>{ day }</div>
 				</div>
@@ -112,7 +111,7 @@ export default class ListItem extends Component {
 				ticket = (
 					<span className="ticket">
 						<b className="icon-ticket" />
-						<b className="ticket-price"> ${show.price}</b>
+						<span className="ticket-price"> ${show.price}</span>
 					</span>
 				)
 			}else{

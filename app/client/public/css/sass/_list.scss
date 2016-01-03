@@ -57,7 +57,7 @@
 	}
 
 	&.search-list-full {
-		padding-top:90px;
+		padding-top:50px;
 
 
 		.fail {
@@ -121,6 +121,11 @@
 			h4 {
 				font-weight:normal;
 			}
+		}
+
+		& > p {
+			font-size:14px;
+			line-height:18px;
 		}
 	}
 }

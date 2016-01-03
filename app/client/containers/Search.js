@@ -6,6 +6,8 @@ import ListItem from '../components/ListItem';
 import { pageLoaded } from '../actions/index';
 import DocMeta from 'react-doc-meta'
 import Loader from '../components/Loader';
+
+
 class Search extends Component {
 	constructor(props) {
 		super(props);
