@@ -13,6 +13,8 @@ import Profile from './containers/Profile';
 import Search from './containers/Search';
 import Venue from './containers/Venue';
 
+import './util/global';
+
 import configureStore from './store/';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 
