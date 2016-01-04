@@ -1,0 +1,1 @@
+use showgrid.com database directly from localhost and bypass cors restrictions.

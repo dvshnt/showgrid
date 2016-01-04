@@ -21,3 +21,6 @@ app/client/public/css/*.css.map
 assets/**
 **/**/*.pyc
 **/**/.DS_Store
+
+**/**/node_modules
+**/**/npm-debug.log
