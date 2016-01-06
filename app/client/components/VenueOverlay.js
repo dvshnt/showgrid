@@ -88,7 +88,7 @@ export default class VenueOverlay extends Component {
 			    	</div>
 			    	<div className='footer'>
 			    		{icons}
-			    		<span className='phone'>{this.formatPhone(this.props.venue.phone)}</span>
+			    		<a className='phone' href="tel:{ this.props.venue.phone }">{this.formatPhone(this.props.venue.phone)}</a>
 			    	</div>
 				</div>
 				
