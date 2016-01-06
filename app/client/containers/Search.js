@@ -49,7 +49,7 @@ class Search extends Component {
 			list.push(<h4 className="query">Search results for: <i>{ this.props.query }</i></h4>);
 
 			for (var i=0; i < results.length; i++) {
-				list.push( <ListItem key={ results[i].id } show={ results[i] } showDate={ true } showStar={ true } /> );
+				list.push( <ListItem key={ results[i].id } show={ results[i] } showDate={ true } showStar={ true } showTime={ true }/> );
 			}
 
 			return list;	
