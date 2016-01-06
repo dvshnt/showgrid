@@ -71,7 +71,7 @@ export default class CalendarRowVenue extends Component {
 					
 					<h3 className="name">
 						<Link to={link}>
-							<a style={ {color:"#fff",cursor:"pointer"} } target="_blank">{ this.props.venue.name }</a>
+							<a style={ titleColor } target="_blank">{ this.props.venue.name }</a>
 						</Link>
 					</h3>
 					
