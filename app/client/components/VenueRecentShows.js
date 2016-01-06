@@ -104,11 +104,11 @@ class VenueRecentShows extends Component{
 		return (
 			<div className = 'venue-recent'>
 				{header}
-				<Toggler ref="toggle" hook={this.toggle.bind(this)}/>
 				<hr/>
 				<div className = 'child-container'>
 					{children}
 				</div>
+				<Toggler ref="toggle" hook={this.toggle.bind(this)}/>
 			</div>
 		)
 	}
