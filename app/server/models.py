@@ -127,7 +127,7 @@ class Show(models.Model):
 
 	# cancelled = models.BooleanField(default=False)
 	soldout = models.BooleanField(default=False)
-	onsale = models.DateTimeField(default=None, blank=True)
+	onsale = models.DateTimeField(default=datetime.datetime.now(), blank=True)
 
 	age = models.PositiveSmallIntegerField(default=0, blank=True)
 
