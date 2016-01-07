@@ -1,3 +1,5 @@
+VERSION = 'v1'
+
 import inspect, itertools, json
 from datetime import timedelta, date, datetime
 
@@ -52,7 +54,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 
 
-
+def version(request):
+	return HttpResponse(VERSION)
 
 
 #signup a user and respond with token or 500 error.

@@ -12,6 +12,9 @@ urlpatterns = patterns('',
     ## Standard Django admin endpoints for a crude CMS
     url(r'^admin/', include(admin.site.urls)),
 
+
+    ## version/ping
+    url(r'^version/','server.views.version',name='version'),
    
 
     ## Authentication flow via django-rest-auth
@@ -25,7 +28,7 @@ urlpatterns = patterns('',
     url(r'^recent$', 'server.views.index', name='recent'),
     url(r'^profile$', 'server.views.index', name='profile'),
     url(r'^featured$', 'server.views.index', name='featured'),
-     url(r'^venue/\d+$', 'server.views.index', name='venues'),
+    url(r'^venue/\d+$', 'server.views.index', name='venues'),
 
 
     ## user actions
