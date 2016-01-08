@@ -89,7 +89,7 @@ class ShowListSerializer(serializers.ModelSerializer):
 		fields = (
 			'id', 'created_at', 'title', 'headliners', 'openers', 'website', 
 			'star', 'review', 'date', 'ticket', 'price', 'soldout', 
-			'onsale', 'age', 'venue'
+			'onsale', 'age', 'venue', 'banner'
 		)
 
 
@@ -132,7 +132,7 @@ class ShowSerializer(serializers.ModelSerializer):
 		fields = (
 			'id', 'created_at', 'title', 'headliners', 'openers', 'website', 
 			'star', 'review', 'date', 'ticket', 'price', 'soldout', 
-			'onsale', 'age', 'venue'
+			'onsale', 'age', 'venue', 'banner'
 		)
 
 
