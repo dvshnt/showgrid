@@ -344,7 +344,7 @@ class Alert(models.Model):
 				msg = construct_sale_message(self)
 			else:
 				msg = construct_text_message(self)
-			print colored('sending alert to '+self.user.phone+' ( is sale ? : '+self.sale+' ) ', 'green')
+			print colored('sending alert to '+self.user.phone+' ( is sale ? : ' + str(self.sale) + ' ) ', 'green')
 			Sender.send_message(msg,self.user.phone)
 			self.sent += 1
 			self.save()
