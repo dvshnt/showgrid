@@ -62,6 +62,9 @@
 
 			&:hover {
 				text-decoration:underline;
+
+				-moz-text-decoration-color:#000;
+					 text-decoration-color:#000;
 			}
 
 			h4 {
