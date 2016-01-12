@@ -20,15 +20,17 @@ class SetAlert extends Component {
 		this.toggleAlert = this.toggleAlert.bind(this);
 		this.checkIfAlertSet = this.checkIfAlertSet.bind(this);
 
-		var _this = this;
+		var alert = this.checkIfAlertSet(props.alerts, props.show.id);
+		var sale = (alert) ? alert.sale : false;
+
 		this.state = {
 			open: false,
-			active: this.checkIfAlertSet(props.alerts, props.show.id,false),
-			sale: this.checkIfAlertSet(props.alerts, props.show.id,true)
+			active: alert,
+			sale: sale
 		};
 	}
 
-	checkIfAlertSet(alerts, show, sale) {
+	checkIfAlertSet(alerts, show) {
 		var alrt = null
 
 		for (var i = 0, len = alerts.length; i < len; i++) {
@@ -37,9 +39,7 @@ class SetAlert extends Component {
 		    }
 		}
 
-		if(alrt === null) return null
-		if(sale === alrt.sale) return alrt
-		return null;
+		return alrt;
 	}
 
 	createAlert(e) {
@@ -77,8 +77,8 @@ class SetAlert extends Component {
 					var alert = data.payload.entities.alerts[index];
 
 					_this.setState({
-						active: alert.sale == true ? null : alert,
-						sale: alert.sale == true ? alert : null
+						active: alert,
+						sale: value.sale
 					});
 				}
 
@@ -89,9 +89,7 @@ class SetAlert extends Component {
 	}
 
 	cancelAlert() {
-		if(this.state.sale){
-			this.props.deleteAlert(this.state.sale.id);
-		}else if(this.state.active){
+		if(this.state.active){
 			this.props.deleteAlert(this.state.active.id);
 		}
 	
@@ -99,14 +97,14 @@ class SetAlert extends Component {
 		this.setState({
 			active: null,
 			open: false,
-			sale: null
+			sale: false
 		});
 	}
 
 	toggleAlert(e) {
 		if (e.target.localName === "select") return false;
 
-		if (this.state.active || this.state.sale) {
+		if (this.state.active) {
 			this.cancelAlert();
 		}
 		else {
@@ -198,7 +196,8 @@ class SetAlert extends Component {
 
 
 		var className = (this.state.open) ? "icon-alert open" : "icon-alert";
-		className += (this.state.active) ? " active" : (this.state.sale ? " sale" : "");
+			className += (this.state.active) ? " active" : "";
+			className += (this.state.sale) ? " sale" : "";
 
 		var options = this.getEligibleAlertTimes();
 
