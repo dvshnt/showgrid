@@ -51,6 +51,14 @@ class SetAlert extends Component {
 		var options = e.target.options;
 		var value = "";
 
+		if (!options) {
+			options = this.refs.alertSelect.getDOMNode().options;
+		}
+		// So we don't create the alert when the dialog changes on mobile
+		else if (options && window.innerWidth <= 500) {
+			return;
+		}
+
 
 		for (var i = 0, l = options.length; i < l; i++) {
 			if (options[i].selected) {
@@ -172,7 +180,7 @@ class SetAlert extends Component {
 			options.push(<option value="6" data-value='{"id":6, "unit":"days","num":7}' selected={ alert.which === 6 }>1 Week before show</option>);
 		}
 
-		return <select onBlur={this.createAlert} onChange={ this.createAlert }>{ options }</select>;
+		return <select ref="alertSelect" onBlur={this.createAlert} onChange={ this.createAlert }>{ options }</select>;
 	}
 
 	render() {
@@ -205,10 +213,13 @@ class SetAlert extends Component {
 		return (
 			<b className={ className } onClick={ this.toggleAlert }>
 				<div className="alert-box">
-					<b id="close" className="icon-close" onClick={ this.props.toggleAlert }></b>
 					{ artistInfo }
 					Alert me
 					{ options }
+					<div className="mobile-actions">
+						<button className="cancel" onClick={ this.toggleAlert }>Cancel</button>
+						<button className="set" onClick={ this.createAlert }>Set Alert</button>
+					</div>
 				</div>
 				{ alertInfo }
 			</b>
