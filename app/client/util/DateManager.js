@@ -193,6 +193,14 @@ var DateManager = {
 			return "2 Days before show";
 		case 6:
 			return "1 week before show";
+		case 7:
+			return "When tickets go on sale";
+		case 8:
+			return "30 Minutes before tickets go on sale";
+		case 9:
+			return "1 Hours before tickets go on sale";
+		case 10:
+			return "2 Hours before tickets go on sale";
 		default:
 			return "Sometime before the show";
 		}
