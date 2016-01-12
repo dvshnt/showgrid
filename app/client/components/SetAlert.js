@@ -132,10 +132,10 @@ class SetAlert extends Component {
 				options.push(<option value="8" data-value='{"sale":true, "id":8, "unit":"minutes","num":30}' selected={ alert.which === 8 }>30 minutes before ticket sale</option>);
 			}
 			if (now.isBefore(sale_date.clone().subtract(1, 'hours'))) {
-				options.push(<option value="9" data-value='{"sale":true, "id":9, "unit":"hours","num":1}' selected={ alert.which === 9 }>2 hours before ticket sale</option>);
+				options.push(<option value="9" data-value='{"sale":true, "id":9, "unit":"hours","num":1}' selected={ alert.which === 9 }>1 hour before ticket sale</option>);
 			}
 			if (now.isBefore(sale_date.clone().subtract(2, 'hours'))) {
-				options.push(<option value="10" data-value='{"sale":true, id":10, "unit":"hours","num":2}' selected={ alert.which === 10 }>1 day before ticket sale starts</option>);
+				options.push(<option value="10" data-value='{"sale":true, id":10, "unit":"hours","num":2}' selected={ alert.which === 10 }>2 hours before ticket sale starts</option>);
 			}
 		}
 
