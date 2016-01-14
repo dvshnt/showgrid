@@ -73,11 +73,7 @@ class Featured extends Component {
 		else {
 			results.push(<h4 className="noshows">Go out with an old friend or something.</h4>);
 		}
-
-		results.splice(1, 0, <p>
-				You will notice a few shows that have some writing. This will be the focus of the Featured shows section as we expand. We will be writing a ton. We will write with verve, elasticity and any other exciting adjectives you can imagine that bring to mind motion and sound.<br></br><br></br>If you wanna write with us, email &nbsp;<a href="mailto:writing@showgrid.com"><b>writing@showgrid.com</b></a>&nbsp; and tell us (candidly) about your favorite concert experience.
-			</p>
-		);
+		
 		var tags = [
 			{name: "description", content: "lorem ipsum dolor"},
 			{itemProp: "name", content: "The Name or Title Here"},
