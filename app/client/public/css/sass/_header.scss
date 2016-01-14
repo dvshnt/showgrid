@@ -4,14 +4,13 @@
 
 	width:100%;
 	
-	z-index:99;
 	z-index:100;
+}
 
 #header.hidden {
 	display:none;
 }
 
-}
 
 @import "header__page";
 @import "header__calendar";
