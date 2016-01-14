@@ -60,6 +60,10 @@ export default class VenueOverlay extends Component {
 			'background-image': 'url(' + this.props.venue.image + ')'
 		};
 
+		var phone = "";
+		if (this.props.venue.phone) {
+			phone = <a className='phone' href="tel:{ this.props.venue.phone }">{this.formatPhone(this.props.venue.phone)}</a>
+		}
 
 
 
@@ -98,8 +102,8 @@ export default class VenueOverlay extends Component {
 			    		</p>
 			    	</div>
 			    	<div className='footer'>
-			    		{icons}
-			    		<a className='phone' href="tel:{ this.props.venue.phone }">{this.formatPhone(this.props.venue.phone)}</a>
+			    		{ icons }
+			    		{ phone }
 			    	</div>
 				</div>
 			</div>
