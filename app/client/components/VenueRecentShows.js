@@ -6,20 +6,13 @@ import {sortBy, clone, map} from 'lodash';
 import Toggler from '../components/Toggler';
 
 class VenueRecentShows extends Component{
-
-	// getDefaultProps(){
-	// 	return {
-	// 		default_max: 100,
-	// 		default_min: 3
-	// 	}
-	// }
-
 	constructor(props){
 		super(props);
 
-		props.default_min = props.default_min || 3
-		props.default_max = props.default_max || 10
+		props.default_min = props.default_min || 3;
+		props.default_max = props.default_max || 10;
 
+		this.toggle = this.toggle.bind(this);
 
 		this.state = {
 			mini: props.mini || false,
@@ -71,7 +64,7 @@ class VenueRecentShows extends Component{
 
 	render(){
 		if(this.props.venue.shows.length){
-			var header = <header>Recently Added</header>
+			var header = <h3>Recently Added</h3>
 		}else{
 			var header = null
 		}
@@ -108,7 +101,7 @@ class VenueRecentShows extends Component{
 				<div className = 'child-container'>
 					{children}
 				</div>
-				<Toggler ref="toggle" hook={this.toggle.bind(this)}/>
+				<Toggler ref="toggle" hook={ this.toggle }/>
 			</div>
 		)
 	}

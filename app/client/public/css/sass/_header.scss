@@ -5,6 +5,11 @@
 	width:100%;
 	
 	z-index:99;
+
+#header.hidden {
+	display:none;
+}
+
 }
 
 @import "header__page";

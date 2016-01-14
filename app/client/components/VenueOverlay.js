@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 
+import Toggler from '../components/Toggler';
 
 var GridEngine = require('../util/GridEngine');
 
@@ -56,7 +57,7 @@ export default class VenueOverlay extends Component {
 		};
 
 		var image = {
-			'background-image': 'url(' + GridEngine.domain + this.props.venue.image + ')'
+			'background-image': 'url(' + this.props.venue.image + ')'
 		};
 
 
@@ -72,6 +73,15 @@ export default class VenueOverlay extends Component {
 
 		return (
 			<div className="venue-overlay" style={ primaryColor }>
+				<div className="mobile-action-venue">
+					<div className="back-button" onClick={ this.props.back }><b className="icon-back"></b></div>
+					<div className="title" style={ titleColor }><h2>{ this.props.venue.name }</h2></div>
+					<Toggler hook={ this.props.toggle } />
+					<div  className="address" >
+						{ this.props.venue.address.street } { this.props.venue.address.city },  { this.props.venue.address.state } { this.props.venue.address.zip_code }
+					</div>
+				</div>
+
 				<div className="image" style={ image }></div>
 				<div className="overlay-gradient" style={this.overlayStyle}></div>
 				<div className="content">
@@ -81,6 +91,7 @@ export default class VenueOverlay extends Component {
 							{ this.props.venue.address.street } { this.props.venue.address.city },  { this.props.venue.address.state } { this.props.venue.address.zip_code }
 						</div>
 					</div>
+
 			    	<div className="description">
 			    		<p>
 			    			{ this.props.venue.description }
@@ -91,7 +102,6 @@ export default class VenueOverlay extends Component {
 			    		<a className='phone' href="tel:{ this.props.venue.phone }">{this.formatPhone(this.props.venue.phone)}</a>
 			    	</div>
 				</div>
-				
 			</div>
 		)
 	}

@@ -1,18 +1,29 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { pushState } from 'redux-router';
 
-import { getVenue } from '../actions/index'
+
 import VenueOverlay from '../components/VenueOverlay';
 import VenueRecentShows from '../components/VenueRecentShows';
 import VenueUpcomingShows from '../components/VenueUpcomingShows';
-import Loader from '../components/Loader';
+
 import Toggler from '../components/Toggler';
+import Loader from '../components/Loader';
+
 import DocMeta from 'react-doc-meta'
+
+import { getVenue } from '../actions/index'
+
+import $ from 'jquery';
+
 
 class Venue extends Component {
 	constructor(props) {
 		super(props)
+
+		this.back = this.back.bind(this);
+		this.toggle = this.toggle.bind(this);
 
 		this.state = {
 			offset: false,
@@ -23,23 +34,37 @@ class Venue extends Component {
 	componentDidMount(){
 		this.props.getVenue(this.props.params.id).then((venue)=>{
 			var venue = this.props.venues[this.props.params.id];
+			
 			if( !venue ) return;
+			
 			this.setState({
 				venue: venue
 			})
-		})
+		});
+		
+		if (window.innerWidth <= 500) $("body").addClass("lock");
+	}
+
+	componentWillUnmount() {
+		if (window.innerWidth <= 500) $("body").removeClass("lock");
+	}
+
+	back() {
+		if (window.history.length > 0) {
+			window.history.back();
+		}
+		else {
+			pushState(null, '/calendar/', '');
+		}
 	}
 
 	toggle(){
+		var offset = !this.state.offset;
+
 		this.setState({
-			offset: !this.state.offset
-		})
+			offset: offset
+		});
 	}
-
-	// componentDidMount(){
-	// 	var container = React.findDOMNode(this.refs.container);
-
-	// }
 
 	render(){
 		var tags = [
@@ -51,20 +76,24 @@ class Venue extends Component {
 			{property: "og:title", content: "Title Here"},	
 		]
 
-		if(this.state.offset) var offset = 'container-offset';
-		else var offset = '';
-
+		if(this.state.offset) {
+			var offset = 'container-offset';
+		}
+		else {
+			var offset = '';
+		}
 
 
 		if(this.state.venue){
 			return (
 				<div className='venue--page'>
 					<DocMeta tags={tags} />
-					<VenueOverlay venue={ this.state.venue } />
-					<Toggler hook={this.toggle.bind(this)} />
-					<div ref="container" className = {"venue-container "+offset}>
+
+					<VenueOverlay venue={ this.state.venue } toggle={ this.toggle } back={ this.back }/>
+					
+					<div className = {"venue-container " + offset}>
+						<VenueRecentShows mini={ true } venue={ this.state.venue }/>
 						<VenueUpcomingShows  venue={ this.state.venue }/>
-						<VenueRecentShows mini={true} venue={ this.state.venue }/>
 					</div>
 				</div>
 			)			
