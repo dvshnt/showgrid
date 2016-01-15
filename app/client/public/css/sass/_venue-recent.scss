@@ -1,10 +1,10 @@
 .venue-recent {
-	-webkit-flex:0 0 30%;
-			flex:0 0 30%;
+	-webkit-flex:1 1 30%;
+			flex:1 1 30%;
 	
 	order:1;
 
-	padding:10px 0 10px 10px;
+	padding:10px 20px 10px 20px;
 	margin:0 -2px 0 0;
 
 	font-size:13px;
@@ -37,7 +37,8 @@
 		width:auto; height:auto;
 
 		margin-right:0px;
-		padding-right: 10px;
+		padding-right:10px;
+		padding-left:10px;
 
 		hr {
 			margin-bottom:0;
