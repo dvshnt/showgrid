@@ -31,6 +31,33 @@ from django.utils import timezone
 from termcolor import colored
 
 
+# class Performance(models.Model):
+# 	position = models.CharField(_("position"), max_length=128)
+# 	show = 
+
+
+
+
+
+import server.get_spotify
+import server.get_echonest
+
+class Artist(models.Model):
+	name = models.CharField(_("name"), max_length=128)
+	about = models.CharField(_("about"), max_length=128)
+	pulled = models.BooleanField(default=False)
+	pulled_date = models.DateTimeField(default=datetime.date(1999, 12, 12),blank=True)
+	pulled_spotify =  models.BooleanField(default=False)
+	pulled_echonest =  models.BooleanField(default=False)
+
+
+
+
+
+
+
+
+
 class Address(models.Model):
 	street = models.CharField(_("street"), max_length=128)
 	city = models.CharField(_("city"), max_length=64)
@@ -110,7 +137,9 @@ class Show(models.Model):
 
 	title = models.CharField(max_length=100, blank=True)
 	headliners = models.CharField(max_length=300, blank=False)
+	headliner_artists = models.ManyToManyField(Artist,related_name='shows_headliner')
 	openers = models.CharField(max_length=400, blank=True)
+	opener_artists = models.ManyToManyField(Artist,related_name='shows_opener')
 	website = models.URLField(blank=True)
 
 	date = models.DateTimeField(blank=False)
@@ -350,3 +379,42 @@ class Alert(models.Model):
 			self.save()
 			return True
 		return False
+
+
+
+
+
+
+
+
+
+
+
+
+
+# #Admin Models
+# from django.contrib import admin
+
+# class ArtistAdmin(admin.ModelAdmin):
+#     pass #
+# admin.site.register(Artist, ArtistAdmin)
+
+
+
+
+
+# #Show Admin
+# class ShowAdmin(admin.ModelAdmin):
+#     def add_artist: 
+#     pass #create models from artist names.
+
+# admin.site.register(Show, ShowAdmin)
+
+
+
+
+
+
+
+
+
