@@ -1,0 +1,101 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<style>
+
+	h2{
+		padding-bottom: 5px;
+	}
+
+
+	.counter{
+		background: #D3EBF1;
+		padding: 5px;
+		border: 1px solid #C9DFE7;
+		border-radius: 2px;
+		width: auto;
+		font-weight: 200;
+		
+	}
+
+	.butt{
+		font-weight: 500;
+	}
+
+
+
+	table{
+		margin-top: 20px;
+		border: 1px solid #eee;
+		width: 100%;
+	}
+	.done{
+		background: rgba(215, 255, 236, 0.56);
+	}
+
+	.field-done_all{
+		width: 70%;
+	}
+
+
+	
+</style>
+<div id="content-main">
+	<h2>
+		{% if not done %}
+			Fetching data, please wait...
+		{% else %}
+			DONE PULL
+		{% endif %}
+	</h2>
+
+	
+		<span class='counter'>{{count}}</span>
+	{% if done %}
+		<a href='/admin/server/artist/' ><span class='counter butt'> return </span></a>
+	{% endif %}
+
+
+
+	<table>
+		<thead scope="col" {{ header.class_attrib }}>
+		<tr>
+			<th>Name</th>
+			<th>Done</th>
+			<th>Spotify</th>
+			<th>Echonest</th>
+		</tr>
+			
+		</thead>
+		
+			<tbody>
+			{% for artist in artists %}
+				<tr class="{% if artist.done_all %}done{% endif %} {% cycle 'row1' 'row2' %}">
+					<td class='field-name'>
+						{{artist.name}}
+					</td>
+					<td class='field-done_all'>
+						{% if artist.done_all %}<img src="/static/admin/img/icon-yes.svg" alt='True'>	
+						{% else %}<img src="/static/admin/img/icon-no.svg" alt='False'>{% endif %}	
+					</td>
+					<td class='field-done_spotify'>
+						{% if artist.done_spotify %} <img src="/static/admin/img/icon-yes.svg" alt='True'> {% else %} <img src="/static/admin/img/icon-no.svg" alt='False'> {% endif %}	
+					</td>	
+					<td class='field-done_echonest'>
+						{% if artist.done_spotify %} <img src="/static/admin/img/icon-yes.svg" alt='True'> {% else %} <img src="/static/admin/img/icon-no.svg" alt='False'> {% endif %}		
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+	</table>
+	{% if not done %}
+	<script>
+		setTimeout(function() {
+			window.location.replace(window.location.href);
+		}, 3333);
+	</script>
+	{%endif%}
+</div>
+
+
+
+{% endblock %}
