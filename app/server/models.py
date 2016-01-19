@@ -27,7 +27,6 @@ from rest_framework.authtoken.models import Token
 
 from server.twillio_handle import MessageClient
 Sender = MessageClient()
-from django.utils import timezone
 from termcolor import colored
 
 
@@ -45,12 +44,19 @@ import server.get_echonest
 class Artist(models.Model):
 	name = models.CharField(_("name"), max_length=128)
 	about = models.CharField(_("about"), max_length=128)
+	
 	pulled = models.BooleanField(default=False)
-	pulled_date = models.DateTimeField(default=datetime.date(1999, 12, 12),blank=True)
+	queued = models.BooleanField(default=False)
+
+	pulled_date = models.DateTimeField(default=datetime.date(1999, 12, 5))
 	pulled_spotify =  models.BooleanField(default=False)
 	pulled_echonest =  models.BooleanField(default=False)
 
+	def pull_echonest(self):
+		pass
 
+	def pull_spotify(self):
+		pass
 
 
 
@@ -385,30 +391,6 @@ class Alert(models.Model):
 
 
 
-
-
-
-
-
-
-
-# #Admin Models
-# from django.contrib import admin
-
-# class ArtistAdmin(admin.ModelAdmin):
-#     pass #
-# admin.site.register(Artist, ArtistAdmin)
-
-
-
-
-
-# #Show Admin
-# class ShowAdmin(admin.ModelAdmin):
-#     def add_artist: 
-#     pass #create models from artist names.
-
-# admin.site.register(Show, ShowAdmin)
 
 
 
