@@ -1,0 +1,72 @@
+.venue-recent {
+	-webkit-flex:1 1 30%;
+			flex:1 1 30%;
+	
+	order:1;
+
+	padding:10px 20px 10px 20px;
+	margin:0 -2px 0 0;
+
+	font-size:13px;
+	font-weight:500;
+
+	
+	.name {
+		display:block;
+
+		margin-top:10px;
+		padding:10px;
+
+		color:#000000;
+		text-decoration:none;
+		
+		border:1px solid rgba(150,150,150,0.1);
+		background:rgba(255,255,255,0.2);
+		border-radius: 5px 0px 0px 5px;
+
+		cursor:pointer;
+	}
+
+	hr {
+		margin-bottom:20px;
+	}
+}
+
+@media (max-width:500px) {
+	.venue-recent {
+		width:auto; height:auto;
+
+		margin-right:0px;
+		padding-right:10px;
+		padding-left:10px;
+
+		hr {
+			margin-bottom:0;
+		}
+
+		.child-container{
+			overflow:hidden;
+			height:auto;
+		}
+
+		.toggler{
+			position:relative;
+
+			height:40px; width:70px;
+
+			margin:10px auto;
+		
+			border:1px solid rgba(150,150,150,0.1);
+			background:rgba(255,255,255,0.2);
+			border-radius: 5px 0px 0px 5px;
+
+			.toggler_bar {
+				background:#000;
+			}
+		}
+
+		.name {
+			border-radius: 5px 5px 5px 5px;
+		}
+	}
+}

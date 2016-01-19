@@ -113,8 +113,28 @@ var DateManager = {
 
 	getFeaturedShowDate(date) {
 		var today = moment().hour(0).minute(0).second(0);
-		//console.log("GET DIFF FOR",date.toISOString(),"ACTUAL",today)
 
+		var diff = Math.round(date.diff(today, 'days', true));
+
+		if (diff === -1) {
+			return "Yesterday";
+		}
+		else if (diff === 0) {
+			return "Today";
+		}
+		else if (diff === 1 ) {
+			return "Tomorrow";
+		}
+		else if (diff < 7 && diff > 1) {
+			return date.format("dddd");
+		}
+		else {
+			return date.format("dddd, MMMM Do");
+		}
+	},
+
+	getUpcomingShowDate(date) {
+		var today = moment();
 
 		var diff = Math.round(date.diff(today, 'days', true));
 

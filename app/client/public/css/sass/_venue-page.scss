@@ -1,204 +1,91 @@
-
-
 .venue--page {
-	background: #F1F1F1;
-	padding-top: 50px;
-	width: 100%;
-	height: auto;
-	display: flex;
-	flex-direction: row;
-	header {
-		font-size: 20px;
-   		font-weight: 900;
+	display:-webkit-flex;
+	display:		flex;
+
+	width:100%; height:auto;
+
+
+	h3 {
+		margin:10px 0;
+
+		font-size:20px;
+   		font-weight:900;
 	}
 
 
 	.toggler{
-		display: none;
-		position: absolute;
-		top:50px;
-		right:0;
+		display:none;
 	}
 
 
 	.venue-container {
-		overflow-x: hidden;
-		padding-top: 10px;
-		min-height: 100vh;
+		display:-webkit-flex;
+		display:		flex;
+
+		-webkit-align-items:stretch;
+				align-items:stretch;
+
+		width:75%; height:auto;
+		min-height:100vh;
+
+		padding-top:50px;
+		margin-left:25%;
+
 		background: #F1F1F1;
-		z-index: 5;
-		margin-left: 25%;
-		width: 75%;
-		height: auto;
-		display: flex;
-		flex-direction: row;
-		align-items: stretch;
-		transition: transform 0.3s cubic-bezier(0, 0, 0.03, 1.01);
-		transform: translate(0px,0vh);
+		
+		@include transition--transform(0.3s cubic-bezier(0, 0, 0.03, 1.01));
+		@include transform(translate(0px,0vh));
+
+		overflow-x: hidden;
+
+		z-index:99;
 	}
 
-
-	.container-offset {
-		transform: translate(0px,80vh);
-	}
 	hr {
-		margin-top: 5px;
-		margin-bottom: 10px;
-		border: 0px;
+		margin:5px 0;
+		border:0px;
 		border-bottom: 1px solid rgba(0,0,0,0.1);
 	}
-
-
-
-
-
-
-
-	.venue-upcoming {
-		
-
-		width: 70%;
-		padding-left: 20px;
-		padding-right: 5px;
-		padding-top: 10px;
-		padding-bottom: 10px;
-
-
-		
-	
-		.date-seperator {
-			margin-top: 35px;
-			margin-bottom: 5px;
-			text-transform: uppercase;
-		}
-	}
-
-	.venue-recent {
-		font-size: 13px;
-		font-weight: 500;
-		height: auto;
-		width: 30%;
-		padding: 10px;
-		padding-right: 0px;
-		margin-right: -2px;
-
-		.toggler {
-			div{
-				background: rgba(100,100,100,1);
-			}
-			height: 40px;
-			top: 15px;
-			position: relative;
-			display: none;
-			cursor: pointer;
-			border-radius: 5px 5px 5px 5px;
-			background: rgba(255,255,255,0.2);
-			border: 1px solid rgba(150,150,150,0.1);
-		}
-
-		.name {
-			display:block;
-			cursor: pointer;
-			margin-top: 10px;
-			border-radius: 5px 0px 0px 5px;
-			background: rgba(255,255,255,0.2);
-			padding: 10px;
-			border: 1px solid rgba(150,150,150,0.1);
-
-			color:#000000;
-			text-decoration:none;
-		}
-		
-		hr {
-			margin-bottom: 20px;
-		}
-
-		header {
-
-			text-align: start;
-			.title{
-				font-size: 20px;
-				font-weight: bold;
-			}
-			.see-all{
-				font-size: 12px;
-			}
-		}
-		.seperator {
-			display: block;
-			margin-top: 0.5em;
-			margin-bottom: 0.5em;
-			margin-left: auto;
-			margin-right: auto;
-			border-style: inset;
-			border-width: 1px;
-
-			padding-top: 3px;
-			padding-bottom: 3px;			
-		}
-	}
-
-
-
-
-
 }
 
-@media (max-width: 700px) {
+
+@media (max-width:500px) {
 	.venue--page {
-		flex-direction: column;
+		-webkit-flex-flow:column nowrap;
+				flex-flow:column nowrap;
 
 
 		.toggler{
-			display: block;
+			display:block;
 		}
-
 
 		hr {
-			margin-top: 10px;
-			margin-bottom: 10px;
-			opacity: 0;
+			margin-bottom:0;
+			opacity:0;
 		}
-
-		.venue-upcoming {
-			padding-top: 40px;
-			line-height: 20px;			
-			padding-left: 10px;
-			padding-right: 10px;
-
-			height: auto;
-			width: auto;
-		}
-		.venue-recent {
-			margin-right: 0px;
-
-			.child-container{
-				overflow:hidden;
-				height: auto;
-			}
-			.toggler{
-				display: block;
-			}
-			.name {
-				border-radius: 5px 5px 5px 5px;
-			}
-			padding-left: 10px;
-			padding-right: 10px;
-			height: auto;
-			width: auto;
-		}
-
-		
 
 		.venue-container {
-			width: 100%;
-			height: auto;
-			flex-direction: column-reverse;
-			margin-left: 0;
-			padding-top: 0px;
-			margin-top: 50px;
+			position:relative;
+			top:50px;
+
+			display:block;
+
+			width:100%; height:calc(100vh - 50px);
+			min-height:calc(100vh - 50px);
+
+			margin-left:0;
+			margin-top:0;
+			padding-top:0;
+
+			overflow-y:scroll;
+		}
+
+		.container-offset {
+			@include transform(translate(0px,100vh));
 		}
 	}
 }
 
 
+@import "venue-recent";
+@import "venue-upcoming";

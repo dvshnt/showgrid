@@ -30,14 +30,14 @@ class VenueUpcomingShows extends Component{
 		for(var i in this.props.venue.shows){
 			var show = this.props.venue.shows[i];
 			var date = moment(show.date);
-			var next_time = DateManager.getFeaturedShowDate(date);
+			var next_time = DateManager.getUpcomingShowDate(date);
 			if(next_time != prev_time) children.push(this.dateSeperator(next_time));
 			prev_time = next_time
 			children.push(<Show showVenueName={false} showStar={true} showTime={true} ticket_price={true} skip_header={true} showDate={false} show={show}/>);
 		}
 
-		if(this.props.venue.shows.length) var header = <header>Upcoming Shows</header>
-		else var header = <header>No shows here yet.</header>
+		if(this.props.venue.shows.length) var header = <h3>Upcoming Shows</h3>
+		else var header = <h3>No shows here yet.</h3>
 
 		return(
 			<div className='venue-upcoming'>

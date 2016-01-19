@@ -1,0 +1,34 @@
+.venue-upcoming {
+	-webkit-flex:1 1 70%;
+			flex:1 1 70%;
+
+	order:0;
+
+	padding-top:10px;
+	padding-right:30px;
+	padding-bottom:10px;
+	padding-left:30px;
+
+
+	.date-seperator {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		text-transform: uppercase;
+	}
+}
+
+@media (max-width:500px) {
+	.venue-upcoming {
+		width:auto; height:auto;
+
+		padding-top: 40px;			
+		padding-left: 10px;
+		padding-right: 10px;
+
+		line-height: 20px;
+
+		.date-seperator:first-of-type {
+			margin-top:10px;
+		}
+	}
+}
