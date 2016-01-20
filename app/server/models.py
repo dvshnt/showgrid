@@ -1,5 +1,5 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-
+from os import path
 import datetime
 import hashlib
 from random import randint
@@ -7,6 +7,12 @@ from django.conf import settings
 import os
 import math
 import pytz
+import requests
+import urllib
+import re
+import json
+
+from jsonfield import JSONField
 
 from django.db import models
 from django.core.mail import send_mail
@@ -30,33 +36,296 @@ Sender = MessageClient()
 from termcolor import colored
 
 
-# class Performance(models.Model):
-# 	position = models.CharField(_("position"), max_length=128)
-# 	show = 
+
+#pretty colors 
+def prRed(prt): print("\033[91m {}\033[00m" .format(prt))
+def prGreen(prt): print("\033[92m {}\033[00m" .format(prt))
+def prYellow(prt): print("\033[93m {}\033[00m" .format(prt))
+def prLightPurple(prt): print("\033[94m {}\033[00m" .format(prt))
+def prPurple(prt): print("\033[95m {}\033[00m" .format(prt))
+def prCyan(prt): print("\033[96m {}\033[00m" .format(prt))
+def prLightGray(prt): print("\033[97m {}\033[00m" .format(prt))
+def prBlack(prt): print("\033[98m {}\033[00m" .format(prt))
 
 
 
 
 
-import server.get_spotify
-import server.get_echonest
+
+
+#Analyze spotify data and sync it with passed artist.
+def SpotifyArtistParser(artist,data):
+	
+	# 1000x1000 images
+	if 'images' in data:
+		for img in data['images']:
+			if not img['url'] in artist.images:
+				artist.images.append(img['url'])
+
+	#link to spotify page
+	if 'external_urls' in data and 'url' in data['external_urls']:
+		artist.spotify_link = data['external_urls']['url']['spotify']
+
+	#follow count??
+	if 'followers' in data and 'total' in data['followers']:
+		artist.spotify_followers = data['followers']['total']
+
+
+	#genres
+	if 'genre' in data:
+		for genre in data['genres']:
+			if not genre in artist.genres:
+				artist.genres.append(genre)
+
+
+
+
+
+
+
+
+#Analyze echonest data and sync it with passed artist.
+def EchonestArtistParser(artist,data):
+	a_json = t_list = None
+	if 'artist' in data['response']:
+		a_json = data['response']['artist']
+	
+	if 'songs' in data['response']:
+		t_list = data['response']['songs']
+
+	if a_json != None:
+		#genres
+		if 'genres' in a_json:
+			for g in a_json['genres']:
+				if 'name' in g and not g['name'] in artist.genres:
+					print artist.genres
+					artist.genres.append(g['name'])
+
+		#biography
+		if len(a_json['biographies']) >= 1:
+			artist.bio = a_json['biographies'][0]['text']
+
+		#articles
+		blogs =  a_json['blogs'] + a_json['news']
+		
+		for blog in blogs:
+			try:
+				artist.articles.get(external_url=blog['url'])
+			except:
+				new_title = blog['name']
+				new_summary = blog['summary']
+				new_external_url = blog['url']
+				new_article = Article.objects.create(summary=new_summary,title=new_title,external_url=new_external_url)
+				new_article.save()
+				artist.articles.add(new_article)				
+
+
+		#images
+		for image in a_json['images']:
+			if not image['url'] in artist.images:
+				artist.images.append(image['url'])
+
+		artist.popularity = a_json['hotttnesss']
+
+	if t_list != None and len(t_list) != 0:
+		#linked spotify tracks
+		for track in t_list:
+			if not track['foreign_id'] in artist.spotify_tracks:
+				artist.spotify_tracks.append(track['foreign_id'])
+
+
+
+
+
+
+class Article(models.Model):
+	def __unicode__ (self):
+		return self.title
+	title = models.CharField(max_length=255,blank=False)
+	external_url = models.CharField( max_length=255,blank=True)
+	summary = models.TextField(default="No description")
+	published_date = models.DateTimeField(default=datetime.datetime.now())
+	active =  models.BooleanField(default=True)
+
 
 class Artist(models.Model):
+	def __unicode__ (self):
+		return self.name
 	name = models.CharField(_("name"), max_length=128)
-	about = models.CharField(_("about"), max_length=128)
 	
+
+
+	#pull meta data
 	pulled = models.BooleanField(default=False)
 	queued = models.BooleanField(default=False)
-
 	pulled_date = models.DateTimeField(default=datetime.date(1999, 12, 5))
-	pulled_spotify =  models.BooleanField(default=False)
+	pulled_spotify = models.BooleanField(default=False)
 	pulled_echonest =  models.BooleanField(default=False)
 
-	def pull_echonest(self):
-		pass
 
-	def pull_spotify(self):
-		pass
+
+	# if we have id's we can update by id
+	echonest_id = models.CharField(_("echonest_id"), max_length=255,default='-1')
+	spotify_id = models.CharField(_("spotify_id"), max_length=255,default='-1')
+	
+
+	#extra links?
+	twitter_url =  models.CharField(max_length=255,blank=True)
+	facebook_url =  models.CharField(max_length=255,blank=True)
+
+	#pulled data
+	bio = models.TextField(default="No description")
+	articles = models.ManyToManyField(Article,related_name='artist')
+	popularity = models.PositiveSmallIntegerField(default=0, blank=True)
+	
+	@property
+	def genres(self):
+	    return json.loads(self._genres)
+	@property
+	def spotify_tracks(self):
+	    return json.loads(self._spotify_tracks)
+	@property
+	def images(self):
+	    return json.loads(self._images)
+		
+
+	_genres = JSONField(db_column="genres",default='[]', blank=True)
+	_spotify_tracks = JSONField(db_column="spotify_tracks",default='[]', blank=True)
+	_images = JSONField(db_column="images",default='[]', blank=True)
+	spotify_link = models.CharField(max_length=255,blank=True)
+
+
+	#search echonest for artist.
+	def pull_echonest(self):
+		payload = {'api_key': settings.ECHONEST_KEY, 'format':'json', 'results':1, 'name':re.sub(' +',' ',self.name)}
+		r = requests.get(path.join(settings.ECHONEST_API,'artist/search'),params=payload)
+		data = r.json()
+
+		print r.url
+		print data
+
+		if data['response'] and data['response']['status']['code'] != 0 or len(data['response']['artists']) == 0 :
+			return
+		self.echonest_id = data['response']['artists'][0]['id']
+		self.save()
+		self.update_echonest()
+
+
+
+	#already have id, update artist with already existing id.
+	def update_echonest(self):
+		prGreen("UPDATE ECHONEST")
+		if self.echonest_id == None: 
+			return
+
+
+		#artist data
+		payload = {'api_key': settings.ECHONEST_KEY, 'format': 'json', 'id': self.echonest_id,'bucket':['id:spotify','biographies','hotttnesss','images','blogs','news','songs','genre']}			
+		r = requests.get(path.join(settings.ECHONEST_API,'artist/profile/'),params=payload)
+		data = r.json();
+
+		#artist track data
+		payload_tracks = {'api_key': settings.ECHONEST_KEY, 'format': 'json', 'artist': self.name,'bucket' : ['id:spotify','tracks'],'limit':'true'}
+		r_tracks = requests.get(path.join(settings.ECHONEST_API,'song/search'),params=payload)
+		data_tracks = r_tracks.json();
+
+		if not 'response' in data and not 'response' in data_tracks:
+			return False
+
+		#combine tracks response data with artist response data
+		if 'response' in data and 'response' in data_tracks and 'tracks' in data_tracks['response']:
+			data['response']['tracks'] = data_tracks['response']['tracks']
+		elif 'response' in data_tracks and 'tracks' in data_tracks['response']:
+			data = data_tracks
+		
+
+
+		artist = None
+
+		if 'artist' in data['response']:
+			artist = data['response']['artist']
+
+		if artist != None and 'foreign_ids' in artist and len(artist['foreign_ids']) != 0 and artist['foreign_ids'][0]['catalog'] == 'spotify':
+			r_match = re.match('spotify:artist:(.+)',artist['foreign_ids'][0]['foreign_id'])
+			if r_match != None:
+				self.spotify_id = r_match.group(1)
+			
+
+		EchonestArtistParser(self,data)
+		self.pulled_echonest = True
+		self.save()
+
+
+	#already have spotify id update artist with already existing id
+	def update_spotify(self):
+		#we dont have the id?
+		if self.spotify_id == None: 
+			return
+		
+		#pull
+		r = requests.get(path.join(settings.SPOTIFY_API,'artists',self.spotify_id))
+		data = r.json();
+
+		if data != None and 'id' in data:
+			SpotifyArtistParser(self,data)
+			self.pulled_spotify = True
+			self.save()
+
+
+	def pull_all(self):
+		#cant pull if already pulling
+		# if self.queued == True:
+		# 	return False
+
+		#reset meta
+
+
+		#search/update endpoints
+		self.pull_echonest()
+		if self.spotify_id != None:
+			self.update_spotify()
+		else:
+			self.pull_spotify()
+		
+		#done
+		self.pulled = True
+		self.pulled_date = datetime.datetime.now()
+		self.queued = False
+		self.save()
+		prGreen('SAVE')
+		print self.echonest_id
+		print self.spotify_id
+		
+
+
+
+
+	def update_all(self):
+		#cant update if already updaing
+		# if self.queued == True:
+		# 	return False
+
+		#reset meta
+
+
+		#update endpoints
+		self.update_echonest()
+		self.update_spotify()
+		
+		#done
+		self.pulled = True
+		self.pulled_date = datetime.datetime.now()
+		self.queued = False
+		self.save()
+		
+
+
+
+
+
+
+
+
 
 
 
@@ -100,6 +369,9 @@ class Venue(models.Model):
 	# Sign-post for if venue is open or not
 	opened = models.BooleanField(default=True)
 
+	#extract meta_data
+	
+
 	# Auto-fill URL for calendars without unique links
 	autofill = models.CharField(max_length=200, blank=True)
 	age = models.PositiveSmallIntegerField(default=0, blank=True)
@@ -142,10 +414,13 @@ class Show(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 
 	title = models.CharField(max_length=100, blank=True)
+	
 	headliners = models.CharField(max_length=300, blank=False)
-	headliner_artists = models.ManyToManyField(Artist,related_name='shows_headliner')
+	headliner_artists = models.ManyToManyField(Artist,related_name='shows_headliner',blank=True)
+
 	openers = models.CharField(max_length=400, blank=True)
-	opener_artists = models.ManyToManyField(Artist,related_name='shows_opener')
+	opener_artists = models.ManyToManyField(Artist,related_name='shows_opener',blank=True)
+	
 	website = models.URLField(blank=True)
 
 	date = models.DateTimeField(blank=False)
@@ -166,6 +441,57 @@ class Show(models.Model):
 
 	age = models.PositiveSmallIntegerField(default=0, blank=True)
 
+	#extract metadata
+	extract_queued = models.BooleanField(default=False)
+
+	def extract_artists_from_name(self):
+		self.extract_queued = True
+		self.save()
+
+		#headliner request
+		payload = {'api_key': settings.ECHONEST_KEY, 'format':'json', 'results':10, 'text':re.sub(' +',' ',self.headliners)}
+		r = requests.get(path.join(settings.ECHONEST_API,'artist/extract'),params=payload)
+		h_data = r.json()
+
+		#opener request
+		payload = {'api_key': settings.ECHONEST_KEY, 'format':'json', 'results':10, 'text':re.sub(' +',' ',self.openers)}
+		r = requests.get(path.join(settings.ECHONEST_API,'artist/extract'),params=payload)
+		o_data = r.json()
+
+		prYellow(h_data)
+		prRed(o_data)
+
+		#extract headliners
+		if 'response' in h_data and 'artists' in h_data['response']:
+			for artist in h_data['response']['artists']:
+				try:
+					self.headliner_artists.get(echonest_id=artist['id'])
+				except:
+					try:
+						found_artist = Artist.objects.get(echonest_id=artist['id'])
+						self.headliner_artists.add(found_artist)
+					except:
+						new_artist = Artist.objects.create(name=artist['name'],echonest_id=artist['id'])
+						new_artist.update_all()
+						new_artist.save()
+						self.headliner_artists.add(new_artist)
+
+		#extract openers
+		if 'response' in o_data and 'artists' in o_data['response']:
+			for artist in o_data['response']['artists']:
+				try:
+					self.opener_artists.get(echonest_id=artist['id'])
+				except:
+					try:
+						found_artist = Artist.objects.get(echonest_id=artist['id'])
+						self.opener_artists.add(found_artist)
+					except:
+						new_artist = Artist.objects.create(name=artist['name'],echonest_id=artist['id'])
+						new_artist.update_all()
+						new_artist.save()
+						self.opener_artists.add(new_artist)
+		self.extract_queued = False
+		self.save()
 
 	def __unicode__ (self):
 		return self.headliners
