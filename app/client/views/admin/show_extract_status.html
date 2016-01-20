@@ -46,7 +46,7 @@
 <div id="content-main">
 	<h1>
 		{% if not done %}
-			Fetching data 
+			Extracting Artists...
 		{% else %}
 			Done
 		{% endif %}
@@ -55,7 +55,7 @@
 	
 		<span class='counter'>{{count}}</span>
 	{% if done %}
-		<a href='/admin/server/artist/' ><span class='counter butt'> return </span></a>
+		<a href='/admin/server/show/' ><span class='counter butt'> return </span></a>
 	{% endif %}
 
 
@@ -63,29 +63,24 @@
 	<table>
 		<thead scope="col" {{ header.class_attrib }}>
 		<tr>
-			<th>Name</th>
+			<th>Show</th>
 			<th>Done</th>
-			<th>Spotify</th>
-			<th>Echonest</th>
+			<th>Artists</th>
 		</tr>
-			
 		</thead>
 		
 			<tbody>
-			{% for artist in artists %}
+			{% for show in shows %}
 				<tr class="{% if artist.done_all %}done{% endif %} {% cycle 'row1' 'row2' %}">
 					<td class='field-name'>
-						<b>{{artist.name}}</b>
+						<b>{{show.name}}</b>
 					</td>
 					<td class='field-done_all'>
-						{% if artist.done_all %}<img src="/static/admin/img/icon-yes.svg" alt='True'>	
+						{% if show.done_all %}<img src="/static/admin/img/icon-yes.svg" alt='True'>	
 						{% else %}<img src="/static/admin/img/icon-no.svg" alt='False'>{% endif %}	
 					</td>
 					<td class='field-done_spotify'>
-						{% if artist.done_spotify %} <img src="/static/admin/img/icon-yes.svg" alt='True'> {% else %} <img src="/static/admin/img/icon-no.svg" alt='False'> {% endif %}	
-					</td>	
-					<td class='field-done_echonest'>
-						{% if artist.done_echonest %} <img src="/static/admin/img/icon-yes.svg" alt='True'> {% else %} <img src="/static/admin/img/icon-no.svg" alt='False'> {% endif %}		
+						{{show.artist_count}}
 					</td>
 				</tr>
 			{% endfor %}
