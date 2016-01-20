@@ -31,6 +31,13 @@ from django.utils import timezone
 from termcolor import colored
 
 
+
+class ListSignup(models.Model):
+	created_at = models.DateTimeField(auto_now_add=True)
+	email = models.EmailField(_('email address'), unique=True)
+
+
+
 class Address(models.Model):
 	street = models.CharField(_("street"), max_length=128)
 	city = models.CharField(_("city"), max_length=64)
