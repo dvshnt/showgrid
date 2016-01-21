@@ -18,10 +18,10 @@ import requests
 
 
 
-def extract_artists_data(queryset):
+def extract_artists_data(queryset,update):
 	shows = queryset.all()
 	for show in shows:
-		show.extract_artists_from_name()
+		show.extract_artists_from_name(update)
 
 
 
@@ -38,15 +38,21 @@ def get_artists_data(queryset):
 	for artist in artists:
 		artist.pull_all()
 
-
+def extract_artists_from_shows_action_noupdate(modeladmin, request, queryset):
+	queryset.update(extract_queued=True)
+	selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)	
+	tr = Thread(target=extract_artists_data,args=(queryset,False))
+	tr.start()
+	return HttpResponseRedirect('/admin/server/show/extractstatus/?ids=%s' % (",".join(selected)) );
+extract_artists_from_shows_action_noupdate.short_description = "Extract artists with IDs only"
 
 def extract_artists_from_shows_action(modeladmin, request, queryset):
 	queryset.update(extract_queued=True)
 	selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)	
-	tr = Thread(target=extract_artists_data,args=(queryset,))
+	tr = Thread(target=extract_artists_data,args=(queryset,True))
 	tr.start()
 	return HttpResponseRedirect('/admin/server/show/extractstatus/?ids=%s' % (",".join(selected)) );
-extract_artists_from_shows_action.short_description = "Extract artists"
+extract_artists_from_shows_action.short_description = "Extract artists with full data"
 
 
 #only update thos
@@ -67,7 +73,7 @@ update_artist_data_action.short_description = "Update artist data"
 
 
 def pull_artist_data_action(modeladmin, request, queryset):
-
+	queryset.update(queued=True,pulled_spotify=False,pulled_echonest=False)
 	
 	ct = ContentType.objects.get_for_model(queryset.model)
 	selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
@@ -87,7 +93,7 @@ pull_artist_data_action.short_description = "Pull artist data"
 class ShowAdmin(admin.ModelAdmin):
 	search_fields = ['headliners', 'openers', 'title']
 	list_display = ('date', 'headliners', 'openers', 'venue')
-	actions = [extract_artists_from_shows_action]
+	actions = [extract_artists_from_shows_action,extract_artists_from_shows_action_noupdate]
 	def get_urls(self):
 		urls = super(ShowAdmin, self).get_urls()
 		my_urls = [
@@ -98,6 +104,7 @@ class ShowAdmin(admin.ModelAdmin):
 		ids = request.GET['ids'].split(',')
 		shows = []
 		done = 0
+		done_artists = total_artists = 0
 
 		for i in ids:
 			show = Show.objects.get(id=i)

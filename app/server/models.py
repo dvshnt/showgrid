@@ -98,7 +98,7 @@ def EchonestArtistParser(artist,data):
 		if 'genres' in a_json:
 			for g in a_json['genres']:
 				if 'name' in g and not g['name'] in artist.genres:
-					print artist.genres
+					# print artist.genres
 					artist.genres.append(g['name'])
 
 		#biography
@@ -144,7 +144,7 @@ class Article(models.Model):
 	title = models.CharField(max_length=255,blank=False)
 	external_url = models.CharField( max_length=255,blank=True)
 	summary = models.TextField(default="No description")
-	published_date = models.DateTimeField(default=datetime.datetime.now())
+	published_date = models.DateTimeField(default=timezone.now)
 	active =  models.BooleanField(default=True)
 
 
@@ -201,8 +201,8 @@ class Artist(models.Model):
 		r = requests.get(path.join(settings.ECHONEST_API,'artist/search'),params=payload)
 		data = r.json()
 
-		print r.url
-		print data
+		# print r.url
+		# print data
 
 		if data['response'] and data['response']['status']['code'] != 0 or len(data['response']['artists']) == 0 :
 			return
@@ -292,13 +292,11 @@ class Artist(models.Model):
 		
 		#done
 		self.pulled = True
-		self.pulled_date = datetime.datetime.now()
+		self.pulled_date = timezone.now()
 		self.queued = False
 		self.save()
 		prGreen('SAVE')
-		print self.echonest_id
-		print self.spotify_id
-		
+
 
 
 
@@ -320,7 +318,7 @@ class Artist(models.Model):
 		
 		#done
 		self.pulled = True
-		self.pulled_date = datetime.datetime.now()
+		self.pulled_date = timezone.now()
 		self.queued = False
 		self.save()
 		
@@ -443,16 +441,18 @@ class Show(models.Model):
 
 	# cancelled = models.BooleanField(default=False)
 	soldout = models.BooleanField(default=False)
-	onsale = models.DateTimeField(default=datetime.datetime.now(), blank=True)
+	onsale = models.DateTimeField(default=timezone.now, blank=True)
 
 	age = models.PositiveSmallIntegerField(default=0, blank=True)
 
 	#extract metadata
 	extract_queued = models.BooleanField(default=False)
 
-	def extract_artists_from_name(self):
+	def extract_artists_from_name(self,update):
 		self.extract_queued = True
 		self.save()
+
+		artists = []
 
 		#headliner request
 		payload = {'api_key': settings.ECHONEST_KEY, 'format':'json', 'results':10, 'text':re.sub(' +',' ',self.headliners)}
@@ -464,25 +464,38 @@ class Show(models.Model):
 		r = requests.get(path.join(settings.ECHONEST_API,'artist/extract'),params=payload)
 		o_data = r.json()
 
-		prYellow(h_data)
-		prRed(o_data)
+	
+
+		if 'response' in h_data and 'status' in h_data['response'] and h_data['response']['status']['code'] != 0:
+			prRed(h_data)
+		if 'response' in h_data and 'status' in o_data['response'] and o_data['response']['status']['code'] != 0:
+			prRed(o_data)
+
 
 		#extract headliners
 		if 'response' in h_data and 'artists' in h_data['response']:
 			for artist in h_data['response']['artists']:
+
+				#if we already have an artist like that.
 				try:
 					self.headliner_artists.get(echonest_id=artist['id'])
 				except:
+					#is the artist in the database?
 					try:
 						found_artist = Artist.objects.get(echonest_id=artist['id'])
 						self.headliner_artists.add(found_artist)
+					#create new artist and sync later
 					except:
 						new_artist = Artist.objects.create(name=artist['name'],echonest_id=artist['id'])
-						new_artist.update_all()
+						if update == True:
+							new_artist.queued=True
 						new_artist.save()
 						self.headliner_artists.add(new_artist)
+						artists.append(new_artist)
+						self.save()
+						
 
-		#extract openers
+		#extract openers (same as above)
 		if 'response' in o_data and 'artists' in o_data['response']:
 			for artist in o_data['response']['artists']:
 				try:
@@ -492,10 +505,17 @@ class Show(models.Model):
 						found_artist = Artist.objects.get(echonest_id=artist['id'])
 						self.opener_artists.add(found_artist)
 					except:
-						new_artist = Artist.objects.create(name=artist['name'],echonest_id=artist['id'])
-						new_artist.update_all()
+						new_artist = Artist.objects.create(name=artist['name'],echonest_id=artist['id'],queued=True)
 						new_artist.save()
 						self.opener_artists.add(new_artist)
+						artists.append(new_artist)
+						self.save()
+
+		if update == True:
+			for a in artists:
+				a.update_all()
+
+
 		self.extract_queued = False
 		self.save()
 
@@ -526,7 +546,7 @@ class ShowgridUserManager(BaseUserManager):
 		"""
 		Creates and saves a User with the given email and password.
 		"""
-		now = datetime.datetime.now()
+		now = timezone.now()
 
 		if not email:
 			raise ValueError('The given email must be set')

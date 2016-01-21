@@ -40,7 +40,9 @@
 		width: 70%;
 	}
 
-
+	#pullstatus_refresh{
+		cursor: pointer;
+	}
 	
 </style>
 <div id="content-main">
@@ -56,8 +58,9 @@
 		<span class='counter'>{{count}}</span>
 	{% if done %}
 		<a href='/admin/server/show/' ><span class='counter butt'> return </span></a>
+	{% else %}
+		<span id='pullstatus_refresh' class='counter butt'> refresh </span>
 	{% endif %}
-
 
 
 	<table>
@@ -86,13 +89,13 @@
 			{% endfor %}
 			</tbody>
 	</table>
-	{% if not done %}
+
 	<script>
-		setTimeout(function() {
+		document.getElementById('pullstatus_refresh').addEventListener('click',function(){
 			window.location.replace(window.location.href);
-		}, 1333);
+		})
 	</script>
-	{%endif%}
+
 </div>
 
 

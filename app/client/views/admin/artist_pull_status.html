@@ -18,7 +18,7 @@
 		border-radius: 2px;
 		width: auto;
 		font-weight: 200;
-		
+		margin-right: 5px;
 	}
 
 	.butt{
@@ -40,13 +40,17 @@
 		width: 70%;
 	}
 
+	#pullstatus_refresh{
+		cursor: pointer;
+	}
+
 
 	
 </style>
 <div id="content-main">
 	<h1>
 		{% if not done %}
-			Fetching data 
+			Fetching data...
 		{% else %}
 			Done
 		{% endif %}
@@ -56,6 +60,8 @@
 		<span class='counter'>{{count}}</span>
 	{% if done %}
 		<a href='/admin/server/artist/' ><span class='counter butt'> return </span></a>
+	{% else %}
+		<span id='pullstatus_refresh' class='counter butt'> refresh </span>
 	{% endif %}
 
 
@@ -91,13 +97,13 @@
 			{% endfor %}
 			</tbody>
 	</table>
-	{% if not done %}
+
+
 	<script>
-		setTimeout(function() {
-			window.location.replace(window.location.href);
-		}, 1333);
+	document.getElementById('pullstatus_refresh').addEventListener('click',function(){
+		window.location.replace(window.location.href);
+	})
 	</script>
-	{%endif%}
 </div>
 
 
