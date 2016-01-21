@@ -278,7 +278,10 @@ class Artist(models.Model):
 		# 	return False
 
 		#reset meta
-
+		self.queued=True
+		self.pulled_spotify=False
+		self.pulled_echonest=False
+		self.save()
 
 		#search/update endpoints
 		self.pull_echonest()
@@ -306,7 +309,10 @@ class Artist(models.Model):
 		# 	return False
 
 		#reset meta
-
+		self.queued=True
+		self.pulled_spotify=False
+		self.pulled_echonest=False
+		self.save()
 
 		#update endpoints
 		self.update_echonest()
