@@ -147,7 +147,7 @@ class ArticleAdmin(admin.ModelAdmin):
 class ArtistAdmin(admin.ModelAdmin):
 	list_display = ['name','queued','pulled','pulled_date']
 	ordering = ['name','pulled_date','pulled','queued']
-	fields = ('name','facebook_url','twitter_url','articles','tracks','bios')
+	fields = ('name','articles','genres','images','tracks','bios','echonest_id','spotify_id','facebook_url','twitter_url','spotify_link')
 	actions = [pull_artist_data_action,update_artist_data_action]
 
 	def get_urls(self):

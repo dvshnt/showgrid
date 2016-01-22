@@ -70,9 +70,8 @@ def SpotifyArtistParser(artist,data):
 					new_image.save()
 					artist.images.add(new_image)
 
-	#link to spotify page
-	if 'external_urls' in data and 'url' in data['external_urls']:
-		artist.spotify_link = data['external_urls']['url']['spotify']
+	if 'external_urls' in data and 'spotify' in data['external_urls']:
+		artist.spotify_link = data['external_urls']['spotify']
 
 	#follow count??
 	if 'followers' in data and 'total' in data['followers']:
@@ -110,6 +109,8 @@ def EchonestArtistParser(artist,data):
 	
 	if 'songs' in data['response']:
 		t_list = data['response']['songs']
+
+	
 
 	if a_json != None:
 		#genres
@@ -248,8 +249,8 @@ class Artist(models.Model):
 
 
 	# if we have id's we can update by id
-	echonest_id = models.CharField(_("echonest_id"), max_length=255,default='-1')
-	spotify_id = models.CharField(_("spotify_id"), max_length=255,default='-1')
+	echonest_id = models.CharField(_("echonest_id"), max_length=255,blank=True)
+	spotify_id = models.CharField(_("spotify_id"), max_length=255,blank=True)
 	
 
 	#extra links?
@@ -327,11 +328,18 @@ class Artist(models.Model):
 		if 'artist' in data['response']:
 			artist = data['response']['artist']
 
-		if artist != None and 'foreign_ids' in artist and len(artist['foreign_ids']) != 0 and artist['foreign_ids'][0]['catalog'] == 'spotify':
-			r_match = re.match('spotify:artist:(.+)',artist['foreign_ids'][0]['foreign_id'])
-			if r_match != None:
-				self.spotify_id = r_match.group(1)
-			
+
+		#spotify id
+		print self.spotify_id
+		if not self.spotify_id and 'foreign_ids' in artist:
+			print "HAS NO ID"
+			for source in artist['foreign_ids']:
+				if source['catalog'] == 'spotify':
+					r_match = re.match('spotify:artist:(.+)',source['foreign_id'])
+					if r_match != None:
+						self.spotify_id = r_match.group(1)
+				
+
 
 		EchonestArtistParser(self,data)
 		self.pulled_echonest = True
@@ -512,9 +520,7 @@ class Show(models.Model):
 	opener_artists = models.ManyToManyField(Artist,related_name='shows_opener',blank=True)
 	
 	website = models.URLField(blank=True)
-
 	date = models.DateTimeField(blank=False)
-
 	venue = models.ForeignKey(Venue, related_name='shows')
 
 	star = models.BooleanField(default=False)
