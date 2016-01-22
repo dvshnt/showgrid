@@ -59,7 +59,11 @@ I may be crazy, but you should then be able to run `python manage.py runserver` 
 Run CRONS from management/commands/crons.py with python manage.py crons
 
 
-login with basic HTTP Auth.
+add these settings for show and related artists data pulling form echonest and spotify:
+	SPOTIFY_KEY = ''
+	SPOTIFY_API = 'https://api.spotify.com/v1/'
+	ECHONEST_API = 'http://developer.echonest.com/api/v4/'
+	ECHONEST_KEY = 'ZOP6OTHBMGEZHVHTF'
 
 
 run cron job to check alerts.
