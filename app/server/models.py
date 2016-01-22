@@ -48,7 +48,24 @@ def prLightGray(prt): print("\033[97m {}\033[00m" .format(prt))
 def prBlack(prt): print("\033[98m {}\033[00m" .format(prt))
 
 
+def crossArrays(arr1,arr2,limit):
 
+	new_arr = []
+	i_1 = -1
+	i_2 = -1
+	for i in range(len(arr1)+len(arr2)):
+		if(limit != None and len(new_arr) >= limit):
+			return new_arr
+		if i %2:
+			i_2 += 1
+			if arr2[i_2] in arr2: 
+				new_arr.append(arr2[i_2])
+		else:
+			i_1 += 1
+			if arr1[i_1] in arr1: 
+				new_arr.append(arr1[i_1])		
+
+	return new_arr
 
 
 
@@ -150,11 +167,13 @@ def EchonestArtistParser(artist,data):
 			
 
 		#articles
-		blogs =  a_json['blogs'] + a_json['news']
-		b_count = 0
-		for blog in blogs:
-			b_count += 1
-			if b_count > MAX_ARTICLES: continue
+		if settings.ECHONEST_ARTICLES_NEWS_ONLY:
+			articles = a_json['news']
+			articles = articles[:ECHONEST_MAX_ARTICLES]
+		else:
+			articles = crossArrays(a_json['blogs'],a_json['news'],MAX_ARTICLES)
+			
+		for blog in articles :
 			try:
 				artist.articles.get(external_url=blog['url'])
 			except:
