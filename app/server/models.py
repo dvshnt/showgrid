@@ -380,8 +380,6 @@ class Artist(models.Model):
 		self.pull_echonest()
 		if self.spotify_id != None:
 			self.update_spotify()
-		else:
-			self.pull_spotify()
 		
 		#done
 		self.pulled = True
