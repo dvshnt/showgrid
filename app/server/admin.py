@@ -136,6 +136,10 @@ class ShowAdmin(admin.ModelAdmin):
 
 		return TemplateResponse(request, "admin/show_extract_status.html", context)
 
+class BioAdmin(admin.ModelAdmin):
+	list_display = ['url', 'source']
+	search_fields = ['source']
+
 class ArticleAdmin(admin.ModelAdmin):
 	list_display = ['title', 'external_url']
 	search_fields = ['title']
@@ -143,7 +147,7 @@ class ArticleAdmin(admin.ModelAdmin):
 class ArtistAdmin(admin.ModelAdmin):
 	list_display = ['name','queued','pulled','pulled_date']
 	ordering = ['name','pulled_date','pulled','queued']
-	fields = ('name', 'bio','_images','_genres','facebook_url','twitter_url','articles')
+	fields = ('name','facebook_url','twitter_url','articles','tracks','bios')
 	actions = [pull_artist_data_action,update_artist_data_action]
 
 	def get_urls(self):
@@ -165,7 +169,7 @@ class ArtistAdmin(admin.ModelAdmin):
 			artist = Artist.objects.get(id=i)
 			if artist.queued == False:
 				done += 1
-			artists.append({'name':artist.name,'done_all':False if artist.queued else True,'done_spotify':artist.pulled_spotify,'done_echonest':artist.pulled_echonest})
+			artists.append({'id':i,'name':artist.name,'done_all':False if artist.queued else True,'done_spotify':artist.pulled_spotify,'done_echonest':artist.pulled_echonest})
 
 		context = dict(
 			self.admin_site.each_context(request),
@@ -184,4 +188,7 @@ admin.site.register(Alert)
 admin.site.register(Show, ShowAdmin)
 admin.site.register(Artist, ArtistAdmin)
 admin.site.register(Article, ArticleAdmin)
-
+admin.site.register(Biography,BioAdmin)
+admin.site.register(Track)
+admin.site.register(Genre)
+admin.site.register(Image)
