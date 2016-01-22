@@ -333,7 +333,6 @@ class Artist(models.Model):
 
 
 		#spotify id
-		print artist
 		if artist != None:
 			if self.spotify_id == None or self.spotify_id == "":
 				if 'foreign_ids' in artist:
