@@ -289,7 +289,8 @@ class Artist(models.Model):
 	#already have id, update artist with already existing id.
 	def update_echonest(self):
 		prGreen("UPDATE ECHONEST "+self.name)
-		if self.echonest_id == None: 
+		if self.echonest_id == None or self.echonest_id == "":
+			prRed('Cant update Artist with no echonest id: '+self.name) 
 			return
 
 
@@ -327,16 +328,20 @@ class Artist(models.Model):
 
 		if 'artist' in data['response']:
 			artist = data['response']['artist']
+		else:
+			prRed("ARTIST NOT FOUND :( "+self.name)
 
 
 		#spotify id
-		if self.spotify_id == None or self.spotify_id == "":
-			if 'foreign_ids' in artist:
-				for source in artist['foreign_ids']:
-					if source['catalog'] == 'spotify':
-						r_match = re.match('spotify:artist:(.+)',source['foreign_id'])
-						if r_match != None:
-							self.spotify_id = r_match.group(1)
+		print artist
+		if artist != None:
+			if self.spotify_id == None or self.spotify_id == "":
+				if 'foreign_ids' in artist:
+					for source in artist['foreign_ids']:
+						if source['catalog'] == 'spotify':
+							r_match = re.match('spotify:artist:(.+)',source['foreign_id'])
+							if r_match != None:
+								self.spotify_id = r_match.group(1)
 				
 
 
@@ -350,7 +355,8 @@ class Artist(models.Model):
 	#already have spotify id update artist with already existing id
 	def update_spotify(self):
 		#we dont have the id?
-		if self.spotify_id == None: 
+		if self.spotify_id == None or self.spotify_id == "":
+		 	prRed('Cant update Artist with no spotify id: '+self.name) 
 			return
 		
 		#pull
@@ -380,7 +386,7 @@ class Artist(models.Model):
 		self.pull_echonest()
 		if self.spotify_id != None:
 			self.update_spotify()
-		
+
 		#done
 		self.pulled = True
 		self.pulled_date = timezone.now()
