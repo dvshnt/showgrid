@@ -97,7 +97,8 @@ def SpotifyArtistParser(artist,data):
 
 
 
-MAX_BIO = 3
+MAX_BIO = settings.ECHONEST_MAX_BIO
+MAX_ARTICLES = settings.ECHONEST_MAX_ARTICLES
 
 #Analyze echonest data and sync it with passed artist.
 def EchonestArtistParser(artist,data):
@@ -150,8 +151,10 @@ def EchonestArtistParser(artist,data):
 
 		#articles
 		blogs =  a_json['blogs'] + a_json['news']
-		
+		b_count = 0
 		for blog in blogs:
+			b_count += 1
+			if b_count > MAX_ARTICLES: continue
 			try:
 				artist.articles.get(external_url=blog['url'])
 			except:

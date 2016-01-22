@@ -64,7 +64,34 @@ add these settings for show and related artists data pulling form echonest and s
 	SPOTIFY_API = 'https://api.spotify.com/v1/'
 	ECHONEST_API = 'http://developer.echonest.com/api/v4/'
 	ECHONEST_KEY = 'ZOP6OTHBMGEZHVHTF'
+	ECHONEST_MAX_BIO = 3 (maximum amount of artist bios to pull)
+	ECHONEST_MAX_ARTICLES = 5 (maxiumum amount of articles to pull)
 
+
+also add these template settings to the settings file:
+	TEMPLATES = [
+	    {
+	        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+	        'DIRS': [
+	            'client/views',
+	        ],
+
+	        'APP_DIRS': False,
+	        'OPTIONS': {
+	            'loaders': [
+	                'django.template.loaders.filesystem.Loader',
+	                'django.template.loaders.app_directories.Loader',
+	            ],
+	            'debug': True,
+	            'context_processors': [
+	                'django.template.context_processors.debug',
+	                'django.template.context_processors.request',
+	                'django.contrib.auth.context_processors.auth',
+	                'django.contrib.messages.context_processors.messages',
+	            ],
+	        },
+	    },
+	]
 
 run cron job to check alerts.
 
