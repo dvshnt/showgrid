@@ -44,6 +44,12 @@
 		cursor: pointer;
 	}
 
+	.field-name > a{
+		
+		font-weight: bold;
+		
+	}
+
 
 	
 </style>
@@ -81,7 +87,7 @@
 			{% for artist in artists %}
 				<tr class="{% if artist.done_all %}done{% endif %} {% cycle 'row1' 'row2' %}">
 					<td class='field-name'>
-						<b>{{artist.name}}</b>
+						<a href='/admin/server/artist/{{artist.id}}/change/'<b>{{artist.name}}</b></a>
 					</td>
 					<td class='field-done_all'>
 						{% if artist.done_all %}<img src="/static/admin/img/icon-yes.svg" alt='True'>	
