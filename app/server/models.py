@@ -330,14 +330,13 @@ class Artist(models.Model):
 
 
 		#spotify id
-		print self.spotify_id
-		if not self.spotify_id and 'foreign_ids' in artist:
-			print "HAS NO ID"
-			for source in artist['foreign_ids']:
-				if source['catalog'] == 'spotify':
-					r_match = re.match('spotify:artist:(.+)',source['foreign_id'])
-					if r_match != None:
-						self.spotify_id = r_match.group(1)
+		if self.spotify_id == None or self.spotify_id == "":
+			if 'foreign_ids' in artist:
+				for source in artist['foreign_ids']:
+					if source['catalog'] == 'spotify':
+						r_match = re.match('spotify:artist:(.+)',source['foreign_id'])
+						if r_match != None:
+							self.spotify_id = r_match.group(1)
 				
 
 
