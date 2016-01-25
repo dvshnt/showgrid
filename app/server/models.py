@@ -171,7 +171,7 @@ def EchonestArtistParser(artist,data):
 		#articles
 		if settings.ECHONEST_ARTICLES_NEWS_ONLY:
 			articles = a_json['news']
-			articles = articles[:ECHONEST_MAX_ARTICLES]
+			articles = articles[:settings.ECHONEST_MAX_ARTICLES]
 		else:
 			articles = crossArrays(a_json['blogs'],a_json['news'],MAX_ARTICLES)
 
