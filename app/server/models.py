@@ -150,6 +150,8 @@ def EchonestArtistParser(artist,data):
 		bio_count = 0
 		if 'biographies' in a_json:
 			for b in a_json['biographies']:
+				if settings.ECHONEST_BIO_WIKI_LASTFM_ONLY == True and b['site'] != 'wikipedia' and b['site'] != 'last.fm':
+					continue
 				bio_count += 1
 				if bio_count > MAX_BIO:
 					break
@@ -172,7 +174,7 @@ def EchonestArtistParser(artist,data):
 			articles = articles[:ECHONEST_MAX_ARTICLES]
 		else:
 			articles = crossArrays(a_json['blogs'],a_json['news'],MAX_ARTICLES)
-			
+
 		for blog in articles :
 			try:
 				artist.articles.get(external_url=blog['url'])
