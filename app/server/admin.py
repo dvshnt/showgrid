@@ -173,8 +173,8 @@ class BioAdmin(admin.ModelAdmin):
 	search_fields = ['source']
 
 class ArticleAdmin(admin.ModelAdmin):
-	list_display = ['title', 'external_url']
-	search_fields = ['title']
+	list_display = ['title', 'published_date','external_url']
+	search_fields = ['title','external_url']
 
 class ArtistAdmin(admin.ModelAdmin):
 	list_display = ['name','queued','pulled','pulled_date']
