@@ -64,10 +64,11 @@ add these settings for show and related artists data pulling form echonest and s
 	SPOTIFY_API = 'https://api.spotify.com/v1/'
 	ECHONEST_API = 'http://developer.echonest.com/api/v4/'
 	ECHONEST_KEY = 'ZOP6OTHBMGEZHVHTF'
-	ECHONEST_MAX_BIO = 3 (maximum amount of artist bios to pull)
-	ECHONEST_MAX_ARTICLES = 5 (maxiumum amount of articles to pull)
-	ECHONEST_ARTICLES_NEWS_ONLY = False #this will mix artist blogs with news.
-	ECHONEST_BIO_WIKI_LASTFM_ONLY = False #this will only pull bio from websites wikipedia and last.fm
+	ECHONEST_MAX_BIO = 10
+	ECHONEST_MAX_ARTICLES = 10
+	ECHONEST_ARTICLES_NEWS_ONLY = False (only fetch news)
+	ECHONEST_BIO_WIKI_LASTFM_ONLY = False
+
 
 also add these template settings to the settings file:
 	TEMPLATES = [
