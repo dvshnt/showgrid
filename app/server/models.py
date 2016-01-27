@@ -166,7 +166,7 @@ def EchonestArtistParser(artist,data):
 		else:
 			articles = a_json['news']+a_json['blogs']
 			articles = articles[:settings.ECHONEST_MAX_ARTICLES]
-			random.shuffle(articles)
+			# random.shuffle(articles)
 
 			print artist.name+' article count: ' + str(len(articles)) + 'news:' + str(len(a_json['news'])) + 'blogs:' + str(len(a_json['blogs']))
 
