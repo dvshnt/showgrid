@@ -24,7 +24,10 @@ def extract_artists_data(queryset,update):
 		show.extract_artists_from_name(update)
 
 
-
+def get_artists_images(queryset):
+	artists = list(queryset)
+	for artist in artists:
+		artist.download_images()
 
 
 def update_artists_data(queryset):
@@ -37,6 +40,21 @@ def get_artists_data(queryset):
 	artists = list(queryset)
 	for artist in artists:
 		artist.pull_all()
+
+def download_image(queryset):
+	images = list(queryset)
+	for img in images:
+		img.download()	
+
+
+def download_image_action(modeladmin, request, queryset):
+	queryset.update(downloading=True)
+	tr = Thread(target=download_image,args=(queryset,))
+	tr.start()
+download_image_action.short_description = "Download"
+
+
+
 
 def extract_artists_from_shows_action_noupdate(modeladmin, request, queryset):
 	queryset.update(extract_queued=True)
@@ -70,7 +88,21 @@ update_artist_data_action.short_description = "Update artist data"
 
 
 
+def download_artist_images_action(modeladmin, request, queryset):
+	queryset.update(queued=True)
 
+
+	ct = ContentType.objects.get_for_model(queryset.model)
+	selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
+	
+	#que artist for update
+	
+	
+	#start thread
+	tr = Thread(target=get_artists_images,args=(queryset,))
+	tr.start()
+
+download_artist_images_action.short_description = "Download Artist Images"
 
 def pull_artist_data_action(modeladmin, request, queryset):
 	queryset.update(queued=True,pulled_spotify=False,pulled_echonest=False)
@@ -144,14 +176,14 @@ class BioAdmin(admin.ModelAdmin):
 	search_fields = ['source']
 
 class ArticleAdmin(admin.ModelAdmin):
-	list_display = ['title', 'external_url']
-	search_fields = ['title']
+	list_display = ['title', 'published_date','external_url']
+	search_fields = ['title','external_url']
 
 class ArtistAdmin(admin.ModelAdmin):
 	list_display = ['name','queued','pulled','pulled_date']
 	ordering = ['name','pulled_date','pulled','queued']
 	fields = ('name','articles','genres','images','tracks','bios','echonest_id','spotify_id','facebook_url','twitter_url','spotify_link')
-	actions = [pull_artist_data_action,update_artist_data_action]
+	actions = [pull_artist_data_action,update_artist_data_action,download_artist_images_action]
 
 	def get_urls(self):
 		urls = super(ArtistAdmin, self).get_urls()
@@ -182,6 +214,13 @@ class ArtistAdmin(admin.ModelAdmin):
 		)
 
 		return TemplateResponse(request, "admin/artist_pull_status.html", context)
+
+class ImageAdmin(admin.ModelAdmin):
+	list_display = ['name','local','url','downloaded','downloading','valid']
+	ordering = ['downloaded','name']
+	fields = ('downloaded','url','local')
+	actions = [download_image_action]
+
 
 
 
@@ -275,5 +314,4 @@ admin.site.register(Biography,BioAdmin)
 admin.site.register(Issue,IssueAdmin)
 admin.site.register(Track)
 admin.site.register(Genre)
-admin.site.register(Image)
-
+admin.site.register(Image,ImageAdmin)

@@ -11,8 +11,11 @@ import requests
 import urllib
 import re
 import json
-
 from jsonfield import JSONField
+
+import PIL 
+from StringIO import StringIO
+
 
 from django.db import models
 from django.core.mail import send_mail
@@ -28,7 +31,7 @@ from django.dispatch import receiver
 
 from colorful.fields import RGBColorField
 
-
+from django.core.files import File
 from rest_framework.authtoken.models import Token
 
 from server.twillio_handle import MessageClient
@@ -48,25 +51,7 @@ def prLightGray(prt): print("\033[97m {}\033[00m" .format(prt))
 def prBlack(prt): print("\033[98m {}\033[00m" .format(prt))
 
 
-def crossArrays(arr1,arr2,limit):
-
-	new_arr = []
-	i_1 = -1
-	i_2 = -1
-	for i in range(len(arr1)+len(arr2)):
-		if(limit != None and len(new_arr) >= limit):
-			return new_arr
-		if i %2:
-			i_2 += 1
-			if arr2[i_2] in arr2: 
-				new_arr.append(arr2[i_2])
-		else:
-			i_1 += 1
-			if arr1[i_1] in arr1: 
-				new_arr.append(arr1[i_1])		
-
-	return new_arr
-
+import random
 
 
 
@@ -76,6 +61,12 @@ def SpotifyArtistParser(artist,data):
 	# 1000x1000 images
 	if 'images' in data:
 		for img in data['images']:
+			bad_source_match = re.findall('userserve-ak.last.fm',img['url'])
+			if  len(bad_source_match) > 0:
+				print prRed('bad image from spotify: '+img['url'])
+				continue
+
+
 			try:
 				artist.images.get(url=img['url'])
 			except:
@@ -171,24 +162,39 @@ def EchonestArtistParser(artist,data):
 		#articles
 		if settings.ECHONEST_ARTICLES_NEWS_ONLY:
 			articles = a_json['news']
-			articles = articles[:settings.ECHONEST_MAX_ARTICLES]
+			articles = a_json['news'][:settings.ECHONEST_MAX_ARTICLES]
 		else:
-			articles = crossArrays(a_json['blogs'],a_json['news'],MAX_ARTICLES)
+			articles = a_json['news']+a_json['blogs']
+			articles = articles[:settings.ECHONEST_MAX_ARTICLES]
+			# random.shuffle(articles)
+
+			print artist.name+' article count: ' + str(len(articles)) + 'news:' + str(len(a_json['news'])) + 'blogs:' + str(len(a_json['blogs']))
 
 		for blog in articles :
 			try:
 				artist.articles.get(external_url=blog['url'])
 			except:
+				
 				new_title = blog['name']
 				new_summary = blog['summary']
 				new_external_url = blog['url']
 				new_article = Article.objects.create(summary=new_summary,title=new_title,external_url=new_external_url)
+				
+				if 'date_posted' in blog :
+					new_article.published_date = blog['date_posted']
+				elif 'date_found' in blog :
+					new_article.published_date = blog['date_found']
+
 				new_article.save()
 				artist.articles.add(new_article)				
 
 
 		#images
 		for i in a_json['images']:
+			bad_source_match = re.findall('userserve-ak.last.fm',i['url'])
+			if len(bad_source_match) > 0:
+				print prRed('bad image from echonest: '+i['url'])
+				continue
 			try:
 				artist.images.get(url=i['url'])
 			except:
@@ -239,12 +245,41 @@ class Track(models.Model):
 
 class Image(models.Model):
 	def __unicode__ (self):
-		if self.path != None and self.path != "":
-			return self.path
+		try:
+			return self.local.url
+		except:
+			return self.url
+
+	def download(self):
+
+		content = urllib.urlretrieve(self.url)
+		match = re.match('image\/(\w+)',content[1]['Content-Type'])
+		
+		if match != None:
+			file_type = match.group(1)
 		else:
-			return self.url	
+			self.valid = False
+			self.save()
+			return
+
+		file_name = self.name+'_'+str(self.id)+'.'+file_type
+		self.name = file_name
+
+		self.local.save(file_name, File(open(content[0])), save=False)
+		self.downloaded = True
+		self.valid = True
+		self.downloading = False
+		self.save()
+		prGreen('downloaded image: '+self.local.url)
+	
+	width = models.PositiveSmallIntegerField(default=0, blank=True)
+	height = models.PositiveSmallIntegerField(default=0, blank=True)
+	name = models.CharField(default='image',max_length=255)
+	downloading = models.BooleanField(default=False)
+	valid = models.BooleanField(default=False, blank=True)
+	downloaded = models.BooleanField(default=False)
 	url = models.CharField(max_length=255,blank=False)
-	path = models.CharField(max_length=255,blank=True)
+	local = models.ImageField (upload_to='showgrid/img/artists/',blank=True)
 
 class Article(models.Model):
 	def __unicode__ (self):
@@ -292,6 +327,19 @@ class Artist(models.Model):
 
 	spotify_link = models.CharField(max_length=255,blank=True)
 
+
+	def download_images(self):
+		images = self.images.all()
+
+		for img in images:
+			if not img.downloaded:
+				img.name = self.name
+				img.save()
+				img.download()
+
+		self.queued = False
+		self.save()
+		
 
 	#search echonest for artist.
 	def pull_echonest(self):
