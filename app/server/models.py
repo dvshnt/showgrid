@@ -864,6 +864,89 @@ class Alert(models.Model):
 
 
 
+# from django.db.models import F
+from django.db.models import Q
+from django.template.loader import get_template
+from django.db.models.signals import post_save, post_delete, pre_save
+
+issue_template = get_template('issues/weekly_issue_mail.html')
+
+
+
+
+
+class Issue(models.Model):
+	def __unicode__ (self):
+		return self.tag
+
+	tag = models.CharField(max_length=255,blank=False,default='Issue')
+	name = models.CharField(max_length=255,blank=True)
+	start_date = models.DateTimeField(blank=False)
+	end_date = models.DateTimeField(blank=False)
+	sent = models.BooleanField(default=False)
+	article = models.ForeignKey('Article')
+	mail_html = models.TextField(blank=True,null=True)
+	test = models.TextField(blank=True,null=True)
+	shows_count = models.PositiveSmallIntegerField(default=0)
+
+	
+	# #attach index on pre save
+	# @staticmethod
+	# def pre_save(sender, instance, **kwargs):
+	# 	# new_index = Issue.objects.count()
+	# 	# print new_index
+	# 	# print instance 
+	# 	# instance.index = new_index + 1
+	def sync_shows(self):
+		issue_shows = Show.objects.filter(Q(date__gt = self.start_date) & Q(date__lt = self.end_date))
+		self.shows_count = len(issue_shows)
+		for show in issue_shows:
+			show.issue = self
+			show.save()
+
+		self.render()
+	
+
+
+
+	#render issue
+	def render(self):
+		issue_shows = []
+		shows = Show.objects.filter(issue=self)
+		for show in shows:
+			issue_shows.append(show.json_max())
+
+		self.html = issue_template.render({
+			"shows": issue_shows,
+			"article": self.article.json_max(),
+			"name": self.name,
+			"issue_id":self.id
+		})
+		print self.html
+		self.save()
+
+
+	#mail issue to all users.
+	def mail_to_all(self):
+		if self.sent == True:
+			print('issue ',self.index,' already sent, please override sent boolean in database to False manually')
+			return
+		else:
+			if self.html == None:
+				self.render()
+
+		send_mail('Subject here', 'Here is the message.', 'davis@showgrid.com',['yurisido@gmail.com'], fail_silently=False)
+
+		self.sent = True
+		self.save()
+
+
+# pre_save.connect(Issue.pre_save, Issue, dispatch_uid="server.models.Issue")
+
+
+
+
+
 
 
 
