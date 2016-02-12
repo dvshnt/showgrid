@@ -19,8 +19,7 @@ from server.models import *
 
 from django.utils import dateparse
 
-from django.http import HttpResponse
-from django.http import HttpResponseServerError
+from django.http import HttpResponseServerError, HttpResponseNotFound, HttpResponse
 
 from django.core import serializers
 from django.shortcuts import render
@@ -509,14 +508,64 @@ def check_venues(request):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+from django.template.loader import get_template
+
+
+
 class Issues(APIView):
-	def get(self, request, index=None):
-		if index == None:
+	def render(self,issue):
+		
+		##move this out of render function##
+		issue_template = get_template('issues/weekly_issue_live.html')
+
+		issue_shows = []
+		shows = Show.objects.filter(issue=issue)
+		for show in shows:
+			show_data = {
+				"venue_name" : show.venue.name,
+				"title" : show.title,
+				"openers": show.openers,
+				"headliners": show.headliners,
+				"date_day" : show.date.strftime('%a'),
+				"date_number" : show.date.day,
+				"date_month" : show.date.strftime('%b'), 
+				"date_time" : show.date.strftime('%X'),
+				"age_string" : render_age(show.age),
+			}
+			issue_shows.append(show_data)
+
+		html = issue_template.render({
+			"shows": issue_shows,
+			"article": issue.article.json_max(),
+			"name": issue.name_id,
+			"issue_id":issue.id
+		})
+		return html
+
+
+
+	def get(self, request, id=None):
+		if id == None:
 			print "NO ID"
 		else:
-			issue = Issue.filter(index=index)
-			if issue == None or issue.html == None:
+			print id
+			try:
+				issue = Issue.objects.get(name_id=id)
+				return HttpResponse(self.render(issue))
+			except:
 				return HttpResponseNotFound("<h3>this issue does not exist!</h3>")
-			else:
-				return HttpResponse(issue.html)
-
