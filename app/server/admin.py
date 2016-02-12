@@ -94,6 +94,9 @@ class ShowAdmin(admin.ModelAdmin):
 	search_fields = ['headliners', 'openers', 'title']
 	list_display = ('date', 'headliners', 'openers', 'venue')
 	actions = [extract_artists_from_shows_action,extract_artists_from_shows_action_noupdate]
+	list_filter =  ('issue',)
+
+
 	def get_urls(self):
 		urls = super(ShowAdmin, self).get_urls()
 		my_urls = [
@@ -181,6 +184,86 @@ class ArtistAdmin(admin.ModelAdmin):
 		return TemplateResponse(request, "admin/artist_pull_status.html", context)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def mail_issues(queryset):
+	issues = list(queryset)
+	for issue in issues:
+		if issue.sent == True:
+			print 'issue already mailed, override sent field manually :' + issue.name
+		else:
+			issue.render()
+			issue.mail_to_all()
+		
+def mail_issues_action(modeladmin, request, queryset):
+	tr = Thread(target=mail_issues,args=(queryset,))
+	tr.start()
+mail_issues_action.short_description = "Mail Issues"
+
+
+
+
+
+
+
+
+
+def sync_issue_shows(queryset):
+	issues = list(queryset)
+	for issue in issues:
+		issue.sync_shows()
+
+def sync_issue_shows_action(modeladmin, request, queryset):
+	tr = Thread(target=sync_issue_shows,args=(queryset,))
+	tr.start()
+sync_issue_shows_action.short_description = "Sync Shows to Issue"
+
+
+def render_issue(queryset):
+	issues = list(queryset)
+	for issue in issues:
+		issue.render()
+
+
+def render_issue_action(modeladmin, request, queryset):
+	tr = Thread(target=render_issue,args=(queryset,))
+	tr.start()
+render_issue_action.short_description = "Render Issue Templates"
+
+
+
+
+
+
+
+
+
+
+class IssueAdmin(admin.ModelAdmin):
+	list_display = ['tag','shows_count','name','sent','start_date','end_date']
+	ordering = ['name','sent','start_date','end_date']
+	fields = ('tag','name','start_date','end_date','article','mail_html')
+	list_filter =  ('sent',)
+	actions = [mail_issues_action,sync_issue_shows_action,render_issue_action]
+
+
+
+
+
+
 admin.site.register(Address)
 admin.site.register(Venue)
 admin.site.register(ShowgridUser)
@@ -189,6 +272,8 @@ admin.site.register(Show, ShowAdmin)
 admin.site.register(Artist, ArtistAdmin)
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Biography,BioAdmin)
+admin.site.register(Issue,IssueAdmin)
 admin.site.register(Track)
 admin.site.register(Genre)
 admin.site.register(Image)
+
