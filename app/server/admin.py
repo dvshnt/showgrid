@@ -126,7 +126,7 @@ class ShowAdmin(admin.ModelAdmin):
 	search_fields = ['headliners', 'openers', 'title']
 	list_display = ('date', 'headliners', 'openers', 'venue')
 	actions = [extract_artists_from_shows_action,extract_artists_from_shows_action_noupdate]
-	list_filter =  ('issue',)
+	list_filter =  ('issue','venue')
 
 
 	def get_urls(self):
@@ -292,9 +292,9 @@ render_issue_action.short_description = "Render Issue Templates"
 
 
 class IssueAdmin(admin.ModelAdmin):
-	list_display = ['tag','shows_count','name','sent','start_date','end_date']
-	ordering = ['name','sent','start_date','end_date']
-	fields = ('tag','name','start_date','end_date','article','mail_html')
+	list_display = ['tag','shows_count','name_id','sent','start_date','end_date']
+	ordering = ['name_id','sent','start_date','end_date']
+	fields = ('tag','name_id','start_date','end_date','article')
 	list_filter =  ('sent',)
 	actions = [mail_issues_action,sync_issue_shows_action,render_issue_action]
 
