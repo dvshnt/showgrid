@@ -32,7 +32,9 @@ urlpatterns = [
     url(r'^profile$', views.index, name='profile'),
     url(r'^featured$', views.index, name='featured'),
     url(r'^venue/\d+$', views.index, name='venues'),
-
+    
+    ##static issues
+    url(r'^issue/(?P<index>\d+)$$', views.Issues.as_view(), name='issues'),
 
     ## user actions
     url(r'^user/(?P<action>\w+)$', views.UserActions.as_view(), name='user actions'),
