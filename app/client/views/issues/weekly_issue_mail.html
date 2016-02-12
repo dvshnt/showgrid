@@ -1,10 +1,40 @@
 <html>
 	<body>
+		<style>
+			body{
+				background: #fff;
+			}
+			.date{
+				text-align: center;
+			}
+			.date > span {
+				text-align: center;
+				float: bottom;
+			}
+		</style>
 		<h2> Issue # {{ name }} </h2>
-		<a href='issue/{{ issue_id }}'> view the issue on our website ! </a>
+		<a href='http://localhost:8000/issue/{{ issue_id }}'> view the issue on our website ! </a>
 		</br>
-		<a href='issue/{{ issue_id  }}'> play the tracks from this issue </a>
-		<span>shows go here</span>
-		</br>
+		<a href='http://localhost:8000/issue/{{ issue_id  }}'> play the tracks from this issue </a>
+		<div class='show'>
+			{% for show in shows %}
+				<div class = 'date'>
+					<span> show.date_day </span>
+					<span> show.date_number </span>
+					<span> show.date_month
+				</div>
+
+				<p>
+					{{ show.venue_name }}
+					{{ show.venue_name }} |
+					{{ show.title }} |
+					{{ show.openers }} |
+					{{ show.headliners }} |
+					{{ show.date_time }} |
+					{{ show.age_string }} |
+				</p>
+				<hr>
+			{% endfor %}
+		</div>
 	</body>
 </html>

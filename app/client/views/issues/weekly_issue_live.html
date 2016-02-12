@@ -1,0 +1,140 @@
+<html>
+	<body>
+		<style>
+			body{
+				font-family: sans-serif;
+				background: #F9F9F7;
+			}
+			.show{
+				height: 150px;
+				width: 100%;
+				padding: 20px;
+				border-bottom: 1px solid #E9E9E9;
+			}
+		
+			.date{
+				float: left;
+				padding-top: 10px;
+				position: relative;
+				text-transform: uppercase;
+				margin-right: 17px;
+				background: #fff;
+				margin-top: 100px;
+				width: 80px;
+				height: 75px;
+				float: left;
+				text-align: center;
+				border: 1px solid #E9E9E9;
+				border-radius: 6px;
+			}
+			
+			.date > .day,.month{
+				color: #81A6FD;
+				font-size: 12px;
+			}
+
+			.date > .date_number{
+				color: #FD4436;
+				margin-top: -10px;
+				font-size: 20px;
+			}
+
+
+
+			.date > div {
+				height:33.333%;
+				width: 100%;
+				text-align: center;
+    			padding-top: 1px;
+			}
+
+
+			.show_info{
+				margin-left: 90px;
+				position: relative;
+				width: auto;
+				height: auto;
+				margin-top: 50px;
+				float: bottom;
+				bottom: 0;
+				margin-right: 10px;
+			}
+			
+			.venue_name {
+				color: #51767F;
+				
+				width: 150px;
+				
+			}
+
+			.info_item{
+				padding: 5px;
+				float:left;
+				margin-left: 3px;
+				background: #F9F9F9;
+				border: 1px solid #F3F3F3;
+				text-align: center;
+				position: relative;
+				font-size: 13px;
+				border-radius: 4px;
+			}
+
+			.show_content{
+				float:top;
+				position:relative;
+				width:100%;
+			}
+
+			.show_title{
+				position: relative;
+				text-align: start;
+				vertical-align: text-bottom;
+				height: 107px;
+				font-size: 30px;
+			}
+
+
+
+
+
+
+
+
+		</style>
+		<h2> Issue # {{ name }} </h2>
+		<a href='http://localhost:8000/issue/{{ issue_id }}'> view the issue on our website ! </a>
+		</br>
+		<a href='http://localhost:8000/issue/{{ issue_id  }}'> play the tracks from this issue </a>
+		
+			{% for show in shows %}
+				<div class='show'>
+					<div class = 'date'>
+						<div class = 'day'> {{show.date_day}} </div>
+						<div class = 'date_number'> {{show.date_number}} </div>
+						<div class = 'month'> {{show.date_month}} </div>
+					</div>
+					<div class = 'show_title'>
+						<!-- {{ show.title }} -->
+						<p>
+							{{ show.openers }}
+							{{ show.headliners }}
+						</p>
+						
+					</div>
+					<div class = 'show_info'>
+							<div class = 'info_item venue_name'>
+								{{ show.venue_name }}
+							</div>
+							<div class = 'info_item age_string'>
+								{{ show.age_string }}
+							</div>
+							<div class = 'info_item date_time'>
+								{{ show.date_time }}
+							</div>
+						</div>		
+					</div>
+				</div>
+			{% endfor %}
+		
+	</body>
+</html>
