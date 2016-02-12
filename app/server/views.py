@@ -504,3 +504,19 @@ def check_venues(request):
 
 	return render(request, 'venues.html', { 'venues': data })
 
+
+
+
+
+
+class Issues(APIView):
+	def get(self, request, index=None):
+		if index == None:
+			print "NO ID"
+		else:
+			issue = Issue.filter(index=index)
+			if issue == None or issue.html == None:
+				return HttpResponseNotFound("<h3>this issue does not exist!</h3>")
+			else:
+				return HttpResponse(issue.html)
+
