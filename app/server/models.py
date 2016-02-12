@@ -104,7 +104,7 @@ def SpotifyArtistParser(artist,data):
 
 
 
-
+ISSUES_DIR =  settings.ISSUES_DIR
 MAX_BIO = settings.ECHONEST_MAX_BIO
 MAX_ARTICLES = settings.ECHONEST_MAX_ARTICLES
 
@@ -289,7 +289,14 @@ class Article(models.Model):
 	summary = models.TextField(default="No description")
 	published_date = models.DateTimeField(default=timezone.now)
 	active =  models.BooleanField(default=True)
-
+	def json_max(self):
+		return {
+			'title': self.title,
+			'external_url':self.external_url,
+			'summary':self.summary,
+			'published_date':self.published_date,
+			'active':self.active
+		}
 
 class Artist(models.Model):
 	def __unicode__ (self):
@@ -611,6 +618,7 @@ class Show(models.Model):
 
 	age = models.PositiveSmallIntegerField(default=0, blank=True)
 
+	issue = models.ForeignKey('Issue',null=True)
 	#extract metadata
 	extract_queued = models.BooleanField(default=False)
 
@@ -917,9 +925,15 @@ from django.db.models import Q
 from django.template.loader import get_template
 from django.db.models.signals import post_save, post_delete, pre_save
 
-issue_template = get_template('issues/weekly_issue_mail.html')
 
 
+def render_age(age):
+	if age >= 21:
+		return '21+'
+	if age >= 18:
+		return '18+'
+	else:
+		return ''
 
 
 
@@ -928,12 +942,12 @@ class Issue(models.Model):
 		return self.tag
 
 	tag = models.CharField(max_length=255,blank=False,default='Issue')
-	name = models.CharField(max_length=255,blank=True)
+	name_id = models.CharField(max_length=255,blank=False,unique=True)
 	start_date = models.DateTimeField(blank=False)
 	end_date = models.DateTimeField(blank=False)
 	sent = models.BooleanField(default=False)
 	article = models.ForeignKey('Article')
-	mail_html = models.TextField(blank=True,null=True)
+	template_path = models.CharField(max_length=255,null=True)
 	test = models.TextField(blank=True,null=True)
 	shows_count = models.PositiveSmallIntegerField(default=0)
 
@@ -946,31 +960,57 @@ class Issue(models.Model):
 	# 	# print instance 
 	# 	# instance.index = new_index + 1
 	def sync_shows(self):
+		existing_shows = Show.objects.filter(issue=self)
+		for show in existing_shows:
+			show.issue = None
+			show.save()
+
+
 		issue_shows = Show.objects.filter(Q(date__gt = self.start_date) & Q(date__lt = self.end_date))
-		self.shows_count = len(issue_shows)
 		for show in issue_shows:
 			show.issue = self
 			show.save()
-
+		self.shows_count = len(issue_shows)
 		self.render()
-	
+		
 
 
 
 	#render issue
 	def render(self):
+		issue_template = get_template('issues/weekly_issue_mail.html')
 		issue_shows = []
 		shows = Show.objects.filter(issue=self)
 		for show in shows:
-			issue_shows.append(show.json_max())
+			show_data = {
+				"venue_name" : show.venue.name,
+				"title" : show.title,
+				"openers": show.openers,
+				"headliners": show.headliners,
+				"date_day" : show.date.strftime('%a'),
+				"date_number" : show.date.day,
+				"date_month" : show.date.strftime('%b'), 
+				"date_time" : show.date.strftime('%X'),
+				"age_string" : render_age(show.age),
+			}
+			issue_shows.append(show_data)
 
-		self.html = issue_template.render({
+		html = issue_template.render({
 			"shows": issue_shows,
 			"article": self.article.json_max(),
-			"name": self.name,
-			"issue_id":self.id
+			"name": self.name_id,
+			"issue_id":self.name_id
 		})
-		print self.html
+
+		
+
+		self.template_path = ISSUES_DIR+'issue_'+self.name_id+'.html'
+
+
+		f = open(self.template_path, 'w')
+		f.write(html.encode('utf8')+'\n')
+		f.close()
+		print html
 		self.save()
 
 
