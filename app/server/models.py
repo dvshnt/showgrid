@@ -1010,7 +1010,6 @@ class Issue(models.Model):
 	end_date = models.DateTimeField(blank=False)
 	sent = models.BooleanField(default=False)
 	article = models.ForeignKey('Article')
-	test = models.TextField(blank=True,null=True)
 	shows_count = models.PositiveSmallIntegerField(default=0)
 	spotify_embed = models.CharField(max_length=255,blank=True,null=True)
 	
