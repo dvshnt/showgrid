@@ -12,13 +12,13 @@ import urllib
 import re
 import json
 from jsonfield import JSONField
-
+import string
 import PIL 
 from StringIO import StringIO
 
 
 from django.db import models
-from django.core.mail import send_mail
+from django.core import mail
 from django.utils import timezone
 from django.utils.http import urlquote
 from django.utils.translation import ugettext as _
@@ -38,7 +38,9 @@ from server.twillio_handle import MessageClient
 Sender = MessageClient()
 from termcolor import colored
 
-
+from django.db.models import Q
+from django.template.loader import get_template
+from django.db.models.signals import post_save, post_delete, pre_save
 
 #pretty colors 
 def prRed(prt): print("\033[91m {}\033[00m" .format(prt))
@@ -107,6 +109,7 @@ def SpotifyArtistParser(artist,data):
 ISSUES_DIR =  settings.ISSUES_DIR
 MAX_BIO = settings.ECHONEST_MAX_BIO
 MAX_ARTICLES = settings.ECHONEST_MAX_ARTICLES
+EMAIL_HOST_USER = settings.EMAIL_HOST_USER
 
 #Analyze echonest data and sync it with passed artist.
 def EchonestArtistParser(artist,data):
@@ -920,10 +923,65 @@ class Alert(models.Model):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+mail_template = get_template('issues/weekly_issue_mail.html')
+
+
+class Subscriber(models.Model):
+	def __unicode__ (self):
+		return self.email
+	email = models.EmailField(_('email address'), unique=True,blank=False)
+	user = models.ForeignKey('ShowgridUser',null=True)
+	hash_name =  models.CharField(unique=True,blank=False,max_length=255,null=False)
+	@receiver(pre_save)
+	def my_callback(sender, instance, *args, **kwargs):
+		instance.hash_name = ''
+		for x in range(0, 10):
+			instance.hash_name += random.choice(string.letters)
+	def sendIssue(self,issue):
+		
+		if self.user != None:
+			email = self.user.email
+		else:
+			email = self.email
+
+		title = 'Showgrid Issue '+issue.name_id
+		text_alt = 'visit http://showgrid.com/issue/'+issue.name_id
+		html_content = issue.render(mail_template,self)
+		msg =  mail.EmailMultiAlternatives(title,text_alt,EMAIL_HOST_USER,[email])
+		msg.attach_alternative(html_content, "text/html")
+		print(html_content)
+		msg.send()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # from django.db.models import F
-from django.db.models import Q
-from django.template.loader import get_template
-from django.db.models.signals import post_save, post_delete, pre_save
+
 
 
 
@@ -947,18 +1005,11 @@ class Issue(models.Model):
 	end_date = models.DateTimeField(blank=False)
 	sent = models.BooleanField(default=False)
 	article = models.ForeignKey('Article')
-	template_path = models.CharField(max_length=255,null=True)
 	test = models.TextField(blank=True,null=True)
 	shows_count = models.PositiveSmallIntegerField(default=0)
-
+	spotify_embed = models.CharField(max_length=255,blank=True,null=True)
 	
-	# #attach index on pre save
-	# @staticmethod
-	# def pre_save(sender, instance, **kwargs):
-	# 	# new_index = Issue.objects.count()
-	# 	# print new_index
-	# 	# print instance 
-	# 	# instance.index = new_index + 1
+
 	def sync_shows(self):
 		existing_shows = Show.objects.filter(issue=self)
 		for show in existing_shows:
@@ -977,62 +1028,66 @@ class Issue(models.Model):
 
 
 	#render issue
-	def render(self):
-		issue_template = get_template('issues/weekly_issue_mail.html')
+	def render(self,template,sub):
 		issue_shows = []
 		shows = Show.objects.filter(issue=self)
 		for show in shows:
+
+			if show.openers != None and show.headliners != None and show.headliners != '' and show.openers != '':
+				openers = show.openers + ' |'
+			else:
+				openers = show.openers
+
 			show_data = {
 				"venue_name" : show.venue.name,
 				"title" : show.title,
-				"openers": show.openers,
+				"openers": openers,
 				"headliners": show.headliners,
 				"date_day" : show.date.strftime('%a'),
 				"date_number" : show.date.day,
 				"date_month" : show.date.strftime('%b'), 
-				"date_time" : show.date.strftime('%X'),
+				"date_time" : show.date.strftime('%I:%M %p'),
 				"age_string" : render_age(show.age),
-			}
+				"venue_primary":show.venue.primary_color,
+				"venue_secondary":show.venue.secondary_color,
+				"venue_letter": show.venue.name[0],
+				"venue_link": "http://showgrid.com/venue/"+str(show.venue.id),
+				"link": show.website
+			}			
 			issue_shows.append(show_data)
-
-		html = issue_template.render({
+		if sub != None:
+			unsub_link = "http://showgrid.com/issue/unsubscribe/"+sub.hash_name
+		else:
+			unsub_link = None
+		
+		html = template.render({
+			"issue_link":"http://showgrid.com/issue/"+str(self.name_id),
 			"shows": issue_shows,
 			"article": self.article.json_max(),
 			"name": self.name_id,
-			"issue_id":self.name_id
+			"issue_id":self.name_id,
+			"unsub_link": unsub_link,
+			"spotify_embed": self.spotify_embed,
+			"play_button" : 'http://localhost:8000/static/play_icon.png'
 		})
 
-		
+	
 
-		self.template_path = ISSUES_DIR+'issue_'+self.name_id+'.html'
-
-
-		f = open(self.template_path, 'w')
-		f.write(html.encode('utf8')+'\n')
-		f.close()
-		print html
-		self.save()
+		return html
+	
 
 
 	#mail issue to all users.
-	def mail_to_all(self):
+	def mail(self):
 		if self.sent == True:
 			print('issue ',self.index,' already sent, please override sent boolean in database to False manually')
 			return
 		else:
-			if self.html == None:
-				self.render()
-
-		send_mail('Subject here', 'Here is the message.', 'davis@showgrid.com',['yurisido@gmail.com'], fail_silently=False)
-
-		self.sent = True
-		self.save()
-
-
-# pre_save.connect(Issue.pre_save, Issue, dispatch_uid="server.models.Issue")
-
-
-
+			subscribers = Subscriber.objects.all()
+			for sub in subscribers:
+				sub.sendIssue(self)
+			self.sent = True
+			self.save()
 
 
 

@@ -14,7 +14,14 @@ import requests
 
 
 
-
+def prRed(prt): print("\033[91m {}\033[00m" .format(prt))
+def prGreen(prt): print("\033[92m {}\033[00m" .format(prt))
+def prYellow(prt): print("\033[93m {}\033[00m" .format(prt))
+def prLightPurple(prt): print("\033[94m {}\033[00m" .format(prt))
+def prPurple(prt): print("\033[95m {}\033[00m" .format(prt))
+def prCyan(prt): print("\033[96m {}\033[00m" .format(prt))
+def prLightGray(prt): print("\033[97m {}\033[00m" .format(prt))
+def prBlack(prt): print("\033[98m {}\033[00m" .format(prt))
 
 
 
@@ -242,10 +249,9 @@ def mail_issues(queryset):
 	issues = list(queryset)
 	for issue in issues:
 		if issue.sent == True:
-			print 'issue already mailed, override sent field manually :' + issue.name
+			print prRed('issue already mailed, override sent field manually :'+issue.name_id)
 		else:
-			issue.render()
-			issue.mail_to_all()
+			issue.mail()
 		
 def mail_issues_action(modeladmin, request, queryset):
 	tr = Thread(target=mail_issues,args=(queryset,))
@@ -271,16 +277,16 @@ def sync_issue_shows_action(modeladmin, request, queryset):
 sync_issue_shows_action.short_description = "Sync Shows to Issue"
 
 
-def render_issue(queryset):
-	issues = list(queryset)
-	for issue in issues:
-		issue.render()
+# def render_issue(queryset):
+# 	issues = list(queryset)
+# 	for issue in issues:
+# 		issue.render()
 
 
-def render_issue_action(modeladmin, request, queryset):
-	tr = Thread(target=render_issue,args=(queryset,))
-	tr.start()
-render_issue_action.short_description = "Render Issue Templates"
+# def render_issue_action(modeladmin, request, queryset):
+# 	tr = Thread(target=render_issue,args=(queryset,))
+# 	tr.start()
+# render_issue_action.short_description = "Render Issue Templates"
 
 
 
@@ -294,15 +300,15 @@ render_issue_action.short_description = "Render Issue Templates"
 class IssueAdmin(admin.ModelAdmin):
 	list_display = ['tag','shows_count','name_id','sent','start_date','end_date']
 	ordering = ['name_id','sent','start_date','end_date']
-	fields = ('tag','name_id','start_date','end_date','article')
+	fields = ('spotify_embed','tag','name_id','start_date','end_date','article','sent')
 	list_filter =  ('sent',)
-	actions = [mail_issues_action,sync_issue_shows_action,render_issue_action]
+	actions = [mail_issues_action,sync_issue_shows_action]
 
 
 
 
 
-
+admin.site.register(Subscriber)
 admin.site.register(Address)
 admin.site.register(Venue)
 admin.site.register(ShowgridUser)
