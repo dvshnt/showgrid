@@ -1,0 +1,61 @@
+
+<html>
+	<body style="padding: 0px;margin: 0;font-family: sans-serif;background: #F9F9F7;">
+		
+		<div class="header" style="padding: 10px;box-sizing: border-box;">
+			<a href="{{issue_link}}" style="text-transform: none;text-decoration: none;"><h1 style="width: 200px;font-size: 25px;color: #565656;margin: 0;">
+				Showdigest
+			</h1></a>
+			<h4 style="width: 100px;font-size: 11px;margin-top: 0px;padding-left: 10px;color: #868686;font-weight: 200;padding-bottom: 0px;margin-bottom: 0px;position: relative;"> Issue # {{ name }} </h4>
+		</div>
+		<div class="article" style="position: relative;background: #fff;height: auto;width: 100%;">
+			
+			<p class="article_summary" style="font-weight: 300;line-height: 24px;width: 90%;padding: 5%;">
+				{{ article.summary }}
+			</p>
+			
+			<div class="playlist" style="border-radius: 5px 5px 0px 0px;text-align: center;margin-left: 35%;padding: 15px;padding-bottom: 10px;float: none;width: 20%;height: auto;background: #F5F5F5;">
+				<a href="{{issue_link}}" style="text-transform: none;text-decoration: none;"><div class="play_button" style="left: 50%;-webkit-transform: translate(-50%,0%);transform: translate(-50%,0%);width: 34px;height: 34px;border-radius: 50%;margin-bottom: 10px;background-size: cover;position: relative;background-image: url({{play_button}});"></div></a><a class="play_button_text" href="{{issue_link}}" style="padding-top: 5px;color: #4CAF50;font-size: 13px;font-weight: 600;text-transform: none;text-decoration: none;">play the tracks</a>
+			</div>
+		</div>
+		{% for show in shows %}
+			<div class="show" style="height: auto;position: relative;border-top: 1px solid #F1F1F1;border-bottom: 1px solid #F1F1F1;width: 100%;margin: 0;padding: 0;margin-bottom: 3px;min-height: 160px;background: #FBFBFB;">
+				<div class="date" style="height: 144px;float: left;padding-top: 16px;position: relative;text-transform: uppercase;margin-right: 17px;width: 90px;background: #fff;text-align: center;border-right: 1px solid #F1F1F1;">
+					<div class="day" style="height: 23.333%;width: 100%;text-align: center;padding-top: 1px;color: #81A6FD;font-size: 12px;"> {{show.date_day}} </div>
+					<div class="date_number" style="height: 23.333%;width: 100%;text-align: center;padding-top: 1px;color: #FD4436;margin-top: -10px;font-size: 20px;"> {{show.date_number}} </div>
+					<div class="month" style="color: #81A6FD;font-size: 12px;height: 23.333%;width: 100%;text-align: center;padding-top: 1px;"> {{show.date_month}} </div>
+					<div class="date_time" style="height: 40%;width: 100%;text-align: center;padding-top: 1px;border-top: 1px solid #F1F1F1;vertical-align: middle;color: #909090;font-weight: 100;"><p style="margin-top: 15px;">{{ show.date_time }}</p></div>
+				</div>
+
+				<div class="show_info" style="box-sizing: border-box;padding-top: 10px;position: relative;width: auto;height: 40px;margin-top: 0px;float: bottom;bottom: 0;margin-right: 10px;">
+					<a href="{{show.venue_link}}" style="text-transform: none;text-decoration: none;"><div class="info_item venue_name" style="color: {{show.venue_secondary}};background: {{show.venue_primary}};border-color: #fff;margin-left: -10px;opacity: 0.6;padding: 5px;padding-left: 8px;padding-right: 8px;float: left;text-align: center;position: relative;font-size: 12px;border-radius: 3px;">
+						{{ show.venue_name }}
+					</div>
+					<div class="info_item age_string" style="opacity: 0.6;padding: 5px;padding-left: 8px;padding-right: 8px;float: left;text-align: center;position: relative;font-size: 12px;border-radius: 3px;">
+						{{ show.age_string }}
+					</div>
+					<div class="info_item " style="opacity: 0.6;padding: 5px;padding-left: 8px;padding-right: 8px;float: left;text-align: center;position: relative;font-size: 12px;border-radius: 3px;">
+						
+					</div>
+				
+				</a></div>
+				<div class="show_title" style="font-weight: 300;position: relative;text-align: start;vertical-align: text-bottom;height: auto;left: -10px;margin-left: 110px;min-height: 60px;font-size: 20px;z-index: 1;">
+					<!-- {{ show.title }} -->
+					<p style="margin-top: 0px;line-height: 25px;">
+						<a href="{{show.link}}" class="show_openers" style="color: #424547;font-size: 17px;text-transform: none;text-decoration: none;"> {{ show.openers }}</a>
+						<a href="{{show.link}}" class="show_headliners" style="color: #000000;text-transform: none;text-decoration: none;"> {{ show.headliners }}</a>
+					</p>
+					
+				</div>
+			</div>
+		{% endfor %}
+		<div class="footer" style="border-top: 1px solid #F3F3F3;padding-top: 10px;height: 35px;">
+			<a href="{{unsub_link}}" class="unsubscribe" style="color: #fff;padding: 10px;background: #DE8585;border-radius: 7px;vertical-align: middle;text-decoration: none;text-transform: none;font-weight: 300;float: right;position: relative;margin-right: 10px;margin-bottom: 10px;"> unsubscribe </a>
+			<span style="padding-left: 10px;color: #A2A2A2;font-size: 12px;">© 2015 Showgrid, Nashville, TN<span style="padding-left: 10px;color: #A2A2A2;font-size: 12px;">
+		</span></span></div>
+		
+		
+		
+	</body>
+
+</html>

@@ -1,0 +1,344 @@
+
+
+<html>
+	
+	<style>
+		body{
+			padding: 0px;
+			margin: 0;
+			font-family: sans-serif;
+			background: #F9F9F7;
+		}
+		.show{
+			/* height: auto; */
+			
+			height: auto; 
+			
+			position: relative;
+			height: auto;
+			border-top: 1px solid #F1F1F1;
+			border-bottom: 1px solid #F1F1F1;
+		
+			width: 100%;
+			margin: 0;
+			padding: 0;
+			margin-bottom: 3px;
+			min-height: 160px;
+			background: #FBFBFB;
+			/* border-radius: 4px; */
+
+		}
+
+		.date{
+			/*box-shadow: 0px 0px 2px rgba(0,0,0,0.04);*/
+			/* z-index: 2; */
+			height: 144px;
+			float: left;
+			padding-top: 16px;
+			position: relative;
+			text-transform: uppercase;
+			margin-right: 17px;
+			width: 90px;
+			background: #fff;
+			
+			float: left;
+			text-align: center;
+			border-right: 1px solid #F1F1F1;
+		}
+
+		.date > .day,.month{
+			color: #81A6FD;
+			font-size: 12px;
+		}
+
+		.date > .date_number{
+			color: #FD4436;
+			margin-top: -10px;
+			font-size: 20px;
+		}
+
+		.date > .date_time{
+			border-top: 1px solid #F1F1F1;
+			height: 40%;
+			vertical-align: middle;
+			color: #909090;
+			font-weight: 100;
+		}
+		.date_time p{
+			margin-top: 15px;
+		}
+
+
+
+		.date > div {
+			height:23.333%;
+			width: 100%;
+			text-align: center;
+			padding-top: 1px;
+		}
+
+
+		.show_info{
+			box-sizing: border-box;
+			padding-top: 10px;
+			/* margin-left: -10px; */
+			position: relative;
+			width: auto;
+			height: 40px;
+			margin-top: 0px;
+			float: bottom;
+			bottom: 0;
+			margin-right: 10px;
+		}
+
+		.venue_name {
+			margin-left: -10px;
+			
+		}
+
+		.info_item{
+			opacity: 0.6;
+			padding: 5px;
+			padding-left: 8px;
+			padding-right: 8px;
+			float:left;
+
+			text-align: center;
+			position: relative;
+			font-size: 12px;
+			border-radius: 3px;
+		}
+
+		.show_content{
+			float:top;
+			position:relative;
+			width:100%;
+		}
+
+		.show_title{
+			font-weight: 300;
+			position: relative;
+			text-align: start;
+			vertical-align: text-bottom;
+			height: auto;
+			left: -10px;
+			margin-left: 110px;
+			min-height: 60px;
+			font-size: 20px;
+			/* background: coral; */
+			z-index: 1;
+		}
+
+		.show_title p{
+			margin-top: 0px; 
+			/*padding-top: 10px;*/
+			line-height: 25px;
+		}
+
+
+		.article{
+			position: relative;
+			background: #fff;
+			height: auto;
+			width: 100%;
+		}
+
+		.article_summary{
+			font-weight: 300;
+			line-height: 24px;
+			width: 90%;
+			padding: 5%;
+		}
+		.article_summary p{
+			text-indent: 30px;
+			line-height: 22px;
+			padding: 0px;
+			
+			
+			box-sizing: content-box;
+			
+		}
+
+
+
+
+
+		.playlist{
+			border-radius: 5px 5px 0px 0px;
+			text-align: center;
+			margin-left: 35%;
+			padding: 15px;
+			padding-bottom: 10px;
+			float: none;
+			width: 20%;
+			height: auto;
+			background: #F5F5F5;
+		}
+		.play_button{
+			left: 50%;
+			-webkit-transform: translate(-50%,0%);
+			        transform: translate(-50%,0%);
+			width: 34px;
+			height: 34px;
+			border-radius: 50%;
+			margin-bottom: 10px;
+			background-size: cover;
+
+			position: relative;
+			background-image: url('{{play_button}}');
+		}
+
+		.play_button_text{
+			padding-top: 5px;
+			color: #4CAF50;
+			font-size: 13px;
+			font-weight: 600;
+			text-transform: uppercase;
+		}
+
+
+
+
+
+		.more_info{
+			width: 100%;
+			height: auto
+		}
+
+		.more_info > a{
+			width: 100px;
+		}
+
+
+
+		.unsubscribe{
+			/* position: absolute; */
+			color: #fff;
+			padding: 10px;
+			background: #DE8585;
+			border-radius: 7px;
+			vertical-align: middle;
+			text-decoration: none;
+			/* padding-top: 10px; */
+			text-transform: none;
+			font-weight: 300;
+			float:right;
+			/* right: 100px; */
+			/* bottom: 0; */
+			position: relative;
+			margin-right: 10px;
+			margin-bottom: 10px;
+		}
+
+		.footer{
+			border-top: 1px solid #F3F3F3;
+			padding-top: 10px;
+			
+			height: 35px;
+		}
+
+		.header{
+			/*background: linear-gradient(-45deg,#282828,#38525D);*/
+			padding: 10px;
+			box-sizing: border-box;
+		}
+
+		.header h1{
+			width: 200px;
+			font-size: 25px;
+			color: #565656;
+			margin: 0;
+		}
+
+		.header h4{
+			width: 100px;
+			font-size: 11px;
+			margin-top: 0px;
+			padding-left: 10px;
+			color: #868686;
+			font-weight: 200;
+			padding-bottom: 0px;
+			margin-bottom: 0px;
+			position: relative;
+		}
+
+		.footer span{
+			padding-left: 10px;
+			color: #A2A2A2;
+			font-size: 12px;
+		}
+
+
+		a:link{
+			text-transform: none;
+			text-decoration: none;
+		}
+
+		.show_openers{
+			color:#424547;
+			font-size: 17px;
+		}
+
+		.show_headliners{
+			color:#000000;
+		}
+	</style>
+	<body>
+		
+		<div class = 'header'>
+			<a href = '{{issue_link}}'><h1>
+				Showdigest
+			</h1></a>
+			<h4> Issue # {{ name }} </h4>
+		</div>
+		<div class = 'article'>
+			
+			<p class = 'article_summary'>
+				{{ article.summary }}
+			</p>
+			
+			<div class = 'playlist'>
+				<a href = '{{issue_link}}'><div class = 'play_button' ></div><a class = 'play_button_text' href = '{{issue_link}}'>play the tracks</a></a>
+			</div>
+		</div>
+		{% for show in shows %}
+			<div class='show'>
+				<div class = 'date'>
+					<div class = 'day'> {{show.date_day}} </div>
+					<div class = 'date_number'> {{show.date_number}} </div>
+					<div class = 'month'> {{show.date_month}} </div>
+					<div class = 'date_time'><p>{{ show.date_time }}</p></div>
+				</div>
+
+				<div class = 'show_info'>
+					<a href = '{{show.venue_link}}'><div class = 'info_item venue_name' style='color: {{show.venue_secondary}}; background: {{show.venue_primary}}; border-color:#fff;'>
+						{{ show.venue_name }}
+					</div></a >
+					<div class = 'info_item age_string'>
+						{{ show.age_string }}
+					</div>
+					<div class = 'info_item '>
+						
+					</div>
+				
+				</div>
+				<div class = 'show_title'>
+					<!-- {{ show.title }} -->
+					<p>
+						<a href = '{{show.link}}' class = 'show_openers'> {{ show.openers }}</a>
+						<a href = '{{show.link}}' class = 'show_headliners'> {{ show.headliners }}</a>
+					</p>
+					
+				</div>
+			</div>
+		{% endfor %}
+		<div class = 'footer'>
+			<a href = '{{unsub_link}}'  class = 'unsubscribe'> unsubscribe </a>
+			<span>© 2015 Showgrid, Nashville, TN<span>
+		</div>
+		
+		
+		
+	</body>
+
+</html>

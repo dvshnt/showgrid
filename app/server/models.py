@@ -941,7 +941,7 @@ class Alert(models.Model):
 
 
 
-mail_template = get_template('issues/weekly_issue_mail.html')
+mail_template = get_template('issues/issue_mail_inlined.html')
 
 
 class Subscriber(models.Model):

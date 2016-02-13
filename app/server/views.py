@@ -538,7 +538,7 @@ def IssueUnsubscribe(request,hash):
 		print 'deleted '+email
 	except:
 		print 'no sub found with hash '+hash
-		
+
 	return HttpResponse(unsub_template.render())
 
 
@@ -553,7 +553,7 @@ class Issues(APIView):
 			print id
 			try:
 				issue = Issue.objects.get(name_id=id)
-				issue_template = get_template('issues/weekly_issue_live.html')
+				issue_template = get_template('issues/issue_live.html')
 				return HttpResponse(issue.render(issue_template,None))
 			except Exception:
 				raise
