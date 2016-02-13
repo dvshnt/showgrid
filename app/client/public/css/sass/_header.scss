@@ -3,14 +3,26 @@
 	top:0; left:0;
 
 	width:100%;
-	
+
+	background:#222222;
+
 	z-index:100;
+
+	-webkit-transition: all .25s ease-in;
+	   -moz-transition: all .25s ease-in;
+		 -o-transition: all .25s ease-in;
+			transition: all .25s ease-in;
 }
 
 #header.hidden {
 	display:none;
 }
 
+#container.splash #header {
+	position:relative;
+
+	background:rgba(0,0,0,0);
+}
 
 @import "header__page";
 @import "header__calendar";

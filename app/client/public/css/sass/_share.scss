@@ -1,0 +1,63 @@
+.share {
+
+	.share-button {
+		display:block;
+
+		&.hidden {
+			display:none;
+		}
+	}
+
+	.share-panel {
+		display:block;
+
+		max-width:200px;
+
+		overflow:hidden;
+    	white-space: nowrap;
+
+  		@include transition(all 0.3s ease);
+
+		&.hidden {
+			display:none;
+		}
+
+		a {
+			text-decoration:none;
+
+			margin:0 2.5px;
+		}
+
+		a b {
+			padding:0 !important;
+		}
+
+		a.mail-share {
+			position:relative;
+			top:-1px;
+
+			margin:0 4px;
+		}
+
+		a b.icon-twitter,
+		a b.icon-facebook,
+		a b.icon-mail {
+			font-size:24px;
+			margin:0;
+		}
+
+		a b.icon-twitter {
+			color:#3cf;
+		}
+
+		a b.icon-facebook {
+			color:#3b5998;
+		}
+
+		a b.icon-mail {
+			color:#222;
+
+			font-size:20px;
+		}
+	}
+}

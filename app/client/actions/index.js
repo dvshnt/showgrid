@@ -172,6 +172,24 @@ export function getVenue(id) {
 	}
 }
 
+
+export function getShow(id) {
+	console.log("GET SHOW")
+	return (dispatch, getState) => {
+		return dispatch({
+			[CALL_API]: {
+				endpoint: GridEngine.domain + '/v1/shows/' + id,
+			    method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+			    types: ['SHOW_REQUEST', 'SHOW_SUCCESS', 'SHOW_FAILURE'],
+			    schema: Schemas.SHOW
+			}
+		})
+	}
+}
+
 function fetchGrid(date) {
 
 	console.log("FETCH GRID")

@@ -9,6 +9,10 @@
 		text-decoration:underline;
 		
 		cursor:pointer;
+
+		#container.splash & {
+			color:#222222;
+		}
 	}
 
 	a {
@@ -38,6 +42,11 @@
 		   -moz-transition: all .175s ease;
 			 -o-transition: all .175s ease;
 				transition: all .175s ease;
+
+		#container.splash & {
+			opacity:1;
+			color:#222222;
+		}
 	}
 
 	a:hover b,
@@ -63,6 +72,10 @@
 		   -moz-transition: all .25s ease-in;
 			 -o-transition: all .25s ease-in;
 				transition: all .25s ease-in;
+
+		#container.splash & {
+			color:#222222;
+		}
 	}
 
 	a:hover span,

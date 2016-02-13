@@ -54,7 +54,12 @@ export default function state(state={
 	case "VENUE_REQUEST":
 		return Object.assign({}, state, {
 			waiting: true,
-		});		
+		});
+
+	case "SHOW_REQUEST":
+		return Object.assign({}, state, {
+			waiting: true,
+		});			
 
 	case "GRID_REQUEST":
 		return Object.assign({}, state, {
@@ -103,13 +108,32 @@ export default function state(state={
 					venues: merge({}, state.entities.venues, action.payload.entities.venue),
 				})
 			});
-			console.log("GOT VENUE")
-			console.log(new_state)
 			return new_state
 		}
 
 		return Object.assign({}, state, {
 			waiting: false,
+		});
+
+	case "SHOW_SUCCESS":
+		if (action.payload && action.payload && !action.payload.status) {
+			console.log(action.payload)
+			var new_state = Object.assign({}, state, {
+				waiting: false,
+				entities: Object.assign({}, state.entities, {
+					shows: merge({}, state.entities.shows, action.payload.entities.show),
+				})
+			});
+		}
+
+		return Object.assign({}, state, {
+			waiting: false,
+		});
+
+	case "SHOW_FAILURE":
+		console.error("FAILED TO FETCH SHOW")
+		return Object.assign({}, state, {
+			waiting: false
 		});
 
 	case "VENUE_FAILURE":

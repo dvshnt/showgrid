@@ -1,0 +1,268 @@
+<html>
+	<head>
+		{% load static from staticfiles %}
+
+		<title>Showgrid Nashville</title>
+
+		<meta name=”description” content=”Showgrid is a simple live music calendar for Nashville.”>
+
+		<link rel="icon" type="image/png" href='{% static "showgrid/img/favicon.ico" %}'>
+		
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+
+		<meta property="og:title" content="Showgrid Nashville"/>
+		<meta property="og:type" content="website"/>
+		<meta property="og:image" content="http://showgrid.com/static/showgrid/img/sg--fb.jpg">
+		<meta property="og:url" content="http://showgrid.com"/>
+		<meta property="og:description" content="Nashville's no-none-sense live music calendar made with love and created to keep you informed."/>	
+
+
+		<style>
+			
+			.form {
+				position:relative;
+				
+				width:400px; height:50px;
+
+				margin:40px 0 20px;
+			}
+
+			.form input[type=email] {
+				position:absolute;
+				left:0; top:0;
+				
+				width:320px; height:50px;
+				
+				padding:0 15px;
+
+				font-size:16px;
+				line-height:18px;
+
+				border:1px solid #e2e2e2;
+				border-radius:2px 0 0 2px;
+				background:rgba(255,255,255,1);
+				
+				-webkit-transition:all 0.2s ease;
+
+				z-index:9;
+			}
+
+			.form input[type=submit] {
+				position:absolute;
+				left:319px; top:0;
+				
+				width:81px; height:50px;
+
+				color:#ffffff;
+				font-size:12px;
+				line-height:50px;
+				text-align:center;
+				text-transform:uppercase;
+
+				border:none;
+				border-radius:0 2px 2px 0;
+				background:#4bc76d;
+
+				cursor:pointer;
+				
+				-webkit-transition:all 0.2s ease;
+
+				z-index:10;
+			}
+
+			.form input[type=submit]:hover {
+				background:#65DB96;
+			}
+
+			.form .msg {
+				position:absolute;
+				top:0; left:0;
+
+				width:100%; height:30px;
+
+				color:#ffffff;
+				font-size:14px;
+				line-height:30px;
+				text-shadow:1px 1px 0px rgba(0,0,0,0.25);
+
+				background:#E8463C;
+				border-radius:2px;
+				
+				-webkit-transition:all 0.3s ease-in-out;
+
+				z-index:2;
+			}
+
+			.form.error .msg {
+				top:55px;
+			}
+			
+			.form.success input[type=submit] {
+				left:0px;
+				
+				width:400px;
+				
+				border-radius:2px;
+			}
+			
+			.form.success input[type=email] {
+				width:0;
+				
+				padding:0;
+			}
+			
+			
+			input:-webkit-autofill,
+			input:-webkit-autofill:hover,
+			input:-webkit-autofill:focus,
+			input:-webkit-autofill:active {
+				-webkit-box-shadow: 0 0 0px 1000px rgba(0,255,255,0.3) inset;
+			}
+			
+			input:focus{
+				font-weight: normal;
+				outline: 0;
+				outline: none;
+				box-shadow: inset 0px 0px 20px rgba(155,205,255,0.3);
+			}
+
+			#page {
+				max-width: 646px;
+				margin: 0px auto;
+				padding: 0px 40px;
+			}
+
+			.number {
+				font-size: 48pt;
+				color: #4bc76d;
+				text-shadow: 1px 1px 0px #2f974b;
+				font-weight: bold;
+			}
+
+			.paragraph {
+				font-size: 17pt;
+			}
+
+			.logo {
+				margin-bottom: 40px;
+				font-size: 52pt;
+				font-family: 'Pacifico', cursive;
+			}
+
+			.footer {
+				text-align: center;
+				max-width: 646px;
+				margin: 0px auto;
+			}
+
+			body {
+				font-family: "open sans", sans-serif;
+				color: #333333;
+			}
+
+			.disclaimer {
+				font-size: 10px;
+			}
+
+			.disclaimer-large {
+				font-size: 13px;
+			}
+
+			h1 img {
+				width:350px;
+			}
+		</style>
+
+		<link href='https://cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/buttons-min.css' rel='stylesheet'>
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+		<link href='/styles/animate.css' rel='stylesheet'>
+
+		<script>
+			var Jobs = {
+			    apply: function(email, note){
+			        if(!email && !note){
+			            throw(">> Please provide your email address and a short note about yourself!")
+			        }else{
+			            $.post("/jobs/apply", {
+			                email: email,
+			                note: note
+			            }, function(result){
+			                if(result.success){
+			                    console.log("===> Received. Thank you.")
+			                }else{
+			                    throw(">> Please provide your email address and a short note about yourself!")
+			                }
+			            })
+			        }
+			    }
+			}
+			
+			$(function() {
+			
+			   console.log("*************************");
+			   console.log("Want to help build Magic?");
+			   console.log("Run Jobs.apply()");
+			   console.log("*************************");
+			
+			   $(".animated").textillate({ in: { effect: 'fadeIn', delay: 20 } });
+			   setTimeout(function() {
+			       $(".prompt").animate({"opacity": "1"}, 1000);
+			   }, 1000);
+			});
+		</script>
+	</head>
+	<body>
+		<div id="page">
+			<br><br>
+			<center>
+				<h1><img src="{% static 'showgrid/img/showgrid--mark-black.png' %}" alt="Showgrid"/></h1>
+			</center>
+
+			<center>
+				<h1>Showgrid is here to plug you into the live music scene in Nashville. </h1>
+			</center>
+
+			<center>
+				<form class="form" method="post" action="http://showgrid.com/v1/signup">
+					<input type="email" name="email" placeholder="Enter your email to stay in the loop" required/><input type="submit" value="Submit"/>
+
+					<div class="msg">
+						You've already signed up with this email.
+					</div>
+				</form>
+			</center>
+
+			<center>
+				<h2 style="margin-top:40px;"><sup></sup></h2>
+			</center>
+			<div class="paragraph">
+				While we are working on the site, feel free to text this number and ask about what good shows are happening in town:
+			</div>
+
+			<center>
+				<div class="number animated">(931) 444-6735</div>
+				<br>
+				<i class="prompt" style="opacity:1;position:relative;top:-20px;">
+					Text "<b style='color:#4bc76d'>SHOWGRID</b>" to this number now to get started.
+					<br/>
+					<span class="disclaimer">Msg&data rates may apply</span>
+				</i>
+			</center>
+		</div>
+
+		<br>
+		<br>
+		
+		<div style="margin-top:40px;" class="footer">
+			<span class="disclaimer-large"><i>When using the (931) 444-6735 short code, reply HELP for help and STOP to cancel.</i></span>
+			<br/>
+			<br/>
+			<a href="mailto:info@showgrid.com" style="font-size:10pt;color:#555">Contact</a>
+		</div>
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	</body>
+</html>

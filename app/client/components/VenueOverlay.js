@@ -24,10 +24,10 @@ export default class VenueOverlay extends Component {
 	    if(!g) g = 0
 	    if(!r) r = 0
 
-	   	this.overlayStyle = {
-	   		"background": "-webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 5%,rgba("+r+","+g+","+b+",1) 80%,rgba("+r+","+g+","+b+",1) 100%), rgba("+r+","+g+","+b+",0.3)", /* Chrome10-25,Safari5.1-6 */
-	   		"background": "-moz-linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 5%,rgba("+r+","+g+","+b+",1) 80%,rgba("+r+","+g+","+b+",1) 100%), rgba("+r+","+g+","+b+",0.3)", /* FF3.6-15 */
-	   		"background": "linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 5%,rgba("+r+","+g+","+b+",1) 80%,rgba("+r+","+g+","+b+",1) 100%), rgba("+r+","+g+","+b+",0.3)", /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	    this.overlayStyle = {
+	   		"background": "-webkit-linear-gradient(top, rgba("+r+","+g+","+b+",0.5) 0%,rgba("+r+","+g+","+b+",0.5) 10%,rgba("+r+","+g+","+b+",0.9) 100%), rgba("+r+","+g+","+b+",0.3)", /* Chrome10-25,Safari5.1-6 */
+	   		"background": "-moz-linear-gradient(to bottom, rgba("+r+","+g+","+b+",0.5) 0%,rgba("+r+","+g+","+b+",0.5) 10%,rgba("+r+","+g+","+b+",0.9) 100%), rgba("+r+","+g+","+b+",0.3)", /* FF3.6-15 */
+	   		"background": "linear-gradient(to bottom, rgba("+r+","+g+","+b+",0.5) 0%,rgba("+r+","+g+","+b+",0.5) 10%,rgba("+r+","+g+","+b+",0.9) 100%), rgba("+r+","+g+","+b+",0.3)", /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	   	}
 	}
 

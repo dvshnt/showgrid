@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 
 import SetAlert from './SetAlert';
 import SetFavorite from './SetFavorite';
-
 
 var DateManager = require('../util/DateManager');
 
@@ -85,11 +85,11 @@ export default class CalendarRowDayShow extends Component {
 	            	{ age }
 				</div>
 				<div className="titles">
-					<a href={ show.website } target="_blank">
-					{ title }
-					{ headliner }
-					{ opener }
-					</a>
+					<Link to={'/show/' + show.id}>
+						{ title }
+						{ headliner }
+						{ opener }
+					</Link>
 				</div>
 				<div className="actions">
 					{ ticket }

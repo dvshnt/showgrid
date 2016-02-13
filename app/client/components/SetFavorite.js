@@ -54,10 +54,14 @@ class SetFavorite extends Component {
 	}
 
 	render() {
-		var className = (this.state.favorited) ? "icon-heart active" : "icon-heart";
+		var className = (this.state.favorited) ? "favorite active" : "favorite";
+
+		var text = (this.props.label) ? <span className="text">Favorite</span> : "";
 
 		return (
-			<b className={ className } onClick={ this.setShowAsFavorite }></b>
+			<div className={ className }>
+				<span onClick={ this.setShowAsFavorite }><b className="icon-heart"></b>{ text }</span>
+			</div>
 		)
 	}
 };

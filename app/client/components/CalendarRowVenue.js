@@ -50,7 +50,7 @@ export default class CalendarRowVenue extends Component {
 		};
 
 		var image = {
-			'background-image': 'url(' + GridEngine.domain + this.props.venue.image + ')',
+			'background-image': 'url(' + this.props.venue.image + ')',
 			'filter': 'grayscale(1)',
 			'-webkit-filter':'grayscale(1)'
 		};

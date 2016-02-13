@@ -11,6 +11,18 @@ var DateManager = {
 
 		return moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('h A');
 	},
+
+	getFormattedShowTime(date) {
+		return moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('ddd MMM D, h:mm A');
+	},
+
+	getListItemDate(date) {
+		if (moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('mm') !== '00') {
+			return moment(date).format("dddd, MMMM Do h:mm A");
+		}
+
+		return moment(date).format("dddd, MMMM Do h A");
+	},
  
 	getShowsOnDate(day, shows) {
 		var result = [];

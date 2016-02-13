@@ -30,6 +30,7 @@ def extract_artists_data(queryset,update):
 def update_artists_data(queryset):
 	artists = list(queryset)
 	for artist in artists:
+		print artist.name
 		artist.update_all()
 
 

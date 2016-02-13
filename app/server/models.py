@@ -479,7 +479,7 @@ class Address(models.Model):
 class Venue(models.Model):
 	name = models.CharField(max_length=200)
 	address = models.ForeignKey(Address)
-	image = models.ImageField (upload_to='showgrid/img/venues/')
+	image = models.ImageField (upload_to='venues')
 	website = models.URLField()
 	description = models.TextField(default="This is a description")
 	twitter_url = models.CharField(max_length=200, default=None)

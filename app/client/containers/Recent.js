@@ -55,7 +55,7 @@ class Recent extends Component {
 				items.push(<h3>{day}</h3>);
 				last_day = day;
 			}
-			items.push(<Show showStar={true} showTime={true} ticket_price={true} showDate={true} show={show} />)
+			items.push(<Show showGradient={true} showStar={true} ticket_price={true} showDate={true} show={show} />)
 		}
 
 

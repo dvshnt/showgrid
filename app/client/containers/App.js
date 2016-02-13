@@ -12,7 +12,6 @@ import { getUserInfo } from '../actions/index';
 
 var GridEngine = require('../util/GridEngine');
 
-import DocMeta from 'react-doc-meta'
 
 class App extends Component {
 	constructor(props) {
@@ -30,16 +29,12 @@ class App extends Component {
 	}
 
 	render() {
-		var tags = [
-			{name: "description", content: "lorem ipsum dolor"},
-			{itemProp: "name", content: "The Name or Title Here"},
-			{itemProp: "description", content: "This is the page description"},
-			{name: "twitter:card", content: "product"},
-			{name: "twitter:title", content: "Page Title"},
-			{property: "og:title", content: "Title Here"},	
-		]
 		// Injected by React Router
 		var loading = "";
+
+		var location = window.location.href.toString().split(window.location.host)[1];
+
+		var className = (location === "/") ? "splash" : "";
 
 		const { children } = this.props;
 
@@ -49,7 +44,6 @@ class App extends Component {
 
 		return (
 			<div id="container">
-				<DocMeta tags={tags} />
 				<AuthModal />
 				<PhoneModal />
 				<Header />

@@ -66,6 +66,8 @@ class SetAlert extends Component {
 			}
 		}
 
+		if (value.id === -1 ) return false;
+
 		var alertDate = DateManager.getAlertDate(date, value);
 
 
@@ -130,6 +132,8 @@ class SetAlert extends Component {
 		var date = moment(show.date, 'YYYY-MM-DD HH:mm:ssZZ');
 
 		var options = [];
+
+		options.push(<option value="-1" data-value='{id":-1}' selected={ !alert.which }></option>);
 		
 		if(show.onsale){
 			var sale_date = moment(show.onsale, 'YYYY-MM-DD HH:mm:ssZZ');
@@ -180,7 +184,7 @@ class SetAlert extends Component {
 			options.push(<option value="6" data-value='{"id":6, "unit":"days","num":7}' selected={ alert.which === 6 }>1 Week before show</option>);
 		}
 
-		return <select ref="alertSelect" onBlur={this.createAlert} onChange={ this.createAlert }>{ options }</select>;
+		return <select ref="alertSelect" onBlur={ this.createAlert } onChange={ this.createAlert }>{ options }</select>;
 	}
 
 	render() {
@@ -190,7 +194,7 @@ class SetAlert extends Component {
 
 		if (this.state.active) {
 			alertText = DateManager.convertAlertDate(this.state.active.which);
-			alertInfo = <div className="alert-info">{ alertText }</div>;
+			alertInfo = <span className="text alert-info"><b className="icon-alert" onClick={ this.toggleAlert }></b>Alert <span className="option">{ alertText }</span></span>;
 		}
 
 		var artistInfo = (
@@ -201,28 +205,27 @@ class SetAlert extends Component {
 			</div>	
 		);
 
-
-
-		var className = (this.state.open) ? "icon-alert open" : "icon-alert";
+		var className = (this.state.open) ? "alert open" : "alert";
 			className += (this.state.active) ? " active" : "";
 			className += (this.state.sale) ? " sale" : "";
 
 		var options = this.getEligibleAlertTimes();
 
+		var text = (this.props.label) ? <span className="text">Set Alert</span> : "";
 
 		return (
-			<b className={ className } onClick={ this.toggleAlert }>
+			<div className={ className }>
+				<span className="alert-button" onClick={ this.toggleAlert }><b className="icon-alert"></b>{ text }</span>
 				<div className="alert-box">
-					{ artistInfo }
-					Alert me
+					<label>Alert me</label>
 					{ options }
-					<div className="mobile-actions">
+					<div className="actions">
 						<button className="cancel" onClick={ this.toggleAlert }>Cancel</button>
-						<button className="set" onClick={ this.createAlert }>Set Alert</button>
+						<button className="set" onClick={ this.createAlert }>Set</button>
 					</div>
 				</div>
 				{ alertInfo }
-			</b>
+			</div>
 		)
 	}
 };

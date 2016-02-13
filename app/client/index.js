@@ -12,6 +12,7 @@ import Recent from './containers/Recent';
 import Profile from './containers/Profile';
 import Search from './containers/Search';
 import Venue from './containers/Venue';
+import Show from './containers/Show';
 
 import './util/global';
 
@@ -31,12 +32,16 @@ const routes = (
         <ReduxRouter>
 			<Router history={history}>
 				<Route path="/" component={App}>
-					<IndexRoute component={Showgrid}/>
+					<IndexRoute component={Splash}/>
+					
+					<Route path="calendar" component={Showgrid}/>
 					<Route path="recent" component={Recent}/>
 					<Route path="featured" component={Featured}/>
 					<Route path="profile" component={Profile}/>
 					<Route path="search" component={Search}/>
+					
 					<Route path="venue/:id" component={Venue}/>
+					<Route path="show/:id" component={Show}/>
 				</Route>
 			</Router>
         </ReduxRouter>

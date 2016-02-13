@@ -1,0 +1,179 @@
+.panel--item {
+	-webkit-flex:0 0 425px; 
+			flex:0 0 425px; 
+
+	height:600px;
+
+	margin:0 15px;
+
+	background:#ffffff;
+	border-radius:2px;
+
+	-webkit-box-shadow:0 1px 4px rgba(0,0,0,0.15);
+			box-shadow:0 1px 4px rgba(0,0,0,0.15);
+
+
+	& > header {
+		height:30px;
+
+		padding:0 8px;
+
+
+		& > h4.venue {
+			display:inline;
+
+			margin:0;
+
+			color:#ffffff;
+			font-size:16px;
+			font-weight:600;
+			text-align:left;
+			line-height:30px;
+		}
+
+		& span.age {
+			float:right;
+
+			color:#ffffff;
+			font-size:14px;
+			font-weight:200;
+			line-height:30px;
+		}
+	}
+
+	& > .info {
+		position:relative;
+
+		height:500px;
+
+		padding:20px 15px 5px;
+
+
+		.banner {
+			position:absolute;
+			top:0; right:0; bottom:0; left:0;
+
+			z-index:0;
+		}
+
+		.artists {
+			position:absolute;
+			top:0; right:0; bottom:0; left:0;
+
+			padding:0 15px;
+
+			.inner {
+				position:absolute;
+				bottom:15px;
+
+				width:calc(100% - 30px);
+
+
+				h3, h5 {
+					margin:0 0 5px;
+
+					color:#ffffff;
+					font-weight:500;
+				}
+
+				h3 {
+					font-size:22px;
+				}
+				h5 {
+					font-size:14px;
+				}
+
+				article {
+					width:100%;
+					
+					margin:10px 0;
+
+					max-height:70px;
+					overflow:hidden;
+
+					p {
+						color:rgba(255,255,255,0.85);
+						font-size:12px;
+						font-weight:400;
+						line-height:18px;
+
+						background: -webkit-linear-gradient(top, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.9) 50%, rgba(255,255,255,0)  100%);
+						-webkit-background-clip: text;
+						-webkit-text-fill-color: transparent;
+					}
+				}
+
+				.more {
+					display:block;
+
+					width:100%;
+
+					margin-top:15px;
+
+
+					color:#ffffff;
+					font-size:12px;
+					font-weight:500;
+					line-height:24px;
+					text-align:center;
+					text-decoration:underline;
+
+					cursor:pointer;
+				}
+			}
+		}
+	}
+
+	& > footer {
+		height:45px;
+
+		padding:0 15px;
+
+		.all {
+			float:left;
+
+			line-height:45px;
+
+			a.ticket {
+				display:block;
+
+				color:rgb(0,222,144);
+				font-weight:400;
+				text-decoration:none;
+
+				@include transform(scale(1));
+				@include transition(all 0.2s ease);
+
+
+				b {
+					margin-right:6px;
+
+					font-size:20px;
+				}
+
+				&:hover {
+					@include transform(scale(1.1));
+				}
+
+				.price {
+					font-weight:bold;
+				}
+			}
+		}
+
+		.user {
+			float:right;
+
+			line-height:45px;
+
+			b {
+				color:rgba(0,0,0,0.2);
+				font-size:18px;
+
+				margin-right:5px;
+
+				cursor:pointer;
+			}
+		}
+	}
+}

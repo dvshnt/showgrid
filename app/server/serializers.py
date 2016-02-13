@@ -73,6 +73,7 @@ class AlertPanelSerializer(serializers.ModelSerializer):
 class ShowListSerializer(serializers.ModelSerializer):
 	venue = serializers.SerializerMethodField('get_shows_venue')
 	review = serializers.SerializerMethodField('get_shows_review')
+	image = serializers.SerializerMethodField('get_show_img')
 
 	def get_shows_venue(self, obj):
 		serializer = VenueListSerializer(obj.venue)
@@ -83,13 +84,19 @@ class ShowListSerializer(serializers.ModelSerializer):
 			return obj.review.read().decode('utf-8')
 		return ""
 
+	def get_show_img(self, obj):
+		for artist in obj.headliner_artists.all():
+			for image in artist.images.all():
+				return image.url
+		return ""
+
 	class Meta:
 		model = Show
 		# ADD BACK CANCELLED
 		fields = (
 			'id', 'created_at', 'title', 'headliners', 'openers', 'website', 
 			'star', 'review', 'date', 'ticket', 'price', 'soldout', 
-			'onsale', 'age', 'venue', 'banner'
+			'onsale', 'age', 'venue', 'banner', 'image'
 		)
 
 
@@ -106,7 +113,7 @@ class AlertSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Alert
 		fields = (
-			'id', 'date', 'sent', 'user', 'show', 'sale'
+			'id', 'date', 'sent', 'user', 'show', 'which', 'sale'
 		)
 
 
@@ -115,6 +122,7 @@ class AlertSerializer(serializers.ModelSerializer):
 class ShowSerializer(serializers.ModelSerializer):
 	venue = serializers.SerializerMethodField('get_show_venue')
 	review = serializers.SerializerMethodField('get_shows_review')
+	image = serializers.SerializerMethodField('get_show_img')
 
 	def get_shows_review(self, obj):
 		if obj.review:
@@ -126,13 +134,19 @@ class ShowSerializer(serializers.ModelSerializer):
 		serializer = VenueListSerializer(data)
 		return serializer.data
 
+	def get_show_img(self, obj):
+		for artist in obj.headliner_artists.all():
+			for image in artist.images.all():
+				return image.url
+		return ""
+
 	class Meta:
 		model = Show
 		# ADD BACK CANCELLED
 		fields = (
 			'id', 'created_at', 'title', 'headliners', 'openers', 'website', 
 			'star', 'review', 'date', 'ticket', 'price', 'soldout', 
-			'onsale', 'age', 'venue', 'banner'
+			'onsale', 'age', 'venue', 'banner', 'image'
 		)
 
 
