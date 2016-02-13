@@ -34,7 +34,8 @@ urlpatterns = [
     url(r'^venue/\d+$', views.index, name='venues'),
 
     ##static issues
-    url(r'^issue/(?P<id>\d+)$$', views.Issues.as_view(), name='issues'),
+    url(r'^issue/unsubscribe/(?P<hash>\d+)$', views.IssueUnsubscribe, name='issue unsubscribe'),
+    url(r'^issue/(?P<id>\d+)$', views.Issues.as_view(), name='issues'),
 
     ## user actions
     url(r'^user/(?P<action>\w+)$', views.UserActions.as_view(), name='user actions'),

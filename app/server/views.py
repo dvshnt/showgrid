@@ -524,40 +524,26 @@ def check_venues(request):
 
 
 from django.template.loader import get_template
+import hashlib
+
+
+unsub_template = get_template('issues/unsubscribe.html')
+
+@api_view(['GET'])
+def IssueUnsubscribe(request,hash):
+	try:
+		sub = Subscriber.objects.get(hash_name = hash)
+		email = sub.email
+		sub.delete()
+		print 'deleted '+email
+	except:
+		print 'no sub found with hash '+hash
+	return HttpResponse(unsub_template.render())
+
 
 
 
 class Issues(APIView):
-	def render(self,issue):
-		
-		##move this out of render function##
-		issue_template = get_template('issues/weekly_issue_live.html')
-
-		issue_shows = []
-		shows = Show.objects.filter(issue=issue)
-		for show in shows:
-			show_data = {
-				"venue_name" : show.venue.name,
-				"title" : show.title,
-				"openers": show.openers,
-				"headliners": show.headliners,
-				"date_day" : show.date.strftime('%a'),
-				"date_number" : show.date.day,
-				"date_month" : show.date.strftime('%b'), 
-				"date_time" : show.date.strftime('%X'),
-				"age_string" : render_age(show.age),
-			}
-			issue_shows.append(show_data)
-
-		html = issue_template.render({
-			"shows": issue_shows,
-			"article": issue.article.json_max(),
-			"name": issue.name_id,
-			"issue_id":issue.id
-		})
-		return html
-
-
 
 	def get(self, request, id=None):
 		if id == None:
@@ -566,6 +552,8 @@ class Issues(APIView):
 			print id
 			try:
 				issue = Issue.objects.get(name_id=id)
-				return HttpResponse(self.render(issue))
-			except:
+				issue_template = get_template('issues/weekly_issue_live.html')
+				return HttpResponse(issue.render(issue_template,None))
+			except Exception:
+				print Exception
 				return HttpResponseNotFound("<h3>this issue does not exist!</h3>")
