@@ -1,4 +1,5 @@
 <html>
+
 	<body>
 		<style>
 			body{
@@ -8,19 +9,23 @@
 				background: #F9F9F7;
 			}
 			.show{
-				/* height: auto; */
-				background: #FBFBFB;
+				height: auto; */
+				
 				position: relative;
 				height: auto;
 				border-top: 1px solid #F1F1F1;
+				box-shadow: 0px 1px 0px #F1F1F1;
 				width: 100%;
 				margin: 0;
-				/* border-radius: 4px; */
+				padding: 0;
+				margin-bottom: -15px;
 
+				background: #FBFBFB;
+				/* border-radius: 4px; */
 			}
 		
 			.date{
-				box-shadow: 0px 0px 2px rgba(0,0,0,0.04);
+				/*box-shadow: 0px 0px 2px rgba(0,0,0,0.04);*/
 				/* z-index: 2; */
 				box-sizing: border-box;
 				float: left;
@@ -30,7 +35,7 @@
 				margin-right: 17px;
 				width: 90px;
 				background: #fff;
-				height: 130px;
+				height: 120px;
 				float: left;
 				text-align: center;
 				border-right: 1px solid #F1F1F1;
@@ -75,7 +80,7 @@
 				position: relative;
 				width: auto;
 				height: 40px;
-				margin-top: -10px;
+				margin-top: 0px;
 				float: bottom;
 				bottom: 0;
 				margin-right: 10px;
@@ -264,26 +269,27 @@
 					<div class = 'month'> {{show.date_month}} </div>
 					<div class = 'date_time'><p>{{ show.date_time }}</p></div>
 				</div>
+				<div class = 'show_info'>
+					<a href = '{{show.venue_link}}'><div class = 'info_item venue_name' style='color: {{show.venue_secondary}}; background: {{show.venue_primary}}; border-color:#fff;'>
+						{{ show.venue_name }}
+					</div></a>
+					<div class = 'info_item age_string'>
+						{{ show.age_string }}
+					</div>
+					<div class = 'info_item '>
+						
+					</div>
+					
+				</div>
 				<div class = 'show_title'>
-					<!-- {{ show.title }} -->
+					
 					<p>
 						<a href = '{{show.link}}' class = 'show_openers'> {{ show.openers }}</a>
 						<a href = '{{show.link}}' class = 'show_headliners'> {{ show.headliners }}</a>
 					</p>
 					
 				</div>
-				<div class = 'show_info'>
-						<a href = '{{show.venue_link}}'><div class = 'info_item venue_name' style='color: {{show.venue_secondary}}; background: {{show.venue_primary}}; border-color:#fff;'>
-							{{ show.venue_name }}
-						</div></a>
-						<div class = 'info_item age_string'>
-							{{ show.age_string }}
-						</div>
-						<div class = 'info_item '>
-							
-						</div>
-					</div>		
-				</div>
+
 			</div>
 		{% endfor %}
 		<div class = 'footer'>

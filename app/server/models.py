@@ -42,6 +42,9 @@ from django.db.models import Q
 from django.template.loader import get_template
 from django.db.models.signals import post_save, post_delete, pre_save
 
+import operator
+
+
 #pretty colors 
 def prRed(prt): print("\033[91m {}\033[00m" .format(prt))
 def prGreen(prt): print("\033[92m {}\033[00m" .format(prt))
@@ -994,6 +997,8 @@ def render_age(age):
 		return ''
 
 
+def sort_shows(self,show):
+	return int(show["date_number"])
 
 class Issue(models.Model):
 	def __unicode__ (self):
@@ -1030,7 +1035,9 @@ class Issue(models.Model):
 	#render issue
 	def render(self,template,sub):
 		issue_shows = []
-		shows = Show.objects.filter(issue=self)
+		shows = Show.objects.filter(issue=self).order_by('date')
+
+
 		for show in shows:
 
 			if show.openers != None and show.headliners != None and show.headliners != '' and show.openers != '':
@@ -1053,12 +1060,14 @@ class Issue(models.Model):
 				"venue_letter": show.venue.name[0],
 				"venue_link": "http://showgrid.com/venue/"+str(show.venue.id),
 				"link": show.website
-			}			
+			}	
 			issue_shows.append(show_data)
 		if sub != None:
 			unsub_link = "http://showgrid.com/issue/unsubscribe/"+sub.hash_name
 		else:
 			unsub_link = None
+
+
 		
 		html = template.render({
 			"issue_link":"http://showgrid.com/issue/"+str(self.name_id),
