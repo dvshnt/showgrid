@@ -545,7 +545,6 @@ def IssueUnsubscribe(request,hash):
 
 
 class Issues(APIView):
-
 	def get(self, request, id=None):
 		if id == None:
 			print "NO ID"
@@ -554,7 +553,7 @@ class Issues(APIView):
 			try:
 				issue = Issue.objects.get(name_id=id)
 				issue_template = get_template('issues/issue_live.html')
-				return HttpResponse(issue.render(issue_template,None))
+				return HttpResponse(issue.render_live(issue_template,None))
 			except Exception:
 				raise
 				return HttpResponseNotFound("<h3>this issue does not exist!</h3>")

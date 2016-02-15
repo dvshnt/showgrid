@@ -941,7 +941,7 @@ class Alert(models.Model):
 
 
 
-mail_template = get_template('issues/issue_mail_inlined.html')
+mail_template = get_template('issues/issue_mail.html')
 
 
 class Subscriber(models.Model):
@@ -964,7 +964,7 @@ class Subscriber(models.Model):
 
 		title = 'Showgrid Issue '+issue.name_id
 		text_alt = 'visit http://showgrid.com/issue/'+issue.name_id
-		html_content = issue.render(mail_template,self)
+		html_content = issue.render_mail(mail_template,self)
 		msg =  mail.EmailMultiAlternatives(title,text_alt,EMAIL_HOST_USER,[email])
 		msg.attach_alternative(html_content, "text/html")
 		print(html_content)
@@ -1032,7 +1032,9 @@ class Issue(models.Model):
 
 
 	#render issue
-	def render(self,template,sub):
+
+	#render issue
+	def render_live(self,template,sub):
 		issue_shows = []
 		shows = Show.objects.filter(issue=self).order_by('date')
 
@@ -1077,6 +1079,75 @@ class Issue(models.Model):
 			"unsub_link": unsub_link,
 			"spotify_embed": self.spotify_embed,
 			"play_button" : 'http://localhost:8000/static/play_icon.png'
+		})
+
+	
+
+		return html
+	
+
+
+	def render_mail(self,template,sub):
+		issue_shows = []
+		shows = Show.objects.filter(issue=self).order_by('date')
+
+
+		last_date = None
+
+		dates = []
+
+		date = None
+
+		for show in shows:
+
+
+			show_data = {
+				"venue_name" : show.venue.name,
+				"title" : show.title,
+				"openers": show.openers,
+				"headliners": show.headliners,
+				"show_time" : show.date.strftime('%I:%M %p'),
+				"age_string" : render_age(show.age),
+				"venue_primary":show.venue.primary_color,
+				"venue_secondary":show.venue.secondary_color,
+				"venue_letter": show.venue.name[0],
+				"venue_link": "http://showgrid.com/venue/"+str(show.venue.id),
+				"logo_url":"img/sg-logo.png",
+				"link": show.website
+			}
+
+			if date == None or last_date != show.date:
+				date = {
+					"date_day" : show.date.strftime('%a'),
+					"date_number" : show.date.day,
+					"date_month" : show.date.strftime('%b'), 
+					"shows": []
+				}
+				dates.append(date)
+			
+
+			date["shows"].append(show_data)
+			last_date = show.date
+				
+
+		if sub != None:
+			unsub_link = "http://showgrid.com/issue/unsubscribe/"+sub.hash_name
+		else:
+			unsub_link = None
+
+
+		
+		html = template.render({
+			"start_date": dates[0]['date_month'] + ' ' + str(dates[0]['date_number']),
+			"end_date": dates[len(dates)-1]['date_month'] + ' ' + str(dates[len(dates)-1]['date_number']),
+			"issue_link":"http://showgrid.com/issue/"+str(self.name_id),
+			"dates": dates,
+			"article": self.article.json_max(),
+			"name": self.name_id,
+			"id":self.id,
+			"logo_url":"http://showgrid.com/static/showgrid/img/sg--fb.gif",
+			"unsub_link": unsub_link,
+			"spotify_embed": self.spotify_embed,
 		})
 
 	
