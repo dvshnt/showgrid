@@ -551,7 +551,7 @@ class Issues(APIView):
 		else:
 			print id
 			try:
-				issue = Issue.objects.get(name_id=id)
+				issue = Issue.objects.get(id=id)
 				issue_template = get_template('issues/issue_live.html')
 				return HttpResponse(issue.render_live(issue_template,None))
 			except Exception:

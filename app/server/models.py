@@ -962,8 +962,8 @@ class Subscriber(models.Model):
 		else:
 			email = self.email
 
-		title = 'Showgrid Issue '+issue.name_id
-		text_alt = 'visit http://showgrid.com/issue/'+issue.name_id
+		title = 'Showgrid Weekly Issue'
+		text_alt = 'visit http://showgrid.com/issue/'+issue.id
 		html_content = issue.render_mail(mail_template,self)
 		msg =  mail.EmailMultiAlternatives(title,text_alt,EMAIL_HOST_USER,[email])
 		msg.attach_alternative(html_content, "text/html")
@@ -1008,7 +1008,6 @@ class Issue(models.Model):
 		return self.tag
 
 	tag = models.CharField(max_length=255,blank=False,default='Issue')
-	name_id = models.CharField(max_length=255,blank=False,unique=True)
 	start_date = models.DateTimeField(blank=False)
 	end_date = models.DateTimeField(blank=False)
 	sent = models.BooleanField(default=False)
@@ -1074,14 +1073,12 @@ class Issue(models.Model):
 
 		
 		html = template.render({
-			"issue_link": HOST+"/issue/"+str(self.name_id),
 			"shows": issue_shows,
 			"article": self.article.json_max(),
-			"name": self.name_id,
-			"issue_id":self.name_id,
+			"name": self.id,
+			"issue_id":self.id,
 			"unsub_link": unsub_link,
 			"spotify_embed": self.spotify_embed,
-		
 		})
 
 	
@@ -1143,10 +1140,9 @@ class Issue(models.Model):
 		html = template.render({
 			"start_date": dates[0]['date_month'] + ' ' + str(dates[0]['date_number']),
 			"end_date": dates[len(dates)-1]['date_month'] + ' ' + str(dates[len(dates)-1]['date_number']),
-			"issue_link":HOST+"/issue/"+str(self.name_id),
+			"issue_link":HOST+"/issue/"+str(self.id),
 			"dates": dates,
 			"article": self.article.json_max(),
-			"name": self.name_id,
 			"id":self.id,
 			"logo_url": HOST+"/static/showgrid/img/sg--fb.gif",
 			"unsub_link": unsub_link,

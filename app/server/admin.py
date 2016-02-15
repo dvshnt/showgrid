@@ -249,7 +249,7 @@ def mail_issues(queryset):
 	issues = list(queryset)
 	for issue in issues:
 		if issue.sent == True:
-			print prRed('issue already mailed, override sent field manually :'+issue.name_id)
+			print prRed('issue already mailed, override sent field manually :'+issue.id)
 		else:
 			issue.mail()
 		
@@ -298,9 +298,9 @@ sync_issue_shows_action.short_description = "Sync Shows to Issue"
 
 
 class IssueAdmin(admin.ModelAdmin):
-	list_display = ['tag','shows_count','name_id','sent','start_date','end_date']
-	ordering = ['name_id','sent','start_date','end_date']
-	fields = ('spotify_embed','tag','name_id','start_date','end_date','article','sent')
+	list_display = ['id','tag','shows_count','sent','start_date','end_date']
+	ordering = ['sent','start_date','end_date']
+	fields = ('spotify_embed','tag','start_date','end_date','article','sent')
 	list_filter =  ('sent',)
 	actions = [mail_issues_action,sync_issue_shows_action]
 
