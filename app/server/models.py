@@ -1028,7 +1028,6 @@ class Issue(models.Model):
 			show.issue = self
 			show.save()
 		self.shows_count = len(issue_shows)
-		self.render()
 		
 
 
