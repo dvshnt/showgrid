@@ -1000,6 +1000,9 @@ def render_age(age):
 def sort_shows(self,show):
 	return int(show["date_number"])
 
+
+HOST = "http://localhost:8000"
+
 class Issue(models.Model):
 	def __unicode__ (self):
 		return self.tag
@@ -1059,26 +1062,26 @@ class Issue(models.Model):
 				"venue_primary":show.venue.primary_color,
 				"venue_secondary":show.venue.secondary_color,
 				"venue_letter": show.venue.name[0],
-				"venue_link": "http://showgrid.com/venue/"+str(show.venue.id),
+				"venue_link": HOST+"/venue/"+str(show.venue.id),
 				"link": show.website
 			}	
 			issue_shows.append(show_data)
 		if sub != None:
-			unsub_link = "http://showgrid.com/issue/unsubscribe/"+sub.hash_name
+			unsub_link = HOST+"/issue/unsubscribe/"+sub.hash_name
 		else:
 			unsub_link = None
 
 
 		
 		html = template.render({
-			"issue_link":"http://showgrid.com/issue/"+str(self.name_id),
+			"issue_link": HOST+"/issue/"+str(self.name_id),
 			"shows": issue_shows,
 			"article": self.article.json_max(),
 			"name": self.name_id,
 			"issue_id":self.name_id,
 			"unsub_link": unsub_link,
 			"spotify_embed": self.spotify_embed,
-			"play_button" : 'http://localhost:8000/static/play_icon.png'
+		
 		})
 
 	
@@ -1111,7 +1114,7 @@ class Issue(models.Model):
 				"venue_primary":show.venue.primary_color,
 				"venue_secondary":show.venue.secondary_color,
 				"venue_letter": show.venue.name[0],
-				"venue_link": "http://showgrid.com/venue/"+str(show.venue.id),
+				"venue_link": HOST+"/venue/"+str(show.venue.id),
 				"logo_url":"img/sg-logo.png",
 				"link": show.website
 			}
@@ -1131,7 +1134,7 @@ class Issue(models.Model):
 				
 
 		if sub != None:
-			unsub_link = "http://showgrid.com/issue/unsubscribe/"+sub.hash_name
+			unsub_link = HOST+"/issue/unsubscribe/"+sub.hash_name
 		else:
 			unsub_link = None
 
@@ -1140,14 +1143,15 @@ class Issue(models.Model):
 		html = template.render({
 			"start_date": dates[0]['date_month'] + ' ' + str(dates[0]['date_number']),
 			"end_date": dates[len(dates)-1]['date_month'] + ' ' + str(dates[len(dates)-1]['date_number']),
-			"issue_link":"http://showgrid.com/issue/"+str(self.name_id),
+			"issue_link":HOST+"/issue/"+str(self.name_id),
 			"dates": dates,
 			"article": self.article.json_max(),
 			"name": self.name_id,
 			"id":self.id,
-			"logo_url":"http://showgrid.com/static/showgrid/img/sg--fb.gif",
+			"logo_url": HOST+"/static/showgrid/img/sg--fb.gif",
 			"unsub_link": unsub_link,
 			"spotify_embed": self.spotify_embed,
+			"host": HOST,
 		})
 
 	
