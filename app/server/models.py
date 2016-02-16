@@ -15,6 +15,8 @@ from jsonfield import JSONField
 import string
 import PIL 
 from StringIO import StringIO
+from tinymce.models import HTMLField
+
 
 
 from django.db import models
@@ -109,7 +111,7 @@ def SpotifyArtistParser(artist,data):
 
 
 
-ISSUES_DIR =  settings.ISSUES_DIR
+# ISSUES_DIR =  settings.ISSUES_DIR
 MAX_BIO = settings.ECHONEST_MAX_BIO
 MAX_ARTICLES = settings.ECHONEST_MAX_ARTICLES
 EMAIL_HOST_USER = settings.EMAIL_HOST_USER
@@ -624,7 +626,7 @@ class Show(models.Model):
 
 	age = models.PositiveSmallIntegerField(default=0, blank=True)
 
-	issue = models.ForeignKey('Issue',null=True)
+	issue = models.ForeignKey('Issue',null=True,blank=True)
 	#extract metadata
 	extract_queued = models.BooleanField(default=False)
 
@@ -964,7 +966,7 @@ class Subscriber(models.Model):
 
 		title = 'Showgrid Weekly Issue'
 		text_alt = 'visit http://showgrid.com/issue/'+issue.id
-		html_content = issue.render_mail(mail_template,self)
+		html_content = issue.render(mail_template,self)
 		msg =  mail.EmailMultiAlternatives(title,text_alt,EMAIL_HOST_USER,[email])
 		msg.attach_alternative(html_content, "text/html")
 		print(html_content)
@@ -1005,15 +1007,19 @@ HOST = "http://localhost:8000"
 
 class Issue(models.Model):
 	def __unicode__ (self):
-		return self.tag
+		return self.tag or u''
+	
+	intro = HTMLField(default="")
+	spotify_embed = models.CharField(max_length=255,blank=True,null=True)
+	spotify_url = models.URLField(blank=True,null=True)
 
 	tag = models.CharField(max_length=255,blank=False,default='Issue')
+
 	start_date = models.DateTimeField(blank=False)
 	end_date = models.DateTimeField(blank=False)
-	sent = models.BooleanField(default=False)
-	article = models.ForeignKey('Article')
+
 	shows_count = models.PositiveSmallIntegerField(default=0)
-	spotify_embed = models.CharField(max_length=255,blank=True,null=True)
+	sent = models.BooleanField(default=False)
 	
 
 	def sync_shows(self):
@@ -1028,65 +1034,10 @@ class Issue(models.Model):
 			show.issue = self
 			show.save()
 		self.shows_count = len(issue_shows)
-		
-
-
-
-	#render issue
-
-	#render issue
-	def render_live(self,template,sub):
-		issue_shows = []
-		shows = Show.objects.filter(issue=self).order_by('date')
-
-
-		for show in shows:
-
-			if show.openers != None and show.headliners != None and show.headliners != '' and show.openers != '':
-				openers = show.openers + ' |'
-			else:
-				openers = show.openers
-
-			show_data = {
-				"venue_name" : show.venue.name,
-				"title" : show.title,
-				"openers": openers,
-				"headliners": show.headliners,
-				"date_day" : show.date.strftime('%a'),
-				"date_number" : show.date.day,
-				"date_month" : show.date.strftime('%b'), 
-				"date_time" : show.date.strftime('%I:%M %p'),
-				"age_string" : render_age(show.age),
-				"venue_primary":show.venue.primary_color,
-				"venue_secondary":show.venue.secondary_color,
-				"venue_letter": show.venue.name[0],
-				"venue_link": HOST+"/venue/"+str(show.venue.id),
-				"link": show.website
-			}	
-			issue_shows.append(show_data)
-		if sub != None:
-			unsub_link = HOST+"/issue/unsubscribe/"+sub.hash_name
-		else:
-			unsub_link = None
-
-
-		
-		html = template.render({
-			"shows": issue_shows,
-			"article": self.article.json_max(),
-			"name": self.id,
-			"issue_id":self.id,
-			"unsub_link": unsub_link,
-			"spotify_embed": self.spotify_embed,
-		})
-
-	
-
-		return html
 	
 
 
-	def render_mail(self,template,sub):
+	def render(self,template,sub):
 		issue_shows = []
 		shows = Show.objects.filter(issue=self).order_by('date')
 
@@ -1101,55 +1052,55 @@ class Issue(models.Model):
 
 
 			show_data = {
-				"venue_name" : show.venue.name,
-				"title" : show.title,
-				"openers": show.openers,
+				"show_time": show.date.strftime('%-I:%M %p'),
+				"age_string": render_age(show.age),
+
+				"venue_name": show.venue.name,
+				"venue_primary": show.venue.primary_color,
+				"venue_secondary": show.venue.secondary_color,
+				
+				"venue_link": HOST + "/venue/" + str(show.venue.id),
+
+				"title": show.title,
 				"headliners": show.headliners,
-				"show_time" : show.date.strftime('%I:%M %p'),
-				"age_string" : render_age(show.age),
-				"venue_primary":show.venue.primary_color,
-				"venue_secondary":show.venue.secondary_color,
-				"venue_letter": show.venue.name[0],
-				"venue_link": HOST+"/venue/"+str(show.venue.id),
-				"logo_url":"img/sg-logo.png",
+				"openers": show.openers,
+
 				"link": show.website
 			}
 
 			if date == None or last_date != show.date:
 				date = {
-					"date_day" : show.date.strftime('%a'),
-					"date_number" : show.date.day,
-					"date_month" : show.date.strftime('%b'), 
+					"date_day": show.date.strftime('%a'),
+					"date_number": show.date.day,
+					"date_month": show.date.strftime('%b'), 
 					"shows": []
 				}
 				dates.append(date)
 			
-
 			date["shows"].append(show_data)
 			last_date = show.date
 				
 
 		if sub != None:
-			unsub_link = HOST+"/issue/unsubscribe/"+sub.hash_name
+			unsub_link = HOST + "/issue/unsubscribe/" + sub.hash_name
 		else:
 			unsub_link = None
 
-
 		
 		html = template.render({
-			"start_date": dates[0]['date_month'] + ' ' + str(dates[0]['date_number']),
-			"end_date": dates[len(dates)-1]['date_month'] + ' ' + str(dates[len(dates)-1]['date_number']),
-			"issue_link":HOST+"/issue/"+str(self.id),
-			"dates": dates,
-			"article": self.article.json_max(),
-			"id":self.id,
-			"logo_url": HOST+"/static/showgrid/img/sg--fb.gif",
-			"unsub_link": unsub_link,
-			"spotify_embed": self.spotify_embed,
-			"host": HOST,
-		})
+			"id": self.id,
 
-	
+			"start_date": self.start_date,
+			"end_date": self.end_date,
+			"dates": dates,
+
+			"intro": self.intro,
+			"spotify_embed": self.spotify_embed,
+			"spotify_url": self.spotify_url,
+
+			"issue_link": HOST + "/issue/" + str(self.id),
+			"unsub_link": unsub_link
+		})
 
 		return html
 	
