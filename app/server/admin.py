@@ -304,11 +304,12 @@ class IssueAdmin(admin.ModelAdmin):
 	list_filter =  ('sent',)
 	actions = [mail_issues_action,sync_issue_shows_action]
 
+class SubAdmin(admin.ModelAdmin):
+	fields = ('email','user')
 
 
 
-
-admin.site.register(Subscriber)
+admin.site.register(Subscriber,SubAdmin)
 admin.site.register(Address)
 admin.site.register(Venue)
 admin.site.register(ShowgridUser)

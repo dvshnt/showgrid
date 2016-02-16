@@ -967,12 +967,18 @@ mail_template = get_template('issues/issue_mail.html')
 
 class Subscriber(models.Model):
 	def __unicode__ (self):
-		return self.email
-	email = models.EmailField(_('email address'), unique=True,blank=False)
+		if self.email == None or self.email == '' :
+			return self.user.email
+		else:
+			return self.email
+	email = models.EmailField(_('email address'), unique=True,blank=True)
 	user = models.ForeignKey('ShowgridUser',null=True)
-	hash_name =  models.CharField(unique=True,blank=False,max_length=255,null=False)
+	hash_name =  models.CharField(unique=True,max_length=255,blank=True)
 	@receiver(pre_save)
 	def my_callback(sender, instance, *args, **kwargs):
+		if not hasattr(instance, 'email') and not hasattr(instance, 'user'):
+			instance.delete()
+
 		instance.hash_name = ''
 		for x in range(0, 10):
 			instance.hash_name += random.choice(string.letters)
