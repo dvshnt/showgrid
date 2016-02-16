@@ -13,7 +13,7 @@ from django.views import static
 urlpatterns = [
 
     ## Standard Django admin endpoints for a crude CMS
-    # url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
 
     ## version/ping
     # url(r'^version/','server.views.version',name='version'),

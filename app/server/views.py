@@ -78,11 +78,11 @@ def list_signup(request):
 	except ValidationError:
 		return Response({"msg": "bad_email"}, status=status.HTTP_400_BAD_REQUEST)
 
-	users = ListSignup.objects.filter(email=email)
+	users = Subscriber.objects.filter(email=email)
 	if len(users) > 0:
 		return Response({"msg": "user_exists"}, status=status.HTTP_409_CONFLICT)
 
-	user = ListSignup(email=email)
+	user = Subscriber(email=email)
 	user.save()
 
 	return Response()
