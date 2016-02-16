@@ -1020,6 +1020,8 @@ class Issue(models.Model):
 
 	shows_count = models.PositiveSmallIntegerField(default=0)
 	sent = models.BooleanField(default=False)
+
+	timezone =  models.CharField(max_length=255,default='US/Central')
 	
 
 	def sync_shows(self):
@@ -1034,6 +1036,8 @@ class Issue(models.Model):
 			show.issue = self
 			show.save()
 		self.shows_count = len(issue_shows)
+		print len(issue_shows)
+		self.save()
 	
 
 
@@ -1049,10 +1053,11 @@ class Issue(models.Model):
 		date = None
 
 		for show in shows:
-
+			localtz = pytz.timezone(self.timezone)
+			s_date = show.date.astimezone(localtz)
 
 			show_data = {
-				"show_time": show.date.strftime('%-I:%M %p'),
+				"show_time": s_date.strftime('%-I:%M %p'),
 				"age_string": render_age(show.age),
 
 				"venue_name": show.venue.name,
@@ -1068,17 +1073,19 @@ class Issue(models.Model):
 				"link": show.website
 			}
 
-			if date == None or last_date != show.date:
+			
+
+			if date == None or last_date != s_date.day:
 				date = {
-					"date_day": show.date.strftime('%a'),
-					"date_number": show.date.day,
-					"date_month": show.date.strftime('%b'), 
+					"date_day": s_date.strftime('%a'),
+					"date_number": s_date.day,
+					"date_month": s_date.strftime('%b'), 
 					"shows": []
 				}
 				dates.append(date)
 			
 			date["shows"].append(show_data)
-			last_date = show.date
+			last_date = s_date.day
 				
 
 		if sub != None:
