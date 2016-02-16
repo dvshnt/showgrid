@@ -44,6 +44,10 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 from server.models import *
 from server.serializers import *
 
+from django.core.validators import validate_email
+from django.core.validators import ValidationError
+
+
 import dateutil.parser
 import re
 def index(request, year=None, month=None, day=None):
@@ -55,6 +59,34 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 
 def version(request):
 	return HttpResponse(VERSION)
+
+
+
+def splash(request):
+	return render(request, "splash.html")
+
+
+@api_view(['POST'])
+def list_signup(request):
+	email = request.POST['email']
+
+	if email == None:
+		return Response({"msg": "no_email"}, status=status.HTTP_400_BAD_REQUEST)
+
+	try:
+		validate_email(email)
+	except ValidationError:
+		return Response({"msg": "bad_email"}, status=status.HTTP_400_BAD_REQUEST)
+
+	users = ListSignup.objects.filter(email=email)
+	if len(users) > 0:
+		return Response({"msg": "user_exists"}, status=status.HTTP_409_CONFLICT)
+
+	user = ListSignup(email=email)
+	user.save()
+
+	return Response()
+
 
 
 #signup a user and respond with token or 500 error.
