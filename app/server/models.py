@@ -965,7 +965,7 @@ class Subscriber(models.Model):
 			email = self.email
 
 		title = 'Showgrid Weekly Issue'
-		text_alt = 'visit http://showgrid.com/issue/'+issue.id
+		text_alt = 'visit http://showgrid.com/issue/'+str(issue.id)
 		html_content = issue.render(mail_template,self)
 		msg =  mail.EmailMultiAlternatives(title,text_alt,EMAIL_HOST_USER,[email])
 		msg.attach_alternative(html_content, "text/html")
