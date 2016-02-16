@@ -39,7 +39,7 @@
 				pointer-events: auto;
 				cursor: default;
 			}
-			table[class=devicewidth] {width: 440px!important;text-align:center!important;}
+			table[class=devicewidth], table[class=fullWidth] {width: 440px!important;text-align:center!important;}
 			table[class=devicewidthinner] {width: 420px!important;text-align:center!important;}
 			img[class=banner] {width: 440px!important;height:220px!important;}
 			img[class=colimg2] {width: 440px!important;height:220px!important;}
@@ -58,12 +58,20 @@
 				pointer-events: auto;
 				cursor: default;
 			}
-			table[class=devicewidth] {width: 280px!important;text-align:center!important;}
-			table[class=devicewidthinner] {width: 260px!important;text-align:center!important;}
-			img[class=banner] {width: 280px!important;height:140px!important;}
-			img[class=colimg2] {width: 280px!important;height:140px!important;}
+			table[class=devicewidth] {width: 340px !important;text-align:center !important;}
+			table[class=fullWidth] {width: 100% !important;text-align:center!important;}
+			table[class=devicewidthinner] {width: 320px !important;text-align:center !important;}
+			table[class=mobile-center] {width:340px !important; text-align:center !important;}
+			table[class=row-date] { height:40px !important; width:40px !important; }
+			table[class=row-date] td[class=date_number] { font-size:18px !important; line-height:26px !important; height:auto !important;}
+			table[class=row-date] td[class=date_day], table[class=row-date] td[class=date_month] { line-height:14px !important; }
+
+			img[class=banner] {width: 340px !important;height:140px !important;}
+			img[class=colimg2] {width: 340px !important;height:140px !important;}
 			td[class=mobile-hide]{display:none!important;}
-			td[class="padding-bottom25"]{padding-bottom:25px!important;}
+			td[class="padding-bottom25"]{padding-bottom:25px !important;}
+
+			iframe[class=playlist] {width:340px !important; height:420px !important;}
 		}
 	</style>
 </head>
@@ -79,7 +87,7 @@
 						<table width="600" height="30" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
 							<tbody>
 								<tr>
-									<td align="center" valign="top" style="font-family:Helvetica,arial,sans-serif; font-size:10px; color:#999999" st-content="viewonline">
+									<td align="center" valign="middle" style="font-family:Helvetica,arial,sans-serif; font-size:10px; color:#999999" st-content="viewonline">
 										Showgrid Weekly Digest
 
 										&nbsp;&nbsp;|&nbsp;&nbsp;
@@ -112,10 +120,10 @@
 							<tbody>
 								<tr>
 									<td>
-										<table width="240" align="left" border="0" cellpadding="0" cellspacing="0">
+										<table class="mobile-center" width="240" align="left" border="0" cellpadding="0" cellspacing="0">
 											<tbody>
 												<tr>
-													<td align="left" valign="middle" style="font-family: Helvetica, arial, sans-serif; font-size: 14px;color: #666666" st-content="viewonline" class="mobile-hide">
+													<td valign="middle" style="font-family: Helvetica, arial, sans-serif; font-size: 14px;color: #666666" st-content="viewonline">
 														<a href="http://showgrid.com" style="text-decoration: none; color: #666666">
 															<img src="{% static 'showgrid/img/showgrid--mark-black.png' %}" alt="Showgrid" border="0" width="169" style="display:inline; border:none; outline:none; text-decoration:none;">
 															<span style="display:inline-block; margin-left:10px; line-height:50px; vertical-align:top; color:#000000;"> Digest </span>
@@ -127,7 +135,7 @@
 										<table width="170" align="right" border="0" cellpadding="0" cellspacing="0">
 											<tbody>
 												<tr>
-													<td align="right" height="50" valign="middle" style="font-family:Helvetica, arial, sans-serif; font-size: 11px;" st-content="viewonline" class="mobile-hide">
+													<td class="mobile-hide" align="right" height="50" valign="middle" style="font-family:Helvetica, arial, sans-serif; font-size: 11px;" st-content="viewonline">
 														<iframe src="https://embed.spotify.com/follow/1/?uri=spotify:user:showgrid&size=basic&theme=light&show-count=0" width="100" height="25" scrolling="no" frameborder="0" style="border:none; overflow:hidden; positio" allowtransparency="true"></iframe>
 													</td>
 												</tr>
@@ -197,7 +205,7 @@
 
 								<!-- Spacing -->
 								<tr>
-									<td height="20" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
+									<td height="15" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
 								</tr>
 								<!-- Spacing -->
 
@@ -206,7 +214,7 @@
 								<tr>
 									<td align="center" st-image="banner-image" style="font-family:Helvetica, arial, sans-serif; font-size:24px;">
 										<div class="imgpop">
-											<iframe src="https://embed.spotify.com/?uri=
+											<iframe class="playlist" src="https://embed.spotify.com/?uri=
 											{{ spotify_embed }}&theme=white" width="400" height="480" frameborder="0" allowtransparency="true"></iframe>
 										</div>
 									</td>
@@ -216,7 +224,7 @@
 
 								<!-- Spacing -->
 								<tr>
-									<td height="40" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
+									<td height="20" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
 								</tr>
 								<!-- Spacing -->
 
@@ -267,7 +275,7 @@
 								<!-- Start Show List Block -->
 								<tr>
 									<td>
-										<table width="600" align="center" cellpadding="0" cellspacing="0" border="0" class="devicewidthinner">
+										<table width="600" align="center" cellpadding="0" cellspacing="0" border="0" class="devicewidth">
 											<tbody>
 
 												<!-- Start Section Title -->
@@ -296,20 +304,20 @@
 															<tbody>
 																<tr>
 																	<td style="border:1px solid #e8e8e8; border-radius:2px;">
-																		<table width="60" height="60" align="center" cellpadding="0" cellspacing="0" border="0">
+																		<table width="60" height="60" align="center" cellpadding="0" cellspacing="0" border="0" class="row-date">
 																			<tbody style="font-family:Helvetica,arial,sans-serif; text-align:center; text-transform:uppercase; font-size:10px; color:#6eadea;">
 																				<tr>
-																					<td style="line-height:1;">
+																					<td class="date_day" style="line-height:1;">
 																						{{date.date_day}}
 																					</td>
 																				</tr>
 																				<tr>
-																					<td style="line-height:30px; font-size:20px; color:#ea6e6f;"height="30" >
+																					<td class="date_number" style="line-height:30px; font-size:20px; color:#ea6e6f;"height="30" >
 																						{{date.date_number}}
 																					</td>
 																				</tr>
 																				<tr>
-																					<td style="line-height:1;">
+																					<td class="date_month" style="line-height:1;">
 																						{{date.date_month}}
 																					</td>
 																				</tr>
@@ -324,7 +332,7 @@
 
 														<!-- Start of Date's Shows  -->
 														{% for show in date.shows %}
-														<table width="82.5%" align="right" cellpadding="0" cellspacing="0" border="0">
+														<table width="80%" align="right" cellpadding="0" cellspacing="0" border="0">
 															<tbody>
 
 																<!-- Start of Date's Show Info -->
@@ -425,7 +433,7 @@
 			<tbody>
 				<tr>
 					<td>
-						<table width="600" bgcolor="#f7dd78" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+						<table width="600" bgcolor="#f7dd78" cellpadding="0" cellspacing="0" border="0" align="center" class="fullWidth">
 							<tbody>
 								<!-- Spacing -->
 								<tr>
@@ -503,7 +511,7 @@
 										<table width="50%" cellpadding="0" cellspacing="0" border="0" align="left">
 											<tbody>
 												<tr>
-													<td align="left" valign="middle" style="font-family: Helvetica, arial, sans-serif; font-size:12px;color: #999" st-content="postfooter">
+													<td align="left" valign="middle" style="font-family: Helvetica, arial, sans-serif; font-size:10px;color: #999" st-content="postfooter">
 														&copy;MMXVI Showgrid, Nashville, TN
 													</td>
 												</tr>

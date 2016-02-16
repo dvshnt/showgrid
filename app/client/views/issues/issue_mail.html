@@ -58,12 +58,20 @@
 				pointer-events: auto;
 				cursor: default;
 			}
-			table[class=devicewidth] {width: 280px!important;text-align:center!important;}
-			table[class=devicewidthinner] {width: 260px!important;text-align:center!important;}
-			img[class=banner] {width: 280px!important;height:140px!important;}
-			img[class=colimg2] {width: 280px!important;height:140px!important;}
+			table[class=devicewidth] {width: 340px !important;text-align:center !important;}
+			table[class=fullWidth] {width: 100% !important;text-align:center!important;}
+			table[class=devicewidthinner] {width: 320px !important;text-align:center !important;}
+			table[class=mobile-center] {width:340px !important; text-align:center !important;}
+			table[class=row-date] { height:40px !important; width:40px !important; }
+			table[class=row-date] td[class=date_number] { font-size:18px !important; line-height:26px !important; height:auto !important;}
+			table[class=row-date] td[class=date_day], table[class=row-date] td[class=date_month] { line-height:14px !important; }
+			
+			img[class=banner] {width: 340px !important;height:140px !important;}
+			img[class=colimg2] {width: 340px !important;height:140px !important;}
 			td[class=mobile-hide]{display:none!important;}
-			td[class="padding-bottom25"]{padding-bottom:25px!important;}
+			td[class="padding-bottom25"]{padding-bottom:25px !important;}
+
+			iframe[class=playlist] {width:340px !important; height:420px !important;}
 		}
 	</style>
 </head>
@@ -83,7 +91,7 @@
 										<table width="260" align="left" border="0" cellpadding="0" cellspacing="0">
 											<tbody>
 												<tr>
-													<td align="center" valign="top" style="font-family:Helvetica,arial,sans-serif; font-size:10px; color:#999999" st-content="viewonline">
+													<td align="center" valign="middle" style="font-family:Helvetica,arial,sans-serif; font-size:10px; color:#999999" st-content="viewonline">
 														Showgrid Weekly Digest
 
 														&nbsp;&nbsp;|&nbsp;&nbsp;
@@ -100,7 +108,7 @@
 										<table width="80" align="right" border="0" cellpadding="0" cellspacing="0">
 											<tbody>
 												<tr>
-													<td style="text-align:right; font-family: Helvetica, arial, sans-serif; font-size:12px;color: #222222" st-content="viewonline" class="mobile-hide">
+													<td valign="middle" style="text-align:right; font-family: Helvetica, arial, sans-serif; font-size:12px;color: #222222" st-content="viewonline">
 														<a href="{{ issue_link}} " style=" color: #898989; text-decoration:underline;">
 															View Online
 														</a> 
@@ -131,10 +139,10 @@
 							<tbody>
 								<tr>
 									<td>
-										<table width="240" align="left" border="0" cellpadding="0" cellspacing="0">
+										<table class="mobile-center" width="240" align="left" border="0" cellpadding="0" cellspacing="0">
 											<tbody>
 												<tr>
-													<td align="left" valign="middle" style="font-family: Helvetica, arial, sans-serif; font-size: 14px;color: #666666" st-content="viewonline" class="mobile-hide">
+													<td valign="middle" style="font-family: Helvetica, arial, sans-serif; font-size: 14px;color: #666666" st-content="viewonline">
 														<a href="http://showgrid.com" style="text-decoration: none; color: #666666">
 															<img src="{% static 'showgrid/img/showgrid--mark-black.png' %}" alt="Showgrid" border="0" width="169" style="display:inline; border:none; outline:none; text-decoration:none;">
 															<span style="display:inline-block; margin-left:10px; line-height:50px; vertical-align:top; color:#000000;"> Digest </span>
@@ -289,7 +297,7 @@
 								<!-- Start Show List Block -->
 								<tr>
 									<td>
-										<table width="600" align="center" cellpadding="0" cellspacing="0" border="0" class="devicewidthinner">
+										<table width="600" align="center" cellpadding="0" cellspacing="0" border="0" class="devicewidth">
 											<tbody>
 
 												<!-- Start Section Title -->
@@ -318,20 +326,20 @@
 															<tbody>
 																<tr>
 																	<td style="border:1px solid #e8e8e8; border-radius:2px;">
-																		<table width="60" height="60" align="center" cellpadding="0" cellspacing="0" border="0">
+																		<table width="60" height="60" align="center" cellpadding="0" cellspacing="0" border="0" class="row-date">
 																			<tbody style="font-family:Helvetica,arial,sans-serif; text-align:center; text-transform:uppercase; font-size:10px; color:#6eadea;">
 																				<tr>
-																					<td style="line-height:1;">
+																					<td class="date_day" style="line-height:1;">
 																						{{date.date_day}}
 																					</td>
 																				</tr>
 																				<tr>
-																					<td style="line-height:30px; font-size:20px; color:#ea6e6f;"height="30" >
+																					<td class="date_number" style="line-height:30px; font-size:20px; color:#ea6e6f;"height="30" >
 																						{{date.date_number}}
 																					</td>
 																				</tr>
 																				<tr>
-																					<td style="line-height:1;">
+																					<td class="date_month" style="line-height:1;">
 																						{{date.date_month}}
 																					</td>
 																				</tr>
@@ -346,66 +354,65 @@
 
 														<!-- Start of Date's Shows  -->
 														{% for show in date.shows %}
-														<table width="82.5%" align="right" cellpadding="0" cellspacing="0" border="0">
+														<table width="85%" align="right" cellpadding="0" cellspacing="0" border="0">
 															<tbody>
 
-																	<!-- Start of Date's Show Info -->
-																	<tr>
-																		<td>
-																			<table align="left" cellpadding="0" cellspacing="0" border="0">
-																				<tbody>
-																					<tr>
-																						<td style="font-family: Helvetica, arial, sans-serif; line-height:1; font-size:12px; color:#666666; text-align:center; padding:4px 15px 4px 0;" st-title="fulltext-heading">
-																							{{show.show_time}}
-																						</td>
-																					</tr>
-																				</tbody>
-																			</table>
-																			<table align="left" cellpadding="0" cellspacing="0" border="0">
-																				<tbody>
-																					<tr>
-																						<td bgcolor="{{show.venue_primary}}" style="font-family: Helvetica, arial, sans-serif; line-height:1; font-size:12px; color:{{show.venue_secondary}}; text-align:center; padding:4px 10px; border-radius:2px;" st-title="fulltext-heading">
-																							{{show.venue_name}}
-																						</td>
-																					</tr>
-																				</tbody>
-																			</table>
-																		</td>
-																	</tr>
-																	<!-- End of Date's Show Info -->
+																<!-- Start of Date's Show Info -->
+																<tr>
+																	<td>
+																		<table align="left" cellpadding="0" cellspacing="0" border="0">
+																			<tbody>
+																				<tr>
+																					<td style="font-family: Helvetica, arial, sans-serif; line-height:1; font-size:12px; color:#666666; text-align:center; padding:4px 15px 4px 0;" st-title="fulltext-heading">
+																						{{show.show_time}}
+																					</td>
+																				</tr>
+																			</tbody>
+																		</table>
+																		<table align="left" cellpadding="0" cellspacing="0" border="0">
+																			<tbody>
+																				<tr>
+																					<td bgcolor="{{show.venue_primary}}" style="font-family: Helvetica, arial, sans-serif; line-height:1; font-size:12px; color:{{show.venue_secondary}}; text-align:center; padding:4px 10px; border-radius:2px;" st-title="fulltext-heading">
+																						{{show.venue_name}}
+																					</td>
+																				</tr>
+																			</tbody>
+																		</table>
+																	</td>
+																</tr>
+																<!-- End of Date's Show Info -->
 
 
-																	<!-- Spacing -->
-																	<tr>
-																		<td height="15" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
-																	</tr>
-																	<!-- Spacing -->
+																<!-- Spacing -->
+																<tr>
+																	<td height="15" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
+																</tr>
+																<!-- Spacing -->
 
 
-																	<!-- Start of Date's Show Artists -->
-																	<tr>
-																		<td style="font-family: Helvetica, arial, sans-serif; line-height:1; font-size:20px; color:#000000; text-align:left;">
-																			{{show.headliners}}
-																			&nbsp;
-																			<div style="font-family:Helvetica, arial, sans-serif; font-size:16px; line-height:30px; color:#888888; text-align:left;">
-																				{{show.openers}}
-																			</div>
-																		</td>
-																	</tr>
-																	<!-- End of Date's Show Artists -->
-																	<tr>
-																		<td height="15" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
-																	</tr>
-																	<tr>
-																		<td height="15" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
-																	</tr>
-																	<tr>
-																		<td height="15" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
-																	</tr>
+																<!-- Start of Date's Show Artists -->
+																<tr>
+																	<td style="font-family: Helvetica, arial, sans-serif; line-height:1; font-size:20px; color:#000000; text-align:left;">
+																		{{show.headliners}}
+																		&nbsp;
+																		<div style="font-family:Helvetica, arial, sans-serif; font-size:16px; line-height:30px; color:#888888; text-align:left;">
+																			{{show.openers}}
+																		</div>
+																	</td>
+																</tr>
+																<!-- End of Date's Show Artists -->
+
+
+																<!-- Spacing -->
+																<tr>
+																	<td height="45" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
+																</tr>
+																<!-- Spacing -->
+
 															</tbody>
 														</table>
 														<!-- End of Date's Shows  -->
-
+														
 														{% endfor %}
 													</td>
 												</tr>
@@ -415,9 +422,6 @@
 													<td>
 														<table width="600" align="right" cellspacing="0" cellpadding="0" border="0" class="devicewidth">
 															<tbody>
-																<tr>
-																	<td align="center" height="40" style="font-size:1px; line-height:1px;">&nbsp;</td>
-																</tr>
 																<tr>
 																	<td width="550" align="center" height="1" bgcolor="#e8e8e8" style="font-size:1px; line-height:1px;">&nbsp;</td>
 																</tr>
@@ -451,7 +455,7 @@
 			<tbody>
 				<tr>
 					<td>
-						<table width="600" bgcolor="#f7dd78" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+						<table width="600" bgcolor="#f7dd78" cellpadding="0" cellspacing="0" border="0" align="center" class="fullWidth">
 							<tbody>
 								<!-- Spacing -->
 								<tr>
@@ -529,7 +533,7 @@
 										<table width="50%" cellpadding="0" cellspacing="0" border="0" align="left">
 											<tbody>
 												<tr>
-													<td align="left" valign="middle" style="font-family: Helvetica, arial, sans-serif; font-size:12px;color: #999" st-content="postfooter">
+													<td align="left" valign="middle" style="font-family: Helvetica, arial, sans-serif; font-size:10px;color: #999" st-content="postfooter">
 														&copy;MMXVI Showgrid, Nashville, TN
 													</td>
 												</tr>
