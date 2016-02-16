@@ -1006,7 +1006,7 @@ def sort_shows(self,show):
 	return int(show["date_number"])
 
 
-HOST = "http://localhost:8000"
+HOST = "http://showgrid.com"
 
 class Issue(models.Model):
 	def __unicode__ (self):
@@ -1123,7 +1123,8 @@ class Issue(models.Model):
 			print('issue ',self.index,' already sent, please override sent boolean in database to False manually')
 			return
 		else:
-			subscribers = Subscriber.objects.all()
+			subscribers = Subscriber.objects.filter(email="davis@showgrid.com")
+			# subscribers = Subscriber.objects.all()
 			for sub in subscribers:
 				sub.sendIssue(self)
 			self.sent = True
