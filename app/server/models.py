@@ -1064,6 +1064,7 @@ class Issue(models.Model):
 				"venue_primary": show.venue.primary_color,
 				"venue_secondary": show.venue.secondary_color,
 				
+				"show_link": show.website,
 				"venue_link": HOST + "/venue/" + str(show.venue.id),
 
 				"title": show.title,
