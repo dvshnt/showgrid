@@ -521,10 +521,6 @@ class Artist(models.Model):
 
 
 
-class ListSignup(models.Model):
-	created_at = models.DateTimeField(auto_now_add=True)
-	email = models.EmailField(_('email address'), unique=True)
-
 
 
 class Address(models.Model):
