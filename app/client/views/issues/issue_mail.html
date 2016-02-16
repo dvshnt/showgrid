@@ -1,9 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+	{% load staticfiles %}
+	
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<title>Simples-Minimalistic Responsive Template</title>
+	
+	<title>Showgrid Weekly Digest #{{ id }}</title>
+
 	<style type="text/css">
 		/* Client-specific Styles */
 		#outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
@@ -63,478 +67,493 @@
 		}
 	</style>
 </head>
-<body>
-	<!-- Start of preheader -->
-	<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" st-sortable="preheader" >
-		<tbody>
-			<tr>
-				<td>
-					<table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
-						<tbody>
-							<tr>
-								<td width="100%">
-									<table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
-										<tbody>
-											<tr>
-												<td width="100%" height="30">
-													<table width="200" align="left" border="0" cellpadding="0" cellspacing="0">
-														<tbody>
-															<tr>
-																<td align="left" valign="top" style="font-family:Helvetica, arial, sans-serif; font-size:10px;color: #999999" st-content="viewonline" class="mobile-hide">
-																	Showgrid Weekly Digest  {{start_date}} - {{end_date}} <!-- (Feb. 15 - Feb. 22) -->
-																</td>
-															</tr>
-														</tbody>
-													</table>
-													<table width="70" align="right" border="0" cellpadding="0" cellspacing="0" class="devicewidth">
-														<tbody>
-															<tr>
-																<td style="text-align:right; font-family: Helvetica, arial, sans-serif; font-size:12px;color: #222222" st-content="viewonline" class="mobile-hide">
-																	<a href="{{venue_link}}" style=" color: #898989; text-decoration:underline;">View Online</a> 
-																</td>
-															</tr>
-														</tbody>
-													</table>
-												</td>
-											</tr>
-											<!-- Spacing -->
-											<tr>
-												<td width="100%" height="20"></td>
-											</tr>
-											<!-- Spacing -->
-											<tr>
-												<td>
-													<table width="240" align="left" border="0" cellpadding="0" cellspacing="0">
-														<tbody>
-															<tr>
-																<td align="left" valign="middle" style="font-family: Helvetica, arial, sans-serif; font-size: 14px;color: #666666" st-content="viewonline" class="mobile-hide">
-																	<a href="{{host}}" style="text-decoration: none; color: #666666">
-																		<img src="{{logo_url}}" alt="" border="0" width="169" style="display:inline; border:none; outline:none; text-decoration:none;">
-																		<span style="display:inline-block; margin-left:10px; line-height:50px; vertical-align:top; color:#000000;"> Digest </span>
-																	</a> 
-																</td>
-															</tr>
-														</tbody>
-													</table>
-													<table width="170" align="right" border="0" cellpadding="0" cellspacing="0">
-														<tbody>
-															<tr>
-																<td align="right" height="50" valign="middle" style="font-family:Helvetica, arial, sans-serif; font-size: 11px;" st-content="viewonline" class="mobile-hide">
-																	<a href="https://open.spotify.com/user/showgrid" style="text-decoration: none; color:#fff; text-transform:uppercase; background:#58B760; padding:4px 15px; border-radius:15px;">
-																		Follow
-																	</a> 
-																</td>
-															</tr>
-														</tbody>
-													</table>
-												</td>
-											</tr>
-											<!-- Spacing -->
-											<tr>
-												<td width="100%" height="10"></td>
-											</tr>
-											<!-- Spacing -->
-										</tbody>
-									</table>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<!-- End of preheader -->       
-	<!-- Start of header -->
-	<table width="100%" bgcolor="#fff" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" st-sortable="header">
-		<tbody>
-			<tr>									
-				<td>
-					<table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
-						<tbody>
-							<tr>
-								<td width="100%">
-									<table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
-										<tbody>
-											<!-- Spacing -->
-											<tr>
-												<td height="20" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
-											</tr>
-											<!-- Spacing -->
-											<tr>
-												<td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; line-height:1.5; text-align:left;">
-													<p>
-														{{article.summary}}
-													</p>
+	<body>
 
-												</td>
-											</tr>
-											<!-- Spacing -->
-											<tr>
-												<td height="15" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
-											</tr>
-											<!-- Spacing -->
-										</tbody>
-									</table>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<!-- End of Header -->
+		<!-- Start of Top Block -->
+		<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" st-sortable="preheader" >
+			<tbody>
 
-	<!-- Start of main-banner -->
-	<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" st-sortable="banner">
-		<tbody>
-			<tr>
-				<td>
-					<table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
-						<tbody>
-							<tr>
-								<td width="100%">
-									<table width="600" align="center" cellspacing="0" cellpadding="0" border="0" class="devicewidth">
-										<tbody>
-											<!-- Spacing -->
-											<tr>
-												<td height="80" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
-											</tr>
-											<!-- Spacing -->
-											<tr>
-												<td align="center" st-image="banner-image" style="font-family:Helvetica, arial, sans-serif; font-size:24px;">
-													<div class="imgpop">
-														<a href="{{issue_link}}" href="#" style="text-decoration: none; color:#fff; background:#58B760; padding:40px 80px; border-radius:5px;">
-															Get Playlist
-														</a>
-													</div>
-												</td>
-											</tr>
-											<!-- Spacing -->
-											<tr>
-												<td height="80" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
-											</tr>
-											<!-- Spacing -->
-										</tbody>
-									</table>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<!-- End of main-banner --> 
+				<!-- Start of preheader -->
+				<tr>
+					<td>
+						<table width="600" height="30" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+							<tbody>
+								<tr>
+									<td width="100%">
+										<table width="260" align="left" border="0" cellpadding="0" cellspacing="0">
+											<tbody>
+												<tr>
+													<td align="center" valign="top" style="font-family:Helvetica,arial,sans-serif; font-size:10px; color:#999999" st-content="viewonline">
+														Showgrid Weekly Digest
 
-	<!-- Start of seperator -->
-	<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" st-sortable="seperator">
-		<tbody>
-			<tr>
-				<td>
-					<table width="600" align="center" cellspacing="0" cellpadding="0" border="0" class="devicewidth">
-						<tbody>
-							<tr>
-								<td align="center" height="20" style="font-size:1px; line-height:1px;">&nbsp;</td>
-							</tr>
-						</tbody>
-					</table>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<!-- End of seperator -->  
+														&nbsp;&nbsp;|&nbsp;&nbsp;
 
-	<!-- Start Show Text -->
-	<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" st-sortable="full-text">
-		<tbody>
-			<tr>
-				<td>
-					<table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
-						<tbody>
-							<tr>
-								<td width="100%">
-									<table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
-										<tbody>
-											<!-- Spacing -->
-											<tr>
-												<td height="20" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
-											</tr>
-											<!-- Spacing -->
+														Issue #{{ id }}
 
-											<!-- Start Show Text -->
-											<tr>
-												<td>
-													<table width="600" align="center" cellpadding="0" cellspacing="0" border="0" class="devicewidthinner">
-														<tbody>
-															<!-- Title -->
-															<tr>
-																<td style="font-family: Helvetica, arial, sans-serif; font-size: 24px; color: #333333; text-align:left; line-height: 30px;" st-title="fulltext-heading">
-																	This Weeks Shows
-																</td>
-															</tr>
-															<!-- Spacing -->
-															<tr>
-																<td height="20" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
-															</tr>
-															<!-- Spacing -->
-															<!-- End of Title -->
-															{% for date in dates %}
-															<tr>
-																<td style="font-family: Helvetica, arial, sans-serif; font-size: 24px; color: #333333; text-align:left; line-height: 30px;" st-title="fulltext-heading">
-																	<table width="60" align="left" cellpadding="0" cellspacing="0" border="0" class="devicewidthinner">
-																		<tbody>
-																			<!-- Title -->
-																			<tr>
-																				<td height="60" style="font-family: Helvetica, arial, sans-serif; font-size: 24px; color: #333333; text-align:left; line-height: 30px; border:1px solid #e8e8e8; border-radius:2px;" st-title="fulltext-heading">
-																					<table width="100%" align="center" cellpadding="0" cellspacing="0" border="0" class="devicewidthinner">
-																						<tbody>
-																							<tr>
-																								<td style="font-family: Helvetica, arial, sans-serif; line-height:1; font-size:10px; color:#6eadea; text-align:center; text-transform:uppercase;" st-title="fulltext-heading">
-																									{{date.date_day}}
-																								</td>
-																							</tr>
-																							<tr>
-																								<td height="30" style="font-family: Helvetica, arial, sans-serif; line-height:30px; font-size:20px; color:#ea6e6f; text-align:center;" st-title="fulltext-heading">
-																									{{date.date_number}}
-																								</td>
-																							</tr>
-																							<tr>
-																								<td style="font-family: Helvetica, arial, sans-serif; line-height:1; font-size: 10px; color:#6eadea; text-align:center; text-transform:uppercase;" st-title="fulltext-heading">
-																									{{date.date_month}}
-																								</td>
-																							</tr>
-																						</tbody>
-																					</table>
-																				</td>
-																			</tr>
-																		</tbody>
-																	</table>
-																	{% for show in date.shows %}
-																	<table width="520" align="right" cellpadding="0" cellspacing="0" border="0" class="devicewidthinner">
-																		<tbody>
+														&nbsp;&nbsp;|&nbsp;&nbsp;
+
+														{{ start_date | date:"M d" }} - {{ end_date | date:"M d" }}
+													</td>
+												</tr>
+											</tbody>
+										</table>
+										<table width="80" align="right" border="0" cellpadding="0" cellspacing="0">
+											<tbody>
+												<tr>
+													<td style="text-align:right; font-family: Helvetica, arial, sans-serif; font-size:12px;color: #222222" st-content="viewonline" class="mobile-hide">
+														<a href="{{ issue_link}} " style=" color: #898989; text-decoration:underline;">
+															View Online
+														</a> 
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+				<!-- End of preheader -->
+
+
+				<!-- Spacing -->
+				<tr>
+					<td width="100%" height="20"></td>
+				</tr>
+				<!-- Spacing -->
+
+
+				<!-- Start of header -->
+				<tr>
+					<td>
+						<table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+							<tbody>
+								<tr>
+									<td>
+										<table width="240" align="left" border="0" cellpadding="0" cellspacing="0">
+											<tbody>
+												<tr>
+													<td align="left" valign="middle" style="font-family: Helvetica, arial, sans-serif; font-size: 14px;color: #666666" st-content="viewonline" class="mobile-hide">
+														<a href="http://showgrid.com" style="text-decoration: none; color: #666666">
+															<img src="{% static 'showgrid/img/showgrid--mark-black.png' %}" alt="Showgrid" border="0" width="169" style="display:inline; border:none; outline:none; text-decoration:none;">
+															<span style="display:inline-block; margin-left:10px; line-height:50px; vertical-align:top; color:#000000;"> Digest </span>
+														</a> 
+													</td>
+												</tr>
+											</tbody>
+										</table>
+										<table width="170" align="right" border="0" cellpadding="0" cellspacing="0">
+											<tbody>
+												<tr>
+													<td align="right" height="50" valign="middle" style="font-family:Helvetica, arial, sans-serif; font-size: 11px;" st-content="viewonline" class="mobile-hide">
+														<a href="https://open.spotify.com/user/showgrid" style="text-decoration: none; color:#fff; text-transform:uppercase; background:#65D46E; padding:4px 15px; border-radius:15px;">
+															Follow
+														</a> 
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+				<!-- End of header -->
+
+			</tbody>
+		</table>
+		<!-- End of Top Block -->
+
+
+
+		<!-- Start of text block -->
+		<table width="100%" bgcolor="#fff" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" st-sortable="header">
+			<tbody>
+				<tr>									
+					<td>
+						<table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+							<tbody>
+
+								<!-- Spacing -->
+								<tr>
+									<td height="20" style="font-size:1px; line-height:1px; mso-line-height-rule:exactly;">&nbsp;</td>
+								</tr>
+								<!-- Spacing -->
+
+
+								<!-- Start of intro text -->
+								<tr>
+									<td style="font-family:Helvetica, arial, sans-serif; font-size: 16px; line-height:1.5; text-align:left;">
+										{{intro | safe}}
+									</td>
+								</tr>
+								<!-- End of intro text -->
+
+
+								<!-- Spacing -->
+								<tr>
+									<td height="15" style="font-size:1px; line-height:1px; mso-line-height-rule:exactly;">&nbsp;</td>
+								</tr>
+								<!-- Spacing -->
+
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- End of text block -->
+
+
+
+		<!-- Start of playlist block -->
+		<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" st-sortable="banner">
+			<tbody>
+				<tr>
+					<td>
+						<table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+							<tbody>
+
+								<!-- Spacing -->
+								<tr>
+									<td height="60" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
+								</tr>
+								<!-- Spacing -->
+
+
+								<!-- Start of playlist -->
+								<tr>
+									<td align="center" st-image="banner-image" style="font-family:Helvetica, arial, sans-serif; font-size:24px;">
+										<div class="imgpop">
+											<a href="{{ spotify_embed }}" target="_blank" style="text-decoration: none; color:#fff; background:#65D46E; padding:40px 80px; border-radius:5px;">
+												Get Playlist
+											</a>
+										</div>
+									</td>
+								</tr>
+								<!-- End of playlist -->
+
+
+								<!-- Spacing -->
+								<tr>
+									<td height="80" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
+								</tr>
+								<!-- Spacing -->
+
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- End of playlist block --> 
+
+
+
+		<!-- Start of seperator -->
+		<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" st-sortable="seperator">
+			<tbody>
+				<tr>
+					<td>
+						<table width="600" align="center" cellspacing="0" cellpadding="0" border="0" class="devicewidth">
+							<tbody>
+								<tr>
+									<td align="center" height="20" style="font-size:1px; line-height:1px;">&nbsp;</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- End of seperator -->  
+
+
+
+		<!-- Start Show Text -->
+		<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" st-sortable="full-text">
+			<tbody>
+				<tr>
+					<td>
+						<table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+							<tbody>
+								<!-- Spacing -->
+								<tr>
+									<td height="20" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
+								</tr>
+								<!-- Spacing -->
+
+
+								<!-- Start Show List Block -->
+								<tr>
+									<td>
+										<table width="600" align="center" cellpadding="0" cellspacing="0" border="0" class="devicewidthinner">
+											<tbody>
+
+												<!-- Start Section Title -->
+												<tr>
+													<td style="font-family: Helvetica, arial, sans-serif; font-size: 24px; color: #333333; text-align:left; line-height: 30px;" st-title="fulltext-heading">
+														This Weeks Shows
+													</td>
+												</tr>
+												<!-- End Section Title -->
+
+
+												<!-- Spacing -->
+												<tr>
+													<td height="20" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
+												</tr>
+												<!-- Spacing -->
+
+
+												<!-- Start of Show List -->
+												{% for date in dates %}
+												<tr>
+													<td>
+
+														<!-- Start of Date -->
+														<table width="10%" align="left" cellpadding="0" cellspacing="0" border="0">
+															<tbody>
+																<tr>
+																	<td style="border:1px solid #e8e8e8; border-radius:2px;">
+																		<table width="60" height="60" align="center" cellpadding="0" cellspacing="0" border="0">
+																			<tbody style="font-family:Helvetica,arial,sans-serif; text-align:center; text-transform:uppercase; font-size:10px; color:#6eadea;">
 																				<tr>
-																					<td>
-																						<table align="left" cellpadding="0" cellspacing="0" border="0" class="devicewidthinner">
-																							<tbody>
-																								<tr>
-																									<td style="font-family: Helvetica, arial, sans-serif; line-height:1; font-size:12px; color:#666666; text-align:center; padding:4px 15px 4px 0;" st-title="fulltext-heading">
-																										{{show.show_time}}
-																									</td>
-																								</tr>
-																							</tbody>
-																						</table>
-																						<table align="left" cellpadding="0" cellspacing="0" border="0" class="devicewidthinner">
-																							<tbody>
-																								<tr>
-																									<td bgcolor="{{show.venue_primary}}" style="font-family: Helvetica, arial, sans-serif; line-height:1; font-size:12px; color:{{show.venue_secondary}}; text-align:center; padding:4px 10px; border-radius:2px;" st-title="fulltext-heading">
-																										{{show.venue_name}}
-																									</td>
-																								</tr>
-																							</tbody>
-																						</table>
+																					<td style="line-height:1;">
+																						{{date.date_day}}
 																					</td>
 																				</tr>
-																				<!-- Spacing -->
 																				<tr>
-																					<td height="15" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
-																				</tr>
-																				<!-- Spacing -->
-																				<tr>
-																					<td style="font-family: Helvetica, arial, sans-serif; line-height:1; font-size:20px; color:#000000; text-align:left;">
-																						{{show.headliners}}
-																						<span style="font-family:Helvetica, arial, sans-serif; font-size:16px; line-height:20px; color:#888888; text-align:left;">{{show.openers}}</span>
+																					<td style="line-height:30px; font-size:20px; color:#ea6e6f;"height="30" >
+																						{{date.date_number}}
 																					</td>
 																				</tr>
-																				<!-- <tr>
-																					<td style="font-family:Helvetica, arial, sans-serif; font-size:24px; color:#333333; text-align:left;" st-title="fulltext-heading">
-																						{{show.openers}}
+																				<tr>
+																					<td style="line-height:1;">
+																						{{date.date_month}}
 																					</td>
-																					<td style="font-family:Helvetica, arial, sans-serif; font-size:24px; color:#333333; text-align:left;" st-title="fulltext-heading">
-
-																					</td>
-																				</tr> -->
-																		
-																		</tbody>
-																	</table>
-																	<table width="520" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" st-sortable="seperator">
-																		<tbody>
-																			<tr>
-																				<td>
-																					<table width="520" align="right" cellspacing="0" cellpadding="0" border="0" class="devicewidth">
-																						<tbody>
-																							<tr>
-																								<td align="center" height="20" style="font-size:1px; line-height:1px;">&nbsp;</td>
-																							</tr>
-																							<tr>
-																								<td align="center" height="20" style="font-size:1px; line-height:1px;">&nbsp;</td>
-																							</tr>
-																						</tbody>
-																					</table>
-																				</td>
-																			</tr>
-																		</tbody>
-																	</table>
-																	{% endfor %}
-																	<!-- End of seperator --> 
-																</td>
-															</tr>
-													
-															<tr>
-																<td>
-																	<table width="600" align="right" cellspacing="0" cellpadding="0" border="0" class="devicewidth">
-																		<tbody>
-																			<tr>
-																				<td align="center" height="40" style="font-size:1px; line-height:1px;">&nbsp;</td>
-																			</tr>
-																			<tr>
-																				<td width="550" align="center" height="1" bgcolor="#e8e8e8" style="font-size:1px; line-height:1px;">&nbsp;</td>
-																			</tr>
-																			<tr>
-																				<td align="center" height="40" style="font-size:1px; line-height:1px;">&nbsp;</td>
-																			</tr>
-																		</tbody>
-																	</table>
-																</td>
-															</tr>
-
-															{% endfor %}
-														</tbody>
-													</table>
-												</td>
-											</tr>
-											<!-- Spacing -->
-											<tr>
-												<td height="20" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
-											</tr>
-											<!-- Spacing -->
-										</tbody>
-									</table>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<!-- end of full text -->
+																				</tr>
+																			</tbody>
+																		</table>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+														<!-- End of Date -->
 
 
-	<!-- Start Full Text -->
-	<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" st-sortable="full-text">
-		<tbody>
-			<tr>
-				<td>
-					<table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
-						<tbody>
-							<tr>
-								<td width="100%">
-									<table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
-										<tbody>
-											<!-- Spacing -->
-											<tr>
-												<td height="20" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
-											</tr>
-											<!-- Spacing -->
-											<tr>
-												<td>
-													<table width="560" align="center" cellpadding="0" cellspacing="0" border="0" class="devicewidthinner">
-														<tbody>
-															<!-- Title -->
-															<tr>
-																<td style="font-family: Helvetica, arial, sans-serif; font-size: 30px; color: #333333; text-align:center; line-height: 30px;" st-title="fulltext-title">
-																	Have A Great Week!
-																</td>
-															</tr>
-															<!-- End of Title -->
-															<!-- spacing -->
-															<tr>
-																<td width="100%" height="20" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
-															</tr>
-															<!-- End of spacing -->
-															<!-- content -->
-															<tr>
-																<td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; color: #666666; text-align:center; line-height: 30px;" st-content="fulltext-content">
+														<!-- Start of Date's Shows  -->
+														{% for show in date.shows %}
+														<table width="82.5%" align="right" cellpadding="0" cellspacing="0" border="0">
+															<tbody>
 
-																</td>
-															</tr>
-															<!-- End of content -->
-														</tbody>
-													</table>
-												</td>
-											</tr>
-											<!-- Spacing -->
-											<tr>
-												<td height="20" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
-											</tr>
-											<!-- Spacing -->
-										</tbody>
-									</table>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<!-- end of full text -->
-	<!-- Start of seperator -->
-	<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" st-sortable="seperator">
-		<tbody>
-			<tr>
-				<td>
-					<table width="600" align="center" cellspacing="0" cellpadding="0" border="0" class="devicewidth">
-						<tbody>
-							<tr>
-								<td align="center" height="30" style="font-size:1px; line-height:1px;">&nbsp;</td>
-							</tr>
-							<tr>
-								<td width="550" align="center" height="1" bgcolor="#d1d1d1" style="font-size:1px; line-height:1px;">&nbsp;</td>
-							</tr>
-							<tr>
-								<td align="center" height="30" style="font-size:1px; line-height:1px;">&nbsp;</td>
-							</tr>
-						</tbody>
-					</table>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<!-- End of seperator -->  
-	<!-- Start of Postfooter -->
-	<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" st-sortable="postfooter" >
-		<tbody>
-			<tr>
-				<td>
-					<table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
-						<tbody>
-							<tr>
-								<td width="100%">
-									<table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
-										<tbody>
-											<tr>
-												<td align="center" valign="middle" style="font-family: Helvetica, arial, sans-serif; font-size: 14px;color: #666666" st-content="postfooter">
-													Click here to <a href="{{unsub_link}}" style="text-decoration: none; color: #0a8cce">Unsubscribe</a> 
-												</td>
-											</tr>
-											<!-- Spacing -->
-											<tr>
-												<td width="100%" height="20"></td>
-											</tr>
-											<!-- Spacing -->
-										</tbody>
-									</table>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<!-- End of postfooter -->
-</body>
+																	<!-- Start of Date's Show Info -->
+																	<tr>
+																		<td>
+																			<table align="left" cellpadding="0" cellspacing="0" border="0">
+																				<tbody>
+																					<tr>
+																						<td style="font-family: Helvetica, arial, sans-serif; line-height:1; font-size:12px; color:#666666; text-align:center; padding:4px 15px 4px 0;" st-title="fulltext-heading">
+																							{{show.show_time}}
+																						</td>
+																					</tr>
+																				</tbody>
+																			</table>
+																			<table align="left" cellpadding="0" cellspacing="0" border="0">
+																				<tbody>
+																					<tr>
+																						<td bgcolor="{{show.venue_primary}}" style="font-family: Helvetica, arial, sans-serif; line-height:1; font-size:12px; color:{{show.venue_secondary}}; text-align:center; padding:4px 10px; border-radius:2px;" st-title="fulltext-heading">
+																							{{show.venue_name}}
+																						</td>
+																					</tr>
+																				</tbody>
+																			</table>
+																		</td>
+																	</tr>
+																	<!-- End of Date's Show Info -->
+
+
+																	<!-- Spacing -->
+																	<tr>
+																		<td height="15" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
+																	</tr>
+																	<!-- Spacing -->
+
+
+																	<!-- Start of Date's Show Artists -->
+																	<tr>
+																		<td style="font-family: Helvetica, arial, sans-serif; line-height:1; font-size:20px; color:#000000; text-align:left;">
+																			{{show.headliners}}
+																			&nbsp;
+																			<div style="font-family:Helvetica, arial, sans-serif; font-size:16px; line-height:30px; color:#888888; text-align:left;">
+																				{{show.openers}}
+																			</div>
+																		</td>
+																	</tr>
+																	<!-- End of Date's Show Artists -->
+															
+															</tbody>
+														</table>
+														<!-- End of Date's Shows  -->
+
+														{% endfor %}
+													</td>
+												</tr>
+										
+												<!-- Spacing + Line -->
+												<tr>
+													<td>
+														<table width="600" align="right" cellspacing="0" cellpadding="0" border="0" class="devicewidth">
+															<tbody>
+																<tr>
+																	<td align="center" height="40" style="font-size:1px; line-height:1px;">&nbsp;</td>
+																</tr>
+																<tr>
+																	<td width="550" align="center" height="1" bgcolor="#e8e8e8" style="font-size:1px; line-height:1px;">&nbsp;</td>
+																</tr>
+																<tr>
+																	<td align="center" height="40" style="font-size:1px; line-height:1px;">&nbsp;</td>
+																</tr>
+															</tbody>
+														</table>
+													</td>
+												</tr>
+												<!-- Spacing + Line -->
+
+												{% endfor %}
+											</tbody>
+										</table>
+									</td>
+								</tr>
+								<!-- End Show List Block -->
+
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- end of full text -->
+
+
+		<!-- Start Quote Text -->
+		<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" st-sortable="full-text">
+			<tbody>
+				<tr>
+					<td>
+						<table width="600" bgcolor="#f7dd78" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+							<tbody>
+								<!-- Spacing -->
+								<tr>
+									<td height="40" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
+								</tr>
+								<!-- Spacing -->
+
+
+
+								<tr>
+									<td>
+										<table width="560" align="center" cellpadding="0" cellspacing="0" border="0" class="devicewidthinner">
+											<tbody>
+												<!-- content -->
+												<tr>
+													<td style="font-family: Helvetica, arial, sans-serif; font-size: 16px; color:#6e5f32; text-align:center; line-height: 30px;" st-content="fulltext-content">
+														You who choose to lead must follow<br>
+														But if you fall you fall alone<br>
+														If you should stand then who's to guide you?<br>
+														If I knew the way I would take you home<br>
+														<span style="color:#a38d4a; line-height:50px;">Ripple, <i>The Grateful Dead</i></span>
+													</td>
+												</tr>
+												<!-- end content -->
+											</tbody>
+										</table>
+									</td>
+								</tr>
+
+
+
+								<!-- Spacing -->
+								<tr>
+									<td height="30" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
+								</tr>
+								<!-- Spacing -->
+
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- End Quote Text -->
+
+
+		<!-- Start of seperator -->
+		<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" st-sortable="seperator">
+			<tbody>
+				<tr>
+					<td>
+						<table width="600" align="center" cellspacing="0" cellpadding="0" border="0" class="devicewidth">
+							<tbody>
+								<tr>
+									<td align="center" height="40" style="font-size:1px; line-height:1px;">&nbsp;</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- End of seperator -->  
+
+
+		<!-- Start of Postfooter -->
+		<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" st-sortable="postfooter" >
+			<tbody>
+				<tr>
+					<td>
+						<table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+							<tbody>
+								<tr>
+									<td width="100%">
+										<table width="50%" cellpadding="0" cellspacing="0" border="0" align="left">
+											<tbody>
+												<tr>
+													<td align="left" valign="middle" style="font-family: Helvetica, arial, sans-serif; font-size:12px;color: #999" st-content="postfooter">
+														&copy;MMXVI Showgrid, Nashville, TN
+													</td>
+												</tr>
+												<!-- Spacing -->
+												<tr>
+													<td width="100%" height="20"></td>
+												</tr>
+												<!-- Spacing -->
+											</tbody>
+										</table>
+										<table width="50%" cellpadding="0" cellspacing="0" border="0" align="right">
+											<tbody>
+												<tr>
+													<td align="right" valign="middle" style="font-family: Helvetica, arial, sans-serif; font-size:12px;color: #666666" st-content="postfooter">
+														Click here to <a href="{{unsub_link}}" style="text-decoration: none; color: #0a8cce">Unsubscribe</a> 
+													</td>
+												</tr>
+												<!-- Spacing -->
+												<tr>
+													<td width="100%" height="20"></td>
+												</tr>
+												<!-- Spacing -->
+											</tbody>
+										</table>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- End of postfooter -->
+	</body>
 </html>
