@@ -1034,7 +1034,7 @@ class Issue(models.Model):
 			show.save()
 
 
-		issue_shows = Show.objects.filter(Q(date__gt = self.start_date) & Q(date__lt = self.end_date)).filter(featured=True)
+		issue_shows = Show.objects.filter(Q(date__gt = self.start_date) & Q(date__lt = self.end_date)).filter(star=True)
 		for show in issue_shows:
 			show.issue = self
 			show.save()
