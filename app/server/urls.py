@@ -44,6 +44,8 @@ urlpatterns = [
     url(r'^v1/shows/$', views.ShowList.as_view(), name='grid'),
 
     url(r'^check/venues$', views.check_venues, name='check_venues'),
+    
+    url(r'^tinymce/', include('tinymce.urls')),
 
     url(r'^media/(?P<path>.*)$', static.serve,
         {'document_root': settings.MEDIA_ROOT, 'show_indexes': True }
