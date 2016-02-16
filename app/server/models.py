@@ -521,10 +521,6 @@ class Artist(models.Model):
 
 
 
-class ListSignup(models.Model):
-	created_at = models.DateTimeField(auto_now_add=True)
-	email = models.EmailField(_('email address'), unique=True)
-
 
 
 class Address(models.Model):
@@ -1028,7 +1024,7 @@ def sort_shows(self,show):
 	return int(show["date_number"])
 
 
-HOST = "http://localhost:8000"
+HOST = "http://showgrid.com"
 
 class Issue(models.Model):
 	def __unicode__ (self):
@@ -1056,7 +1052,7 @@ class Issue(models.Model):
 			show.save()
 
 
-		issue_shows = Show.objects.filter(Q(date__gt = self.start_date) & Q(date__lt = self.end_date))
+		issue_shows = Show.objects.filter(Q(date__gt = self.start_date) & Q(date__lt = self.end_date)).filter(star=True)
 		for show in issue_shows:
 			show.issue = self
 			show.save()
@@ -1145,7 +1141,8 @@ class Issue(models.Model):
 			print('issue ',self.index,' already sent, please override sent boolean in database to False manually')
 			return
 		else:
-			subscribers = Subscriber.objects.all()
+			subscribers = Subscriber.objects.filter(email="davis@showgrid.com")
+			# subscribers = Subscriber.objects.all()
 			for sub in subscribers:
 				sub.sendIssue(self)
 			self.sent = True
