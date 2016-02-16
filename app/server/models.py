@@ -637,6 +637,18 @@ class Show(models.Model):
 	#extract metadata
 	extract_queued = models.BooleanField(default=False)
 
+
+	# @receiver(pre_save)
+	# def sync_issue(sender, instance, *args, **kwargs):
+	# 	if instance.issue == None:
+	# 		issue = Issue.objects.filter(Q(start_date__gt = instance.date) & Q(end_date__lt = instance.date))
+	# 		if issue == None:
+	# 			return
+	# 		else:
+	# 			instance.issue = issue
+	# 			return
+	
+
 	def extract_artists_from_name(self,update):
 		self.extract_queued = True
 		self.save()
