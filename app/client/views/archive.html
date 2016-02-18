@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+	
+{% load static from staticfiles %}
+
+{% block content %}
+{% if issues %}
+{% for issue in issues %}
+<a class="issue" href="http://localhost:8000/issue/{{ issue.id }}">
+	<section class="issue list" style="background-image:url('media/{{ issue.banner }}');">
+		<h4>Weekly Digest #{{ issue.id }}</h4>
+		<span>
+			Week of {{ issue.start_date|date:"F jS" }}
+		</span>
+	</section>
+</a>
+{% endfor %}
+{% else %}
+<div class="placeholder">
+	<h2>First Issue comes out this Sunday, February 22nd.<br><br>Sit Tight!</h2>
+</div>
+{% endif %}
+{% endblock %}
