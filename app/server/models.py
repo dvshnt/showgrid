@@ -963,19 +963,31 @@ mail_template = get_template('issues/issue_mail.html')
 
 class Subscriber(models.Model):
 	def __unicode__ (self):
-		return self.email
-	email = models.EmailField(_('email address'), unique=True,blank=False)
-	user = models.ForeignKey('ShowgridUser',null=True)
-	hash_name =  models.CharField(unique=True,blank=False,max_length=255,null=False)
+		if self.email == None or self.email == '' :
+			return self.user.email
+		else:
+			return self.email
+
+	email = models.EmailField(_('email address'),blank=True,null=True,unique=False)
+	user = models.ForeignKey('ShowgridUser',null=True,blank=True,unique=True)
+	hash_name =  models.CharField(unique=True,max_length=255,blank=True)
+	is_tester = models.BooleanField(default=False)
 	
 	@receiver(pre_save)
 	def my_callback(sender, instance, *args, **kwargs):
+		# if not hasattr(instance, 'email') and not hasattr(instance, 'user'):
+		# 	instance.delete()
+
 		instance.hash_name = ''
 		for x in range(0, 10):
 			instance.hash_name += random.choice(string.letters)
 	
 	def sendIssue(self,issue):
-		
+		if self.user != None :
+			prGreen('mail issue to ' + self.user.email)
+		else:
+			prGreen('mail issue to ' + self.email)
+
 		if self.user != None:
 			email = self.user.email
 		else:
@@ -986,7 +998,6 @@ class Subscriber(models.Model):
 		html_content = issue.render(mail_template,self)
 		msg =  mail.EmailMultiAlternatives(title,text_alt,EMAIL_HOST_USER,[email])
 		msg.attach_alternative(html_content, "text/html")
-		print(html_content)
 		msg.send()
 
 
@@ -1056,7 +1067,7 @@ class Issue(models.Model):
 			show.issue = self
 			show.save()
 		self.shows_count = len(issue_shows)
-		print len(issue_shows)
+		
 		self.save()
 	
 
@@ -1135,17 +1146,22 @@ class Issue(models.Model):
 
 
 	#mail issue to all users.
-	def mail(self):
+	def mail(self,test):
 		if self.sent == True:
 			print('issue ',self.index,' already sent, please override sent boolean in database to False manually')
 			return
 		else:
-			subscribers = Subscriber.objects.filter(email="davis@showgrid.com")
-			# subscribers = Subscriber.objects.all()
+			# subscribers = Subscriber.objects.filter(email=test.email)
+			subscribers = Subscriber.objects.all()
 			for sub in subscribers:
-				sub.sendIssue(self)
-			self.sent = True
-			self.save()
+				if test == True and sub.is_tester == True:
+					sub.sendIssue(self)
+				elif test == False:
+					sub.sendIssue(self)
+
+			if test == False:
+				self.sent = True
+				self.save()
 
 
 
