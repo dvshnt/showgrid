@@ -10,6 +10,8 @@ import re #regex
 
 import datetime as datetime_2
 
+from django.db.models import Q
+
 from operator import attrgetter
 
 from django.views.decorators.csrf import csrf_exempt
@@ -63,7 +65,15 @@ def version(request):
 
 
 def splash(request):
-	return render(request, "splash.html")
+	today = datetime.today()
+	issue = Issue.objects.filter(active=True).filter(Q(start_date__lte=today) & Q(end_date__gte=today))
+
+	if len(issue):
+		issue = { 'issue': issue[0] }
+	else:
+		issue = ""
+
+	return render(request, "splash.html", issue)
 
 
 @api_view(['POST'])
@@ -579,7 +589,12 @@ def IssueUnsubscribe(request,hash):
 class Issues(APIView):
 	def get(self, request, id=None):
 		if id == None:
-			print "NO ID"
+			archive = get_template('archive.html')
+			issues = Issue.objects.filter(active=True).order_by('-id')
+			issues = { 'issues': issues }
+
+			return HttpResponse(archive.render(issues, request))
+		
 		else:
 			print id
 			try:
