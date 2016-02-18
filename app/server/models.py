@@ -968,13 +968,13 @@ class Subscriber(models.Model):
 		else:
 			return self.email
 	email = models.EmailField(_('email address'),blank=True,null=True,unique=False)
-	user = models.ForeignKey('ShowgridUser',null=True,blank=True)
+	user = models.ForeignKey('ShowgridUser',null=True,blank=True,unique=True)
 	hash_name =  models.CharField(unique=True,max_length=255,blank=True)
 	is_tester = models.BooleanField(default=False)
 	@receiver(pre_save)
 	def my_callback(sender, instance, *args, **kwargs):
-		if not hasattr(instance, 'email') and not hasattr(instance, 'user'):
-			instance.delete()
+		# if not hasattr(instance, 'email') and not hasattr(instance, 'user'):
+		# 	instance.delete()
 
 		instance.hash_name = ''
 		for x in range(0, 10):
