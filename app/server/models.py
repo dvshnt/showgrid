@@ -967,11 +967,13 @@ class Subscriber(models.Model):
 	email = models.EmailField(_('email address'), unique=True,blank=False)
 	user = models.ForeignKey('ShowgridUser',null=True)
 	hash_name =  models.CharField(unique=True,blank=False,max_length=255,null=False)
+	
 	@receiver(pre_save)
 	def my_callback(sender, instance, *args, **kwargs):
 		instance.hash_name = ''
 		for x in range(0, 10):
 			instance.hash_name += random.choice(string.letters)
+	
 	def sendIssue(self,issue):
 		
 		if self.user != None:
@@ -979,7 +981,7 @@ class Subscriber(models.Model):
 		else:
 			email = self.email
 
-		title = 'Showgrid Weekly Issue'
+		title = 'Showgrid Weekly Digest'
 		text_alt = 'visit http://showgrid.com/issue/'+str(issue.id)
 		html_content = issue.render(mail_template,self)
 		msg =  mail.EmailMultiAlternatives(title,text_alt,EMAIL_HOST_USER,[email])
@@ -1030,11 +1032,14 @@ class Issue(models.Model):
 
 	tag = models.CharField(max_length=255,blank=False,default='Issue')
 
+	banner = models.ImageField (upload_to='showgrid/img/issues/',blank=True)
+
 	start_date = models.DateTimeField(blank=False)
 	end_date = models.DateTimeField(blank=False)
 
 	shows_count = models.PositiveSmallIntegerField(default=0)
 	sent = models.BooleanField(default=False)
+	active = models.BooleanField(default=False)
 
 	timezone =  models.CharField(max_length=255,default='US/Central')
 	
