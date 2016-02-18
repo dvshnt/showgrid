@@ -245,18 +245,24 @@ class ImageAdmin(admin.ModelAdmin):
 
 
 
-def mail_issues(queryset):
+def mail_issues(queryset,test):
 	issues = list(queryset)
 	for issue in issues:
 		if issue.sent == True:
-			print prRed('issue already mailed, override sent field manually :'+issue.id)
+			print prRed('issue already mailed, override sent field manually :'+str(issue.id))
 		else:
-			issue.mail()
+			issue.mail(test)
 		
 def mail_issues_action(modeladmin, request, queryset):
-	tr = Thread(target=mail_issues,args=(queryset,))
+	tr = Thread(target=mail_issues,args=(queryset,False,))
 	tr.start()
-mail_issues_action.short_description = "Mail Issues"
+mail_issues_action.short_description = "Mail Issues To All"
+
+
+def mail_issues_action_test(modeladmin, request, queryset):
+	tr = Thread(target=mail_issues,args=(queryset,True,))
+	tr.start()
+mail_issues_action_test.short_description = "Mail Issues To Testers"
 
 
 
@@ -277,18 +283,6 @@ def sync_issue_shows_action(modeladmin, request, queryset):
 sync_issue_shows_action.short_description = "Sync Shows to Issue"
 
 
-# def render_issue(queryset):
-# 	issues = list(queryset)
-# 	for issue in issues:
-# 		issue.render()
-
-
-# def render_issue_action(modeladmin, request, queryset):
-# 	tr = Thread(target=render_issue,args=(queryset,))
-# 	tr.start()
-# render_issue_action.short_description = "Render Issue Templates"
-
-
 
 
 
@@ -302,10 +296,11 @@ class IssueAdmin(admin.ModelAdmin):
 	ordering = ['sent','start_date','end_date']
 	fields = ('timezone','spotify_embed','spotify_url','tag','start_date','end_date','intro','sent')
 	list_filter =  ('sent',)
-	actions = [mail_issues_action,sync_issue_shows_action]
+	actions = [mail_issues_action,sync_issue_shows_action,mail_issues_action_test]
 
 class SubAdmin(admin.ModelAdmin):
-	fields = ('email','user')
+	list_filter =  ('is_tester',)
+	fields = ('email','user','is_tester')
 
 
 
