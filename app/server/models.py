@@ -968,7 +968,7 @@ class Subscriber(models.Model):
 		else:
 			return self.email
 	email = models.EmailField(_('email address'), unique=True,blank=True)
-	user = models.ForeignKey('ShowgridUser',null=True)
+	user = models.ForeignKey('ShowgridUser',null=True,blank=True)
 	hash_name =  models.CharField(unique=True,max_length=255,blank=True)
 	is_tester = models.BooleanField(default=False)
 	@receiver(pre_save)
