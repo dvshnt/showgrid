@@ -35,6 +35,7 @@ urlpatterns = [
     ##static issues
     url(r'^issue/unsubscribe/(?P<hash>.+)$', views.IssueUnsubscribe, name='issue unsubscribe'),
     url(r'^issue/(?P<id>\d+)$', views.Issues.as_view(), name='issues'),
+    url(r'^issue$', views.Issues.as_view(), name='issues'),
 
     # ## user actions
     url(r'^v1/signup$', 'server.views.list_signup', name='list signup'),
