@@ -1,365 +1,124 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		{% load static from staticfiles %}
+{% extends "base.html" %}
+	
+{% load static from staticfiles %}
 
-		<title>Showgrid Nashville</title>
+{% block content %}
 
-		<meta name=”description” content=”Showgrid is a simple live music calendar for Nashville.”>
+{% if issue %}
+<a class="issue" href="http://localhost:8000/issue/{{ issue.id }}">
+	<section class="issue list" style="background-image:url('media/{{ issue.banner }}');">
+		<h4>This Week's Digest</h4>
+		<span>
+			Week of {{ issue.start_date|date:"F jS" }}&nbsp; | &nbsp;Issue #{{ issue.id }}
+		</span>
+	</section>
+</a>
+{% endif %}
 
-		<link rel="icon" type="image/png" href='{% static "showgrid/img/favicon.ico" %}'>
+<section>
+	<h3>Introducing</h3>
+	<h4>Showgrid Weekly Digest</h4>
+	<p>
+		As Showgrid searches for its soul in the desolate landscape of shoddy live music calendars, we bring you something to help curb your appetite. A weekly email newsletter!
+	</p>
+	<p>
+		Every Sunday, we will bring you a selection of shows for the week accompanied by a Spotify playlist. You can receive the digest via phone or email.
+	</p>
+	<p>
+		I think you can sense why we would pair a playlist and a list of shows so I'll spare you any further explanation. Sign up below. 
+	</p>
+
+	<form class="form" method="post" action="http://localhost:8000/v1/signup">
 		
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+		<input type="email" name="email" placeholder="Email address" required/><input type="submit" value="Submit"/>
+		<div class="msg">
+			There is something here that once wasn't.
+		</div>
+	</form>
+</section>
 
-		<meta property="og:title" content="Showgrid Nashville"/>
-		<meta property="og:type" content="website"/>
-		<meta property="og:image" content="http://showgrid.com/static/showgrid/img/sg--fb.jpg">
-		<meta property="og:url" content="http://showgrid.com"/>
-		<meta property="og:description" content="Nashville's no-none-sense live music calendar made with love and created to keep you informed."/>	
+<section>
+	<h3 class="fade">Coming Soon...</h3>
+	<ul>
+		<li class="inactive">
+			<svg class="icon icon-calendar"><use xlink:href="#icon-calendar"></use></svg><br>
+			<span>Useful Calendar</span>
+		</li>
+		<li class="inactive">
+			<svg class="icon icon-article"><use xlink:href="#icon-article"></use></svg><br>
+			<span>Amazing Articles</span>
+		</li>
+		<li class="inactive">
+			<svg class="icon icon-playlist"><use xlink:href="#icon-playlist"></use></svg><br>
+			<span>Fun Playlists</span>
+		</li>
+	</ul>
+</section>
+{% endblock %}
 
-		<style>
-			body {
-				width:100%; min-height:100vh;
-				margin:0; padding:0;
-  				
-  				font-family: "Helvetica", sans-serif;
 
-  				overflow:hidden;
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+<script>
+	$(function() {
 
-				background:#222222;
+		//hang on event of form with id=myform
+		$(".form").submit(function(e) {
+			e.preventDefault();
 
+			if ($(this).hasClass("success")) return;
+
+			if (!validateEmail($(".form input[type=email]").val())) {
+				$(".form").addClass("error");
+
+				$(".form .msg").html("Enter a valid email address.")
+
+				setTimeout(function() {
+					$(".form").removeClass("error");
+				}, 5000);
+				return;
 			}
 
-			section {
-				display:-webkit-flex;
-				display:		flex;
-
-				-webkit-flex-flow:column nowrap;
-						flex-flow:column nowrap;
-
-				-webkit-align-items:center;
-						align-items:center;
-
-				-webkit-justify-content:center;
-						justify-content:center;
-
-
-				width:100%; height:100vh;
-
-				text-align:center;
-			}
-
-			section h1 {
-				margin:10px 20px;
-			}
-
-			section h1 img {
-				width:150px;
-				
-				margin-bottom:20px;
-
-				cursor:pointer;
-			}
-
-			section h2 {
-				width:540px;
-
-				margin:40px 0 20px 0;
-
-				color:rgba(255,255,255,0.9);
-				font-size:28px;
-				text-transform:uppercase;
-			}
-
-			section p {
-				width:425px;
-
-				margin:0 0 30px 0;
-
-				color:rgba(255,255,255,1);
-				font-size:18px;
-				font-weight:300;
-				text-align:center;
-			}
-			
-			.form {
-				position:relative;
-				
-				width:400px; height:50px;
-			}
-
-			.form input[type=email] {
-				position:absolute;
-				left:0; top:0;
-				
-				width:290px; height:50px;
-				
-				padding:0 15px;
-
-				font-size:16px;
-				line-height:18px;
-
-				border:none;
-				border-radius:2px 0 0 2px;
-				background:rgba(255,255,255,1);
-				
-				-webkit-transition:all 0.2s ease;
-
-				z-index:9;
-			}
-
-			.form input[type=submit] {
-				position:absolute;
-				left:320px; top:0;
-				
-				width:80px; height:50px;
-
-				color:#ffffff;
-				font-size:12px;
-				line-height:50px;
-				text-align:center;
-				text-transform:uppercase;
-
-				border:none;
-				border-radius:0 2px 2px 0;
-				background:#65DB96;
-
-				cursor:pointer;
-				
-				-webkit-transition:all 0.2s ease;
-
-				z-index:10;
-			}
-
-			.form input[type=submit]:hover {
-				background:#65DB96;
-			}
-
-			.form .msg {
-				position:absolute;
-				top:0; left:0;
-
-				width:100%; height:30px;
-
-				color:#ffffff;
-				font-size:14px;
-				line-height:30px;
-				text-shadow:1px 1px 0px rgba(0,0,0,0.25);
-
-				background:#E8463C;
-				border-radius:2px;
-				
-				-webkit-transition:all 0.3s ease-in-out;
-
-				z-index:2;
-			}
-
-			.form.error .msg {
-				top:55px;
-			}
-			
-			.form.success input[type=submit] {
-				left:0px;
-				
-				width:400px;
-				
-				border-radius:2px;
-			}
-			
-			.form.success input[type=email] {
-				width:0;
-				
-				padding:0;
-			}
-			
-			
-			input:-webkit-autofill,
-			input:-webkit-autofill:hover,
-			input:-webkit-autofill:focus,
-			input:-webkit-autofill:active {
-				-webkit-box-shadow: 0 0 0px 1000px rgba(0,255,255,0.3) inset;
-			}
-			
-			input:focus{
-				font-weight: normal;
-				outline: 0;
-				outline: none;
-				box-shadow: inset 0px 0px 20px rgba(155,205,255,0.3);
-			}
-
-			footer {
-				position:absolute;
-				bottom:0; left:0;
-
-				width:calc(100% - 40px); height:40px;
-
-				padding:0 20px;
-
-				color:rgba(255,255,255,0.5);
-				font-size:12px;
-				text-align:center;
-			}
-
-			footer span {
-				line-height:40px;
-			}
-
-			footer span:first-of-type {
-				float:left;
-			}
-
-			footer span:last-of-type {
-				float:right;
-			}
-
-			footer span:last-of-type a {
-				margin:0 15px;
-
-				color:#ffffff;
-			}
-
-
-			@media screen and (max-width: 480px) {
-
-				section h1 img {
-					width:130px;
-
-					-webkit-transform: scale(1);
-
-					-webkit-transition:all 0.1s ease;
-
-					cursor:pointer;
-				}
-
-				section h2 {
-					width:95%;
-
-					font-size:24px;
-				}
-
-				section p {
-					width:92.5%;
-
-					font-size:18px;
-				}
-
-				.form {
-					width:95%;
-				}
-
-				.form input[type=email] {
-					width:70%;
-
-					font-size:14px;
-				}
-
-				.form input[type=submit] {
-					left:70%; width:30%;
-
-					font-size:12px;
-				
-					-webkit-appearance: none;
-				}
-			}
-		</style>
-	</head>
-
-	<body>
-		<section>
-			<div class="bubble"></div>
-			<h1><img id="showgrid-butt" src="{% static 'showgrid/img/showgrid--logo-white.png' %}" alt="Showgrid Nashville"/></h1>
-			<h2>Coming March 2016</h2>
-			<p>
-				We're working to make Showgrid even better. Sign up below to stay in the loop.
-			</p>
-			<form class="form" method="post" action="http://showgrid.com/v1/signup">
-				<input type="email" name="email" placeholder="Email address" required/><input type="submit" value="Submit"/>
-
-				<div class="msg">
-					You've already signed up with this email.
-				</div>
-			</form>
-		</section>
-		<footer>
-			<span>&copy; 2015 Showgrid, Nashville, TN</span>
-			<span>
-				<a href="mailto:info@showgrid.com">Contact</a>
-			</span>
-		</footer>
-	</body>
-
-	<script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-          ga('create', 'UA-70992003-1', 'auto');
-          ga('send', 'pageview');
-        </script>
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
-	<script>
-		$(function() {
-			//hang on event of form with id=myform
-			$(".form").submit(function(e) {
-				e.preventDefault();
-
-				if ($(this).hasClass("success")) return;
-
-				if (!validateEmail($(".form input[type=email]").val())) {
-					$(".form").addClass("error");
-
-					$(".form .msg").html("Enter a valid email address.")
-
-					setTimeout(function() {
-						$(".form").removeClass("error");
-					}, 5000);
-					return;
-				}
-
-				//get the action-url of the form
-				var actionurl = e.currentTarget.action;
-			
-				$(".form").addClass("request");
-
-				//do your own request an handle the results
-				$.ajax({
-					url: actionurl,
-					type: 'POST',
-					dataType: 'json',
-					data: $(".form").serialize(),
-					complete: function(data) {
-						if (data.status === 200) {
-							$(".form").addClass("success");
-							$(".form input[type=submit]").val("Thanks for signing up! See you soon.");
-						}
-
-						// Already entered this eail.
-						if (data.status === 409) {
-							$(".form").addClass("error");
-
-							$(".form .msg").html("You've already signed up with this email address.")
-
-							setTimeout(function() {
-								$(".form").removeClass("error");
-							}, 5000);
-							return;
-						}
+			//get the action-url of the form
+			var actionurl = e.currentTarget.action;
+		
+			$(".form").addClass("request");
+
+			//do your own request an handle the results
+			$.ajax({
+				url: actionurl,
+				type: 'POST',
+				dataType: 'json',
+				data: $(".form").serialize(),
+				complete: function(data) {
+					if (data.status === 200) {
+						$(".form").addClass("success");
+						$(".form input[type=submit]").val("Thanks for signing up! See you soon.");
 					}
-				});
 
+					// Already entered this eail.
+					if (data.status === 409) {
+						$(".form").addClass("error");
+
+						$(".form .msg").html("You've already signed up with this email address.")
+
+						setTimeout(function() {
+							$(".form").removeClass("error");
+						}, 5000);
+						return;
+					}
+				}
 			});
-
-			function validateEmail(str) {
-				var lastAtPos = str.lastIndexOf('@');
-			    var lastDotPos = str.lastIndexOf('.');
-			    return (lastAtPos < lastDotPos && lastAtPos > 0 && str.indexOf('@@') == -1 && lastDotPos > 2 && (str.length - lastDotPos) > 2);
-			}
 
 		});
 
-	</script>
-</html>
+		function validateEmail(str) {
+			var lastAtPos = str.lastIndexOf('@');
+		    var lastDotPos = str.lastIndexOf('.');
+		    return (lastAtPos < lastDotPos && lastAtPos > 0 && str.indexOf('@@') == -1 && lastDotPos > 2 && (str.length - lastDotPos) > 2);
+		}
+
+	});
+
+</script>
+{% endblock %}
