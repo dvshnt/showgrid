@@ -264,7 +264,19 @@ mail_issues_action.short_description = "Mail Issues"
 
 
 
+def make_issue_active(modeladmin, request, queryset):
+	issues = list(queryset)
+	for issue in issues:
+		issue.active = True
+		issue.save()
+make_issue_active.short_description = "Make Issues Active"
 
+def make_issue_inactive(modeladmin, request, queryset):
+	issues = list(queryset)
+	for issue in issues:
+		issue.active = False
+		issue.save()
+make_issue_inactive.short_description = "Make Issues Inactive"
 
 def sync_issue_shows(queryset):
 	issues = list(queryset)
@@ -298,11 +310,11 @@ sync_issue_shows_action.short_description = "Sync Shows to Issue"
 
 
 class IssueAdmin(admin.ModelAdmin):
-	list_display = ['id','tag','shows_count','sent','start_date','end_date']
+	list_display = ['id','tag','shows_count','sent','active','start_date','end_date']
 	ordering = ['sent','start_date','end_date']
-	fields = ('timezone','spotify_embed','spotify_url','tag','start_date','end_date','intro','sent')
+	fields = ('timezone','banner','spotify_embed','spotify_url','tag','start_date','end_date','intro','sent','active')
 	list_filter =  ('sent',)
-	actions = [mail_issues_action,sync_issue_shows_action]
+	actions = [mail_issues_action,sync_issue_shows_action,make_issue_active,make_issue_inactive]
 
 
 
