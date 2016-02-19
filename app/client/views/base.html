@@ -38,7 +38,7 @@
 		<!-- Start Facebook Open Graph -->
 		<meta property="og:title" content="Showgrid {% block ogtitle %}| Nashville's Live Music Source{% endblock %}"/>
 		<meta property="og:type" content="website"/>
-		<meta property="og:image" content="{% block ogimg %}{% static 'showgrid/img/sg--fb.jpg' %}{% endblock %}"/>
+		<meta property="og:image" content="{% block ogimg %}http://showgrid.com/{% static 'showgrid/img/facebook-ogimg.jpg' %}{% endblock %}"/>
 		<meta property="og:url" content="http://showgrid.com"/>
 		<meta property="og:description" content="{% block ogdesc %}Showgrid is Nashville's premiere place to learn about live music in town.{% endblock %}"/>
 		<!-- End Facebook Open Graph -->
@@ -52,7 +52,7 @@
 		<meta name="twitter:creator" content="@dvshnt">
 		<meta name="twitter:title" content="Showgrid {% block twittertitle %}| Nashville's Live Music Source{% endblock %}">
 		<meta name="twitter:description" content="{% block twitterdesc %}Showgrid is Nashville's premiere place to learn about live music in town.{% endblock %}">
-		<meta name="twitter:image" content="{% static 'showgrid/img/sg--fb.jpg' %}">
+		<meta name="twitter:image" content="http://showgrid.com/{% static 'showgrid/img/sg--fb.jpg' %}">
 		<!-- End Twitter Card -->
 		{% endblock %}
 		
@@ -148,13 +148,9 @@
 					<ul>
 						<li>
 							<a href="/issue">
-								<svg class="icon icon-letter"><use xlink:href="#icon-letter"></use></svg><br>
-								<span>Digest</span>
+								<svg class="icon icon-letter"><use xlink:href="#icon-letter"></use></svg>
+								<span>Digest Archive</span>
 							</a>
-						</li>
-						<li>
-							<svg class="icon icon-profile"><use xlink:href="#icon-profile"></use></svg><br>
-							<span>Profile</span>
 						</li>
 					</ul>
 				</menu>

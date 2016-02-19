@@ -5,7 +5,7 @@
 {% block content %}
 
 {% if issue %}
-<a class="issue" href="http://localhost:8000/issue/{{ issue.id }}">
+<a class="issue" href="http://showgrid.com/issue/{{ issue.id }}">
 	<section class="issue list" style="background-image:url('media/{{ issue.banner }}');">
 		<h4>This Week's Digest</h4>
 		<span>
@@ -19,16 +19,16 @@
 	<h3>Introducing</h3>
 	<h4>Showgrid Weekly Digest</h4>
 	<p>
-		As Showgrid searches for its soul in the desolate landscape of shoddy live music calendars, we bring you something to help curb your appetite. A weekly email newsletter!
+		While we work on building out the rest of the site, we've put together a weekly newsletter to help you stay up to date about who is playing in town for the upcoming week. A real simple remedy for the missing Showgrid calendar.
 	</p>
 	<p>
-		Every Sunday, we will bring you a selection of shows for the week accompanied by a Spotify playlist. You can receive the digest via phone or email.
+		Every Sunday, we will bring you a selection of shows for the week accompanied by a Spotify playlist. The playlist will be made up of the artists that are playing in town that week. Click <a href="issue/1">here</a> for an example.
 	</p>
 	<p>
-		I think you can sense why we would pair a playlist and a list of shows so I'll spare you any further explanation. Sign up below. 
+		The newsletter will feature commentary about some of the shows, and ideally, you will read it and want to see some live music! Sign up below. 
 	</p>
 
-	<form class="form" method="post" action="http://localhost:8000/v1/signup">
+	<form class="form" method="post" action="http://showgrid.com/v1/signup">
 		
 		<input type="email" name="email" placeholder="Email address" required/><input type="submit" value="Submit"/>
 		<div class="msg">
@@ -57,13 +57,13 @@
 		A few things we can talk about that are in the works.
 	</p>
 	<p>
-		Firstly, we will release a series of <b class="art">articles</b> focusing on music history. Heavy articles will be monthly, sprinkled between by articles about 'lighter weight' music history topics. To start, these articles will talk exclusively of Nashville, and the rich music history we are surrounded by. We truly believe that to be a fully capable citizen, you must at least know that Bob Dylan recorded his magnum opus, <i>Blonde on Blonde</i>, here in this city.
+		Firstly, we will release a series of <b class="art">articles</b> focusing on music history. Heavy articles will be monthly, sprinkled between by articles about 'lighter weight' music history topics. To start, these articles will talk exclusively of Nashville, and the rich music history we are surrounded by.
 	</p>
 	<p>
-		Secondly, we will consistently put out a series of themed <b class="play">playlists</b>. Playlists will be in the fashion of 'Songs about Star Wars' or maybe even 'Songs That Started Wars'. We may even venture to try and create a <i>mood</i> with these playlists. Like 'Songs To Make Love To With Your Socks On'. You get it. Enough of that.
+		Secondly, we will consistently put out a series of themed <b class="play">playlists</b>. Playlists will be in the fashion of 'Songs about Star Wars' or maybe even 'Songs That Started Wars'. We may even venture to try and create a <i>mood</i> with these playlists. Like 'Songs To Make Love To With Your Socks On'. These will be released more frequently.
  	</p>
  	<p>
- 		And lastly, we will have the standard music <b class="cal">calendar</b> that you came here for in the first place. It will likely look the same, but all links from the calendar will now link to pages within the site where you can gather more info about the show you are exploring. This will include songs, artist bios, articles about said artists, pictures and a fire breathing dragon to scare you into buying tickets.
+ 		And lastly, we will have the standard music <b class="cal">calendar</b> that you came here for in the first place. It will likely look the same, but all links from the calendar will now link to pages within the site where you can gather more info about the show you are exploring. This will include songs, artist bios, articles about said artists, pictures and ways for you to track the show.
  	</p>
  	<p>
  		Until then, enjoy the newsletter and tell all of your friends. I mean all of them. 
