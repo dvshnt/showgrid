@@ -1151,7 +1151,6 @@ class Issue(models.Model):
 			print('issue ',self.index,' already sent, please override sent boolean in database to False manually')
 			return
 		else:
-			# subscribers = Subscriber.objects.filter(email=test.email)
 			subscribers = Subscriber.objects.all()
 			for sub in subscribers:
 				if test == True and sub.is_tester == True:
