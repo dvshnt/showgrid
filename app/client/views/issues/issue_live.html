@@ -2,6 +2,14 @@
 	
 {% load static from staticfiles %}
 
+{% block title %}| Weekly Digest {{ issue.tag }} {% endblock %}
+{% block ogtitle %}| Weekly Digest {{ issue.tag }} {% endblock %}
+{% block twittertitle %}| Weekly Digest {{ issue.tag }} {% endblock %}
+
+{% block ogimg %} 'http://showgrid.com/media/{{ issue.banner }}' {% endblock %}
+{% block twitterimg %} 'http://showgrid.com/media/{{ issue.banner }}' {% endblock %}
+
+
 {% block style %}
 <style type="text/css">
 	#container {

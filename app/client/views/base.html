@@ -52,7 +52,7 @@
 		<meta name="twitter:creator" content="@dvshnt">
 		<meta name="twitter:title" content="Showgrid {% block twittertitle %}| Nashville's Live Music Source{% endblock %}">
 		<meta name="twitter:description" content="{% block twitterdesc %}Showgrid is Nashville's premiere place to learn about live music in town.{% endblock %}">
-		<meta name="twitter:image" content="http://showgrid.com/{% static 'showgrid/img/sg--fb.jpg' %}">
+		<meta name="twitter:image" content="{% block twitterimg %}http://showgrid.com/{% static 'showgrid/img/sg--fb.jpg' %}{% endblock %}">
 		<!-- End Twitter Card -->
 		{% endblock %}
 		
