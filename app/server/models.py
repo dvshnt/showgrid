@@ -994,8 +994,8 @@ class Subscriber(models.Model):
 
 
 
-@receiver(pre_save,sender = Subscriber,dispatch_uid="my_unique_identifier")
-def my_callback(sender, instance,raw,using,update_fields,**kwargs):
+@receiver(pre_save,sender = Subscriber,dispatch_uid="pre_save_sub")
+def pre_save_sub_callback(sender, instance,raw,using,update_fields,**kwargs):
 	duplicate = False
 	if instance.id != None :
 		print "update"
