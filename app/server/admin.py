@@ -300,7 +300,7 @@ class IssueAdmin(admin.ModelAdmin):
 
 class SubAdmin(admin.ModelAdmin):
 	list_filter =  ('is_tester',)
-	fields = ('email','user','is_tester')
+	fields = ('email','user_name','is_tester','hash_name')
 
 
 
