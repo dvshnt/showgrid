@@ -2,12 +2,16 @@
 	
 {% load static from staticfiles %}
 
-{% block title %}| Weekly Digest {{ issue.tag }} {% endblock %}
-{% block ogtitle %}| Weekly Digest {{ issue.tag }} {% endblock %}
-{% block twittertitle %}| Weekly Digest {{ issue.tag }} {% endblock %}
+{% block title %}| Weekly Digest {{ tag }} {% endblock %}
+{% block ogtitle %}| Weekly Digest {{ tag }} {% endblock %}
+{% block twittertitle %}| Weekly Digest {{ tag }} {% endblock %}
 
-{% block ogimg %} 'http://showgrid.com/media/{{ issue.banner }}' {% endblock %}
-{% block twitterimg %} 'http://showgrid.com/media/{{ issue.banner }}' {% endblock %}
+{% block ogimg %}http://showgrid.com/media/{{ banner }}{% endblock %}
+{% block twitterimg %}http://showgrid.com/media/{{ banner }}{% endblock %}
+
+{% block ogurl %}{{ issue_link }}{% endblock %}
+
+{% block ogdesc %}A weekly newsletter bringing you great shows in town for the upcoming week as well as a Spotify playlist so you can hear the music!{% endblock %}
 
 
 {% block style %}
@@ -99,7 +103,7 @@
 
 								&nbsp;&nbsp;|&nbsp;&nbsp;
 
-								Issue #{{ id }}
+								{{ tag }}
 
 								&nbsp;&nbsp;|&nbsp;&nbsp;
 

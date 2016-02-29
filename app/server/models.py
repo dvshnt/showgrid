@@ -1102,7 +1102,7 @@ class Issue(models.Model):
 				"headliners": show.headliners,
 				"openers": show.openers,
 
-				"link": show.website
+				"link": show.website,
 			}
 
 			
@@ -1138,7 +1138,10 @@ class Issue(models.Model):
 			"spotify_url": self.spotify_url,
 
 			"issue_link": HOST + "/issue/" + str(self.id),
-			"unsub_link": unsub_link
+			"unsub_link": unsub_link,
+			
+			"tag": self.tag,
+			"banner": self.banner
 		})
 
 		return html
