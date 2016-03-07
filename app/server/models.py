@@ -985,7 +985,7 @@ class Contest(models.Model):
 		for p in parts:
 			for i in range(0,p.contest_points):
 				choices.append(p)
-		winner = random.choice(parts)
+		winner = random.choice(choices)
 		self.winner = winner
 		self.save()
 		return
