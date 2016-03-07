@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+	
+{% load static from staticfiles %}
+
+{% block content %}
+<section>
+	<h3>{{contest.title}}</h3>
+</section>
+<section>
+<p>
+	this is a hardcoded contest template description located in a folder named share4ticket
+</p>
+<form class="form" method="post" action="http://localhost:8000/v1/contest/{{contest.id}}/signup">
+	{% csrf_token %} 
+	<input type="email" name="email" placeholder="Email address" required/><input type="submit" value="Submit"/>
+	<div class="msg">
+		There is something here that once wasn't.
+	</div>
+</form>
+</section>
+{% endblock %}
+
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+<script>
+	$(function() {
+
+		//hang on event of form with id=myform
+		$(".form").submit(function(e) {
+			e.preventDefault();
+
+			if ($(this).hasClass("success")) return;
+
+			if (!validateEmail($(".form input[type=email]").val())) {
+				$(".form").addClass("error");
+
+				$(".form .msg").html("Enter a valid email address.")
+
+				setTimeout(function() {
+					$(".form").removeClass("error");
+				}, 5000);
+				return;
+			}
+
+			//get the action-url of the form
+			var actionurl = e.currentTarget.action;
+		
+			$(".form").addClass("request");
+
+			//do your own request an handle the results
+			$.ajax({
+				url: actionurl,
+				type: 'POST',
+				dataType: 'json',
+				data: $(".form").serialize(),
+				complete: function(data) {
+					if (data.status === 200) {
+						$(".form").addClass("success");
+						$(".form input[type=submit]").val("Thanks for entering the contest! Check your mail.");
+					}
+
+					// Already entered this eail.
+					if (data.status === 409) {
+						$(".form").addClass("error");
+
+						$(".form .msg").html("You've already registed for the contest!")
+
+						setTimeout(function() {
+							$(".form").removeClass("error");
+						}, 5000);
+						return;
+					}
+					if (data.status === 400) {
+						$(".form").addClass("error");
+
+						$(".form .msg").html("You need to signup to enter the contest")
+
+						setTimeout(function() {
+							$(".form").removeClass("error");
+						}, 5000);
+						return;
+					}
+				}
+			});
+
+		});
+
+		function validateEmail(str) {
+			var lastAtPos = str.lastIndexOf('@');
+		    var lastDotPos = str.lastIndexOf('.');
+		    return (lastAtPos < lastDotPos && lastAtPos > 0 && str.indexOf('@@') == -1 && lastDotPos > 2 && (str.length - lastDotPos) > 2);
+		}
+
+	});
+
+</script>
+{% endblock %}

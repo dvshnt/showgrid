@@ -42,7 +42,7 @@ from termcolor import colored
 
 from django.db.models import Q
 from django.template.loader import get_template
-from django.db.models.signals import post_save, post_delete, pre_save
+from django.db.models.signals import post_save, post_delete, pre_save, pre_delete
 
 import operator
 
@@ -958,7 +958,108 @@ class Alert(models.Model):
 
 
 
-mail_template = get_template('issues/issue_mail.html')
+class Contest(models.Model):
+	def __unicode__ (self):
+		return self.title
+	title = models.CharField(max_length=255,blank=True,null=True)
+	template_folder = models.CharField(max_length=255,blank=False,default='share4ticket')
+
+	signup_subject = models.CharField(max_length=255,blank=False,default='thanks for joining the contest!')
+	ended_subject = models.CharField(max_length=255,blank=False,default='contest has ended!')
+
+	winner = models.ForeignKey('Subscriber',related_name= 'contest_won', blank = True,null = True)
+	active = models.BooleanField(default=False)
+
+	def __init__(self, *args, **kwargs):
+		super(Contest, self).__init__(*args, **kwargs)
+		self.signup_templ = get_template('contest/'+self.template_folder+'/mail_signup.html')
+		self.ended_templ = get_template('contest/'+self.template_folder+'/mail_ended.html')
+
+	def decideWinner(self):
+		parts = Subscriber.objects.filter(contest=self)
+		if parts == None or len(parts) == 0:
+			prRed('cannot decide winner with not participants.')
+			return False
+
+		choices = []
+		for p in parts:
+			for i in range(0,p.contest_points):
+				choices.append(p)
+		winner = random.choice(choices)
+		print choices
+		self.winner = winner
+		self.save()
+		return
+
+
+	def mailWinLetter(self):
+		if self.winner == None:
+			prRed('cannot mail win letter because no winner')
+			return False
+		if self.active == False:
+			prRed('cannot send win letter contest not active.')
+			return False
+		participants = Subscriber.objects.filter(contest=self)
+		title = self.ended_subject
+		text_alt =  self.ended_subject
+		html_ended_content = self.ended_templ.render({
+			'contest': self,
+		})
+
+		for p in participants:
+			msg = mail.EmailMultiAlternatives(title,text_alt,EMAIL_HOST_USER,[p.email])
+			msg.attach_alternative(html_ended_content,'text/html')
+			msg.send()
+		prRed('CONTEST '+self.title+' IS OVER')
+		self.active = False
+		self.save()
+
+
+	def mailShareLetter(self,sub):
+		mail_template = get_template('issues/issue_mail.html')
+		if self.active == False:
+			prRed('cannot send share letter contest not active.')
+			return False
+
+		if sub.email == None:
+			email = sub.user.email
+		else:
+			email = sub.email
+
+		title = self.signup_subject
+		text_alt = 'share this link http://showgrid.com?ref='+sub.hash_name
+		html_signup_content = self.signup_templ.render({
+			'link': 'http://localhost:8000/?ref='+sub.hash_name,
+			'contest': self,
+			'sub': sub
+		})
+
+		msg = mail.EmailMultiAlternatives(title,text_alt,EMAIL_HOST_USER,[email])
+		msg.attach_alternative(html_signup_content , "text/html")
+		msg.send()
+		prGreen(sub.email+' has entered the contest!')
+		self.save()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 class Subscriber(models.Model):
@@ -967,20 +1068,18 @@ class Subscriber(models.Model):
 			return self.user.email
 		else:
 			return self.email
-
+	ip =  models.CharField(max_length=255,blank=False)
 	email = models.EmailField(_('email address'),blank=True,null=True,unique=False)
 	user = models.ForeignKey('ShowgridUser',null=True,blank=True,unique=True)
 	hash_name =  models.CharField(unique=True,max_length=255,blank=True)
 	is_tester = models.BooleanField(default=False)
-	
-	@receiver(pre_save)
-	def my_callback(sender, instance, *args, **kwargs):
-		# if not hasattr(instance, 'email') and not hasattr(instance, 'user'):
-		# 	instance.delete()
 
-		instance.hash_name = ''
-		for x in range(0, 10):
-			instance.hash_name += random.choice(string.letters)
+
+
+	#contest fields
+	contest = models.ForeignKey('Contest',null=True,blank=True)
+	contest_points = models.PositiveSmallIntegerField(default=1)
+
 	
 	def sendIssue(self,issue):
 		if self.user != None :
@@ -1003,6 +1102,48 @@ class Subscriber(models.Model):
 
 
 
+@receiver(pre_save,sender = Subscriber,dispatch_uid="pre_save_sub")
+def pre_save_sub_callback(sender, instance,raw,using,update_fields,**kwargs):
+	duplicate = False
+	if instance.id != None :
+		print "update"
+		model = Subscriber.objects.get(pk=instance.id)
+	else :
+		if instance.user == None and instance.email == None:
+			duplicate = True
+		elif instance.email != None and instance.user == None:
+			same = Subscriber.objects.filter(user__email=instance.email)
+			if len(same) > 0:
+				duplicate = True
+			same = Subscriber.objects.filter(email=instance.email)
+			if len(same) > 0:
+				duplicate = True
+		elif instance.user != None and (instance.email == None or instance.email == ""):
+			same = Subscriber.objects.filter(email=instance.user.email)
+			if len(same) > 0:
+				duplicate = True
+		
+		if duplicate == True:
+			raise Exception('similar subscriber found')
+
+		instance.hash_name = ""
+		for x in range(0, 20):
+			instance.hash_name += random.choice(string.letters)
+		prGreen('created new subscriber with hash '+instance.hash_name)
+
+		
+		return
+
+	if instance.hash_name != model.hash_name:
+		prRed('may not change subscriber hash name.')
+		instance.hash_name = model.hash_name
+	if model.hash_name == None or model.hash_name == "":
+		instance.hash_name = ""
+		for x in range(0, 15):
+			instance.hash_name += random.choice(string.letters)
+		prGreen('subscriber has no hash, updated subscriber with hash '+instance.hash_name)
+	if instance.user != None:
+		instance.email = instance.user.email
 
 
 
@@ -1013,7 +1154,6 @@ class Subscriber(models.Model):
 
 
 
-# from django.db.models import F
 
 
 
@@ -1031,7 +1171,17 @@ def sort_shows(self,show):
 	return int(show["date_number"])
 
 
+
+
 HOST = "http://showgrid.com"
+
+
+
+
+
+
+mail_template = get_template('issues/issue_mail.html')
+
 
 class Issue(models.Model):
 	def __unicode__ (self):
@@ -1040,18 +1190,13 @@ class Issue(models.Model):
 	intro = HTMLField(default="")
 	spotify_embed = models.CharField(max_length=255,blank=True,null=True)
 	spotify_url = models.URLField(blank=True,null=True)
-
 	tag = models.CharField(max_length=255,blank=False,default='Issue')
-
-	banner = models.ImageField (upload_to='showgrid/img/issues/',blank=True)
-
+	banner = models.ImageField(upload_to='showgrid/img/issues/',blank=True)
 	start_date = models.DateTimeField(blank=False)
 	end_date = models.DateTimeField(blank=False)
-
 	shows_count = models.PositiveSmallIntegerField(default=0)
 	sent = models.BooleanField(default=False)
 	active = models.BooleanField(default=False)
-
 	timezone =  models.CharField(max_length=255,default='US/Central')
 	
 
@@ -1069,7 +1214,7 @@ class Issue(models.Model):
 		self.shows_count = len(issue_shows)
 		
 		self.save()
-	
+
 
 
 	def render(self,template,sub):

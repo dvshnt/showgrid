@@ -244,7 +244,6 @@ class ImageAdmin(admin.ModelAdmin):
 
 
 
-
 def mail_issues(queryset,test):
 	issues = list(queryset)
 	for issue in issues:
@@ -297,10 +296,33 @@ sync_issue_shows_action.short_description = "Sync Shows to Issue"
 
 
 
+#mail decide the contest winnder
+def decide_contest_winner(modeladmin, request, queryset):
+	contests = list(queryset)
+	for contest in contests:
+		contest.decideWinner()
+sync_issue_shows_action.short_description = "Decide Contest Winner"
 
 
+#mail letter to all contest participants that the contest has ended
+def mail_contest_end(modeladmin,requst,queryset):
+	contests = list(queryset)
+	for contest in contests:
+		contest.mailWinLetter()
+sync_issue_shows_action.short_description = "Mail Final Results to Participants"
 
 
+class ContestAdmin(admin.ModelAdmin):
+	list_display = ['id','title','active','winner']
+	list_filter =  ('active',)
+	actions = [decide_contest_winner,mail_contest_end]
+
+
+def update_sub_emails(modeladmin,requst,queryset):
+	subs = list(queryset)
+	for sub in subs:
+		sub.save()	
+update_sub_emails.short_description = "Sync subscriber emails (if email empty and user account is linked)"
 
 
 class IssueAdmin(admin.ModelAdmin):
@@ -312,10 +334,11 @@ class IssueAdmin(admin.ModelAdmin):
 
 class SubAdmin(admin.ModelAdmin):
 	list_filter =  ('is_tester',)
-	fields = ('email','user','is_tester')
+	fields = ('email','user','contest','is_tester','hash_name','contest_points')
+	actions = [update_sub_emails]
 
 
-
+admin.site.register(Contest,ContestAdmin)
 admin.site.register(Subscriber,SubAdmin)
 admin.site.register(Address)
 admin.site.register(Venue)

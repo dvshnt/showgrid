@@ -7,6 +7,7 @@ app/server/whoosh_index/*
 
 app/media/**
 
+app/static/**
 app/static/showgrid/js/*
 app/static/showgrid/css/*
 app/static/showgrid/css/webfonts/*
@@ -15,7 +16,6 @@ app/client/.sass-cache/*
 app/client/public/.sass-cache/*
 app/client/node_modules/**
 app/client/public/js/*
-app/client/public/css/*.css
 app/client/public/css/*.css.map
 
 assets/**

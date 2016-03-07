@@ -7,7 +7,7 @@ import json
 import collections
 
 import re #regex
-
+from threading import Thread
 import datetime as datetime_2
 
 from django.db.models import Q
@@ -21,7 +21,7 @@ from server.models import *
 
 from django.utils import dateparse
 
-from django.http import HttpResponseServerError, HttpResponseNotFound, HttpResponse
+from django.http import HttpResponseServerError, HttpResponseNotFound, HttpResponse, HttpResponseNotAllowed
 
 from django.core import serializers
 from django.shortcuts import render
@@ -53,6 +53,7 @@ from django.core.validators import ValidationError
 import dateutil.parser
 import re
 def index(request, year=None, month=None, day=None):
+
 	return render(request, "index.html")
 
 from rest_framework.authtoken.models import Token
@@ -67,17 +68,17 @@ def version(request):
 def splash(request):
 	today = datetime.today()
 	issue = Issue.objects.filter(active=True).filter(Q(start_date__lte=today) & Q(end_date__gte=today))
-
 	if len(issue):
-		issue = { 'issue': issue[0] }
+		issue = { 'issue': issue[0] ,'ref': str(request.GET.get('ref',None)) }
 	else:
-		issue = ""
+		issue = {'ref': str(request.GET.get('ref',None))}
 
 	return render(request, "splash.html", issue)
 
 
 @api_view(['POST'])
 def list_signup(request):
+	ip = request.META.get('REMOTE_ADDR')
 	email = request.POST['email']
 
 	if email == None:
@@ -91,11 +92,76 @@ def list_signup(request):
 	users = Subscriber.objects.filter(email=email)
 	if len(users) > 0:
 		return Response({"msg": "user_exists"}, status=status.HTTP_409_CONFLICT)
+	
+	family = Subscriber.objects.filter(ip=ip)
+	if len(family) >= 3:
+		return Response({"msg": "user_exists"}, status=status.HTTP_409_CONFLICT)
 
-	user = Subscriber(email=email)
+	
+	user = Subscriber(email=email,ip=ip)
 	user.save()
 
+
+	ref = request.GET.get('ref', None)
+	print ref
+	if ref != None:
+		try:
+			ref_sub = Subscriber.objects.get(hash_name=ref)
+			if ref_sub.contest != None:
+				ref_sub.contest_points += 1
+				ref_sub.save()
+		except:
+			return Response()
+
 	return Response()
+
+
+
+
+
+def send_share_letter_thread(contest,user):
+	contest.mailShareLetter(user)
+
+
+
+
+#signup for contest
+@api_view(['POST'])
+def contest_signup(request,id):
+	email = request.POST['email']	
+
+	try:	
+		user = Subscriber.objects.get(email=email)
+		if user.contest != None:
+			print user.contest
+			return Response({"msg": "user_entered"}, status=status.HTTP_409_CONFLICT)
+		contest = Contest.objects.get(id=id)
+		tr = Thread(target=send_share_letter_thread,args=(contest,user,))
+		tr.start()
+		user.contest = contest
+		user.contest_points = 1
+		user.save()
+		return Response()
+	except:
+		return Response({"msg": "user_nonexist"}, status=status.HTTP_400_BAD_REQUEST)
+	
+
+#contest page
+@api_view(['GET'])
+def contest_view(req,id):
+	print 'render view'
+	cont = Contest.objects.get(id=id)
+	return render(req, 'contest/'+cont.template_folder+'/contest_page.html', { 'contest': cont })
+	return HttpResponseNotFound();
+
+
+
+
+
+
+
+
+
 
 
 
