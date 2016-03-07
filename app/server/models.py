@@ -996,7 +996,7 @@ class Contest(models.Model):
 		title = self.ended_email_subject
 		text_alt =  self.ended_email_subject
 		html_ended_content = self.ended_templ.render({
-			cont: self
+			'contest': self
 		})
 
 		for p in participants:
@@ -1026,17 +1026,17 @@ class Contest(models.Model):
 			email = sub.email
 
 		title = self.signup_email_subject
-		text_alt = 'share this link http://showgrid.com?ref='+str(issue.id)
+		text_alt = 'share this link http://showgrid.com?ref='+sub.hash_name
 		html_signup_content = self.signup_templ.render({
-			link: 'http://localhost:8000/?ref='+email,
-			cont: self,
-			sub: sub
+			'link': 'http://localhost:8000/?ref='+sub.hash_name,
+			'contest': self,
+			'sub': sub
 		})
 
-		msg =  mail.EmailMultiAlternatives(title,text_alt,EMAIL_HOST_USER,[email])
+		msg = mail.EmailMultiAlternatives(title,text_alt,EMAIL_HOST_USER,[email])
 		msg.attach_alternative(html_signup_content , "text/html")
 		msg.send()
-
+		prGreen(sub.email+' has entered the contest!')
 		self.save()
 
 
@@ -1064,12 +1064,12 @@ class Contest(models.Model):
 class Subscriber(models.Model):
 	def __unicode__ (self):
 		if self.email == None or self.email == '' :
-			return self.user_name.email
+			return self.user.email
 		else:
 			return self.email
 
 	email = models.EmailField(_('email address'),blank=True,null=True,unique=False)
-	user_name = models.ForeignKey('ShowgridUser',null=True,blank=True,unique=True)
+	user = models.ForeignKey('ShowgridUser',null=True,blank=True,unique=True)
 	hash_name =  models.CharField(unique=True,max_length=255,blank=True)
 	is_tester = models.BooleanField(default=False)
 
@@ -1108,17 +1108,17 @@ def pre_save_sub_callback(sender, instance,raw,using,update_fields,**kwargs):
 		print "update"
 		model = Subscriber.objects.get(pk=instance.id)
 	else :
-		if instance.user_name == None and instance.email == None:
+		if instance.user == None and instance.email == None:
 			duplicate = True
-		elif instance.email != None and instance.user_name == None:
-			same = Subscriber.objects.filter(user_name__email=instance.email)
+		elif instance.email != None and instance.user == None:
+			same = Subscriber.objects.filter(user__email=instance.email)
 			if len(same) > 0:
 				duplicate = True
 			same = Subscriber.objects.filter(email=instance.email)
 			if len(same) > 0:
 				duplicate = True
-		elif instance.user_name != None and (instance.email == None or instance.email == ""):
-			same = Subscriber.objects.filter(email=instance.user_name.email)
+		elif instance.user != None and (instance.email == None or instance.email == ""):
+			same = Subscriber.objects.filter(email=instance.user.email)
 			if len(same) > 0:
 				duplicate = True
 		
@@ -1141,6 +1141,9 @@ def pre_save_sub_callback(sender, instance,raw,using,update_fields,**kwargs):
 		for x in range(0, 15):
 			instance.hash_name += random.choice(string.letters)
 		prGreen('subscriber has no hash, updated subscriber with hash '+instance.hash_name)
+	if instance.user != None:
+		instance.email = instance.user.email
+
 
 
 

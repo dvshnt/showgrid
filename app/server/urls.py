@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-
+import server
 from server import settings, views
 from rest_framework.authtoken import views as auth_views
 
@@ -38,9 +38,9 @@ urlpatterns = [
     url(r'^issue$', views.Issues.as_view(), name='issues'),
 
     # ## user actions
-    url(r'^v1/signup$', 'server.views.list_signup', name='list signup'),
-    url(r'^v1/contest/(?P<id>\d+)/signup$','server.views.contest_signup',name='signup'),
-    url(r'^contest/(?P<id>\d+)$', 'server.views.contest_view',name = 'contest signup'),
+    url(r'^v1/signup$', server.views.list_signup, name='list signup'),
+    url(r'^v1/contest/(?P<id>\d+)/signup$',server.views.contest_signup,name='contest signup'),
+    url(r'^contest/(?P<id>\d+)$', server.views.contest_view,name = 'contest page'),
     # url(r'^user/(?P<action>\w+)$', views.UserActions.as_view(), name='user actions'),
     # url(r'^v1/venues/(?P<id>\d+)$', views.VenueList.as_view(), name='venue'),
     # url(r'^v1/venues/$', views.VenueList.as_view(), name='grid'),

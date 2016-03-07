@@ -318,8 +318,11 @@ class ContestAdmin(admin.ModelAdmin):
 	actions = [decide_contest_winner,mail_contest_end]
 
 
-
-
+def update_sub_emails(modeladmin,requst,queryset):
+	subs = list(queryset)
+	for sub in subs:
+		sub.save()	
+update_sub_emails.short_description = "Sync subscriber emails (if email empty and user account is linked)"
 
 
 class IssueAdmin(admin.ModelAdmin):
@@ -331,10 +334,8 @@ class IssueAdmin(admin.ModelAdmin):
 
 class SubAdmin(admin.ModelAdmin):
 	list_filter =  ('is_tester',)
-	fields = ('email','user','contest','is_tester','hash_name')
-
-
->>>>>>> feature/issue
+	fields = ('email','user','contest','is_tester','hash_name','contest_points')
+	actions = [update_sub_emails]
 
 
 admin.site.register(Contest,ContestAdmin)

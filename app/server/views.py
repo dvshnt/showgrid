@@ -68,18 +68,17 @@ def splash(request):
 
 	today = datetime.today()
 	issue = Issue.objects.filter(active=True).filter(Q(start_date__lte=today) & Q(end_date__gte=today))
-
 	if len(issue):
-		issue = { 'issue': issue[0] , 'ref':request.GET.get('ref',None) }
+		issue = { 'issue': issue[0] ,'ref': str(request.GET.get('ref',None)) }
 	else:
-		issue = ""
+		issue = {'ref': str(request.GET.get('ref',None))}
 
 	return render(request, "splash.html", issue)
 
 
 @api_view(['POST'])
 def list_signup(request):
-
+	email = request.POST['email']
 
 	if email == None:
 		return Response({"msg": "no_email"}, status=status.HTTP_400_BAD_REQUEST)
@@ -96,14 +95,14 @@ def list_signup(request):
 	user = Subscriber(email=email)
 	user.save()
 
+
 	ref = request.GET.get('ref', None)
+	print ref
 	if ref != None:
 		try:
-			referrer = Subscriber.objects.get(email=ref)
-			if referrer.participant != None:
-				participant = getattr(referrer.participant)
-				participant.points += 1
-				participant.save()
+			ref_sub = Subscriber.objects.get(hash_name=ref)
+			ref_sub.contest_points += 1
+			ref_sub.save()
 		except:
 			return Response()
 
@@ -122,28 +121,29 @@ def list_signup(request):
 #signup for contest
 @api_view(['POST'])
 def contest_signup(request,id):
-	body = json.loads(request.body.decode('utf-8'))
-	email = body['email']
+	email = request.POST['email']	
 
-	
-	user = Subscriber.objects.find(email=email)
-	print user.contest
+	# try:	
+	user = Subscriber.objects.get(email=email)
 	if user.contest != None:
 		print user.contest
-		return HttpResponseNotAllowed();
-	contest = Contest.objects.find(id=id)
+		return Response({"msg": "user_entered"}, status=status.HTTP_409_CONFLICT)
+	contest = Contest.objects.get(id=id)
+	contest.mailShareLetter(user)
 	user.contest = contest
 	user.contest_points = 1
 	user.save();
-	contest.mailShareLetter(user);
-	return HttpResponse()
+	
+	return Response()
+	# except:
+	# 	return Response({"msg": "user_nonexist"}, status=status.HTTP_400_BAD_REQUEST)
 	
 
 #contest page
 @api_view(['GET'])
 def contest_view(req,id):
+	print 'render view'
 	cont = Contest.objects.get(id=id)
-	print cont.id
 	return render(req, 'contest/'+cont.template_folder+'/contest_page.html', { 'contest': cont })
 	return HttpResponseNotFound();
 
