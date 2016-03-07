@@ -959,6 +959,8 @@ class Alert(models.Model):
 
 
 class Contest(models.Model):
+	def __unicode__ (self):
+		return self.title
 	title = models.CharField(max_length=255,blank=True,null=True)
 	template_folder = models.CharField(max_length=255,blank=False,default='share4ticket')
 
@@ -984,6 +986,7 @@ class Contest(models.Model):
 			for i in range(0,p.contest_points):
 				choices.append(p)
 		winner = random.choice(choices)
+		print choices
 		self.winner = winner
 		self.save()
 		return
@@ -1023,7 +1026,7 @@ class Contest(models.Model):
 		else:
 			email = sub.email
 
-		title = self.signup_email_subject
+		title = self.signup_subject
 		text_alt = 'share this link http://showgrid.com?ref='+sub.hash_name
 		html_signup_content = self.signup_templ.render({
 			'link': 'http://localhost:8000/?ref='+sub.hash_name,

@@ -313,7 +313,7 @@ sync_issue_shows_action.short_description = "Mail Final Results to Participants"
 
 
 class ContestAdmin(admin.ModelAdmin):
-	list_display = ['id','title','active']
+	list_display = ['id','title','active','winner']
 	list_filter =  ('active',)
 	actions = [decide_contest_winner,mail_contest_end]
 

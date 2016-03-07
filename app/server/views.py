@@ -7,7 +7,7 @@ import json
 import collections
 
 import re #regex
-
+from threading import Thread
 import datetime as datetime_2
 
 from django.db.models import Q
@@ -119,8 +119,8 @@ def list_signup(request):
 
 
 
-
-
+def send_share_letter_thread(contest,user):
+	contest.mailShareLetter(user)
 
 
 
@@ -130,21 +130,20 @@ def list_signup(request):
 def contest_signup(request,id):
 	email = request.POST['email']	
 
-	# try:	
-	user = Subscriber.objects.get(email=email)
-	if user.contest != None:
-		print user.contest
-		return Response({"msg": "user_entered"}, status=status.HTTP_409_CONFLICT)
-	contest = Contest.objects.get(id=id)
-	return Response()
-	contest.mailShareLetter(user)
-	user.contest = contest
-	user.contest_points = 1
-	user.save();
-	
-	
-	# except:
-	# 	return Response({"msg": "user_nonexist"}, status=status.HTTP_400_BAD_REQUEST)
+	try:	
+		user = Subscriber.objects.get(email=email)
+		if user.contest != None:
+			print user.contest
+			return Response({"msg": "user_entered"}, status=status.HTTP_409_CONFLICT)
+		contest = Contest.objects.get(id=id)
+		tr = Thread(target=send_share_letter_thread,args=(contest,user,))
+		tr.start()
+		user.contest = contest
+		user.contest_points = 1
+		user.save()
+		return Response()
+	except:
+		return Response({"msg": "user_nonexist"}, status=status.HTTP_400_BAD_REQUEST)
 	
 
 #contest page
