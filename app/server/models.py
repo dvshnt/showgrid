@@ -973,12 +973,18 @@ class Contest(models.Model):
 		self.signup_templ = get_template('contest/'+self.template_folder+'/mail_signup.html')
 		self.ended_templ = get_template('contest/'+self.template_folder+'/mail_ended.html')
 
+	def fillChances(x): return x*
 
 	def decideWinner(self):
 		parts = Subscriber.objects.filter(contest=self)
 		if parts == None or len(parts) == 0:
 			prRed('cannot decide winner with not participants.')
 			return False
+
+		choices = []
+		for p in parts:
+			for i in range(0,p.contest_points):
+				choices.append(p)
 		winner = random.choice(parts)
 		self.winner = winner
 		self.save()
@@ -1183,18 +1189,13 @@ class Issue(models.Model):
 	intro = HTMLField(default="")
 	spotify_embed = models.CharField(max_length=255,blank=True,null=True)
 	spotify_url = models.URLField(blank=True,null=True)
-
 	tag = models.CharField(max_length=255,blank=False,default='Issue')
-
 	banner = models.ImageField(upload_to='showgrid/img/issues/',blank=True)
-
 	start_date = models.DateTimeField(blank=False)
 	end_date = models.DateTimeField(blank=False)
-
 	shows_count = models.PositiveSmallIntegerField(default=0)
 	sent = models.BooleanField(default=False)
 	active = models.BooleanField(default=False)
-
 	timezone =  models.CharField(max_length=255,default='US/Central')
 	
 
@@ -1212,7 +1213,7 @@ class Issue(models.Model):
 		self.shows_count = len(issue_shows)
 		
 		self.save()
-	
+
 
 
 	def render(self,template,sub):
