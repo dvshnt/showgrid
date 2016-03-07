@@ -39,6 +39,8 @@ urlpatterns = [
 
     # ## user actions
     url(r'^v1/signup$', 'server.views.list_signup', name='list signup'),
+    url(r'^v1/contest/(?P<id>\d+)/signup$','server.views.contest_signup',name='signup'),
+    url(r'^contest/(?P<id>\d+)$', 'server.views.contest_view',name = 'contest signup'),
     # url(r'^user/(?P<action>\w+)$', views.UserActions.as_view(), name='user actions'),
     # url(r'^v1/venues/(?P<id>\d+)$', views.VenueList.as_view(), name='venue'),
     # url(r'^v1/venues/$', views.VenueList.as_view(), name='grid'),

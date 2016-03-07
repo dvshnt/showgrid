@@ -21,7 +21,7 @@ from server.models import *
 
 from django.utils import dateparse
 
-from django.http import HttpResponseServerError, HttpResponseNotFound, HttpResponse
+from django.http import HttpResponseServerError, HttpResponseNotFound, HttpResponse, HttpResponseNotAllowed
 
 from django.core import serializers
 from django.shortcuts import render
@@ -65,11 +65,12 @@ def version(request):
 
 
 def splash(request):
+
 	today = datetime.today()
 	issue = Issue.objects.filter(active=True).filter(Q(start_date__lte=today) & Q(end_date__gte=today))
 
 	if len(issue):
-		issue = { 'issue': issue[0] }
+		issue = { 'issue': issue[0] , 'ref':request.GET.get('ref',None) }
 	else:
 		issue = ""
 
@@ -78,7 +79,7 @@ def splash(request):
 
 @api_view(['POST'])
 def list_signup(request):
-	email = request.POST['email']
+
 
 	if email == None:
 		return Response({"msg": "no_email"}, status=status.HTTP_400_BAD_REQUEST)
@@ -95,7 +96,65 @@ def list_signup(request):
 	user = Subscriber(email=email)
 	user.save()
 
+	ref = request.GET.get('ref', None)
+	if ref != None:
+		try:
+			referrer = Subscriber.objects.get(email=ref)
+			if referrer.participant != None:
+				participant = getattr(referrer.participant)
+				participant.points += 1
+				participant.save()
+		except:
+			return Response()
+
 	return Response()
+
+
+
+
+
+
+
+
+
+
+
+#signup for contest
+@api_view(['POST'])
+def contest_signup(request,id):
+	body = json.loads(request.body.decode('utf-8'))
+	email = body['email']
+
+	
+	user = Subscriber.objects.find(email=email)
+	print user.contest
+	if user.contest != None:
+		print user.contest
+		return HttpResponseNotAllowed();
+	contest = Contest.objects.find(id=id)
+	user.contest = contest
+	user.contest_points = 1
+	user.save();
+	contest.mailShareLetter(user);
+	return HttpResponse()
+	
+
+#contest page
+@api_view(['GET'])
+def contest_view(req,id):
+	cont = Contest.objects.get(id=id)
+	print cont.id
+	return render(req, 'contest/'+cont.template_folder+'/contest_page.html', { 'contest': cont })
+	return HttpResponseNotFound();
+
+
+
+
+
+
+
+
+
 
 
 

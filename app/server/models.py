@@ -958,7 +958,106 @@ class Alert(models.Model):
 
 
 
-mail_template = get_template('issues/issue_mail.html')
+class Contest(models.Model):
+	title = models.CharField(max_length=255,blank=True,null=True)
+	template_folder = models.CharField(max_length=255,blank=False,default='share4ticket')
+
+	signup_email_subject = models.CharField(max_length=255,blank=False,default='thanks for joining the contest!')
+	signup_ended_subject = models.CharField(max_length=255,blank=False,default='contest has ended!')
+
+	winner = models.ForeignKey('Subscriber',related_name= 'contest_won', blank = True,null = True)
+	active = models.BooleanField(default=False)
+
+	def __init__(self, *args, **kwargs):
+		super(Contest, self).__init__(*args, **kwargs)
+		self.signup_templ = get_template('contest/'+self.template_folder+'/mail_signup.html')
+		self.ended_templ = get_template('contest/'+self.template_folder+'/mail_ended.html')
+
+
+	def decideWinner(self):
+		parts = Subscriber.objects.filter(contest=self)
+		if parts == None or len(parts) == 0:
+			prRed('cannot decide winner with not participants.')
+			return False
+		winner = random.choice(parts)
+		self.winner = winner
+		self.save()
+		return
+
+
+	def mailWinLetter(self,sub):
+		if self.winner == None:
+			prRed('cannot mail win letter because no winner')
+			return False
+		if self.active == False:
+			prRed('cannot send win letter contest not active.')
+			return False
+		participants = Subscriber.objects.filter(contest=self)
+		title = self.ended_email_subject
+		text_alt =  self.ended_email_subject
+		html_ended_content = self.ended_templ.render({
+			cont: self
+		})
+
+		for p in participants:
+
+			if p.email == None:
+				email = p.user.email
+			else:
+				email = p.email
+
+			mail.EmailMultiAlternatives(title,text_alt,EMAIL_HOST_USER,[email])
+			msg.attach_alternative(html_ended_content,'text/html')
+			msg.send()
+
+		self.active = False
+		self.save()
+
+
+	def mailShareLetter(self,sub):
+		mail_template = get_template('issues/issue_mail.html')
+		if self.active == False:
+			prRed('cannot send share letter contest not active.')
+			return False
+
+		if sub.email == None:
+			email = sub.user.email
+		else:
+			email = sub.email
+
+		title = self.signup_email_subject
+		text_alt = 'share this link http://showgrid.com?ref='+str(issue.id)
+		html_signup_content = self.signup_templ.render({
+			link: 'http://localhost:8000/?ref='+email,
+			cont: self,
+			sub: sub
+		})
+
+		msg =  mail.EmailMultiAlternatives(title,text_alt,EMAIL_HOST_USER,[email])
+		msg.attach_alternative(html_signup_content , "text/html")
+		msg.send()
+
+		self.save()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 class Subscriber(models.Model):
@@ -972,6 +1071,11 @@ class Subscriber(models.Model):
 	user = models.ForeignKey('ShowgridUser',null=True,blank=True,unique=True)
 	hash_name =  models.CharField(unique=True,max_length=255,blank=True)
 	is_tester = models.BooleanField(default=False)
+
+
+	#contest fields
+	contest = models.ForeignKey('Contest',null=True,blank=True)
+	contest_points = models.PositiveSmallIntegerField(default=1)
 	
 	@receiver(pre_save)
 	def my_callback(sender, instance, *args, **kwargs):
@@ -1013,9 +1117,6 @@ class Subscriber(models.Model):
 
 
 
-# from django.db.models import F
-
-
 
 
 def render_age(age):
@@ -1031,7 +1132,17 @@ def sort_shows(self,show):
 	return int(show["date_number"])
 
 
+
+
 HOST = "http://showgrid.com"
+
+
+
+
+
+
+mail_template = get_template('issues/issue_mail.html')
+
 
 class Issue(models.Model):
 	def __unicode__ (self):
@@ -1043,7 +1154,7 @@ class Issue(models.Model):
 
 	tag = models.CharField(max_length=255,blank=False,default='Issue')
 
-	banner = models.ImageField (upload_to='showgrid/img/issues/',blank=True)
+	banner = models.ImageField(upload_to='showgrid/img/issues/',blank=True)
 
 	start_date = models.DateTimeField(blank=False)
 	end_date = models.DateTimeField(blank=False)
