@@ -42,7 +42,7 @@ from termcolor import colored
 
 from django.db.models import Q
 from django.template.loader import get_template
-from django.db.models.signals import post_save, post_delete, pre_save
+from django.db.models.signals import post_save, post_delete, pre_save, pre_delete
 
 import operator
 
@@ -1060,31 +1060,25 @@ class Contest(models.Model):
 
 
 
+
 class Subscriber(models.Model):
 	def __unicode__ (self):
 		if self.email == None or self.email == '' :
-			return self.user.email
+			return self.user_name.email
 		else:
 			return self.email
 
 	email = models.EmailField(_('email address'),blank=True,null=True,unique=False)
-	user = models.ForeignKey('ShowgridUser',null=True,blank=True,unique=True)
+	user_name = models.ForeignKey('ShowgridUser',null=True,blank=True,unique=True)
 	hash_name =  models.CharField(unique=True,max_length=255,blank=True)
 	is_tester = models.BooleanField(default=False)
+
 
 
 	#contest fields
 	contest = models.ForeignKey('Contest',null=True,blank=True)
 	contest_points = models.PositiveSmallIntegerField(default=1)
-	
-	@receiver(pre_save)
-	def my_callback(sender, instance, *args, **kwargs):
-		# if not hasattr(instance, 'email') and not hasattr(instance, 'user'):
-		# 	instance.delete()
 
-		instance.hash_name = ''
-		for x in range(0, 10):
-			instance.hash_name += random.choice(string.letters)
 	
 	def sendIssue(self,issue):
 		if self.user != None :
@@ -1106,6 +1100,47 @@ class Subscriber(models.Model):
 
 
 
+
+@receiver(pre_save,sender = Subscriber,dispatch_uid="pre_save_sub")
+def pre_save_sub_callback(sender, instance,raw,using,update_fields,**kwargs):
+	duplicate = False
+	if instance.id != None :
+		print "update"
+		model = Subscriber.objects.get(pk=instance.id)
+	else :
+		if instance.user_name == None and instance.email == None:
+			duplicate = True
+		elif instance.email != None and instance.user_name == None:
+			same = Subscriber.objects.filter(user_name__email=instance.email)
+			if len(same) > 0:
+				duplicate = True
+			same = Subscriber.objects.filter(email=instance.email)
+			if len(same) > 0:
+				duplicate = True
+		elif instance.user_name != None and (instance.email == None or instance.email == ""):
+			same = Subscriber.objects.filter(email=instance.user_name.email)
+			if len(same) > 0:
+				duplicate = True
+		
+		if duplicate == True:
+			raise Exception('similar subscriber found')
+
+		instance.hash_name = ""
+		for x in range(0, 20):
+			instance.hash_name += random.choice(string.letters)
+		prGreen('created new subscriber with hash '+instance.hash_name)
+
+		
+		return
+
+	if instance.hash_name != model.hash_name:
+		prRed('may not change subscriber hash name.')
+		instance.hash_name = model.hash_name
+	if model.hash_name == None or model.hash_name == "":
+		instance.hash_name = ""
+		for x in range(0, 15):
+			instance.hash_name += random.choice(string.letters)
+		prGreen('subscriber has no hash, updated subscriber with hash '+instance.hash_name)
 
 
 

@@ -331,7 +331,10 @@ class IssueAdmin(admin.ModelAdmin):
 
 class SubAdmin(admin.ModelAdmin):
 	list_filter =  ('is_tester',)
-	fields = ('email','user','contest','is_tester')
+	fields = ('email','user','contest','is_tester','hash_name')
+
+
+>>>>>>> feature/issue
 
 
 admin.site.register(Contest,ContestAdmin)
