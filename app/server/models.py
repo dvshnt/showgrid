@@ -973,8 +973,6 @@ class Contest(models.Model):
 		self.signup_templ = get_template('contest/'+self.template_folder+'/mail_signup.html')
 		self.ended_templ = get_template('contest/'+self.template_folder+'/mail_ended.html')
 
-	def fillChances(x): return x*
-
 	def decideWinner(self):
 		parts = Subscriber.objects.filter(contest=self)
 		if parts == None or len(parts) == 0:
