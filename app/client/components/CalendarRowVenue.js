@@ -20,7 +20,7 @@ export default class CalendarRowVenue extends Component {
 				b = 0;
 		} 
 		else{
-			var hex = this.props.venue.primary_color.replace('#','');this.props.venue.primary_color
+			var hex = this.props.venue.primary_color.replace('#','');
 			var r = parseInt(hex.substring(0,2), 16);
 	  	  	var g = parseInt(hex.substring(2,4), 16);
 	    	var b = parseInt(hex.substring(4,6), 16);
