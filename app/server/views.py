@@ -53,6 +53,7 @@ from django.core.validators import ValidationError
 import dateutil.parser
 import re
 def index(request, year=None, month=None, day=None):
+
 	return render(request, "index.html")
 
 from rest_framework.authtoken.models import Token
@@ -65,7 +66,6 @@ def version(request):
 
 
 def splash(request):
-
 	today = datetime.today()
 	issue = Issue.objects.filter(active=True).filter(Q(start_date__lte=today) & Q(end_date__gte=today))
 	if len(issue):
@@ -78,6 +78,7 @@ def splash(request):
 
 @api_view(['POST'])
 def list_signup(request):
+	ip = request.META.get('REMOTE_ADDR')
 	email = request.POST['email']
 
 	if email == None:
@@ -91,8 +92,13 @@ def list_signup(request):
 	users = Subscriber.objects.filter(email=email)
 	if len(users) > 0:
 		return Response({"msg": "user_exists"}, status=status.HTTP_409_CONFLICT)
+	
+	family = Subscriber.objects.filter(ip=ip)
+	if len(family) >= 3:
+		return Response({"msg": "user_exists"}, status=status.HTTP_409_CONFLICT)
 
-	user = Subscriber(email=email)
+	
+	user = Subscriber(email=email,ip=ip)
 	user.save()
 
 
@@ -101,8 +107,9 @@ def list_signup(request):
 	if ref != None:
 		try:
 			ref_sub = Subscriber.objects.get(hash_name=ref)
-			ref_sub.contest_points += 1
-			ref_sub.save()
+			if ref_sub.contest != None:
+				ref_sub.contest_points += 1
+				ref_sub.save()
 		except:
 			return Response()
 
@@ -129,12 +136,13 @@ def contest_signup(request,id):
 		print user.contest
 		return Response({"msg": "user_entered"}, status=status.HTTP_409_CONFLICT)
 	contest = Contest.objects.get(id=id)
+	return Response()
 	contest.mailShareLetter(user)
 	user.contest = contest
 	user.contest_points = 1
 	user.save();
 	
-	return Response()
+	
 	# except:
 	# 	return Response({"msg": "user_nonexist"}, status=status.HTTP_400_BAD_REQUEST)
 	

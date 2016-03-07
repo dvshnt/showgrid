@@ -308,7 +308,7 @@ sync_issue_shows_action.short_description = "Decide Contest Winner"
 def mail_contest_end(modeladmin,requst,queryset):
 	contests = list(queryset)
 	for contest in contests:
-		participants = Subscriber.objects.filter(contest=contest)
+		contest.mailWinLetter()
 sync_issue_shows_action.short_description = "Mail Final Results to Participants"
 
 

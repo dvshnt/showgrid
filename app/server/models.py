@@ -962,8 +962,8 @@ class Contest(models.Model):
 	title = models.CharField(max_length=255,blank=True,null=True)
 	template_folder = models.CharField(max_length=255,blank=False,default='share4ticket')
 
-	signup_email_subject = models.CharField(max_length=255,blank=False,default='thanks for joining the contest!')
-	signup_ended_subject = models.CharField(max_length=255,blank=False,default='contest has ended!')
+	signup_subject = models.CharField(max_length=255,blank=False,default='thanks for joining the contest!')
+	ended_subject = models.CharField(max_length=255,blank=False,default='contest has ended!')
 
 	winner = models.ForeignKey('Subscriber',related_name= 'contest_won', blank = True,null = True)
 	active = models.BooleanField(default=False)
@@ -985,7 +985,7 @@ class Contest(models.Model):
 		return
 
 
-	def mailWinLetter(self,sub):
+	def mailWinLetter(self):
 		if self.winner == None:
 			prRed('cannot mail win letter because no winner')
 			return False
@@ -993,23 +993,17 @@ class Contest(models.Model):
 			prRed('cannot send win letter contest not active.')
 			return False
 		participants = Subscriber.objects.filter(contest=self)
-		title = self.ended_email_subject
-		text_alt =  self.ended_email_subject
+		title = self.ended_subject
+		text_alt =  self.ended_subject
 		html_ended_content = self.ended_templ.render({
-			'contest': self
+			'contest': self,
 		})
 
 		for p in participants:
-
-			if p.email == None:
-				email = p.user.email
-			else:
-				email = p.email
-
-			mail.EmailMultiAlternatives(title,text_alt,EMAIL_HOST_USER,[email])
+			msg = mail.EmailMultiAlternatives(title,text_alt,EMAIL_HOST_USER,[p.email])
 			msg.attach_alternative(html_ended_content,'text/html')
 			msg.send()
-
+		prRed('CONTEST '+self.title+' IS OVER')
 		self.active = False
 		self.save()
 
@@ -1067,7 +1061,7 @@ class Subscriber(models.Model):
 			return self.user.email
 		else:
 			return self.email
-
+	ip =  models.CharField(max_length=255,blank=False)
 	email = models.EmailField(_('email address'),blank=True,null=True,unique=False)
 	user = models.ForeignKey('ShowgridUser',null=True,blank=True,unique=True)
 	hash_name =  models.CharField(unique=True,max_length=255,blank=True)
