@@ -2,17 +2,32 @@
 	
 {% load static from staticfiles %}
 
+{% block title %}| {{ contest.short_title }} {% endblock %}
+{% block ogtitle %}| {{ contest.short_title }} {% endblock %}
+{% block twittertitle %}| {{ contest.short_title }}{% endblock %}
+
+{% block ogimg %}http://showgrid.com/media/{{ contest.banner }}{% endblock %}
+{% block twitterimg %}http://showgrid.com/media/{{ contest.banner }}{% endblock %}
+
+{% block ogurl %}http://showgrid.com/contest/{{ contest.id }}{% endblock %}
+
+{% block ogdesc %}{{ contest.description|striptags }}{% endblock %}
+
+
 {% block content %}
 <section>
 	<h3>{{contest.title}}</h3>
 </section>
+<section class="image">
+	<img src="/media/{{contest.banner}}"/>
+</section>
 <section>
 <p>
-	this is a hardcoded contest template description located in a folder named share4ticket
+	{{ contest.description|safe }}
 </p>
-<form class="form" method="post" action="http://localhost:8000/v1/contest/{{contest.id}}/signup">
+<form class="form" method="post" action="/v1/contest/{{contest.id}}/signup">
 	{% csrf_token %} 
-	<input type="email" name="email" placeholder="Email address" required/><input type="submit" value="Submit"/>
+	<input type="email" name="email" placeholder="Email address" required/><input type="submit" value="Enter"/>
 	<div class="msg">
 		There is something here that once wasn't.
 	</div>
@@ -57,14 +72,14 @@
 				complete: function(data) {
 					if (data.status === 200) {
 						$(".form").addClass("success");
-						$(".form input[type=submit]").val("Thanks for entering the contest! Check your mail.");
+						$(".form input[type=submit]").val("Thanks for entering the contest! Check your email.");
 					}
 
 					// Already entered this eail.
 					if (data.status === 409) {
 						$(".form").addClass("error");
 
-						$(".form .msg").html("You've already registed for the contest!")
+						$(".form .msg").html("You've already registed for the contest! Check your email.")
 
 						setTimeout(function() {
 							$(".form").removeClass("error");
