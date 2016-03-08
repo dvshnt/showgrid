@@ -66,20 +66,28 @@ def version(request):
 
 
 def splash(request):
+	data = {}
+
 	today = datetime.today()
 	issue = Issue.objects.filter(active=True).filter(Q(start_date__lte=today) & Q(end_date__gte=today))
-	if len(issue):
-		issue = { 'issue': issue[0] ,'ref': str(request.GET.get('ref',None)) }
-	else:
-		issue = {'ref': str(request.GET.get('ref',None))}
+	contest = Contest.objects.filter(active=True)
 
-	return render(request, "splash.html", issue)
+	data['ref'] = str(request.GET.get('ref',None))
+
+	if len(issue):
+		data['issue'] = issue[0]
+
+	if len(contest):
+		data['contest'] = contest[0]
+
+	return render(request, "splash.html", data)
 
 
 @api_view(['POST'])
 def list_signup(request):
 	ip = request.META.get('REMOTE_ADDR')
 	email = request.POST['email']
+	ref = request.POST['ref']
 
 	if email == None:
 		return Response({"msg": "no_email"}, status=status.HTTP_400_BAD_REQUEST)
@@ -102,8 +110,6 @@ def list_signup(request):
 	user.save()
 
 
-	ref = request.GET.get('ref', None)
-	print ref
 	if ref != None:
 		try:
 			ref_sub = Subscriber.objects.get(hash_name=ref)

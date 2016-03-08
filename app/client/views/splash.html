@@ -4,8 +4,21 @@
 
 {% block content %}
 
+{% if contest %}
+<a class="issue" href="/contest/{{ contest.id }}">
+	<section class="issue tall list" style="background-image:url('media/{{ contest.banner }}');">
+	</section>
+	<section class="issue-head">
+		<h4>{{ contest.title }}</h4>
+		<span>
+			Click For More Info...
+		</span>
+	</section>
+</a>
+{% endif %}
+
 {% if issue %}
-<a class="issue" href="http://showgrid.com/issue/{{ issue.id }}">
+<a class="issue" href="/issue/{{ issue.id }}">
 	<section class="issue list" style="background-image:url('media/{{ issue.banner }}');">
 		<h4>This Week's Digest</h4>
 		<span>
@@ -16,16 +29,9 @@
 {% endif %}
 
 <section>
-	<h3>Introducing</h3>
 	<h4>Showgrid Weekly Digest</h4>
 	<p>
-		While we work on building out the rest of the site, we've put together a weekly newsletter to help you stay up to date about who is playing in town for the upcoming week. A real simple remedy for the missing Showgrid calendar.
-	</p>
-	<p>
-		Every Sunday, we will bring you a selection of shows for the week accompanied by a Spotify playlist. The playlist will be made up of the artists that are playing in town that week. 
-	</p>
-	<p>
-		The newsletter will feature commentary about some of the shows, and ideally, you will read it and want to see some live music! Sign up below. 
+		Sign up below to receive a selection of shows for the week accompanied by a Spotify playlist. The playlist will be made up of the artists that are playing in town that week. 
 	</p>
 
 	<form class="form" method="post" action="http://localhost:8000/v1/signup?ref={{ref}}">
@@ -50,28 +56,6 @@
 			<svg class="icon icon-playlist"><use xlink:href="#icon-playlist"></use></svg><br>
 		</li>
 	</ul>
-	<p>
-		In an effort to grow Showgrid into a more useful and exciting place to get information, we are putting her under the proverbial knife.
-	</p>
-	<p>
-		A few things we can talk about that are in the works.
-	</p>
-	<p>
-		First, we will release a series of <b class="art">articles</b> focusing on music history. To start, these articles will talk exclusively of Nashville, and the rich music history we are surrounded by. They will be fresh and new and help inform your understanding of why Nashville is Nashville.
-	</p>
-	<p>
-		Second, we will consistently put out a series of themed <b class="play">playlists</b>. Playlists will be in the fashion of 'Songs about Star Wars' or maybe even 'Songs That Started Wars'. We may even venture to try and create a <i>mood</i> with these playlists. Like 'Songs To Make Love To With Your Socks On'.
- 	</p>
- 	<p>
- 		Finally, we will have the standard music <b class="cal">calendar</b> that you came here for in the first place. .
- 	</p>
- 	<p>
- 		Until then, enjoy the newsletter and tell all of your friends. I mean all of them. 
- 	</p>
- 	<p>
- 		<br>
- 		<i>Thanks, Davis.</i>
- 	</p>
 </section>
 {% endblock %}
 
@@ -80,6 +64,29 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
 <script>
 	$(function() {
+
+		var QueryString = function () {
+		  // This function is anonymous, is executed immediately and 
+		  // the return value is assigned to QueryString!
+		  var query_string = {};
+		  var query = window.location.search.substring(1);
+		  var vars = query.split("&");
+		  for (var i=0;i<vars.length;i++) {
+		    var pair = vars[i].split("=");
+		        // If first entry with this name
+		    if (typeof query_string[pair[0]] === "undefined") {
+		      query_string[pair[0]] = decodeURIComponent(pair[1]);
+		        // If second entry with this name
+		    } else if (typeof query_string[pair[0]] === "string") {
+		      var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
+		      query_string[pair[0]] = arr;
+		        // If third or later entry with this name
+		    } else {
+		      query_string[pair[0]].push(decodeURIComponent(pair[1]));
+		    }
+		  } 
+		    return query_string;
+		}();
 
 		//hang on event of form with id=myform
 		$(".form").submit(function(e) {
@@ -100,8 +107,13 @@
 
 			//get the action-url of the form
 			var actionurl = e.currentTarget.action;
+			var data = $(".form").serialize();
 		
 			$(".form").addClass("request");
+
+			if (QueryString.ref) {
+				data += "&ref=" + QueryString.ref;
+			}
 
 			//do your own request an handle the results
 			$.ajax({
