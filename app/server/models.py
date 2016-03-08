@@ -961,11 +961,22 @@ class Alert(models.Model):
 class Contest(models.Model):
 	def __unicode__ (self):
 		return self.title
+
+	banner = models.ImageField(upload_to='showgrid/img/contest/',blank=True)
+	
+	description = HTMLField(default="")
+
 	title = models.CharField(max_length=255,blank=True,null=True)
+	short_title = models.CharField(max_length=100,blank=True,null=True)
 	template_folder = models.CharField(max_length=255,blank=False,default='share4ticket')
 
 	signup_subject = models.CharField(max_length=255,blank=False,default='thanks for joining the contest!')
+	signup_body = HTMLField(default='')
 	ended_subject = models.CharField(max_length=255,blank=False,default='contest has ended!')
+
+	share_email_subject = models.CharField(max_length=255,blank=False,default='thanks for joining the contest!')
+	share_email_body = models.TextField(default='')
+	share_text_body = models.CharField(max_length=255,blank=False,default='thanks for joining the contest!')
 
 	winner = models.ForeignKey('Subscriber',related_name= 'contest_won', blank = True,null = True)
 	active = models.BooleanField(default=False)
@@ -1027,9 +1038,9 @@ class Contest(models.Model):
 			email = sub.email
 
 		title = self.signup_subject
-		text_alt = 'share this link http://showgrid.com?ref='+sub.hash_name
+		text_alt = 'Share this link http://showgrid.com/issue?ref='+sub.hash_name
 		html_signup_content = self.signup_templ.render({
-			'link': 'http://localhost:8000/?ref='+sub.hash_name,
+			'link': 'http://showgrid.com/issue?ref=' + sub.hash_name,
 			'contest': self,
 			'sub': sub
 		})
@@ -1068,7 +1079,7 @@ class Subscriber(models.Model):
 			return self.user.email
 		else:
 			return self.email
-	ip =  models.CharField(max_length=255,blank=False)
+	ip =  models.CharField(max_length=255,blank=False,default="")
 	email = models.EmailField(_('email address'),blank=True,null=True,unique=False)
 	user = models.ForeignKey('ShowgridUser',null=True,blank=True,unique=True)
 	hash_name =  models.CharField(unique=True,max_length=255,blank=True)
