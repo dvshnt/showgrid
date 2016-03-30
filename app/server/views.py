@@ -87,7 +87,7 @@ def splash(request):
 def list_signup(request):
 	ip = request.META.get('REMOTE_ADDR')
 	email = request.POST['email']
-	ref = request.POST['ref']
+	ref = request.POST.get('ref',False)
 
 	if email == None:
 		return Response({"msg": "no_email"}, status=status.HTTP_400_BAD_REQUEST)
