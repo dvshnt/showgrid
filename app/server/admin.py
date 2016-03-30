@@ -301,7 +301,7 @@ def decide_contest_winner(modeladmin, request, queryset):
 	contests = list(queryset)
 	for contest in contests:
 		contest.decideWinner()
-sync_issue_shows_action.short_description = "Decide Contest Winner"
+decide_contest_winner.short_description = "Decide Contest Winner"
 
 
 #mail letter to all contest participants that the contest has ended
@@ -309,7 +309,7 @@ def mail_contest_end(modeladmin,requst,queryset):
 	contests = list(queryset)
 	for contest in contests:
 		contest.mailWinLetter()
-sync_issue_shows_action.short_description = "Mail Final Results to Participants"
+mail_contest_end.short_description = "Mail Final Results to Participants"
 
 
 class ContestAdmin(admin.ModelAdmin):
@@ -318,11 +318,22 @@ class ContestAdmin(admin.ModelAdmin):
 	actions = [decide_contest_winner,mail_contest_end]
 
 
+
 def update_sub_emails(modeladmin,requst,queryset):
 	subs = list(queryset)
 	for sub in subs:
 		sub.save()	
 update_sub_emails.short_description = "Sync subscriber emails (if email empty and user account is linked)"
+
+def email_recent_issue_to_selected(modeladmin, requst, queryset):
+	subs = list(queryset)
+	issue = Issue.objects.order_by('-id')[0]
+	
+	for sub in subs:
+		print sub.email
+		tr = Thread(target=sub.sendIssue,args=(issue,))
+		tr.start()
+email_recent_issue_to_selected.short_description = "Send recent issue to selected"
 
 
 class IssueAdmin(admin.ModelAdmin):
@@ -335,7 +346,7 @@ class IssueAdmin(admin.ModelAdmin):
 class SubAdmin(admin.ModelAdmin):
 	list_filter =  ('is_tester',)
 	fields = ('email','user','contest','is_tester','hash_name','contest_points')
-	actions = [update_sub_emails]
+	actions = [update_sub_emails, email_recent_issue_to_selected]
 
 
 admin.site.register(Contest,ContestAdmin)
