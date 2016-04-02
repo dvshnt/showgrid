@@ -69,13 +69,13 @@ def splash(request):
 	data = {}
 
 	today = datetime.today()
-	issue = Issue.objects.filter(active=True).filter(Q(start_date__lte=today) & Q(end_date__gte=today))
+	issues = Issue.objects.filter(active=True).order_by('-id')
 	contest = Contest.objects.filter(active=True)
 
 	data['ref'] = str(request.GET.get('ref',None))
 
-	if len(issue):
-		data['issue'] = issue[0]
+	if len(issues):
+		data['issues'] = issues
 
 	if len(contest):
 		data['contest'] = contest[0]

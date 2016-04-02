@@ -3,59 +3,32 @@
 {% load static from staticfiles %}
 
 {% block content %}
-
-{% if contest %}
-<a class="issue" href="/contest/{{ contest.id }}">
-	<section class="issue tall list" style="background-image:url('media/{{ contest.banner }}');">
-	</section>
-	<section class="issue-head">
-		<h4>{{ contest.title }}</h4>
-		<span>
-			Click For More Info...
-		</span>
-	</section>
-</a>
-{% endif %}
-
-{% if issue %}
-<a class="issue" href="/issue/{{ issue.id }}">
-	<section class="issue list" style="background-image:url('media/{{ issue.banner }}');">
-		<h4>This Week's Digest</h4>
-		<span>
-			Week of {{ issue.start_date|date:"F jS" }}&nbsp; | &nbsp;{{ issue.tag }}
-		</span>
-	</section>
-</a>
-{% endif %}
-
 <section>
-	<h4>Showgrid Weekly Digest</h4>
-	<p>
-		Sign up below to receive a selection of shows for the week accompanied by a Spotify playlist. The playlist will be made up of the artists that are playing in town that week. 
-	</p>
+	<h1>
+		<img src="{% static 'showgrid/img/sg-wordmark-new.png' %}"/>
+	</h1>
 
 	<form class="form" method="post" action="http://localhost:8000/v1/signup?ref={{ref}}">
 		{% csrf_token %} 
+		<p>
+			Sign up to receive the Showgrid Weekly Digest in your inbox each week. 
+		</p>
 		<input type="email" name="email" placeholder="Email address" required/><input type="submit" value="Submit"/>
 		<div class="msg">
 			There is something here that once wasn't.
 		</div>
 	</form>
-</section>
 
-<section>
-	<h3 class="fade">Coming Soon...</h3>
-	<ul>
-		<li>
-			<svg class="icon icon-calendar"><use xlink:href="#icon-calendar"></use></svg><br>
-		</li>
-		<li>
-			<svg class="icon icon-article"><use xlink:href="#icon-article"></use></svg><br>
-		</li>
-		<li>
-			<svg class="icon icon-playlist"><use xlink:href="#icon-playlist"></use></svg><br>
-		</li>
-	</ul>
+	{% for issue in issues %}
+	<a class="issue" href="http://showgrid.com/issue/{{ issue.id }}">
+		<section class="issue list" style="background-image:url('media/{{ issue.banner }}');">
+			<h4>Weekly Digest | {{ issue.tag }}</h4>
+			<span>
+				Week of {{ issue.start_date|date:"F jS" }}
+			</span>
+		</section>
+	</a>
+	{% endfor %}
 </section>
 {% endblock %}
 
