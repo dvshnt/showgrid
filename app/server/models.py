@@ -1253,7 +1253,7 @@ class Issue(models.Model):
 				"venue_secondary": show.venue.secondary_color,
 				
 				"show_link": show.website,
-				"venue_link": HOST + "/venue/" + str(show.venue.id),
+				"venue_link": show.venue.website,
 
 				"title": show.title,
 				"headliners": show.headliners,

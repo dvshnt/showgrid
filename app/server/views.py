@@ -656,6 +656,11 @@ def IssueUnsubscribe(request,hash):
 	return HttpResponse(unsub_template.render())
 
 
+class IssuesToday(APIView):
+	def get(self, request):
+			issue = Issue.objects.filter(active=True).order_by('-id')[0]
+			issue_template = get_template('issues/issue_live.html')
+			return HttpResponse(issue.render(issue_template, None))
 
 
 class Issues(APIView):

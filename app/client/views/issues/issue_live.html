@@ -87,6 +87,20 @@
 </style>
 {% endblock %}
 
+
+
+{% block header %}
+<section style="padding:0; margin:0;">
+	<form class="form" method="post" action="/v1/signup" style="box-shadow:none; margin-top:0; background:#222222; padding-top:25px; padding-bottom:0;">
+		
+		<input type="email" name="email" placeholder="Signup for the weekly newsletter" required/><input type="submit" value="Submit"/>
+		<div class="msg">
+			There is something here that once wasn't.
+		</div>
+	</form>
+</section>
+{% endblock %}
+
 {% block content %}
 <!-- Start of Top Block -->
 <table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" st-sortable="preheader" >
@@ -512,4 +526,98 @@
 	</tbody>
 </table>
 <!-- End of seperator -->
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+<script>
+	$(function() {
+
+		var QueryString = function () {
+		  // This function is anonymous, is executed immediately and 
+		  // the return value is assigned to QueryString!
+		  var query_string = {};
+		  var query = window.location.search.substring(1);
+		  var vars = query.split("&");
+		  for (var i=0;i<vars.length;i++) {
+		    var pair = vars[i].split("=");
+		        // If first entry with this name
+		    if (typeof query_string[pair[0]] === "undefined") {
+		      query_string[pair[0]] = decodeURIComponent(pair[1]);
+		        // If second entry with this name
+		    } else if (typeof query_string[pair[0]] === "string") {
+		      var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
+		      query_string[pair[0]] = arr;
+		        // If third or later entry with this name
+		    } else {
+		      query_string[pair[0]].push(decodeURIComponent(pair[1]));
+		    }
+		  } 
+		    return query_string;
+		}();
+
+		//hang on event of form with id=myform
+		$(".form").submit(function(e) {
+			e.preventDefault();
+
+			if ($(this).hasClass("success")) return;
+
+			if (!validateEmail($(".form input[type=email]").val())) {
+				$(".form").addClass("error");
+
+				$(".form .msg").html("Enter a valid email address.")
+
+				setTimeout(function() {
+					$(".form").removeClass("error");
+				}, 5000);
+				return;
+			}
+
+			//get the action-url of the form
+			var actionurl = e.currentTarget.action;
+			var data = $(".form").serialize();
+		
+			$(".form").addClass("request");
+
+			if (QueryString.ref) {
+				data += "&ref=" + QueryString.ref;
+			}
+
+			//do your own request an handle the results
+			$.ajax({
+				url: actionurl,
+				type: 'POST',
+				dataType: 'json',
+				data: data,
+				complete: function(data) {
+					if (data.status === 200) {
+						$(".form").addClass("success");
+						$(".form input[type=submit]").val("Thanks for signing up! See you soon.");
+					}
+
+					// Already entered this eail.
+					if (data.status === 409) {
+						$(".form").addClass("error");
+
+						$(".form .msg").html("You've already signed up with this email address.")
+
+						setTimeout(function() {
+							$(".form").removeClass("error");
+						}, 5000);
+						return;
+					}
+				}
+			});
+
+		});
+
+		function validateEmail(str) {
+			var lastAtPos = str.lastIndexOf('@');
+		    var lastDotPos = str.lastIndexOf('.');
+		    return (lastAtPos < lastDotPos && lastAtPos > 0 && str.indexOf('@@') == -1 && lastDotPos > 2 && (str.length - lastDotPos) > 2);
+		}
+
+	});
+
+</script>
 {% endblock %}

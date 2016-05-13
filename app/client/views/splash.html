@@ -3,12 +3,16 @@
 {% load static from staticfiles %}
 
 {% block content %}
-<section>
+<section id="section">
 	<h1>
 		<img src="{% static 'showgrid/img/sg-wordmark-new.png' %}"/>
 	</h1>
 
-	<form class="form" method="post" action="http://localhost:8000/v1/signup?ref={{ref}}">
+	<div class="blurb">
+		<p>Every Monday morning, we give you a quick rundown of interesting shows in town for the week alongside a comprehensive schedule and a Spotify playlist containing all the bands playing.</p>
+	</div>
+
+	<form class="form" method="post" action="http://showgrid.com/v1/signup?ref={{ref}}">
 		{% csrf_token %} 
 		<p>
 			Sign up to receive the Showgrid Weekly Digest in your inbox each week. 
